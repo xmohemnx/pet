@@ -461,12 +461,13 @@ export class CarePlansService {
         );
       const e = (
         await db.query(
-          'SELECT sl.service_id,e.signed_at,a.starts_at,sl.branch_id FROM encounters e JOIN appointments a ON a.id=e.appointment_id JOIN appointment_slots sl ON sl.id=a.slot_id WHERE e.id=$1 AND e.pet_id=$2 AND e.clinic_id=$3 AND e.signed_at IS NOT NULL',
+          'SELECT sl.service_id,sl.visit_mode,e.signed_at,a.starts_at,sl.branch_id FROM encounters e JOIN appointments a ON a.id=e.appointment_id JOIN appointment_slots sl ON sl.id=a.slot_id WHERE e.id=$1 AND e.pet_id=$2 AND e.clinic_id=$3 AND e.signed_at IS NOT NULL',
           [encounterId, s.pet_id, s.clinic_id],
         )
       ).rows[0];
       if (
         !e ||
+        e.visit_mode !== 'clinic' ||
         Date.parse(e.starts_at) < Date.parse(s.available_at) ||
         Date.parse(e.starts_at) >= Date.parse(s.expires_at) ||
         (s.branch_id && e.branch_id !== s.branch_id)

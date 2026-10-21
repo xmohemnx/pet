@@ -83,7 +83,16 @@ export function ClinicCalendar({
                 {appointmentLabels[a.status]} ·{' '}
                 {attendanceLabels[a.attendance_state]}
               </span>
-              {a.status === 'confirmed' &&
+              {a.visit_mode === 'home' && (
+                <Link
+                  className="text-link"
+                  href={`/clinic/${clinic.id}/home-visits`}
+                >
+                  متابعة الزيارة المنزلية
+                </Link>
+              )}
+              {a.visit_mode !== 'home' &&
+                a.status === 'confirmed' &&
                 a.attendance_state === 'scheduled' && (
                   <div className="care-actions">
                     {(['checked_in', 'no_show'] as const).map((state) => (

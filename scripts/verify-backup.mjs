@@ -138,6 +138,12 @@ try {
     'care_subscription_usage_balance',
     'care_usage_balance',
     'care_subscription_terms_balance',
+    'home_offer_immutable',
+    'home_slot_immutable',
+    'home_booking_immutable',
+    'home_events_immutable',
+    'home_appointment_link',
+    'home_booking_link',
   ];
   const triggerCount = (
     await clone.query(

@@ -36,6 +36,9 @@ export function CareHome({
         </button>
       </div>
       <div className="care-actions">
+        <Link className="button outline" href="/home-visits">
+          الزيارات المنزلية
+        </Link>
         <Link className="button outline" href="/care/directory">
           دليل الأطباء والحجز
         </Link>

@@ -277,6 +277,9 @@ export interface CareTask {
   encounter_id: string | null;
 }
 export interface CareAppointment {
+  visit_mode: 'clinic' | 'home';
+  home_visit_id: string | null;
+  home_status: HomeVisitBooking['status'] | null;
   id: string;
   pet_id: string;
   pet_name: string;
@@ -291,6 +294,81 @@ export interface CareAppointment {
   attendance_state: 'scheduled' | 'checked_in' | 'in_progress';
   version: number;
   encounter_id: string | null;
+}
+export interface HomeVisitOffer {
+  id: string;
+  clinic_id: string;
+  branch_id: string;
+  service_id: string;
+  doctor_id: string;
+  name: string;
+  description: string;
+  city: string;
+  district: string;
+  species: string[];
+  service_minor: string;
+  travel_minor: string;
+  total_minor: string;
+  duration_minutes: number;
+  buffer_minutes: number;
+  travel_minutes: number;
+  active: boolean;
+  version: number;
+  doctor_name: string;
+  clinic_name: string;
+  branch_name: string;
+  service_name: string;
+}
+export interface HomeVisitSlot {
+  id: string;
+  offer_id: string;
+  starts_at: string;
+  ends_at: string;
+  cancelled_at?: string | null;
+}
+export interface HomeVisitBooking {
+  id: string;
+  appointment_id: string;
+  offer_id: string;
+  clinic_id: string;
+  doctor_id: string;
+  pet_id: string;
+  user_id: string;
+  pet_name: string;
+  service_name: string;
+  city: string;
+  district: string;
+  service_minor: string;
+  travel_minor: string;
+  total_minor: string;
+  status: 'confirmed' | 'en_route' | 'arrived' | 'completed' | 'cancelled';
+  version: number;
+  starts_at: string;
+  ends_at: string;
+  occupied_from: string;
+  occupied_until: string;
+  attendance_state: CareAppointment['attendance_state'];
+  appointment_version: number;
+  medical_consent_until: string;
+  doctor_name: string;
+  clinic_name: string;
+  offer_name: string;
+  can_execute: boolean;
+  contact_name: string | null;
+  phone: string | null;
+  address_line: string | null;
+  notes: string | null;
+}
+export interface HomeVisitCatalog {
+  offers: HomeVisitOffer[];
+  slots: HomeVisitSlot[];
+}
+export interface HomeVisitManagement extends HomeVisitCatalog {
+  admin: boolean;
+  bookings: HomeVisitBooking[];
+  branches: { id: string; name: string }[];
+  services: { id: string; name: string }[];
+  doctors: { id: string; name: string }[];
 }
 export interface AvailableSlot {
   id: string;

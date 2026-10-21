@@ -45,6 +45,8 @@ import { FinancialReportsController } from './finance/reports-controller.js';
 import { FinanceService } from './finance/ledger.js';
 import { CareController } from './care/controller.js';
 import { CareService } from './care/service.js';
+import { HomeVisitsService } from './care/home-visits.js';
+import { HomeVisitsController } from './care/home-controller.js';
 import { registerIdentity } from './identity/bridge.js';
 import { IdentityController } from './organizations/controller.js';
 import { OrganizationService } from './organizations/service.js';
@@ -83,7 +85,7 @@ class HealthController {
     return {
       status: 'ok',
       service: 'petra-api',
-      phase: 'care-plan-lifecycle-local',
+      phase: 'home-visits-local',
       demoEnabled: process.env.PETRA_DEMO_MODE === 'true',
     };
   }
@@ -178,6 +180,7 @@ class Errors implements ExceptionFilter {
     DemoController,
     IdentityController,
     CareController,
+    HomeVisitsController,
     SchedulingController,
     PetSafetyController,
     CommerceController,
@@ -201,6 +204,7 @@ class Errors implements ExceptionFilter {
   providers: [
     OrganizationService,
     CareService,
+    HomeVisitsService,
     SchedulingService,
     PetSafetyService,
     CommerceService,

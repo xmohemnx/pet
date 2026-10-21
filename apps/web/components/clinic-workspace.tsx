@@ -133,6 +133,16 @@ export function ClinicWorkspace({
   };
   return (
     <IdentityShell me={context}>
+      {clinic.capabilities.some((c) =>
+        ['clinic_admin', 'receptionist', 'doctor_member'].includes(c),
+      ) && (
+        <Link
+          className="button outline"
+          href={`/clinic/${clinic.id}/home-visits`}
+        >
+          إدارة الزيارات المنزلية
+        </Link>
+      )}
       <div className="page-title">
         <div>
           <span className="eyebrow">منشأة معتمدة · صلاحيات بنطاق العيادة</span>

@@ -1,3 +1,4 @@
+import { homeExecution } from './home-execution.js';
 import {
   Injectable,
   ForbiddenException,
@@ -287,7 +288,7 @@ export class SchedulingService {
       if (
         (
           await db.query(
-            "SELECT 1 FROM appointments WHERE clinic_id=$1 AND ($2::uuid IS NULL OR doctor_id=$2) AND status='confirmed' AND tstzrange(starts_at,occupied_until,'[)') && tstzrange($3,$4,'[)')",
+            "SELECT 1 FROM appointments WHERE clinic_id=$1 AND ($2::uuid IS NULL OR doctor_id=$2) AND status='confirmed' AND tstzrange(occupied_from,occupied_until,'[)') && tstzrange($3,$4,'[)')",
             [clinicId, clinicWide ? null : actor, i.startsAt, i.endsAt],
           )
         ).rowCount
@@ -309,7 +310,7 @@ export class SchedulingService {
         )
       ).rows[0];
       await db.query(
-        "UPDATE appointment_slots SET cancelled_at=now() WHERE clinic_id=$1 AND ($2::uuid IS NULL OR doctor_id=$2) AND tstzrange(starts_at,ends_at+(buffer_minutes::text||' minutes')::interval,'[)') && tstzrange($3,$4,'[)') AND starts_at>now()",
+        "UPDATE appointment_slots sl SET cancelled_at=now() WHERE clinic_id=$1 AND ($2::uuid IS NULL OR doctor_id=$2) AND tstzrange(sl.starts_at-make_interval(mins=>coalesce((SELECT travel_minutes FROM home_visit_offers ho WHERE ho.id=sl.home_offer_id),0)),sl.ends_at+make_interval(mins=>sl.buffer_minutes+coalesce((SELECT travel_minutes FROM home_visit_offers ho WHERE ho.id=sl.home_offer_id),0)),'[)') && tstzrange($3,$4,'[)') AND starts_at>now()",
         [clinicId, clinicWide ? null : actor, i.startsAt, i.endsAt],
       );
       await audit(db, actor, 'care.time_off_created', clinicId, {
@@ -350,7 +351,7 @@ export class SchedulingService {
       return {
         appointments: (
           await db.query(
-            "SELECT a.id,a.version,a.status,a.attendance_state,a.checked_in_at,a.started_at,a.starts_at,a.ends_at,p.name pet_name,u.name doctor_name,s.name service_name,r.name resource_name FROM appointments a JOIN pets p ON p.id=a.pet_id JOIN auth_users u ON u.id=a.doctor_id JOIN appointment_slots sl ON sl.id=a.slot_id JOIN clinic_services s ON s.id=sl.service_id LEFT JOIN clinic_resources r ON r.id=a.resource_id WHERE a.clinic_id=$1 AND a.starts_at>=($2::date::timestamp AT TIME ZONE 'Asia/Baghdad') AND a.starts_at<(($2::date+1)::timestamp AT TIME ZONE 'Asia/Baghdad') ORDER BY a.starts_at",
+            "SELECT a.id,a.version,a.status,a.attendance_state,a.checked_in_at,a.started_at,a.starts_at,a.ends_at,sl.visit_mode,p.name pet_name,u.name doctor_name,s.name service_name,r.name resource_name FROM appointments a JOIN pets p ON p.id=a.pet_id JOIN auth_users u ON u.id=a.doctor_id JOIN appointment_slots sl ON sl.id=a.slot_id JOIN clinic_services s ON s.id=sl.service_id LEFT JOIN clinic_resources r ON r.id=a.resource_id WHERE a.clinic_id=$1 AND a.starts_at>=($2::date::timestamp AT TIME ZONE 'Asia/Baghdad') AND a.starts_at<(($2::date+1)::timestamp AT TIME ZONE 'Asia/Baghdad') ORDER BY a.starts_at",
             [clinicId, date],
           )
         ).rows,
@@ -382,11 +383,20 @@ export class SchedulingService {
         if (state === 'in_progress')
           throw new ForbiddenException('بدء العلاج للطبيب المسند فقط');
       }
+      if (initial.visit_mode === 'home')
+        await this.care.medical(db, actor, initial.pet_id, initial.clinic_id);
       const a = (
         await db.query('SELECT * FROM appointments WHERE id=$1 FOR UPDATE', [
           id,
         ])
       ).rows[0];
+      if (a.visit_mode === 'home') {
+        if (state === 'no_show')
+          throw new ConflictException(
+            'راجع إلغاء الزيارة المنزلية وتسوية الرد',
+          );
+        await homeExecution(db, actor, a.id);
+      }
       if (
         (state === 'no_show' && a.status === 'no_show') ||
         (a.status === 'confirmed' && a.attendance_state === state)

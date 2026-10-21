@@ -154,6 +154,19 @@ try {
       'utf8',
     ),
   );
+  await db.query('BEGIN');
+  await db.query(
+    await readFile(new URL('0033_home_visits.sql', migrationRoot), 'utf8'),
+  );
+  await db.query('COMMIT');
+  assert.equal(
+    (
+      await db.query(
+        "SELECT count(*)::int n FROM appointments WHERE visit_mode='clinic' AND occupied_from=starts_at",
+      )
+    ).rows[0].n,
+    2,
+  );
   assert.deepEqual(
     (await db.query('SELECT row_to_json(j) data FROM journals j ORDER BY id'))
       .rows,

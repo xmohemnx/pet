@@ -71,6 +71,14 @@ export function DoctorWorkspace({
       <Link className="button outline" href="/doctor/planning">
         إدارة الدوام والإجازات والملف المهني
       </Link>
+      {clinicId && (
+        <Link
+          className="button outline"
+          href={`/clinic/${clinicId}/home-visits`}
+        >
+          إرسال ومتابعة الزيارات المنزلية
+        </Link>
+      )}
       <div className="care-columns">
         <div className="care-stack">
           <section className="panel care-section">
@@ -85,7 +93,9 @@ export function DoctorWorkspace({
                     {a.pet_name} · {a.service_name}
                   </h3>
                   <p>
-                    {a.clinic_name} · {careDate(a.starts_at)}
+                    {a.clinic_name} ·{' '}
+                    {a.visit_mode === 'home' ? 'زيارة منزلية · ' : ''}
+                    {careDate(a.starts_at)}
                   </p>
                   <span className="small-chip">
                     {appointmentLabels[a.status]}
@@ -94,12 +104,27 @@ export function DoctorWorkspace({
                       : ''}
                   </span>
                 </div>
-                {a.status !== 'cancelled' && a.status !== 'no_show' && (
-                  <CareAction action={() => open(a)}>
-                    فتح ملف الزيارة
-                  </CareAction>
-                )}
+                {a.status !== 'cancelled' &&
+                  a.status !== 'no_show' &&
+                  (a.visit_mode !== 'home' ||
+                    a.home_status === 'arrived' ||
+                    a.status === 'completed') && (
+                    <CareAction action={() => open(a)}>
+                      فتح ملف الزيارة
+                    </CareAction>
+                  )}
+                {a.visit_mode === 'home' &&
+                  a.status === 'confirmed' &&
+                  a.home_status !== 'arrived' && (
+                    <Link
+                      className="text-link"
+                      href={`/clinic/${a.clinic_id}/home-visits`}
+                    >
+                      إرسال الطبيب والوصول أولاً
+                    </Link>
+                  )}
                 {a.status === 'confirmed' &&
+                  (a.visit_mode !== 'home' || a.home_status === 'arrived') &&
                   a.attendance_state !== 'in_progress' && (
                     <CareAction
                       action={async () => {

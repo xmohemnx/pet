@@ -9,12 +9,13 @@ import { randomUUID } from 'node:crypto';
 import type { PoolClient } from 'pg';
 import { transaction } from '../database.js';
 import { availableTime, lockScheduling } from './calendar.js';
+import { homeExecution, completeHomeVisit } from './home-execution.js';
 import { OrganizationService, audit, emit } from '../organizations/service.js';
 import type {
   PetInput,
   VisitContent,
 } from '../../../../packages/contracts/src/index.js';
-const appointmentsSql = `SELECT a.*,p.name pet_name,u.name doctor_name,c.name clinic_name,s.name service_name,e.id encounter_id FROM appointments a JOIN pets p ON p.id=a.pet_id JOIN auth_users u ON u.id=a.doctor_id JOIN clinics c ON c.id=a.clinic_id JOIN appointment_slots sl ON sl.id=a.slot_id JOIN clinic_services s ON s.id=sl.service_id LEFT JOIN encounters e ON e.appointment_id=a.id`;
+const appointmentsSql = `SELECT a.*,p.name pet_name,u.name doctor_name,c.name clinic_name,s.name service_name,e.id encounter_id,h.id home_visit_id,h.status home_status FROM appointments a JOIN pets p ON p.id=a.pet_id JOIN auth_users u ON u.id=a.doctor_id JOIN clinics c ON c.id=a.clinic_id JOIN appointment_slots sl ON sl.id=a.slot_id JOIN clinic_services s ON s.id=sl.service_id LEFT JOIN encounters e ON e.appointment_id=a.id LEFT JOIN home_visit_bookings h ON h.appointment_id=a.id`;
 @Injectable()
 export class CareService {
   constructor(private readonly organizations: OrganizationService) {}
@@ -304,7 +305,7 @@ export class CareService {
       async (db) =>
         (
           await db.query(
-            `SELECT sl.id,sl.clinic_id,sl.doctor_id,sl.starts_at,sl.ends_at,sl.resource_id,sl.buffer_minutes,s.price_minor::text,c.name clinic_name,u.name doctor_name,s.name service_name,b.name branch_name FROM appointment_slots sl JOIN clinics c ON c.id=sl.clinic_id AND c.verification_status='verified' JOIN clinic_services s ON s.id=sl.service_id AND s.active JOIN clinic_branches b ON b.id=sl.branch_id JOIN auth_users u ON u.id=sl.doctor_id JOIN professional_profiles p ON p.user_id=sl.doctor_id AND p.kind='doctor' AND p.status='verified' JOIN doctor_affiliations f ON f.doctor_id=sl.doctor_id AND f.clinic_id=sl.clinic_id AND f.status='approved' JOIN clinic_memberships m ON m.user_id=sl.doctor_id AND m.clinic_id=sl.clinic_id AND m.revoked_at IS NULL AND m.capabilities @> ARRAY['doctor_member'] WHERE ($1::uuid IS NULL OR sl.doctor_id=$1) AND ($2::uuid IS NULL OR sl.clinic_id=$2) AND sl.starts_at>now() AND sl.cancelled_at IS NULL AND (sl.resource_id IS NULL OR EXISTS(SELECT 1 FROM clinic_resources r WHERE r.id=sl.resource_id AND r.active)) AND NOT EXISTS(SELECT 1 FROM care_time_off o WHERE o.clinic_id=sl.clinic_id AND (o.doctor_id=sl.doctor_id OR o.doctor_id IS NULL) AND tstzrange(o.starts_at,o.ends_at,'[)') && tstzrange(sl.starts_at,sl.ends_at+(sl.buffer_minutes::text||' minutes')::interval,'[)')) AND NOT EXISTS(SELECT 1 FROM appointments a WHERE (a.slot_id=sl.id AND a.status IN ('confirmed','completed')) OR ((a.doctor_id=sl.doctor_id OR (sl.resource_id IS NOT NULL AND a.resource_id=sl.resource_id)) AND a.status='confirmed' AND tstzrange(a.starts_at,a.occupied_until,'[)') && tstzrange(sl.starts_at,sl.ends_at+(sl.buffer_minutes::text||' minutes')::interval,'[)'))) ORDER BY sl.starts_at LIMIT 100`,
+            `SELECT sl.id,sl.clinic_id,sl.doctor_id,sl.starts_at,sl.ends_at,sl.resource_id,sl.buffer_minutes,s.price_minor::text,c.name clinic_name,u.name doctor_name,s.name service_name,b.name branch_name FROM appointment_slots sl JOIN clinics c ON c.id=sl.clinic_id AND c.verification_status='verified' JOIN clinic_services s ON s.id=sl.service_id AND s.active JOIN clinic_branches b ON b.id=sl.branch_id JOIN auth_users u ON u.id=sl.doctor_id JOIN professional_profiles p ON p.user_id=sl.doctor_id AND p.kind='doctor' AND p.status='verified' JOIN doctor_affiliations f ON f.doctor_id=sl.doctor_id AND f.clinic_id=sl.clinic_id AND f.status='approved' JOIN clinic_memberships m ON m.user_id=sl.doctor_id AND m.clinic_id=sl.clinic_id AND m.revoked_at IS NULL AND m.capabilities @> ARRAY['doctor_member'] WHERE ($1::uuid IS NULL OR sl.doctor_id=$1) AND ($2::uuid IS NULL OR sl.clinic_id=$2) AND sl.visit_mode='clinic' AND sl.starts_at>now() AND sl.cancelled_at IS NULL AND (sl.resource_id IS NULL OR EXISTS(SELECT 1 FROM clinic_resources r WHERE r.id=sl.resource_id AND r.active)) AND NOT EXISTS(SELECT 1 FROM care_time_off o WHERE o.clinic_id=sl.clinic_id AND (o.doctor_id=sl.doctor_id OR o.doctor_id IS NULL) AND tstzrange(o.starts_at,o.ends_at,'[)') && tstzrange(sl.starts_at,sl.ends_at+(sl.buffer_minutes::text||' minutes')::interval,'[)')) AND NOT EXISTS(SELECT 1 FROM appointments a WHERE (a.slot_id=sl.id AND a.status IN ('confirmed','completed')) OR ((a.doctor_id=sl.doctor_id OR (sl.resource_id IS NOT NULL AND a.resource_id=sl.resource_id)) AND a.status='confirmed' AND tstzrange(a.occupied_from,a.occupied_until,'[)') && tstzrange(sl.starts_at,sl.ends_at+(sl.buffer_minutes::text||' minutes')::interval,'[)'))) ORDER BY sl.starts_at LIMIT 100`,
             [doctorId ?? null, clinicId ?? null],
           )
         ).rows,
@@ -451,7 +452,11 @@ export class CareService {
       await lockScheduling(db, scope.clinic_id);
       await this.pet(db, actor, petId, 'booking');
       if (previous) {
-        if (previous.pet_id !== petId || previous.slot_id !== slotId)
+        if (
+          previous.visit_mode !== 'clinic' ||
+          previous.pet_id !== petId ||
+          previous.slot_id !== slotId
+        )
           throw new ConflictException('مفتاح المحاولة مستخدم لحجز مختلف');
         return previous;
       }
@@ -461,7 +466,7 @@ export class CareService {
       if (pet.archived_at) throw new ConflictException('الحيوان مؤرشف');
       const sl = (
         await db.query(
-          'SELECT sl.*,s.price_minor::text service_price_minor FROM appointment_slots sl JOIN clinic_services s ON s.id=sl.service_id AND s.active WHERE sl.id=$1 AND sl.cancelled_at IS NULL AND sl.starts_at>now() FOR UPDATE OF sl',
+          "SELECT sl.*,s.price_minor::text service_price_minor FROM appointment_slots sl JOIN clinic_services s ON s.id=sl.service_id AND s.active WHERE sl.id=$1 AND sl.visit_mode='clinic' AND sl.cancelled_at IS NULL AND sl.starts_at>now() FOR UPDATE OF sl",
           [slotId],
         )
       ).rows[0];
@@ -525,10 +530,17 @@ export class CareService {
   async cancel(actor: string, id: string) {
     return transaction(async (db) => {
       const found = (
-        await db.query('SELECT pet_id FROM appointments WHERE id=$1', [id])
+        await db.query(
+          'SELECT pet_id,visit_mode FROM appointments WHERE id=$1',
+          [id],
+        )
       ).rows[0];
       if (!found) throw new NotFoundException();
       await this.pet(db, actor, found.pet_id, 'booking');
+      if (found.visit_mode === 'home')
+        throw new ConflictException(
+          'ألغِ الزيارة المنزلية من صفحة الخدمة لتسوية الرد',
+        );
       const a = (
         await db.query('SELECT * FROM appointments WHERE id=$1 FOR UPDATE', [
           id,
@@ -595,6 +607,7 @@ export class CareService {
       ).rows[0];
       if (a.status !== 'confirmed')
         throw new ConflictException('الموعد غير مفتوح');
+      if (a.visit_mode === 'home') await homeExecution(db, actor, a.id);
       const e = (
         await db.query(
           'SELECT * FROM encounters WHERE appointment_id=$1 FOR UPDATE',
@@ -631,6 +644,15 @@ export class CareService {
         )
       ).rows[0];
       if (!e0) throw new NotFoundException();
+      if (
+        (
+          await db.query(
+            'SELECT 1 FROM home_visit_bookings WHERE appointment_id=$1',
+            [e0.appointment_id],
+          )
+        ).rowCount
+      )
+        await db.query('SELECT pg_advisory_xact_lock(823702)');
       await this.medical(db, actor, e0.pet_id, e0.clinic_id);
       const a = (
         await db.query('SELECT * FROM appointments WHERE id=$1 FOR UPDATE', [
@@ -642,6 +664,7 @@ export class CareService {
       ).rows[0];
       if (e.signed_at || e.version !== version || a.status !== 'confirmed')
         throw new ConflictException('السجل وقع أو تغير؛ أعد التحميل');
+      if (a.visit_mode === 'home') await homeExecution(db, actor, a.id, true);
       // Do not complete a visit for a future slot.
       if (new Date(a.starts_at).getTime() > Date.now())
         throw new ConflictException('لا يمكن توقيع زيارة قبل وقت الموعد');
@@ -672,6 +695,7 @@ export class CareService {
         "UPDATE appointments SET status='completed',version=version+1 WHERE id=$1",
         [e.appointment_id],
       );
+      if (a.visit_mode === 'home') await completeHomeVisit(db, actor, a.id);
       await audit(db, actor, 'medical.visit_signed', e.clinic_id, {
         encounterId: id,
         petId: e.pet_id,
