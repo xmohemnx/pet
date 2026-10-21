@@ -1,0 +1,49 @@
+{
+  "name": "petra",
+  "private": true,
+  "version": "0.14.0",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @petra/web dev",
+    "dev:api": "pnpm --filter @petra/api dev",
+    "build": "pnpm --filter @petra/api build && pnpm --filter @petra/web build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:e2e": "node scripts/test-e2e.mjs",
+    "db:migrate": "node --env-file-if-exists=.env scripts/database.mjs migrate",
+    "db:seed": "node --env-file-if-exists=.env scripts/database.mjs seed",
+    "test:db": "node --env-file-if-exists=.env scripts/database.mjs test",
+    "infra:up": "docker compose -f infra/docker/compose.yml up -d --wait postgres redis mailpit",
+    "infra:down": "docker compose -f infra/docker/compose.yml down",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm format:check && pnpm secret:scan && pnpm security:check",
+    "secret:scan": "secretlint \"**/*\"",
+    "env:prepare": "node scripts/prepare-env.mjs",
+    "admin:bootstrap": "node --env-file=.env scripts/bootstrap-admin.mjs",
+    "dev:worker": "node scripts/run-worker.mjs",
+    "backup:verify": "node scripts/verify-backup.mjs",
+    "security:check": "node scripts/security-check.mjs",
+    "security:built": "node scripts/security-check.mjs --built",
+    "release:source": "python3 scripts/package-source.py"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@eslint/js": "^10.0.0",
+    "@playwright/test": "^1.56.0",
+    "@secretlint/secretlint-rule-preset-recommend": "13.0.7",
+    "@types/node": "^24.10.0",
+    "eslint": "^10.0.0",
+    "otpauth": "^9.5.2",
+    "pg": "^8.16.3",
+    "prettier": "^3.6.2",
+    "secretlint": "13.0.7",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "5.0.5"
+  }
+}

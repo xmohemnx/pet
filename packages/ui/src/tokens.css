@@ -1,0 +1,19 @@
+:root {
+  --brand: #0e6873;
+  --brand-dark: #123f43;
+  --brand-deep: #102f32;
+  --accent: #fe7e3c;
+  --ink: #1a2c30;
+  --muted: #53686a;
+  --paper: #faf9f5;
+  --surface: #ffffff;
+  --mint: #e6efdf;
+  --line: #dce4de;
+  --success: #246147;
+  --warning: #88520d;
+  --radius: 24px;
+  --duration-micro: 160ms;
+  --duration-page: 280ms;
+  --duration-reveal: 600ms;
+  --ease: cubic-bezier(0.2, 0.65, 0.3, 1);
+}

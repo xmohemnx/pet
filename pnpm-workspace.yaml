@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  '@scarf/scarf': false
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@nestjs/common@12.2.0'
+  - '@nestjs/core@12.2.0'
+  - '@nestjs/platform-express@12.2.0'

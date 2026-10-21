@@ -1,0 +1,461 @@
+'use client';
+import { useState } from 'react';
+import type { IdentityMe, Pet, Ride, DriverHome } from '@petra/contracts';
+import { formatIqd } from '@petra/contracts';
+import { IdentityShell } from './identity-shell';
+import { CareForm, CareAction, localToUtc, careDate } from './care-shared';
+import { api } from '../lib/auth-client';
+import {
+  PlatformHeading,
+  SandboxNotice,
+  Empty,
+  Status,
+  mutate,
+} from './platform-shared';
+export function TaxiCenter({
+  me,
+  pets,
+  initial,
+  driverData,
+}: {
+  me: IdentityMe;
+  pets: Pet[];
+  initial: Ride[];
+  driverData?: DriverHome;
+}) {
+  const [rides, setRides] = useState(initial),
+    [home, setHome] = useState(driverData),
+    [locations, setLocations] = useState<Record<string, string>>({});
+  async function refresh() {
+    const current = await api<Ride[]>('me/rides');
+    setRides(current);
+    setLocations((old) =>
+      Object.fromEntries(
+        Object.entries(old).filter(([id]) =>
+          current.some(
+            (r) =>
+              r.id === id &&
+              ['accepted', 'driver_en_route', 'arrived', 'in_transit'].includes(
+                r.status,
+              ),
+          ),
+        ),
+      ),
+    );
+    if (home) setHome(await api<DriverHome>('driver/home'));
+  }
+  async function send(path: string, body: unknown = {}) {
+    await mutate(path, body);
+    await refresh();
+  }
+  async function gps(id: string, shared: boolean) {
+    if (!shared) {
+      await send(`rides/${id}/location`, { lat: 0, lng: 0, shared: false });
+      return;
+    }
+    const p = await new Promise<GeolocationPosition>((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        timeout: 10000,
+        maximumAge: 0,
+      }),
+    );
+    await send(`rides/${id}/location`, {
+      lat: p.coords.latitude,
+      lng: p.coords.longitude,
+      shared: true,
+    });
+  }
+  return (
+    <IdentityShell me={me}>
+      <PlatformHeading
+        eyebrow={home ? 'مساحة السائق' : 'نقل الحيوانات'}
+        title={home ? 'رحلاتك ومستحقاتك' : 'رحلة مهيأة لرفيقك'}
+      >
+        قبول فعلي من سائق معتمد. مشاركة الموقع أثناء الرحلة فقط ولمدة دقيقة بعد
+        كل تحديث.
+      </PlatformHeading>
+      <SandboxNotice />
+      {home && (
+        <section className="panel care-section">
+          <h2>المستحق الاختباري من الدفتر</h2>
+          <strong>{formatIqd(home.walletMinor)}</strong>
+          <p className="panel-intro">
+            ينشأ من رحلة مكتملة، ولا يمكن تعديله من الواجهة. لا تحويل بنكي
+            تلقائي.
+          </p>
+        </section>
+      )}
+      <div className="care-columns">
+        <div className="care-stack">
+          {home && (
+            <section className="panel care-section">
+              <h2>طلبات في مدينتك</h2>
+              {home.requests.map((r) => (
+                <article className="care-list-row" key={r.id}>
+                  <div>
+                    <h3>
+                      {r.city} · {r.species}
+                    </h3>
+                    <p>{formatIqd(r.fare_minor)}</p>
+                  </div>
+                  <CareAction action={() => send(`rides/${r.id}/claim`)}>
+                    قبول الرحلة
+                  </CareAction>
+                </article>
+              ))}
+              {!home.requests.length && (
+                <Empty>لا طلبات مطابقة لمركبتك المتاحة.</Empty>
+              )}
+            </section>
+          )}
+          <section className="panel care-section">
+            <h2>رحلاتي</h2>
+            {!rides.length && <Empty>لا رحلات بعد.</Empty>}
+            {rides.map((r) => (
+              <article key={r.id} className="ride-card">
+                <h3>
+                  {r.pet_name} · {r.city}
+                </h3>
+                <p>
+                  {r.pet_count ?? 1} حيوان ·{' '}
+                  {r.scheduled_at ? careDate(r.scheduled_at) : 'رحلة فورية'}
+                  {r.accompanying ? ' · راكب مصاحب' : ''}
+                </p>
+                <p>{r.transport_notes}</p>
+                <p>
+                  {r.origin_label} ← {r.destination_label}
+                </p>
+                <strong>{formatIqd(r.fare_minor)}</strong>
+                <Status value={r.status} />
+                <div className="inline-actions">
+                  {r.driver_id === me.user.id &&
+                    [
+                      'accepted',
+                      'driver_en_route',
+                      'arrived',
+                      'in_transit',
+                    ].includes(r.status) && (
+                      <>
+                        <CareAction
+                          action={() =>
+                            send(`rides/${r.id}/transition`, {
+                              status: {
+                                accepted: 'driver_en_route',
+                                driver_en_route: 'arrived',
+                                arrived: 'in_transit',
+                                in_transit: 'completed',
+                              }[r.status],
+                            })
+                          }
+                        >
+                          {
+                            {
+                              accepted: 'بدأت التوجه',
+                              driver_en_route: 'وصلت إلى العميل',
+                              arrived: 'بدأ نقل الحيوان',
+                              in_transit: 'إتمام الرحلة والتحصيل الاختباري',
+                            }[r.status]
+                          }
+                        </CareAction>
+                        <CareAction action={() => gps(r.id, true)}>
+                          مشاركة موقعي الآن
+                        </CareAction>
+                        <CareAction action={() => gps(r.id, false)}>
+                          إيقاف مشاركة الموقع
+                        </CareAction>
+                      </>
+                    )}
+                  {[
+                    'requested',
+                    'accepted',
+                    'driver_en_route',
+                    'arrived',
+                  ].includes(r.status) && (
+                    <CareAction action={() => send(`rides/${r.id}/cancel`)}>
+                      إلغاء الرحلة
+                    </CareAction>
+                  )}
+                  {r.user_id === me.user.id &&
+                    r.driver_id &&
+                    [
+                      'accepted',
+                      'driver_en_route',
+                      'arrived',
+                      'in_transit',
+                    ].includes(r.status) && (
+                      <CareAction
+                        action={async () => {
+                          const l = await api<{
+                            lat: string;
+                            lng: string;
+                          } | null>(`rides/${r.id}/location`);
+                          setLocations({
+                            ...locations,
+                            [r.id]: l
+                              ? `${l.lat}, ${l.lng}`
+                              : 'لا مشاركة حديثة من السائق',
+                          });
+                        }}
+                      >
+                        عرض موقع السائق الحالي
+                      </CareAction>
+                    )}
+                </div>
+                {locations[r.id] && (
+                  <p role="status" dir="ltr">
+                    {locations[r.id]}
+                  </p>
+                )}
+                <details>
+                  <summary>بلاغ سلامة أو نزاع</summary>
+                  <CareForm
+                    label="إرسال بلاغ الرحلة"
+                    submit={(f) =>
+                      send(`rides/${r.id}/incidents`, {
+                        description: f.get('description'),
+                      })
+                    }
+                  >
+                    <label>
+                      وصف البلاغ الخاص
+                      <textarea
+                        name="description"
+                        minLength={5}
+                        maxLength={1000}
+                        required
+                      />
+                    </label>
+                  </CareForm>
+                </details>
+              </article>
+            ))}
+          </section>
+          <CareAction action={refresh}>تحديث الرحلات</CareAction>
+        </div>
+        <aside className="care-stack">
+          {home ? (
+            <section className="panel care-section">
+              <h2>مركبتي وتوفري</h2>
+              <CareForm
+                label="حفظ المركبة والتوفر"
+                submit={(f) =>
+                  send('driver/vehicle', {
+                    plate: f.get('plate'),
+                    description: f.get('description'),
+                    city: f.get('city'),
+                    expiresOn: f.get('expires'),
+                    available: f.get('available') === 'on',
+                    capacity: Number(f.get('capacity')),
+                    allowedSpecies: f.getAll('species'),
+                    passengerAllowed: f.get('passenger') === 'on',
+                  })
+                }
+              >
+                <label>
+                  رقم اللوحة
+                  <input
+                    name="plate"
+                    defaultValue={home.vehicle?.plate}
+                    minLength={2}
+                    required
+                    maxLength={100}
+                  />
+                </label>
+                <label>
+                  وصف المركبة والتجهيز
+                  <textarea
+                    name="description"
+                    defaultValue={home.vehicle?.description}
+                    minLength={5}
+                    required
+                    maxLength={1000}
+                  />
+                </label>
+                <label>
+                  مدينة العمل
+                  <input
+                    name="city"
+                    defaultValue={home.vehicle?.city}
+                    minLength={2}
+                    required
+                    maxLength={100}
+                  />
+                </label>
+                <label>
+                  انتهاء الوثيقة
+                  <input
+                    type="date"
+                    name="expires"
+                    defaultValue={home.vehicle?.expires_on?.slice(0, 10)}
+                    required
+                  />
+                </label>
+                <label>
+                  سعة الحيوانات
+                  <input
+                    name="capacity"
+                    type="number"
+                    min={1}
+                    max={5}
+                    defaultValue={home.vehicle?.capacity ?? 1}
+                    required
+                  />
+                </label>
+                <label>
+                  أنواع الحيوانات المقبولة
+                  <select
+                    name="species"
+                    multiple
+                    defaultValue={home.vehicle?.allowed_species ?? ['all']}
+                    required
+                  >
+                    <option value="all">كل الأنواع</option>
+                    <option value="cat">قطط</option>
+                    <option value="dog">كلاب</option>
+                    <option value="bird">طيور</option>
+                    <option value="rabbit">أرانب</option>
+                    <option value="other">أخرى</option>
+                  </select>
+                </label>
+                <label className="care-check">
+                  <input
+                    type="checkbox"
+                    name="passenger"
+                    defaultChecked={home.vehicle?.passenger_allowed}
+                  />
+                  يسمح براكب مصاحب
+                </label>
+                <label className="care-check">
+                  <input
+                    type="checkbox"
+                    name="available"
+                    defaultChecked={home.vehicle?.available}
+                  />
+                  متاح لقبول رحلات
+                </label>
+              </CareForm>
+            </section>
+          ) : (
+            <section className="panel care-section">
+              <h2>طلب نقل اختباري</h2>
+              <CareForm
+                label="إنشاء طلب النقل وعرض السعر"
+                submit={(f) =>
+                  send('sandbox/rides', {
+                    policyAccepted: true,
+                    petId: f.get('pet'),
+                    extraPetIds: f.getAll('extraPets'),
+                    scheduledAt: f.get('schedule')
+                      ? localToUtc(f.get('schedule'))
+                      : null,
+                    transportNotes: f.get('notes'),
+                    accompanying: f.get('accompanying') === 'on',
+                    city: f.get('city'),
+                    originLabel: f.get('origin'),
+                    destinationLabel: f.get('destination'),
+                    originLat: Number(f.get('olat')),
+                    originLng: Number(f.get('olng')),
+                    destinationLat: Number(f.get('dlat')),
+                    destinationLng: Number(f.get('dlng')),
+                    idempotencyKey: crypto.randomUUID(),
+                  })
+                }
+              >
+                <label>
+                  الحيوان المسافر
+                  <select name="pet" required>
+                    {pets
+                      .filter((p) => p.scopes.includes('booking'))
+                      .map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <label>
+                  حيوانات إضافية (اختياري، دون تكرار الحيوان الرئيسي)
+                  <select multiple name="extraPets">
+                    {pets
+                      .filter((p) => p.scopes.includes('booking'))
+                      .map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <label>
+                  موعد بتوقيت بغداد (اختياري)
+                  <input name="schedule" type="datetime-local" />
+                </label>
+                <label>
+                  متطلبات النقل
+                  <textarea name="notes" maxLength={1000} />
+                </label>
+                <label className="care-check">
+                  <input type="checkbox" name="accompanying" />
+                  راكب مصاحب
+                </label>
+                <p>
+                  حتى خمسة حيوانات بصلاحية حجز سارية. يتاح قبول الموعد قبل نصف
+                  ساعة، ويلغى الطلب غير المقبول بعد ساعتين من الموعد.
+                </p>
+                <label>
+                  مدينة الرحلة
+                  <input name="city" minLength={2} maxLength={100} required />
+                </label>
+                <label>
+                  مكان الانطلاق الخاص
+                  <input
+                    name="origin"
+                    minLength={5}
+                    maxLength={1000}
+                    required
+                  />
+                </label>
+                <label>
+                  الوجهة الخاصة
+                  <input
+                    name="destination"
+                    minLength={5}
+                    maxLength={1000}
+                    required
+                  />
+                </label>
+                <div className="care-fields">
+                  {[
+                    ['olat', 'خط عرض الانطلاق', -90, 90],
+                    ['olng', 'خط طول الانطلاق', -180, 180],
+                    ['dlat', 'خط عرض الوجهة', -90, 90],
+                    ['dlng', 'خط طول الوجهة', -180, 180],
+                  ].map(([name, label, min, max]) => (
+                    <label key={name}>
+                      {label}
+                      <input
+                        type="number"
+                        step="0.000001"
+                        min={min}
+                        max={max}
+                        name={String(name)}
+                        required
+                      />
+                    </label>
+                  ))}
+                </div>
+                <p className="panel-intro">
+                  الإحداثيات خاصة. السعر التجريبي يُحسب على الخادم حسب المسافة
+                  المباشرة، ولا يعتمد خريطة طرق أو مزود دفع.
+                </p>
+                <label className="care-check">
+                  <input type="checkbox" required />
+                  سأجهز وسيلة تثبيت مناسبة للحيوان وأقبل طلب النقل الاختباري.
+                </label>
+              </CareForm>
+            </section>
+          )}
+        </aside>
+      </div>
+    </IdentityShell>
+  );
+}

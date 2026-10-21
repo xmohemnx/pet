@@ -1,0 +1,36 @@
+name: petra
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: petra
+      POSTGRES_PASSWORD: petra_local_only
+      POSTGRES_DB: petra_dev
+    ports: ['127.0.0.1:5432:5432']
+    volumes: ['petra-postgres:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U petra -d petra_dev']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports: ['127.0.0.1:1025:1025', '127.0.0.1:8025:8025']
+    healthcheck:
+      test: ['CMD', '/mailpit', 'readyz']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  redis:
+    image: redis:7-alpine
+    ports: ['127.0.0.1:6379:6379']
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes: ['petra-redis:/data']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  petra-postgres:
+  petra-redis:

@@ -1,0 +1,842 @@
+{
+  "package": "Petra Codex Full Rebuild Plan",
+  "kind": "architecture and implementation instructions; not built website",
+  "source": "user-provided legacy code with redacted connection refs",
+  "files_count": 166,
+  "markdown_files_count": 31,
+  "redactions": [
+    "legacy_reference/mobile/src/lib/supabase.ts"
+  ],
+  "files": [
+    {
+      "path": "00_EXECUTIVE_BRIEF_AR.md",
+      "bytes": 3440,
+      "sha256": "dfd0084ba1712ff651fde812cae28a5fe878f81383f819e5d1125ae63c4ea326"
+    },
+    {
+      "path": "01_PRODUCT_PRD.md",
+      "bytes": 7442,
+      "sha256": "8c385c5c23edc11e1721549c792e69590fd31d19666e50ea44dacf0b82bedc4d"
+    },
+    {
+      "path": "02_ROLES_AND_DASHBOARDS.md",
+      "bytes": 6986,
+      "sha256": "4c1f1a54a385a79b3b2f55fba4db6191d8f3568038baa2c77f05af55ef8a4b4f"
+    },
+    {
+      "path": "03_CARE_AND_MEDICAL.md",
+      "bytes": 9767,
+      "sha256": "c50db867ee3bfc1b3e95efdaafe3550401c4dd92c72c86cd3bece6854fc60aca"
+    },
+    {
+      "path": "04_CLINIC_MARKETPLACE.md",
+      "bytes": 5623,
+      "sha256": "2ac83d3bacebce58f06e2f739e192eeafe4626ac0fe023fc9025b9aa0ed53fcb"
+    },
+    {
+      "path": "05_ACCOUNTING_ERP.md",
+      "bytes": 10821,
+      "sha256": "cabdb6edefaa3f4bdb004ec6d0c37ee687e34a745875d074ba15a83785a59451"
+    },
+    {
+      "path": "06_SOCIAL_MEDIA.md",
+      "bytes": 3911,
+      "sha256": "c562f9eefe2d46ad4fd047a970bf3e1c2dfdea517e6129321feab0f8f7c8152a"
+    },
+    {
+      "path": "07_RESCUE_ADOPTION_DONATIONS.md",
+      "bytes": 3596,
+      "sha256": "cd44dd1b4b9a8cc1c521eaac1d1aabaa1ada47b4bb1d701b5e2d73997df4db34"
+    },
+    {
+      "path": "08_TAXI_AND_SERVICES.md",
+      "bytes": 2694,
+      "sha256": "12f6761fffd4466bab97f4e2c56ab30b48cb9b187017a0a0a6242ae440cda6cb"
+    },
+    {
+      "path": "09_ARCHITECTURE.md",
+      "bytes": 7007,
+      "sha256": "649129a1a1871a996ac95b27ce60f96304e300a6e18b1531e17d139bc2a64837"
+    },
+    {
+      "path": "10_DATABASE_AND_EVENTS.md",
+      "bytes": 6092,
+      "sha256": "cb98a0000b92368eefb059c7a838c488aa28d6efd3eea76923400dbfa30acb35"
+    },
+    {
+      "path": "11_SECURITY_AND_PRIVACY.md",
+      "bytes": 3474,
+      "sha256": "faab565bbd5bac741059d56d300a00c83daacf8055ec1768e7a3fdfd6813a867"
+    },
+    {
+      "path": "12_DESIGN_MOTION_SYSTEM.md",
+      "bytes": 7923,
+      "sha256": "add4fecd507eac4f0ca73125f0fd3f39cea13a676cfd4b1d536464dc79fdef81"
+    },
+    {
+      "path": "13_SCREEN_AND_ROUTE_MAP.md",
+      "bytes": 4522,
+      "sha256": "863b24925b858c167430c58cf4ed06bf02f9e90834812560fc1729218d01938e"
+    },
+    {
+      "path": "14_API_CONTRACTS.md",
+      "bytes": 4416,
+      "sha256": "194cc720d6d6f4a096c5dbe8141a9d75bfe0d6629d387837a90e8de25cd0ecb0"
+    },
+    {
+      "path": "15_INFRA_SCALING.md",
+      "bytes": 2949,
+      "sha256": "af9bd08ec87703e1149637d47d2a2b1ef481568445e2b61f8f7af80019cb6512"
+    },
+    {
+      "path": "16_IMPLEMENTATION_ROADMAP.md",
+      "bytes": 5746,
+      "sha256": "d1258838e559a59bfba11704c0552a70fb13b445a5ba2789f5f6ec9996870e34"
+    },
+    {
+      "path": "17_ACCEPTANCE_TESTS.md",
+      "bytes": 5115,
+      "sha256": "fbf19e09cd076a3f0a2e78aa5c770fa8ab04dcb19ca2eafe10d11f5da3f6f3fb"
+    },
+    {
+      "path": "18_REFERENCE_AUDIT.md",
+      "bytes": 4596,
+      "sha256": "cd7e5f429750b30fcef80aac49ae4ab537d6a4d9930a4709a9eac37630f53f15"
+    },
+    {
+      "path": "19_DECISIONS_AND_ASSUMPTIONS.md",
+      "bytes": 3907,
+      "sha256": "1772691a47b666597e8d6c267ff913110fa464219169fb17bee0967259092dea"
+    },
+    {
+      "path": "20_CODEX_PHASE_COMMANDS.md",
+      "bytes": 4457,
+      "sha256": "e37eb0dfd0bdc0d09c3ee6a25e46f3d7822e0fd908cc40d6646d817d39228a0d"
+    },
+    {
+      "path": "21_FINANCIAL_EXAMPLES.md",
+      "bytes": 7267,
+      "sha256": "38789844f4cd69b8d43c55d7bd69c87dfc5eda28eb136ae121153e1991e00299"
+    },
+    {
+      "path": "22_DESIGN_REVIEW_CHECKLIST.md",
+      "bytes": 2975,
+      "sha256": "4d213cb9e6e156bb43fea8b2fff17e679a32ff908383c8db5d3f6aadc4478d77"
+    },
+    {
+      "path": "23_GLOSSARY_AND_STATE_MACHINES.md",
+      "bytes": 3416,
+      "sha256": "f352d6de34710a94cd76ea1ad4eff6271acac72a3f85c570d100a6249d8199b5"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 4452,
+      "sha256": "9ee7ccb9a6daf982be52dc112960bcb18f9532394ff04d88f8719105bfb391a6"
+    },
+    {
+      "path": "CODEX_DELIVERY_CHECKLIST.md",
+      "bytes": 863,
+      "sha256": "b7790778c2f1defa767d810b4411f56324212979b39f260b2e883e176c889d2a"
+    },
+    {
+      "path": "CODEX_MASTER_PROMPT.md",
+      "bytes": 6930,
+      "sha256": "fae23e0f77d54f74c0906fe4d87d3f484d315fd99bae89f42384668264eeb3ed"
+    },
+    {
+      "path": "Petra_Codex_Complete_Master_Plan_AR.md",
+      "bytes": 149682,
+      "sha256": "78b480e1ec8e50805e02ca104d5f31266af095ed17bcc5d54f487928fbb8c36a"
+    },
+    {
+      "path": "README_START_HERE_AR.md",
+      "bytes": 7482,
+      "sha256": "b7b402fddf5c1d0ef59658fda71d20f59cb271e6dbd0101178fe9206ef439fa6"
+    },
+    {
+      "path": "REFERENCE_SANITIZATION_REPORT.md",
+      "bytes": 477,
+      "sha256": "0a82537a2a856a4ccc928ab7a51d4ab5e3eaa6b4523c6abce594eb615c236596"
+    },
+    {
+      "path": "legacy_reference/README.md",
+      "bytes": 1530,
+      "sha256": "3e327570a10f2f1f4a05cc45ad9d12cf353b5b5c7315250cc8b907035dd74e6f"
+    },
+    {
+      "path": "legacy_reference/mobile/App.tsx",
+      "bytes": 1367,
+      "sha256": "fe29926ceef3f009b933d63b33f52e66126c0532ce7f8030dfca8b1ecbddf501"
+    },
+    {
+      "path": "legacy_reference/mobile/app.json",
+      "bytes": 1272,
+      "sha256": "df284bf6ece5aec0cf07a82b0267303f7ef06380dd69aa2742b285459cee75e5"
+    },
+    {
+      "path": "legacy_reference/mobile/package.json",
+      "bytes": 1118,
+      "sha256": "dae55aee96656376b01aedb1ec16596b3c8ca339a83a3c74015ee0dfc5a944e3"
+    },
+    {
+      "path": "legacy_reference/mobile/src/context/AuthContext.tsx",
+      "bytes": 8222,
+      "sha256": "6271012046fb30ce75d7d6a0503463e65b16e4e68c1b6585b37b50b455c6a1c5"
+    },
+    {
+      "path": "legacy_reference/mobile/src/lib/supabase.ts",
+      "bytes": 870,
+      "sha256": "bcd08140060dcb4f9bd2df7d93856bdfaf94d053e9c20a35eb912715fbfd646d"
+    },
+    {
+      "path": "legacy_reference/mobile/src/navigation/MainTabs.tsx",
+      "bytes": 2481,
+      "sha256": "2d22f7af1ee70412c22cf73b14c7cadfd892b878b9ffa8f5702ac03f0d6804db"
+    },
+    {
+      "path": "legacy_reference/mobile/src/navigation/MoreStack.tsx",
+      "bytes": 1800,
+      "sha256": "baad29731993f7588bf96396501ba18203252d1a4f730d0fd24f4b076356f83a"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/AppointmentsScreen.tsx",
+      "bytes": 4421,
+      "sha256": "0cddd69bfd13f1241cd940823e845545e3e34ea3629f56ca9ffdc3b024b963d7"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/AuthScreen.tsx",
+      "bytes": 9149,
+      "sha256": "527cbc60daf33f47fa4c3dfd8f23d30aa0ccaad93ddd9236c28fe170e5e54e53"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/HomeScreen.tsx",
+      "bytes": 13449,
+      "sha256": "b5c18b5e6c643aa238905e5b8287f04dad25b186aa00615dc3b3769c56adeba4"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/LoyaltyScreen.tsx",
+      "bytes": 6025,
+      "sha256": "cdc80093984ac10bcbf6633d37bf5ddfd4b7812c254772d27e74af01fe2dae90"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/MoreScreen.tsx",
+      "bytes": 5177,
+      "sha256": "b3987a3725d5164015015695355060e9c0443ee8fb2208ad51a96fa7a1848343"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/NotificationsScreen.tsx",
+      "bytes": 5069,
+      "sha256": "881c81fd81c74ef734f2a512804b17f40e2596c059449203251f44c1038430b2"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/OrdersScreen.tsx",
+      "bytes": 5024,
+      "sha256": "075e1eaf22e76a870ddb366702766d3df33684376fc493d16cfebf0274e17e3f"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/PetsScreen.tsx",
+      "bytes": 8787,
+      "sha256": "9eb8de0309419b68cc1525449afe08518ff23f069580097526e0385a57e0385e"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/ServicesScreen.tsx",
+      "bytes": 3845,
+      "sha256": "55f4b98c9d53acfa7eda004b43ef026b53a50f111748b5f3a9a28af44f736663"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/SocialScreen.tsx",
+      "bytes": 6389,
+      "sha256": "fc17bb75bef02ff5ec40fa4fc75126286397af49abb9c205945cfbccb73c77b4"
+    },
+    {
+      "path": "legacy_reference/mobile/src/screens/StoreScreen.tsx",
+      "bytes": 5229,
+      "sha256": "0d6bfad3ee7acf8c661cd139eec08792b3fccd6bf1ec4fec027f5bddc4db2a16"
+    },
+    {
+      "path": "legacy_reference/mobile/src/theme/index.ts",
+      "bytes": 1314,
+      "sha256": "048dd5b2d227d3083792b64e6fb3d6d7959b9edb86eb19132e9734f2aab1683c"
+    },
+    {
+      "path": "legacy_reference/mobile/src/types/index.ts",
+      "bytes": 16765,
+      "sha256": "d5deaef20199fcbfb8e0b1f041f291becc04fe2063c5ef6fffefe74e1834f66c"
+    },
+    {
+      "path": "legacy_reference/package.json",
+      "bytes": 962,
+      "sha256": "938fcf709ee8fad80b6210f01a2d0cc19730612225c29780db646e0d5c1c3444"
+    },
+    {
+      "path": "legacy_reference/public/favicon.svg",
+      "bytes": 414,
+      "sha256": "ab1dcd06943ae60ea0d55b8ce7d502e68977591d8bb188a11fa87758fbdc7b10"
+    },
+    {
+      "path": "legacy_reference/src/App.tsx",
+      "bytes": 6457,
+      "sha256": "2feda627f5ecef4c96f9d99243549000084a0c0dae82259fe4748b93a3f0d853"
+    },
+    {
+      "path": "legacy_reference/src/assets/images/image.png",
+      "bytes": 122111,
+      "sha256": "eb92de13882d00b4680ef7dd161cdea518a162399230309c60e416ccc5936af2"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/AdminApp.tsx",
+      "bytes": 18570,
+      "sha256": "dfdaf4302123d9a094e7f8dd67129c928de8acd63a3dc45c07a277e61521c7ea"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/AdminAppInventory.tsx",
+      "bytes": 26610,
+      "sha256": "6c510c60c3c4a0d652534239135ba559d98e547e94b91aafba2c7305814abcad"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/AdminAuthScreen.tsx",
+      "bytes": 5420,
+      "sha256": "4820fb7f2f955e838b2cc2ca7fcd042895c307ba9815ca304ae938add139c445"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/AppointmentsManager.tsx",
+      "bytes": 15045,
+      "sha256": "6f4363d4d0d7c6f2d313605738c6aa1351c408bf04da96706dd3fc9c2cf1e41a"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/BankQRCodesManager.tsx",
+      "bytes": 16043,
+      "sha256": "1c0e2e14db41f3146467a9311e6014118b8189a5c5d59a6a1d7a252ddd08cc3c"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/ClinicsManager.tsx",
+      "bytes": 19416,
+      "sha256": "4a78f51c8895cd3920c433e45ff09c08208c9c0ddd5172cc3f087c09180ef7d6"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/CouponsManager.tsx",
+      "bytes": 18740,
+      "sha256": "e48ededd6eb299f34c5b0e7fc3d9c4e7c716e850ee0b6f883b8ce9f74e055814"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/DriversApproval.tsx",
+      "bytes": 33397,
+      "sha256": "badecba7e98f00ada932affa113df6f2674dc28c57ab3f2df40e36021ef5be90"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/FinancialCenter.tsx",
+      "bytes": 93932,
+      "sha256": "e882af0891ba4d055ea339666fe8b6a052bfe612138d41a5cbee9f074cacff0d"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/FundraisingManager.tsx",
+      "bytes": 16031,
+      "sha256": "d9b3ade4e380216bd4beb417e9cf6ff4f1a079a627bd6d2c5116808346201225"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/OrdersManager.tsx",
+      "bytes": 13370,
+      "sha256": "32a5092fb01c3a2e7cf623c2ab46fddaefa20280096e44b1878ca0a736ed7a90"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PageBuilder.tsx",
+      "bytes": 38944,
+      "sha256": "b6cb53c101e0db809d94027b3678449eb30c6639db41220b61dbd3790631a060"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PaymentVerificationsManager.tsx",
+      "bytes": 17341,
+      "sha256": "8246a188d2a39266f00b27110f4ed22eb6f78fa52dae552371b7ad4d06b45033"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PaymentsManager.tsx",
+      "bytes": 11092,
+      "sha256": "bceb8d8e63acbe3156698be66f4b5cb971a4b85b09d0dd93e5c34e5643a72ea0"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PetsRegistry.tsx",
+      "bytes": 17994,
+      "sha256": "19819d2cc444535aae14aabf71af5d13b688801297d4a724dd05867e757ef4bf"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PlatformEarnings.tsx",
+      "bytes": 17574,
+      "sha256": "5549190b182abd866eda59e50d9d0e634897f4dc4db87e70e1e3def9df675865"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/ProductsManager.tsx",
+      "bytes": 29609,
+      "sha256": "efb3f157e234bb1d0e653dd21017bfabc506a1198b39d0594f5d24a85100be0c"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/PromotionalBannersManager.tsx",
+      "bytes": 15373,
+      "sha256": "e99dde64124f489bc461fbfe6c58062e9d9f83f275ea429e5f70f675f38c68fe"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/SettingsPanel.tsx",
+      "bytes": 33684,
+      "sha256": "d40b80a82fd3eacaf23e3a5ff40dae856f750e9d78d997c773f74f004492df64"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/StoresManager.tsx",
+      "bytes": 21062,
+      "sha256": "45c7380cb394838c36d610383b2c7ecbb329123199d8967868b4f2ff8239b796"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/TaxiOperationsManager.tsx",
+      "bytes": 36419,
+      "sha256": "d18103c94ce40f94b1fb3a4edf6685a25184c86379ffe8b84f654d835bf3432f"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/UserRolesManager.tsx",
+      "bytes": 13867,
+      "sha256": "a126883f2fb4b0078068c7149c4be83efb37d554dbecd55e289290a21ba86617"
+    },
+    {
+      "path": "legacy_reference/src/components/admin/types.ts",
+      "bytes": 439,
+      "sha256": "3aa88a1afdf9c655e8ba3b33855be3713c88cafb219627b580e5839c790e9d9a"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/AdoptionSection.tsx",
+      "bytes": 52259,
+      "sha256": "18d626401962d95c066a2d37440fe9099461b7fb0757db02d570b9ebb45dab3a"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/BannerCarousel.tsx",
+      "bytes": 6751,
+      "sha256": "b8a84d8a38cc35dc382ca7e6ad54d2e952e04b3bde374990edf1d5302548be37"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/ClinicDashboard.tsx",
+      "bytes": 71294,
+      "sha256": "4d3751bba7253afa47bbde54de0b01734f4ae42f8a6fa2bd67a84bf3c31cc123"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/ClinicInventorySection.tsx",
+      "bytes": 5607,
+      "sha256": "efc13c30f4516899ff98a3f78b29b8394d630e9d6af6bd4ac142b54b68bd4731"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/CommunitySection.tsx",
+      "bytes": 31135,
+      "sha256": "60bcb8e42cfff6f9bd5fb72faff8ae9f4257cf37e4d7097ac0c3442028c01d0a"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/CustomerDashboard.tsx",
+      "bytes": 107344,
+      "sha256": "6bbecf23bd7d093963f45437fb028dee152f2225eaa26451520231aff704970c"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/DoctorDashboard.tsx",
+      "bytes": 63937,
+      "sha256": "02d6e9797803b139c7b7e776afee64b2f0019e913dbd8c06f080e9763cd3ccc9"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/GoogleMap.tsx",
+      "bytes": 5455,
+      "sha256": "e9cfd89f76085dfea38d2a81421b7d1669724e67a57a8201b86b57bfc7ffb870"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/GroomingSection.tsx",
+      "bytes": 27975,
+      "sha256": "ac7db0751bd8adaf4e868cc6e33f9492cb6e7e8c6797cf2177ab72fd2da7aa08"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/HealthPlansSection.tsx",
+      "bytes": 23297,
+      "sha256": "7e6ae789781471e179f7976825e382847c07e67626da81cb53e450f71fe2b23d"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/HotelBookingSection.tsx",
+      "bytes": 30107,
+      "sha256": "a0e23035154713497fd3e867c168487cf23d778126ad4885121f2697d9046f1e"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/InteractiveMapSection.tsx",
+      "bytes": 23329,
+      "sha256": "1f31661a3a0767319ecc8683420b481c461fba2134733bdde3550f0a1089f3ff"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/LabReportsSection.tsx",
+      "bytes": 25648,
+      "sha256": "9e445d356db0a8d757acc89d93ad64833a537e47b221ddfaa3034cdcad7f78f8"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/LikesAndComments.tsx",
+      "bytes": 9160,
+      "sha256": "22a95d1d53d37d7e6d6526aafde0829e4c96fb7003eafbca0dc4b61c456180d2"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/LiveChatSection.tsx",
+      "bytes": 24687,
+      "sha256": "9d0466576b289bac8b89bebba30b0c410e39e66b21832e704590c48f3783eb4f"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/LostAndFoundSection.tsx",
+      "bytes": 36886,
+      "sha256": "ba50318aaddfde5927c98f8b6d312647fa9f2f2028b69a46d0d912e497b59916"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/LoyaltySection.tsx",
+      "bytes": 17607,
+      "sha256": "4a3cb56de9e20133130b81bb9dc9065201d91f44fc6827e009aa17b3bf0f42fc"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/NotificationsSection.tsx",
+      "bytes": 15701,
+      "sha256": "aa0b22226e7f57cb160491dccf47dd5e6216ced515b9278e6c03be5ec24eb49b"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/OrderTracking.tsx",
+      "bytes": 11437,
+      "sha256": "66b1180568737bb5cdefaa5c16b851ee068baba9787e5fab106b139430536b33"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PaymentVerificationModal.tsx",
+      "bytes": 9714,
+      "sha256": "1e917fd9167082ac4ee7d3254087b31717cd4ca9604d684ee19e8a5f524d9245"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PetPassportSection.tsx",
+      "bytes": 25371,
+      "sha256": "bec73e3f95bdac7c19d181621c84b918f7e8daf32faa5d7bafae86f88402744e"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PetTaxiSection.tsx",
+      "bytes": 52193,
+      "sha256": "dd6a07c61beb25bb668e6879d85dde45d2cbadbd7ca5bb52568b063bd9cde9a9"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PortalApp.tsx",
+      "bytes": 4038,
+      "sha256": "65a57fbe6c3924769effc1b02e70baa139d78da3a0f95a6812ad4a9250b8d242"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PortalAuthScreen.tsx",
+      "bytes": 9912,
+      "sha256": "6f4455d9e15409356aa86eac49c4596508b0b0962f6da48a760abfc19cc7761d"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PortalLayout.tsx",
+      "bytes": 8111,
+      "sha256": "aaccce92e300135c5c99776f7be9ab0789aa3ee6b9a21611dd2dfe88da2ae4ce"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/PrescriptionsSection.tsx",
+      "bytes": 19851,
+      "sha256": "fd4e0cbcfdd0302932afe6f04f4a90f803965c91b2d2d00b406d683da5b77379"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/RescueFundraisingSection.tsx",
+      "bytes": 15849,
+      "sha256": "cc8bf93b3c1ff8735877e58396a9d83fef520c8f7dff11ea782fff6f5a8fe393"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/Sidebar.tsx",
+      "bytes": 2751,
+      "sha256": "93b5ec3e0225f1386f7fbc565a9da9002b4cf21a66dce5cb8301d02b23dde6bc"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/SocialDirectMessages.tsx",
+      "bytes": 17037,
+      "sha256": "3447bcb113d508cb6fb32d3669b272bb0ac193426101363640835cc1bcb4b0e1"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/SocialProfile.tsx",
+      "bytes": 29357,
+      "sha256": "1709a6bd70c26eee248223bb8ffbf4332a9c21597b1617250bc32726989a116b"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/SocialSearch.tsx",
+      "bytes": 14423,
+      "sha256": "09fffbef8eb45b85bc255f86ad6d9ea02b54d6f715d986202a4c7db39310fd87"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/SocialSection.tsx",
+      "bytes": 10872,
+      "sha256": "eda9a7524767ad091fd747ec4b2af5cf27aebdb2229a824372d31116f9df2c9d"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/SosEmergencySection.tsx",
+      "bytes": 31604,
+      "sha256": "b1c22b19c9419c1162e182b79bdcdb20e9fb2b21c7855df3ee0c2f5e58600d23"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/StoreOwnerOrders.tsx",
+      "bytes": 19611,
+      "sha256": "04fe998d9f157b18eafa899734b81b2b608f61a0503d0f30aeee7f6f6e5d4a63"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/Storefront.tsx",
+      "bytes": 58281,
+      "sha256": "149d5b08c4ed649e694fe985f98357b6c509b41155bc912e4df7f03250dd11ac"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/TaxiDriverDashboard.tsx",
+      "bytes": 65163,
+      "sha256": "bf795d14fab328cf2678468b7a9b70dafd5dbc7a31b447c4d8b89f39bc6370d8"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/TaxiRequestForm.tsx",
+      "bytes": 18458,
+      "sha256": "4ed5bad82326a7d128fe014806a7bc8873e2cf68cf0bf33105d71ebf7403b00d"
+    },
+    {
+      "path": "legacy_reference/src/components/portal/TelehealthSection.tsx",
+      "bytes": 21296,
+      "sha256": "a069074111afde94df391cbef351d5113018e1caa36721383ff1ae93731e2951"
+    },
+    {
+      "path": "legacy_reference/src/components/public/Footer.tsx",
+      "bytes": 2501,
+      "sha256": "cc9968f4b0e37bff1149353ad7731007a7c5813349780b097e1b311b3c9e3034"
+    },
+    {
+      "path": "legacy_reference/src/components/public/Navbar.tsx",
+      "bytes": 3568,
+      "sha256": "1c9aa8b0616cc549d074ceb8e99c14f71624033b10b432b7529f414daaa81817"
+    },
+    {
+      "path": "legacy_reference/src/components/public/PublicSite.tsx",
+      "bytes": 4395,
+      "sha256": "b4c7393280c6c254725cf2b3e7d0ba1569c8b4ead8868a38c547472babd49f36"
+    },
+    {
+      "path": "legacy_reference/src/components/public/SectionRenderer.tsx",
+      "bytes": 22948,
+      "sha256": "aa2d62e5bbaf3cdab115c6364944267f2c40b0527340b7a8cb4130bc87944240"
+    },
+    {
+      "path": "legacy_reference/src/components/social/SocialCreateStudio.tsx",
+      "bytes": 19786,
+      "sha256": "86fca446e7aa9dd09cb2c5149ff38b5ac9e73d732bdae1501d6e29b2278fbe44"
+    },
+    {
+      "path": "legacy_reference/src/components/social/SocialExplore.tsx",
+      "bytes": 13122,
+      "sha256": "9420c0724d170d5cfb7f5bcb909098931b7cc16f28ff0dbc8ff1b2d495a4dee6"
+    },
+    {
+      "path": "legacy_reference/src/components/social/SocialFeed.tsx",
+      "bytes": 9020,
+      "sha256": "679ee2110ce51d219a41404b66e5533b8e0d38d9d1b598f4a055905cc4ae7b75"
+    },
+    {
+      "path": "legacy_reference/src/components/social/SocialProfileV2.tsx",
+      "bytes": 14260,
+      "sha256": "bc92e2fa20dbb1f683f597e9c3d2be2190c530cc0e753016435701eb37092301"
+    },
+    {
+      "path": "legacy_reference/src/components/social/SocialReels.tsx",
+      "bytes": 9345,
+      "sha256": "278423ec03bffdbacbf720a24cd4b3d7353d7b15b13b0368859fa68ee0c4a34e"
+    },
+    {
+      "path": "legacy_reference/src/components/social/constants.ts",
+      "bytes": 7571,
+      "sha256": "07a045bd08cf904cf5df6632625523563341591f89b3d626ba11646eaf7aea25"
+    },
+    {
+      "path": "legacy_reference/src/components/social/types.ts",
+      "bytes": 5947,
+      "sha256": "895cba8a89a50a19329c42f61d8d0479e82a36d7225a7a7d888e7ca6249b92bd"
+    },
+    {
+      "path": "legacy_reference/src/components/social/useSocialData.ts",
+      "bytes": 16559,
+      "sha256": "d731a8cbc3f643dbc12a9e7821a2f3d6f2e6052e7de47ff4fddbb80dda123c4d"
+    },
+    {
+      "path": "legacy_reference/src/components/ui/Logo.tsx",
+      "bytes": 1575,
+      "sha256": "b0698a174fb37811a57f94f2cfebfc18e23268ce9d09c2425d51e738f24b4be5"
+    },
+    {
+      "path": "legacy_reference/src/context/AuthContext.tsx",
+      "bytes": 7850,
+      "sha256": "13a7fdf2b766e85cdb69c1d038ab70509921d181fa817c77cac4966a096332b2"
+    },
+    {
+      "path": "legacy_reference/src/index.css",
+      "bytes": 4741,
+      "sha256": "a4516161999b02dbd0eb656be6018d2db5f63418b79caccd769efc7812b34b6a"
+    },
+    {
+      "path": "legacy_reference/src/lib/supabase.ts",
+      "bytes": 1914,
+      "sha256": "d7139aa58863a4669e970f352f348e2e94c46d6f47f09052270fcd366e028fb5"
+    },
+    {
+      "path": "legacy_reference/src/lib/taxiUtils.ts",
+      "bytes": 4516,
+      "sha256": "9a8f909df1cb795b3a96d9e20d0dbed73c4b28a1a3bae9981d6e62749a4c3db9"
+    },
+    {
+      "path": "legacy_reference/src/main.tsx",
+      "bytes": 229,
+      "sha256": "62428bc75807fb06ad531b2d988bb88b064edddaf2dee6f48daa4ab427449677"
+    },
+    {
+      "path": "legacy_reference/src/types/index.ts",
+      "bytes": 35908,
+      "sha256": "512e12da021538838bf2fe480e282ad4e0c82ac16c9ca35271a0670f8eb92593"
+    },
+    {
+      "path": "legacy_reference/src/types.ts",
+      "bytes": 89,
+      "sha256": "ecaa4e44e2ce0bbc8a19e81f2df5029c7eb5701448925c32b386971aaa13c996"
+    },
+    {
+      "path": "legacy_reference/src/vite-env.d.ts",
+      "bytes": 38,
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728102040_20260728000000_enhance_pet_taxi.sql.sql",
+      "bytes": 3668,
+      "sha256": "64c47e07d06cdca90a15aa15f205f711990d147d32cc9255b6fa2d97ae8ee13d"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728103103_20260728010000_add_suspended_status.sql.sql",
+      "bytes": 295,
+      "sha256": "1cc81fda18ee4c91e3950deaec356a0d219af098292b6fcf75f25b49724d05fb"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728104730_20260728020000_social_network.sql.sql",
+      "bytes": 17139,
+      "sha256": "021d4f0e8a083dc0e14ea1d42829d4f888d5b16692dd048c025b7a2bf40033d9"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728111031_20260728030000_fix_invite_trigger.sql.sql",
+      "bytes": 1492,
+      "sha256": "b8298fd32b056899da7df7639df65e5b2fac4af6cc2485b86f051dc5aaa94b9e"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728112958_20260728040000_admin_restructure_accounting.sql.sql",
+      "bytes": 13026,
+      "sha256": "58841849ed31aecb9dd28e08a9cc50216024bdc407acb60cc93864a355769ca5"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728114917_20260728051000_fix_auth_trigger_auto_create_records.sql.sql",
+      "bytes": 13048,
+      "sha256": "4fd3bfce199967e127db5d3f4905686a362cf318990123baf4ede0821dc4ceb4"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728121805_20260728060000_fix_taxi_rls_and_cleanup.sql.sql",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260728131128_20260728070000_driver_wallet_and_stats.sql.sql",
+      "bytes": 4092,
+      "sha256": "4dbacb1835d3b8dca8d42367994fff934b0498b296ddfebf75a0ce37c7882672"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729104327_add_requested_by_to_taxi_rides.sql",
+      "bytes": 1200,
+      "sha256": "aad2ad8b46c59c5c1d363c19ca31ed9e3eafc440ad8696c418fe294a85f673fd"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729105449_link_appointments_services_earnings.sql",
+      "bytes": 4942,
+      "sha256": "cccf4775508996f61ec9f45cb753ddd3f8884cef4f9a91f6995f5e74f29d47d7"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729111811_fix_rls_and_column_mismatches.sql",
+      "bytes": 9482,
+      "sha256": "db309b2f5447bf835ae6147612d37094b1dd7e01874e208073cbcd81c2ff9521"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729111939_fix_doctor_earnings_trigger_doctor_id.sql",
+      "bytes": 2730,
+      "sha256": "b7abd1e2afc5c2a64b9e168b3821b3082e09e2c3c1d2bfd07120e85aa0675abf"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729113039_fix_doctor_dashboard_rls.sql",
+      "bytes": 4863,
+      "sha256": "e6ef47f6cfff420e3971460a0fbcdeadaab0148889d27a90bbe9a5e209760ca6"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729120755_fix_appointments_rls_doctor_id.sql",
+      "bytes": 1682,
+      "sha256": "9c2f846cb7ab41e7744a1535b2a72163e4b8ff65c1678f6a1ee8e12048891105"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729122902_fix_409_fk_constraints.sql",
+      "bytes": 736,
+      "sha256": "7f40875093320d6a173312d13aa464863dde4384972c5d31026f4f61356d2d4f"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729122959_create_consultation_chat_and_sos_tables.sql",
+      "bytes": 7221,
+      "sha256": "ed5b69f25038d1d78a9441fa696dd43fa65d735ee98cc39235e66c3c665cfd14"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729124253_fix_prescriptions_fk_and_sync.sql",
+      "bytes": 1219,
+      "sha256": "29d26c994d3b551e428146247751abee22cff53aa632073b1e06dc82d285135b"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729125439_fix_taxi_rides_rls_for_clinic_doctor_requests.sql",
+      "bytes": 1961,
+      "sha256": "83ebc2ff35c17ed487b1732697d1d0f1551605b1dfe502c4233de80e25b873a2"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729131954_social_system_instagram_enhancement.sql",
+      "bytes": 12217,
+      "sha256": "afb86a585aac7fd557d1827c18ec42be118eadc981222fc5fc8a558c9f8e54a5"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260729134731_add_increment_campaign_raised_rpc.sql",
+      "bytes": 953,
+      "sha256": "58967e927a0a3934325bd5e02223649028d4d4ec86e1405fc0d17e81f4c1f087"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801124030_fix_function_search_paths_and_grants.sql.sql",
+      "bytes": 7328,
+      "sha256": "727bc66e60e75b0bd76d09aefc120c0acce4d9abecb6ab8984177321befdeb31"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801124133_fix_rls_always_true_policies.sql.sql",
+      "bytes": 13384,
+      "sha256": "24ab4e84cbb489c0d89c5a21c39d6aae16aa09ce6e41ac7582d81381a9b9e26e"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801124150_fix_medical_files_bucket_listing.sql.sql",
+      "bytes": 910,
+      "sha256": "e76717fd65a9fe0550296b35dcd6f48a21203ff616efceba90930b1da0c3647d"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801124252_fix_revoke_public_execute_on_functions.sql.sql",
+      "bytes": 5387,
+      "sha256": "5f171e2cd7f717c8aeec0a39b4d77eb64c61f9b0fcf0930a6d4945122989e5e8"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801124326_fix_revoke_auth_execute_generate_invite_code.sql.sql",
+      "bytes": 645,
+      "sha256": "c7d30d95ad8b52ec97dcf5c51234028919d6d24f6d0c5a189a628b3ed926c084"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801134946_create_emergency_contacts_table.sql",
+      "bytes": 986,
+      "sha256": "2628ab15a01dca1ef72f0ae417bf57e74e6711664e7decc919cc4d426b10112f"
+    },
+    {
+      "path": "legacy_reference/supabase/migrations/20260801134955_add_donations_insert_policy.sql",
+      "bytes": 199,
+      "sha256": "b7b88c7a52a0244990d7276e4e1ad618c9cd9337014c57e149443cad34690b4b"
+    },
+    {
+      "path": "legacy_reference/tailwind.config.js",
+      "bytes": 2486,
+      "sha256": "60f6c6263f3d60a0cc4e97e31cdaa6315cd9fa24a09c55bf15ba66d333c136e4"
+    },
+    {
+      "path": "legacy_reference/vite.config.ts",
+      "bytes": 361,
+      "sha256": "66009563e054091f8df6c5c111b7423f762ca30601aa900b3a49c5f52399c03b"
+    }
+  ]
+}

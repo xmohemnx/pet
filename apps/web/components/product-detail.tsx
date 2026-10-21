@@ -1,0 +1,137 @@
+'use client';
+import Link from 'next/link';
+import type { IdentityMe, Product, Storefront } from '@petra/contracts';
+import { formatIqd } from '@petra/contracts';
+import { IdentityShell } from './identity-shell';
+import { PlatformHeading, SandboxNotice } from './platform-shared';
+import { ProductReviews } from './product-reviews';
+import { CareForm } from './care-shared';
+import { api } from '../lib/auth-client';
+export function ProductDetail({
+  me,
+  product: p,
+  variants,
+  store,
+}: {
+  me: IdentityMe;
+  product: Product;
+  variants: Product[];
+  store: Storefront;
+}) {
+  return (
+    <IdentityShell me={me}>
+      <PlatformHeading eyebrow={p.store_name ?? p.clinic_name} title={p.name}>
+        {p.description}
+      </PlatformHeading>
+      <SandboxNotice />
+      <div className="inline-actions">
+        <Link className="button outline" href="/marketplace">
+          السوق والسلة
+        </Link>
+        <Link
+          className="button outline"
+          href={`/marketplace/stores/${p.clinic_id}`}
+        >
+          متجر {store.display_name}
+        </Link>
+      </div>
+      <div className="care-columns">
+        <section className="panel care-section">
+          <h2>صور ومواصفات</h2>
+          <div className="catalog-gallery">
+            {p.images?.map((x) => (
+              <img
+                key={x.asset_id}
+                src={`/api/v1/media/${x.asset_id}/file`}
+                alt={x.alt}
+              />
+            ))}
+          </div>
+          <p>
+            {p.brand} · {p.category} · {p.age_suitability}
+          </p>
+          <p>
+            SKU: {p.sku} · {p.barcode}
+          </p>
+          <dl>
+            {p.specifications?.map((x, n) => (
+              <div key={n}>
+                <dt>{x.name}</dt>
+                <dd>{x.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <ProductReviews productId={p.id} />
+        </section>
+        <aside className="care-stack">
+          <section className="panel care-section">
+            <h2>اختر المقاس أو الخيار</h2>
+            <div className="care-stack">
+              {variants.map((v) => (
+                <Link
+                  className={`button ${v.id === p.id ? 'primary' : 'outline'}`}
+                  key={v.id}
+                  href={`/marketplace/products/${v.id}`}
+                  aria-current={v.id === p.id ? 'page' : undefined}
+                >
+                  {v.variant_label || v.name} · {formatIqd(v.price_minor)} ·{' '}
+                  {v.available} متاحة
+                </Link>
+              ))}
+            </div>
+            <strong>{formatIqd(p.price_minor)}</strong>
+            <p>
+              {p.available} {p.unit} متاحة لهذا الخيار
+            </p>
+            <CareForm
+              label="إضافة الخيار للسلة"
+              submit={async (f) => {
+                const cart =
+                  await api<{ product_id: string; quantity: number }[]>(
+                    'me/cart',
+                  );
+                const quantity = Number(f.get('quantity'));
+                const old = cart.find((x) => x.product_id === p.id);
+                const items = cart
+                  .filter((x) => x.product_id !== p.id)
+                  .map((x) => ({
+                    productId: x.product_id,
+                    quantity: x.quantity,
+                  }));
+                items.push({
+                  productId: p.id,
+                  quantity: quantity + (old?.quantity ?? 0),
+                });
+                await api('me/cart', {
+                  method: 'POST',
+                  body: JSON.stringify({ items }),
+                });
+              }}
+            >
+              <label>
+                كمية {p.name}
+                <input
+                  name="quantity"
+                  type="number"
+                  min={1}
+                  max={Math.min(10000, p.available)}
+                  defaultValue={p.available ? 1 : 0}
+                  required
+                />
+              </label>
+            </CareForm>
+          </section>
+          <section className="panel care-section">
+            <h2>التسليم والإرجاع</h2>
+            <p className="store-policies">
+              {store.delivery_policy || 'سياسة التسليم لم تحدد بعد'}
+            </p>
+            <p className="store-policies">
+              {store.return_policy || 'سياسة الإرجاع لم تحدد بعد'}
+            </p>
+          </section>
+        </aside>
+      </div>
+    </IdentityShell>
+  );
+}

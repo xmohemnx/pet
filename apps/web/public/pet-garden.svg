@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 720" fill="none">
+<title>رسم أصلي لقطة وكلب في حديقة هادئة</title>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#d7e6c6"/><stop offset="1" stop-color="#a3bfa3"/></linearGradient>
+<linearGradient id="fur" x2=".8" y2="1"><stop stop-color="#dfa965"/><stop offset="1" stop-color="#bd793f"/></linearGradient>
+<linearGradient id="cat" x2="1" y2="1"><stop stop-color="#fbf1de"/><stop offset="1" stop-color="#d8c8ad"/></linearGradient>
+<filter id="shadow"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+<rect width="700" height="720" rx="160" fill="url(#bg)"/>
+<circle cx="518" cy="156" r="93" fill="#f0edc9" opacity=".65"/>
+<path d="M0 558Q202 421 415 553T700 527V720H0Z" fill="#8da98a"/>
+<path d="M31 652Q50 409 155 317M77 510Q31 468 37 415Q107 447 77 510M103 444Q99 370 149 355Q157 416 103 444M66 566Q141 486 171 517Q143 572 66 566" fill="#4b7663"/>
+<path d="M631 656Q619 398 579 333M617 535Q550 504 552 457Q614 465 617 535M603 448Q651 415 650 367Q592 395 603 448M627 583Q679 534 683 481Q626 505 627 583" fill="#4b7663"/>
+<ellipse cx="360" cy="637" rx="230" ry="27" fill="#365c4e" opacity=".2" filter="url(#shadow)"/>
+<!-- Corgi -->
+<path d="M368 544Q451 464 484 526Q514 600 462 620" stroke="#b87d48" stroke-width="38" stroke-linecap="round"/>
+<path d="M251 439Q235 418 231 326Q223 266 205 255Q181 309 187 384Q175 454 225 477" fill="#b77a43"/>
+<path d="M271 409Q328 373 395 416Q455 462 444 579Q439 633 391 636H279Q237 633 233 582Q227 486 271 409Z" fill="url(#fur)"/>
+<path d="M285 433Q323 464 368 431Q398 496 383 593L293 608Q267 517 285 433Z" fill="#fff4df"/>
+<path d="M266 559Q242 616 264 642Q280 656 302 641L316 568M370 570Q359 624 376 642Q396 657 417 639Q430 597 412 557" fill="#fff4df"/>
+<path d="M258 273L228 177Q222 159 208 181Q179 233 197 301M365 267L405 171Q414 153 424 176Q453 235 421 310" fill="url(#fur)"/>
+<path d="M218 205L215 275L244 274M411 199L382 274L415 276" fill="#d99a88"/>
+<path d="M208 290Q229 245 309 244Q388 236 421 287Q451 347 409 402Q383 449 315 448Q237 449 208 402Q177 347 208 290Z" fill="url(#fur)"/>
+<path d="M306 246Q287 297 304 343Q276 334 257 353Q237 391 281 415Q318 442 362 415Q404 387 377 358Q357 338 332 344Q342 294 326 244" fill="#fff6e6"/>
+<path d="M243 323Q258 310 275 323M359 322Q375 310 390 321" stroke="#754724" stroke-width="6" stroke-linecap="round"/>
+<ellipse cx="262" cy="337" rx="9" ry="12" fill="#292d28"/><ellipse cx="373" cy="336" rx="9" ry="12" fill="#292d28"/>
+<circle cx="265" cy="333" r="3" fill="white"/><circle cx="376" cy="332" r="3" fill="white"/>
+<path d="M301 366Q317 352 335 366Q334 383 317 385Q303 381 301 366Z" fill="#333a32"/>
+<path d="M317 386V395M293 392Q302 413 317 397Q333 412 346 392" stroke="#68472f" stroke-width="4" stroke-linecap="round"/>
+<path d="M306 404Q316 442 331 411" fill="#e4938c"/>
+<path d="M244 438Q311 474 395 437L392 455Q314 493 248 458Z" fill="#0e6873"/>
+<circle cx="322" cy="479" r="15" fill="#f5ce70"/><path d="M316 479H328M322 473V485" stroke="#846c36" stroke-width="3"/>
+<!-- Cat -->
+<path d="M467 554Q550 466 558 538Q575 600 511 625" stroke="#bcac91" stroke-width="27" stroke-linecap="round"/>
+<path d="M422 468Q487 438 521 504Q536 558 519 623Q493 649 427 630Q395 594 405 541Z" fill="url(#cat)"/>
+<path d="M427 558L424 638Q438 653 454 638L461 562M479 560L476 639Q490 653 506 638L510 561" fill="#f9edda"/>
+<path d="M405 415L398 333Q400 315 413 326L452 371M481 370L527 325Q540 318 536 338L530 417" fill="url(#cat)"/>
+<path d="M411 346L416 395L438 380M522 344L499 382L524 395" fill="#d4a29d"/>
+<path d="M405 398Q425 366 471 370Q521 365 538 412Q554 464 514 490Q464 518 418 484Q385 459 405 398Z" fill="url(#cat)"/>
+<path d="M436 386L448 407M465 379L467 404M493 382L487 405" stroke="#b9a78e" stroke-width="7" stroke-linecap="round"/>
+<path d="M420 438Q433 428 445 437M491 438Q505 427 517 438" stroke="#3e5a4b" stroke-width="6" stroke-linecap="round"/>
+<path d="M457 455L476 455L467 465Z" fill="#ba7e77"/>
+<path d="M467 465V470M451 471Q461 480 467 471Q478 480 487 471" stroke="#7b6a59" stroke-width="3" stroke-linecap="round"/>
+<path d="M436 457L389 449M436 466L391 473M498 456L545 448M499 466L546 475" stroke="#917d63" stroke-width="2"/>
+<path d="M419 495Q468 521 514 494L513 508Q466 535 422 509Z" fill="#ee8657"/><circle cx="468" cy="527" r="10" fill="#f4cb66"/>
+<!-- Garden flowers -->
+<path d="M131 677V612M574 679V628" stroke="#3a6654" stroke-width="4"/>
+<g fill="#f2d59b"><circle cx="131" cy="602" r="13"/><circle cx="116" cy="613" r="13"/><circle cx="145" cy="615" r="13"/><circle cx="129" cy="628" r="13"/></g><circle cx="131" cy="614" r="9" fill="#d68a4d"/>
+<g fill="#f2e4cb"><circle cx="574" cy="618" r="10"/><circle cx="563" cy="628" r="10"/><circle cx="586" cy="628" r="10"/><circle cx="574" cy="638" r="10"/></g><circle cx="574" cy="628" r="7" fill="#d68a4d"/>
+<path d="M177 146L180 133M171 139L185 140M540 270L542 255M534 262L549 264" stroke="#fff9e9" stroke-width="4" stroke-linecap="round"/>
+</svg>

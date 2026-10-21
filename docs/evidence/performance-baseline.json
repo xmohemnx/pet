@@ -1,0 +1,11 @@
+{
+  "environment": "local Chromium, synthetic",
+  "fieldWebVitals": false,
+  "requests": 40,
+  "concurrency": 40,
+  "catalogP95Ms": 378.5649059999996,
+  "productCount": 120,
+  "searchInteractionMs": 161.35174600000028,
+  "lcpMs": 664,
+  "cls": 0.02160381787353092
+}
