@@ -79,6 +79,11 @@ export function DoctorWorkspace({
           إرسال ومتابعة الزيارات المنزلية
         </Link>
       )}
+      {clinicId && (
+        <Link className="button outline" href={`/clinic/${clinicId}/boarding`}>
+          مراجعات قبول الإقامة والحوادث
+        </Link>
+      )}
       <div className="care-columns">
         <div className="care-stack">
           <section className="panel care-section">

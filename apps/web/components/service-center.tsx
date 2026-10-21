@@ -294,17 +294,29 @@ export function ServiceCenter({
               <p className="eyebrow">{u.clinic_name}</p>
               <h3>{u.name}</h3>
               <strong>{formatIqd(u.night_price)} / ليلة</strong>
+              <p>
+                {u.max_weight_grams
+                  ? `الوزن الأقصى ${u.max_weight_grams} غرام`
+                  : 'لا حد وزن محدد'}{' '}
+                ·{' '}
+                {u.vaccines_required
+                  ? 'يلزم تدقيق وثائق اللقاح'
+                  : 'مراجعة صحية قبل الوصول'}
+              </p>
+              <p>
+                {u.health_requirements ||
+                  'مراجعة قبول من طبيب العيادة قبل تسجيل الوصول.'}
+              </p>
               <CareForm
                 label="تأكيد إقامة اختبارية"
                 submit={async (f) => {
-                  await mutate('sandbox/boarding', {
+                  await sendKeyed('sandbox/boarding', {
                     unitId: u.id,
                     petId: f.get('pet'),
                     startsOn: f.get('start'),
                     endsOn: f.get('end'),
-                    idempotencyKey: crypto.randomUUID(),
+                    policyAccepted: f.get('policy') === 'on',
                   });
-                  await refresh();
                 }}
               >
                 <label>
@@ -314,7 +326,8 @@ export function ServiceCenter({
                       .filter(
                         (p) =>
                           p.species === u.species &&
-                          p.scopes.includes('booking'),
+                          p.scopes.includes('owner') &&
+                          !p.archived_at,
                       )
                       .map((p) => (
                         <option key={p.id} value={p.id}>
@@ -330,6 +343,12 @@ export function ServiceCenter({
                 <label>
                   المغادرة
                   <input type="date" name="end" required />
+                </label>
+                <label className="care-check">
+                  <input name="policy" type="checkbox" required />
+                  أقبل شروط الوزن واللقاحات والمراجعة قبل الوصول. الإلغاء برد
+                  كامل قبل الوصول، والمغادرة المبكرة تحتسب العقد كاملاً. هذا لا
+                  يمنح الوصول إلى الملف الطبي.
                 </label>
               </CareForm>
             </article>
@@ -350,6 +369,9 @@ export function ServiceCenter({
                 {formatIqd(b.total_minor)}
               </p>
               <Status value={b.status} />
+              <Link className="text-link" href={`/boarding/${b.id}`}>
+                متابعة الإقامة والمراجعة والإيصال
+              </Link>
             </div>
           </div>
         ))}

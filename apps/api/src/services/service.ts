@@ -2,13 +2,11 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-  ForbiddenException,
   BadRequestException,
 } from '@nestjs/common';
 import { transaction } from '../database.js';
 import { OrganizationService, audit, emit } from '../organizations/service.js';
 import { CareService } from '../care/service.js';
-import { entity, post, sandbox } from '../finance/ledger.js';
 import {
   planEntitlementsSql,
   subscriptionEntitlementsSql,
@@ -44,7 +42,7 @@ export class ServicesService {
       ).rows,
       boarding: (
         await db.query(
-          'SELECT b.*,b.total_minor::text,u.name,u.clinic_id,p.name pet_name FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id JOIN pets p ON p.id=b.pet_id WHERE b.user_id=$1 ORDER BY b.created_at DESC',
+          'SELECT b.*,b.total_minor::text,b.unit_name name,u.clinic_id FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id JOIN pets p ON p.id=b.pet_id WHERE b.user_id=$1 AND p.owner_id=$1 AND p.archived_at IS NULL ORDER BY b.created_at DESC LIMIT 200',
           [actor],
         )
       ).rows,
@@ -58,7 +56,27 @@ export class ServicesService {
   }
   async clinic(actor: string, clinic: string) {
     return transaction(async (db) => {
-      await this.org.membership(actor, clinic, undefined, db);
+      const membership = await this.org.membership(
+        actor,
+        clinic,
+        undefined,
+        db,
+      );
+      const boardingAccess = membership.capabilities.some((c: string) =>
+        [
+          'clinic_admin',
+          'receptionist',
+          'doctor_member',
+          'service_staff',
+        ].includes(c),
+      );
+      if (
+        boardingAccess &&
+        !membership.capabilities.some((c: string) =>
+          ['clinic_admin', 'receptionist', 'service_staff'].includes(c),
+        )
+      )
+        await this.care.doctor(db, actor, clinic);
       return {
         branches: (
           await db.query(
@@ -90,217 +108,11 @@ export class ServicesService {
         ).rows,
         boarding: (
           await db.query(
-            'SELECT b.*,p.name pet_name,u.name unit_name FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id JOIN pets p ON p.id=b.pet_id WHERE u.clinic_id=$1 ORDER BY b.starts_on DESC LIMIT 100',
-            [clinic],
+            'SELECT b.id,b.pet_name,b.unit_name,b.starts_on::text,b.ends_on::text,b.status FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id WHERE u.clinic_id=$1 AND $2 ORDER BY b.starts_on DESC LIMIT 100',
+            [clinic, boardingAccess],
           )
         ).rows,
       };
-    });
-  }
-  async unit(
-    actor: string,
-    clinic: string,
-    i: { name: string; species: string; nightPrice: string },
-  ) {
-    return transaction(async (db) => {
-      await this.org.membership(actor, clinic, 'clinic_admin', db);
-      const r = (
-        await db.query(
-          'INSERT INTO boarding_units(clinic_id,name,species,night_price) VALUES($1,$2,$3,$4) RETURNING *',
-          [clinic, i.name, i.species, i.nightPrice],
-        )
-      ).rows[0];
-      await audit(db, actor, 'services.boarding_unit_created', clinic, {
-        unitId: r.id,
-      });
-      return r;
-    });
-  }
-  async book(
-    actor: string,
-    unitId: string,
-    petId: string,
-    start: string,
-    end: string,
-    key: string,
-  ) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      const p = await this.care.pet(db, actor, petId, 'booking');
-      if (p.archived_at) throw new ConflictException('ملف الحيوان مؤرشف');
-      const old = (
-        await db.query(
-          'SELECT *,starts_on::text,ends_on::text FROM boarding_bookings WHERE user_id=$1 AND idempotency_key=$2',
-          [actor, key],
-        )
-      ).rows[0];
-      if (old) {
-        if (
-          old.unit_id !== unitId ||
-          old.pet_id !== petId ||
-          old.starts_on !== start ||
-          old.ends_on !== end
-        )
-          throw new ConflictException();
-        return old;
-      }
-      const unit = (
-        await db.query(
-          "SELECT u.* FROM boarding_units u JOIN clinics c ON c.id=u.clinic_id WHERE u.id=$1 AND u.active AND c.verification_status='verified'",
-          [unitId],
-        )
-      ).rows[0];
-      if (!unit || unit.species !== p.species)
-        throw new BadRequestException('الوحدة لا تطابق نوع الحيوان');
-      const nights = (Date.parse(end) - Date.parse(start)) / 86400000;
-      if (
-        start < new Date().toISOString().slice(0, 10) ||
-        nights < 1 ||
-        nights > 90
-      )
-        throw new BadRequestException(
-          'فترة الإقامة من ليلة إلى 90 ليلة في المستقبل',
-        );
-      const amount = BigInt(unit.night_price) * BigInt(nights);
-      const b = (
-        await db.query(
-          'INSERT INTO boarding_bookings(unit_id,pet_id,user_id,starts_on,ends_on,total_minor,idempotency_key) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-          [unitId, petId, actor, start, end, amount.toString(), key],
-        )
-      ).rows[0];
-      await post(
-        db,
-        actor,
-        await entity(db, unit.clinic_id),
-        `boarding:${b.id}`,
-        'إقامة اختبارية مؤجلة',
-        [
-          { account: '1200', debit: amount },
-          { account: '2100', credit: amount },
-        ],
-      );
-      await post(
-        db,
-        actor,
-        await entity(db, null),
-        `boarding:${b.id}`,
-        'تحصيل إقامة اختباري',
-        [
-          { account: '1100', debit: amount },
-          { account: '2000', credit: amount, partyId: unit.clinic_id },
-        ],
-      );
-      await audit(db, actor, 'services.boarding_booked', unit.clinic_id, {
-        bookingId: b.id,
-      });
-      return b;
-    });
-  }
-  async cancelBoarding(actor: string, id: string) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      const b = (
-        await db.query(
-          'SELECT b.*,u.clinic_id FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id WHERE b.id=$1 FOR UPDATE OF b',
-          [id],
-        )
-      ).rows[0];
-      if (!b) throw new NotFoundException();
-      await this.care.pet(db, actor, b.pet_id, 'booking');
-      if (b.status !== 'confirmed')
-        throw new ConflictException('الإلغاء قبل تسجيل الوصول فقط');
-      const amount = BigInt(b.total_minor);
-      await post(
-        db,
-        actor,
-        await entity(db, b.clinic_id),
-        `boarding-cancel:${id}`,
-        'إلغاء إقامة قبل الحضور',
-        [
-          { account: '2100', debit: amount },
-          { account: '1200', credit: amount },
-        ],
-      );
-      await post(
-        db,
-        actor,
-        await entity(db, null),
-        `boarding-cancel:${id}`,
-        'رد إقامة اختباري',
-        [
-          { account: '2000', debit: amount, partyId: b.clinic_id },
-          { account: '1100', credit: amount },
-        ],
-      );
-      await db.query(
-        "UPDATE boarding_bookings SET status='cancelled' WHERE id=$1",
-        [id],
-      );
-      await audit(db, actor, 'services.boarding_cancelled', b.clinic_id, {
-        bookingId: id,
-      });
-      return { status: 'cancelled' };
-    });
-  }
-  async transition(
-    actor: string,
-    clinic: string,
-    id: string,
-    status: 'checked_in' | 'completed',
-    healthReviewed: boolean,
-  ) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      const m = await this.org.membership(actor, clinic, undefined, db);
-      if (
-        !m.capabilities.some((c: string) =>
-          ['clinic_admin', 'receptionist', 'doctor_member'].includes(c),
-        )
-      )
-        throw new ForbiddenException();
-      const b = (
-        await db.query(
-          'SELECT b.*,u.clinic_id,b.starts_on::text,b.ends_on::text FROM boarding_bookings b JOIN boarding_units u ON u.id=b.unit_id WHERE b.id=$1 AND u.clinic_id=$2 FOR UPDATE OF b',
-          [id, clinic],
-        )
-      ).rows[0];
-      if (
-        !b ||
-        b.status !== (status === 'checked_in' ? 'confirmed' : 'checked_in')
-      )
-        throw new ConflictException();
-      if (
-        status === 'checked_in' &&
-        (!healthReviewed || b.starts_on > new Date().toISOString().slice(0, 10))
-      )
-        throw new ConflictException(
-          'يتطلب الحضور حلول تاريخ الوصول ومراجعة المتطلبات الصحية',
-        );
-      if (status === 'completed') {
-        const amount = BigInt(b.total_minor);
-        await post(
-          db,
-          actor,
-          await entity(db, clinic),
-          `boarding-complete:${id}`,
-          'إقامة منفذة',
-          [
-            { account: '2100', debit: amount },
-            { account: '4100', credit: amount },
-          ],
-        );
-      }
-      await db.query('UPDATE boarding_bookings SET status=$2 WHERE id=$1', [
-        id,
-        status,
-      ]);
-      await audit(db, actor, `services.boarding_${status}`, clinic, {
-        bookingId: id,
-      });
-      return { status };
     });
   }
   async messages(actor: string, id: string, body?: string, key?: string) {

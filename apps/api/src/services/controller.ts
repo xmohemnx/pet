@@ -4,6 +4,7 @@ import type { Request } from 'express';
 import { z } from 'zod';
 import { requireSession, parse, uuid } from '../identity/session.js';
 import { ServicesService } from './service.js';
+import { BoardingService } from './boarding.js';
 import { CarePlansService } from './plans.js';
 const name = z.string().trim().min(1).max(100),
   money = z.string().regex(/^[1-9]\d{0,11}$/);
@@ -13,6 +14,7 @@ export class ServicesController {
   constructor(
     private readonly service: ServicesService,
     private readonly plans: CarePlansService,
+    private readonly boarding: BoardingService,
   ) {}
   @Get('services/catalog') async catalog(@Req() r: Request) {
     await requireSession(r);
@@ -230,11 +232,20 @@ export class ServicesController {
           name,
           species: z.enum(['cat', 'dog', 'bird', 'rabbit', 'other']),
           nightPrice: money,
+          maxWeightGrams: z
+            .number()
+            .int()
+            .min(1)
+            .max(2000000)
+            .nullable()
+            .default(null),
+          vaccinesRequired: z.boolean().default(false),
+          healthRequirements: z.string().trim().max(1500).default(''),
         })
         .strict(),
       b,
     );
-    return this.service.unit((await requireSession(r)).user.id, uuid(id), i);
+    return this.boarding.unit((await requireSession(r)).user.id, uuid(id), i);
   }
   @Post('sandbox/boarding') async book(@Req() r: Request, @Body() b: unknown) {
     const i = parse(
@@ -242,6 +253,7 @@ export class ServicesController {
         .object({
           unitId: z.uuid(),
           petId: z.uuid(),
+          policyAccepted: z.literal(true),
           startsOn: z.iso.date(),
           endsOn: z.iso.date(),
           idempotencyKey: z.uuid(),
@@ -249,7 +261,7 @@ export class ServicesController {
         .strict(),
       b,
     );
-    return this.service.book(
+    return this.boarding.book(
       (await requireSession(r)).user.id,
       i.unitId,
       i.petId,
@@ -262,10 +274,7 @@ export class ServicesController {
     @Req() r: Request,
     @Param('id') id: string,
   ) {
-    return this.service.cancelBoarding(
-      (await requireSession(r)).user.id,
-      uuid(id),
-    );
+    return this.boarding.cancel((await requireSession(r)).user.id, uuid(id));
   }
   @Post('sandbox/subscriptions/:id/cancel') async cancelSubscription(
     @Req() r: Request,
@@ -284,16 +293,17 @@ export class ServicesController {
         .object({
           status: z.enum(['checked_in', 'completed']),
           healthReviewed: z.boolean().default(false),
+          version: z.number().int().positive(),
         })
         .strict(),
       b,
     );
-    return this.service.transition(
+    return this.boarding.transition(
       (await requireSession(r)).user.id,
       uuid(id),
       uuid(bid),
       i.status,
-      i.healthReviewed,
+      i.version,
     );
   }
   @Get('appointments/:id/messages') async messages(

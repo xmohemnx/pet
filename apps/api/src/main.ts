@@ -23,6 +23,8 @@ import { OperationsController } from './operations/controller.js';
 import { OperationsService } from './operations/service.js';
 import { ServicesController } from './services/controller.js';
 import { ServicesService } from './services/service.js';
+import { BoardingService } from './services/boarding.js';
+import { BoardingController } from './services/boarding-controller.js';
 import { CarePlansService } from './services/plans.js';
 import { CommerceController } from './commerce/controller.js';
 import { CommerceService } from './commerce/service.js';
@@ -85,7 +87,7 @@ class HealthController {
     return {
       status: 'ok',
       service: 'petra-api',
-      phase: 'home-visits-local',
+      phase: 'boarding-admission-local',
       demoEnabled: process.env.PETRA_DEMO_MODE === 'true',
     };
   }
@@ -193,6 +195,7 @@ class Errors implements ExceptionFilter {
     FinancialReportsController,
     SocialDiscoveryController,
     ServicesController,
+    BoardingController,
     BankController,
     MediaController,
     CommunityController,
@@ -218,6 +221,7 @@ class Errors implements ExceptionFilter {
     SocialDiscovery,
     FinanceService,
     ServicesService,
+    BoardingService,
     CarePlansService,
     CommunityService,
     RescueService,

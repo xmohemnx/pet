@@ -140,6 +140,28 @@ try {
   const before = (
     await db.query('SELECT row_to_json(j) data FROM journals j ORDER BY id')
   ).rows;
+  const legacyUnit = (
+    await db.query(
+      "INSERT INTO boarding_units(clinic_id,name,species,night_price) VALUES($1,'وحدة ترحيل اصطناعية','cat',1000) RETURNING id",
+      [clinic],
+    )
+  ).rows[0].id;
+  const legacyBoarding = (
+    await db.query(
+      "INSERT INTO boarding_bookings(unit_id,pet_id,user_id,starts_on,ends_on,total_minor,idempotency_key) VALUES($1,$2,$3,'2028-01-01','2028-01-04',3000,$4) RETURNING id",
+      [legacyUnit, pet, user, randomUUID()],
+    )
+  ).rows[0].id;
+  await db.query('UPDATE boarding_units SET night_price=9000 WHERE id=$1', [
+    legacyUnit,
+  ]);
+  const legacyCheckedIn = (
+    await db.query(
+      "INSERT INTO boarding_bookings(unit_id,pet_id,user_id,starts_on,ends_on,total_minor,idempotency_key,status) VALUES($1,$2,$3,'2028-02-01','2028-02-03',2000,$4,'checked_in') RETURNING id",
+      [legacyUnit, pet, user, randomUUID()],
+    )
+  ).rows[0].id;
+
   await db.query('BEGIN');
   await db.query(
     await readFile(
@@ -158,6 +180,47 @@ try {
   await db.query(
     await readFile(new URL('0033_home_visits.sql', migrationRoot), 'utf8'),
   );
+  await db.query(
+    await readFile(
+      new URL('0034_boarding_admission.sql', migrationRoot),
+      'utf8',
+    ),
+  );
+  await db.query(
+    await readFile(
+      new URL('0035_boarding_presence.sql', migrationRoot),
+      'utf8',
+    ),
+  );
+  const migratedBoarding = (
+    await db.query(
+      'SELECT total_minor::text,night_price::text,policy_accepted,status FROM boarding_bookings WHERE id=$1',
+      [legacyBoarding],
+    )
+  ).rows[0];
+  assert.deepEqual(migratedBoarding, {
+    total_minor: '3000',
+    night_price: '1000',
+    policy_accepted: false,
+    status: 'confirmed',
+  });
+  const grandfathered = (
+    await db.query(
+      'SELECT total_minor::text,night_price::text,policy_accepted,status FROM boarding_bookings WHERE id=$1',
+      [legacyCheckedIn],
+    )
+  ).rows[0];
+  assert.deepEqual(grandfathered, {
+    total_minor: '2000',
+    night_price: '1000',
+    policy_accepted: false,
+    status: 'checked_in',
+  });
+  await db.query(
+    "UPDATE boarding_bookings SET status='completed',checked_out_at=now(),version=version+1 WHERE id=$1",
+    [legacyCheckedIn],
+  );
+
   await db.query('COMMIT');
   assert.equal(
     (
@@ -205,7 +268,7 @@ try {
     { code: '23514' },
   );
   console.log(
-    'PASS: legacy plan/partial usage migrated; original journals unchanged; snapshots, exact recognition and immutable usage verified',
+    'PASS: legacy plan/partial usage migrated; original journals unchanged; snapshots, exact recognition, immutable usage and legacy boarding price preserved',
   );
 } finally {
   if (db) {

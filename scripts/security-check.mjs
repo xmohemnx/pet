@@ -52,22 +52,67 @@ const candidates = [
       .filter(Boolean),
   ),
 ];
-const indexed = new Set(
-  execFileSync('git', ['ls-files', '--cached', '-z'], { cwd: root })
-    .toString()
-    .split('\0')
-    .filter(Boolean),
-);
+// Read the exact index blobs in one Git process; checking only disk misses staged-only secrets.
+const indexRecords = execFileSync('git', ['ls-files', '--stage', '-z'], {
+  cwd: root,
+})
+  .toString()
+  .split('\0')
+  .filter(Boolean);
+const blobPaths = new Map();
+for (const record of indexRecords) {
+  const match = /^([0-7]{6}) ([a-f0-9]{40,64}) ([0-3])\t([\s\S]+)$/.exec(
+    record,
+  );
+  if (!match) {
+    failures.push('Unrecognized Git index record');
+    continue;
+  }
+  const [, , oid, , path] = match;
+  if (!blobPaths.has(oid)) blobPaths.set(oid, []);
+  blobPaths.get(oid).push(path);
+}
+if (blobPaths.size) {
+  try {
+    const ids = [...blobPaths.keys()];
+    const bytes = execFileSync('git', ['cat-file', '--batch'], {
+      cwd: root,
+      input: ids.join('\n') + '\n',
+      maxBuffer: 128 * 1024 * 1024,
+    });
+    let offset = 0;
+    for (const oid of ids) {
+      const end = bytes.indexOf(10, offset);
+      if (end < 0) throw new Error('Incomplete index header');
+      const fields = bytes.subarray(offset, end).toString('ascii').split(' ');
+      const size = Number(fields[2]);
+      if (
+        fields[0] !== oid ||
+        fields[1] !== 'blob' ||
+        fields.length !== 3 ||
+        !Number.isSafeInteger(size) ||
+        size < 0 ||
+        end + 1 + size >= bytes.length ||
+        bytes[end + 1 + size] !== 10
+      )
+        throw new Error('Invalid index object');
+      const content = bytes.subarray(end + 1, end + 1 + size);
+      if (secrets.some((secret) => content.includes(Buffer.from(secret)))) {
+        for (const path of blobPaths.get(oid))
+          failures.push(
+            `Runtime credential copied into staged source: ${path}`,
+          );
+      }
+      offset = end + 1 + size + 1;
+    }
+    if (offset !== bytes.length) throw new Error('Unexpected index bytes');
+  } catch {
+    // Never print Git buffers or exception fields: they may contain the credentials being checked.
+    failures.push('Unable to inspect every staged source blob');
+  }
+}
 for (const path of candidates) {
   if (forbidden(path)) failures.push(`Forbidden source file: ${path}`);
-  if (indexed.has(path)) {
-    const staged = execFileSync('git', ['show', `:${path}`], {
-      cwd: root,
-      maxBuffer: 32 * 1024 * 1024,
-    });
-    if (secrets.some((secret) => staged.includes(Buffer.from(secret))))
-      failures.push(`Runtime credential copied into staged source: ${path}`);
-  }
   const file = join(root, path);
   if (!existsSync(file)) continue;
   const stat = lstatSync(file);

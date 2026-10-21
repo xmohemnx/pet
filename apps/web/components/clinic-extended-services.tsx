@@ -94,34 +94,9 @@ export function ClinicExtendedServices({
                   </p>
                   <Status value={b.status} />
                 </div>
-                {b.status === 'confirmed' && (
-                  <CareForm
-                    label="تسجيل الوصول"
-                    submit={(f) =>
-                      send(`boarding/${b.id}/transition`, {
-                        status: 'checked_in',
-                        healthReviewed: f.get('health') === 'on',
-                      })
-                    }
-                  >
-                    <label className="care-check">
-                      <input type="checkbox" name="health" required />
-                      راجعت متطلبات صحة الحيوان وقبلت إقامته
-                    </label>
-                  </CareForm>
-                )}
-                {b.status === 'checked_in' && (
-                  <CareAction
-                    action={() =>
-                      send(`boarding/${b.id}/transition`, {
-                        status: 'completed',
-                        healthReviewed: true,
-                      })
-                    }
-                  >
-                    تأكيد المغادرة واكتمال الخدمة
-                  </CareAction>
-                )}
+                <Link className="text-link" href={`/boarding/${b.id}`}>
+                  مراجعة القبول والوصول والحوادث والمغادرة
+                </Link>
               </div>
             ))}
           </section>
@@ -302,34 +277,12 @@ export function ClinicExtendedServices({
           </section>
           <section className="panel care-section">
             <h2>إضافة وحدة إقامة</h2>
-            <CareForm
-              label="إضافة الوحدة"
-              submit={(f) =>
-                send('boarding-units', {
-                  name: f.get('name'),
-                  species: f.get('species'),
-                  nightPrice: f.get('price'),
-                })
-              }
+            <Link
+              className="button outline"
+              href={`/clinic/${clinic.id}/boarding`}
             >
-              <label>
-                اسم الوحدة
-                <input name="name" required maxLength={100} />
-              </label>
-              <label>
-                نوع حيوان الوحدة
-                <select name="species">
-                  <option value="cat">قط</option>
-                  <option value="dog">كلب</option>
-                  <option value="bird">طائر</option>
-                  <option value="rabbit">أرنب</option>
-                </select>
-              </label>
-              <label>
-                سعر الليلة بوحدات IQD الصغرى
-                <input name="price" pattern="[1-9][0-9]{0,11}" required />
-              </label>
-            </CareForm>
+              إدارة وحدات الفندق ومتطلبات القبول
+            </Link>
             {data.units.map((u) => (
               <p key={u.id}>{u.name}</p>
             ))}

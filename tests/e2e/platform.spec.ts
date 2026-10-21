@@ -529,6 +529,7 @@ test.describe
     ).id;
     const payload = {
       unitId: unit.id,
+      policyAccepted: true,
       startsOn: '2027-04-01',
       endsOn: '2027-04-03',
     };
@@ -1130,6 +1131,7 @@ test.describe
     const booking = await expectJson(owner, 'sandbox/boarding', {
       unitId: unit.id,
       petId,
+      policyAccepted: true,
       startsOn: '2027-05-01',
       endsOn: '2027-05-02',
       idempotencyKey: randomUUID(),
@@ -1137,7 +1139,7 @@ test.describe
     await expectJson(owner, `sandbox/boarding/${booking.id}/cancel`);
     expect(
       (await send(owner, `sandbox/boarding/${booking.id}/cancel`)).status(),
-    ).toBe(409);
+    ).toBe(201);
     const pending = await expectJson(manager, 'admin/sandbox/payouts', {
       kind: 'clinic',
       partyId: fixture.clinicId,
@@ -1340,21 +1342,21 @@ test.describe
     ).toString();
     expect(JSON.parse(result).status).toBe('verified');
   });
-  test('صفحات العميل تتجاوب على ثلاثة أحجام وتجتاز الوصول الآلي', async ({
-    browser,
-  }) => {
-    test.setTimeout(60000);
-    const context = await browser.newContext();
-    await cookies(context, 'owner');
-    const page = await context.newPage();
-    for (const route of [
-      '/marketplace',
-      '/services',
-      '/social',
-      '/adoption',
-      '/taxi',
-      '/notifications',
-    ]) {
+  for (const route of [
+    '/marketplace',
+    '/services',
+    '/social',
+    '/adoption',
+    '/taxi',
+    '/notifications',
+  ]) {
+    test(`صفحة العميل ${route} تتجاوب على ثلاثة أحجام وتجتاز الوصول الآلي`, async ({
+      browser,
+    }) => {
+      test.setTimeout(60000);
+      const context = await browser.newContext();
+      await cookies(context, 'owner');
+      const page = await context.newPage();
       await page.goto(route);
       await expect(page.locator('h1')).toBeVisible();
       for (const width of [320, 390, 1440]) {
@@ -1378,9 +1380,9 @@ test.describe
         path: `docs/evidence/platform-${route.slice(1)}-1440.png`,
         fullPage: true,
       });
-    }
-    await context.close();
-  });
+      await context.close();
+    });
+  }
   test('الشراء والملف الاجتماعي يحفظان من الواجهة ولوحة المفاتيح', async ({
     browser,
   }) => {

@@ -6,7 +6,7 @@ import sys
 import zipfile
 
 root = Path(__file__).resolve().parent.parent
-output = Path(sys.argv[1]).resolve() if len(sys.argv) == 2 else root.parent / "petra-platform-0.16.0-source.zip"
+output = Path(sys.argv[1]).resolve() if len(sys.argv) == 2 else root.parent / "petra-platform-0.17.0-source.zip"
 if output.exists() or output == root or root in output.parents:
     raise SystemExit("Choose a new archive path outside the repository")
 subprocess.run(["node", "scripts/security-check.mjs", "--built"], cwd=root, check=True)

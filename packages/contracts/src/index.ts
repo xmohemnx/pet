@@ -698,6 +698,11 @@ export interface PlanEntitlement {
   used?: number;
 }
 export interface BoardingUnit {
+  max_weight_grams: number | null;
+  vaccines_required: boolean;
+  health_requirements: string;
+  active: boolean;
+  version: number;
   id: string;
   clinic_id: string;
   name: string;
@@ -1180,4 +1185,65 @@ export interface ContentCorrection {
 export interface CareLibraryManagement {
   articles: CareArticle[];
   corrections: ContentCorrection[];
+}
+
+export interface BoardingBooking {
+  id: string;
+  unit_id: string;
+  pet_id: string;
+  user_id: string;
+  clinic_id: string;
+  clinic_name: string;
+  unit_name: string;
+  pet_name: string;
+  night_price: string;
+  total_minor: string;
+  starts_on: string;
+  ends_on: string;
+  max_weight_grams: number | null;
+  vaccines_required: boolean;
+  health_requirements: string;
+  policy_accepted: boolean;
+  version: number;
+  status: 'confirmed' | 'checked_in' | 'completed' | 'cancelled';
+  review_id: string | null;
+  review_decision: 'approved' | 'rejected' | null;
+  review_valid_through: string | null;
+  checked_in_at: string | null;
+  checked_out_at: string | null;
+}
+export interface BoardingAccess {
+  owner: boolean;
+  doctor: boolean;
+  admin: boolean;
+  operator: boolean;
+}
+export interface BoardingDetailData {
+  booking: BoardingBooking;
+  access: BoardingAccess;
+  reviews: {
+    id: string;
+    doctor_id: string;
+    doctor_name: string;
+    decision: 'approved' | 'rejected';
+    valid_through: string;
+    created_at: string;
+    weight_grams: number | null;
+    vaccines_checked: boolean | null;
+    notes: string | null;
+  }[];
+  incidents: {
+    id: string;
+    kind: 'incident' | 'resolution';
+    severity: 'low' | 'attention' | 'urgent';
+    body: string;
+    resolves_id: string | null;
+    created_at: string;
+    actor_name: string;
+  }[];
+}
+export interface BoardingManagementData {
+  access: Omit<BoardingAccess, 'owner'>;
+  bookings: BoardingBooking[];
+  units: BoardingUnit[];
 }

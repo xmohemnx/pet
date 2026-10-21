@@ -144,6 +144,12 @@ try {
     'home_events_immutable',
     'home_appointment_link',
     'home_booking_link',
+    'boarding_unit_immutable',
+    'boarding_review_immutable',
+    'boarding_log_immutable',
+    'boarding_log_scope',
+    'boarding_booking_immutable',
+    'boarding_initial_state',
   ];
   const triggerCount = (
     await clone.query(
@@ -163,7 +169,23 @@ try {
       "SELECT attgenerated FROM pg_attribute WHERE attrelid='order_lines'::regclass AND attname='total_minor'",
     )
   ).rows[0]?.attgenerated;
-  if (capacity !== 3 || generated !== 's')
+  const boardingCapacity = (
+    await clone.query(
+      "SELECT count(*)::int n FROM pg_constraint WHERE conrelid='boarding_bookings'::regclass AND contype='x'",
+    )
+  ).rows[0].n;
+  const presentIndexes = (
+    await clone.query(
+      "SELECT count(*)::int n FROM pg_index i JOIN pg_class c ON c.oid=i.indexrelid WHERE i.indrelid='boarding_bookings'::regclass AND i.indisunique AND i.indisvalid AND c.relname=ANY($1::text[])",
+      [['boarding_one_present_unit', 'boarding_one_present_pet']],
+    )
+  ).rows[0].n;
+  if (
+    capacity !== 3 ||
+    boardingCapacity !== 2 ||
+    presentIndexes !== 2 ||
+    generated !== 's'
+  )
     throw new Error('Restore missed capacity or generated pricing protections');
   const result = {
     status: 'verified',

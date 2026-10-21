@@ -3,9 +3,9 @@
   "fieldWebVitals": false,
   "requests": 40,
   "concurrency": 40,
-  "catalogP95Ms": 538.0012040000001,
+  "catalogP95Ms": 311.9115279999969,
   "productCount": 120,
-  "searchInteractionMs": 256.27068299998064,
-  "lcpMs": 736,
+  "searchInteractionMs": 116.9291689999809,
+  "lcpMs": 640,
   "cls": 0.02160381787353092
 }

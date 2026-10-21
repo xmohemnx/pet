@@ -57,3 +57,51 @@ it('يكشف env مضافًا بالقوة إلى فهرس Git معزول', () =
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+it('يكشف سراً ثنائياً في فهرس Git مع نسخة عمل نظيفة دون طباعة السر', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'petra-staged-'));
+  const file = `security-staged-${randomUUID()}.txt`;
+  const secret = randomBytes(48).toString('base64url');
+  const env = {
+    ...process.env,
+    GIT_INDEX_FILE: join(directory, 'index'),
+    BETTER_AUTH_SECRET: secret,
+  };
+  try {
+    const content = Buffer.concat([
+      Buffer.from([0, 255, 10]),
+      Buffer.from(secret),
+      Buffer.from([0, 10]),
+    ]);
+    const hash = spawnSync('git', ['hash-object', '-w', '--stdin'], {
+      env,
+      input: content,
+      encoding: 'utf8',
+    });
+    expect(hash.status).toBe(0);
+    const stage = spawnSync(
+      'git',
+      [
+        'update-index',
+        '--add',
+        '--cacheinfo',
+        `100644,${hash.stdout.trim()},${file}`,
+      ],
+      { env },
+    );
+    expect(stage.status).toBe(0);
+    writeFileSync(file, 'clean working tree content');
+    const result = spawnSync(process.execPath, ['scripts/security-check.mjs'], {
+      env,
+      encoding: 'utf8',
+    });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      `Runtime credential copied into staged source: ${file}`,
+    );
+    expect(result.stderr + result.stdout).not.toContain(secret);
+  } finally {
+    rmSync(file, { force: true });
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
