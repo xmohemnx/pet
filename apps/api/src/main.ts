@@ -87,7 +87,7 @@ class HealthController {
     return {
       status: 'ok',
       service: 'petra-api',
-      phase: 'boarding-admission-local',
+      phase: 'variant-matrices-local',
       demoEnabled: process.env.PETRA_DEMO_MODE === 'true',
     };
   }

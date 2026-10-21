@@ -518,6 +518,8 @@ export interface Product {
   active?: boolean;
   parent_product_id?: string | null;
   variant_label?: string;
+  variant_attributes?: { name: string; value: string }[];
+  matrix_dimensions?: VariantDimension[] | null;
   category?: string;
   brand?: string;
   barcode?: string;
@@ -1246,4 +1248,64 @@ export interface BoardingManagementData {
   access: Omit<BoardingAccess, 'owner'>;
   bookings: BoardingBooking[];
   units: BoardingUnit[];
+}
+
+export interface VariantDimension {
+  name: string;
+  values: string[];
+}
+export interface VariantChoice {
+  indexes: number[];
+  attributes: { name: string; value: string }[];
+  label: string;
+}
+// Shared deterministic preview; the server always repeats validation and generation.
+export function variantMatrix(input: VariantDimension[]): {
+  dimensions: VariantDimension[];
+  choices: VariantChoice[];
+} {
+  const clean = (s: string) => s.normalize('NFKC').trim();
+  const unique = (a: string[]) =>
+    new Set(a.map((s) => s.toLowerCase())).size === a.length;
+  if (!Array.isArray(input) || input.length < 1 || input.length > 3)
+    throw new Error('اختر من بُعد واحد إلى ثلاثة أبعاد');
+  const dimensions = input.map((d) => {
+    const name = clean(d.name),
+      values = d.values.map(clean);
+    if (
+      !name ||
+      name.length > 30 ||
+      /[\p{Cc}\p{Cf}]/u.test(name) ||
+      values.length < 1 ||
+      values.length > 8 ||
+      !unique(values) ||
+      values.some((s) => !s || s.length > 30 || /[\p{Cc}\p{Cf}]/u.test(s))
+    )
+      throw new Error(
+        'أسماء الأبعاد والقيم فريدة ومن 1 إلى 30 حرفاً؛ حتى ثماني قيم للبُعد',
+      );
+    return { name, values };
+  });
+  if (!unique(dimensions.map((d) => d.name)))
+    throw new Error('اسم البُعد مكرر');
+  if (dimensions.reduce((n, d) => n * d.values.length, 1) > 64)
+    throw new Error('الحد الأقصى 64 تركيبة؛ قلل القيم قبل التوليد');
+  let choices: VariantChoice[] = [{ indexes: [], attributes: [], label: '' }];
+  for (const dimension of dimensions)
+    choices = choices.flatMap((choice) =>
+      dimension.values.map((value, i) => {
+        const attributes = [
+          ...choice.attributes,
+          { name: dimension.name, value },
+        ];
+        return {
+          indexes: [...choice.indexes, i + 1],
+          attributes,
+          label: attributes.map((a) => `${a.name}: ${a.value}`).join(' · '),
+        };
+      }),
+    );
+  if (choices.some((c) => c.label.length > 100))
+    throw new Error('وصف التركيبة أطول من 100 حرف؛ اختصر أسماء الأبعاد والقيم');
+  return { dimensions, choices };
 }

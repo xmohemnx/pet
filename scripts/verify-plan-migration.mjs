@@ -162,6 +162,24 @@ try {
     )
   ).rows[0].id;
 
+  const legacyProduct = (
+    await db.query(
+      "INSERT INTO products(clinic_id,sku,name,price_minor,cost_minor) VALUES($1,'LEGACY-MATRIX','أصل SKU سابق',4321,1234) RETURNING id",
+      [clinic],
+    )
+  ).rows[0].id;
+  const legacyChild = (
+    await db.query(
+      "INSERT INTO products(clinic_id,sku,name,price_minor,cost_minor,parent_product_id,variant_label) VALUES($1,'LEGACY-CHILD','خيار SKU سابق',5678,2345,$2,'قديم') RETURNING id",
+      [clinic, legacyProduct],
+    )
+  ).rows[0].id;
+  const oldProducts = (
+    await db.query(
+      'SELECT row_to_json(p) data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id',
+      [[legacyProduct, legacyChild]],
+    )
+  ).rows;
   await db.query('BEGIN');
   await db.query(
     await readFile(
@@ -191,6 +209,34 @@ try {
       new URL('0035_boarding_presence.sql', migrationRoot),
       'utf8',
     ),
+  );
+  await db.query(
+    await readFile(
+      new URL('0036_product_variant_matrices.sql', migrationRoot),
+      'utf8',
+    ),
+  );
+  assert.deepEqual(
+    (
+      await db.query(
+        'SELECT row_to_json(p) data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id',
+        [[legacyProduct, legacyChild]],
+      )
+    ).rows,
+    oldProducts,
+  );
+  assert.equal(
+    (await db.query('SELECT count(*)::int n FROM product_variant_matrices'))
+      .rows[0].n,
+    0,
+  );
+  assert.deepEqual(
+    (
+      await db.query('SELECT product_variant_attributes($1) attrs', [
+        legacyChild,
+      ])
+    ).rows[0].attrs,
+    [],
   );
   const migratedBoarding = (
     await db.query(

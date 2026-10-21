@@ -150,6 +150,11 @@ try {
     'boarding_log_scope',
     'boarding_booking_immutable',
     'boarding_initial_state',
+    'variant_matrix_guard',
+    'variant_choice_guard',
+    'variant_product_identity_guard',
+    'variant_matrix_complete',
+    'variant_product_complete',
   ];
   const triggerCount = (
     await clone.query(

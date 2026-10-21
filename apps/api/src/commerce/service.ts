@@ -155,7 +155,7 @@ export class CommerceService {
       return {
         products: (
           await db.query(
-            `SELECT p.*,p.price_minor::text,p.cost_minor::text,${productImagesSql} images FROM products p WHERE clinic_id=$1 ORDER BY name`,
+            `SELECT p.*,p.price_minor::text,p.cost_minor::text,${productImagesSql} images,product_variant_attributes(p.id) variant_attributes,(SELECT dimensions FROM product_variant_matrices WHERE parent_product_id=p.id) matrix_dimensions FROM products p WHERE clinic_id=$1 ORDER BY name`,
             [id],
           )
         ).rows,
@@ -205,7 +205,7 @@ export class CommerceService {
         if (
           !(
             await db.query(
-              'SELECT 1 FROM products WHERE id=$1 AND clinic_id=$2 AND parent_product_id IS NULL FOR SHARE',
+              'SELECT 1 FROM products WHERE id=$1 AND clinic_id=$2 AND parent_product_id IS NULL AND NOT EXISTS(SELECT 1 FROM product_variant_matrices WHERE parent_product_id=$1) FOR SHARE',
               [input.parentProductId, clinic],
             )
           ).rowCount

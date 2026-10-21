@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useState } from 'react';
 import type { IdentityMe, Product, Storefront } from '@petra/contracts';
 import { formatIqd } from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
@@ -7,6 +8,7 @@ import { PlatformHeading, SandboxNotice } from './platform-shared';
 import { ProductReviews } from './product-reviews';
 import { CareForm } from './care-shared';
 import { api } from '../lib/auth-client';
+import { ProductVariantPicker } from './product-variant-picker';
 export function ProductDetail({
   me,
   product: p,
@@ -18,6 +20,7 @@ export function ProductDetail({
   variants: Product[];
   store: Storefront;
 }) {
+  const [canAdd, setCanAdd] = useState(true);
   return (
     <IdentityShell me={me}>
       <PlatformHeading eyebrow={p.store_name ?? p.clinic_name} title={p.name}>
@@ -54,6 +57,12 @@ export function ProductDetail({
             SKU: {p.sku} · {p.barcode}
           </p>
           <dl>
+            {p.variant_attributes?.map((a) => (
+              <div key={a.name}>
+                <dt>{a.name}</dt>
+                <dd>{a.value}</dd>
+              </div>
+            ))}
             {p.specifications?.map((x, n) => (
               <div key={n}>
                 <dt>{x.name}</dt>
@@ -66,60 +75,59 @@ export function ProductDetail({
         <aside className="care-stack">
           <section className="panel care-section">
             <h2>اختر المقاس أو الخيار</h2>
-            <div className="care-stack">
-              {variants.map((v) => (
-                <Link
-                  className={`button ${v.id === p.id ? 'primary' : 'outline'}`}
-                  key={v.id}
-                  href={`/marketplace/products/${v.id}`}
-                  aria-current={v.id === p.id ? 'page' : undefined}
-                >
-                  {v.variant_label || v.name} · {formatIqd(v.price_minor)} ·{' '}
-                  {v.available} متاحة
-                </Link>
-              ))}
-            </div>
+            <ProductVariantPicker
+              key={p.id}
+              product={p}
+              variants={variants}
+              onSelectionChange={setCanAdd}
+            />
             <strong>{formatIqd(p.price_minor)}</strong>
             <p>
               {p.available} {p.unit} متاحة لهذا الخيار
             </p>
-            <CareForm
-              label="إضافة الخيار للسلة"
-              submit={async (f) => {
-                const cart =
-                  await api<{ product_id: string; quantity: number }[]>(
-                    'me/cart',
-                  );
-                const quantity = Number(f.get('quantity'));
-                const old = cart.find((x) => x.product_id === p.id);
-                const items = cart
-                  .filter((x) => x.product_id !== p.id)
-                  .map((x) => ({
-                    productId: x.product_id,
-                    quantity: x.quantity,
-                  }));
-                items.push({
-                  productId: p.id,
-                  quantity: quantity + (old?.quantity ?? 0),
-                });
-                await api('me/cart', {
-                  method: 'POST',
-                  body: JSON.stringify({ items }),
-                });
-              }}
-            >
-              <label>
-                كمية {p.name}
-                <input
-                  name="quantity"
-                  type="number"
-                  min={1}
-                  max={Math.min(10000, p.available)}
-                  defaultValue={p.available ? 1 : 0}
-                  required
-                />
-              </label>
-            </CareForm>
+            {canAdd ? (
+              <CareForm
+                label="إضافة الخيار للسلة"
+                submit={async (f) => {
+                  const cart =
+                    await api<{ product_id: string; quantity: number }[]>(
+                      'me/cart',
+                    );
+                  const quantity = Number(f.get('quantity'));
+                  const old = cart.find((x) => x.product_id === p.id);
+                  const items = cart
+                    .filter((x) => x.product_id !== p.id)
+                    .map((x) => ({
+                      productId: x.product_id,
+                      quantity: x.quantity,
+                    }));
+                  items.push({
+                    productId: p.id,
+                    quantity: quantity + (old?.quantity ?? 0),
+                  });
+                  await api('me/cart', {
+                    method: 'POST',
+                    body: JSON.stringify({ items }),
+                  });
+                }}
+              >
+                <label>
+                  كمية {p.name}
+                  <input
+                    name="quantity"
+                    type="number"
+                    min={1}
+                    max={Math.min(10000, p.available)}
+                    defaultValue={p.available ? 1 : 0}
+                    required
+                  />
+                </label>
+              </CareForm>
+            ) : (
+              <p role="status">
+                افتح صفحة الخيار المطابق أولاً لإضافته إلى السلة بسعره ومخزونه.
+              </p>
+            )}
           </section>
           <section className="panel care-section">
             <h2>التسليم والإرجاع</h2>

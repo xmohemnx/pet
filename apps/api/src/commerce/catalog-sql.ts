@@ -7,5 +7,5 @@ export const sellableSql = `p.active AND c.verification_status='verified' AND s.
 export const productImagesSql = `(SELECT coalesce(jsonb_agg(jsonb_build_object('asset_id',i.asset_id,'alt',i.alt) ORDER BY i.position),'[]') FROM product_images i WHERE i.product_id=p.id)`;
 export const publicProductSql = `p.id,p.clinic_id,p.name,p.description,p.species,p.price_minor::text,
  available_stock(p.id) available,c.name clinic_name,p.sku,p.parent_product_id,p.variant_label,
- p.category,p.brand,p.barcode,p.unit,p.age_suitability,p.specifications,s.city,
+ p.category,p.brand,p.barcode,p.unit,p.age_suitability,p.specifications,s.city,product_variant_attributes(p.id) variant_attributes,
  coalesce(nullif(s.display_name,''),c.name) store_name,${productImagesSql} images`;

@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Req, Param, Body } from '@nestjs/common';
+import { Controller, Get, Patch, Post, Req, Param, Body } from '@nestjs/common';
 import type { Request } from 'express';
 import { z } from 'zod';
 import { requireSession, parse, uuid } from '../identity/session.js';
@@ -9,6 +9,42 @@ const short = z.string().trim().max(100),
 @Controller('api/v1')
 export class CatalogController {
   constructor(private readonly catalog: CatalogService) {}
+  @Post('clinics/:id/products/:productId/variant-matrix') async matrix(
+    @Req() r: Request,
+    @Param('id') id: string,
+    @Param('productId') product: string,
+    @Body() body: unknown,
+  ) {
+    const input = parse(
+      z
+        .object({
+          version,
+          idempotencyKey: z.uuid(),
+          skuPrefix: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_-]{0,47}$/),
+          priceMinor: z.string().regex(/^[1-9]\d{0,11}$/),
+          costMinor: z.string().regex(/^(0|[1-9]\d{0,11})$/),
+          dimensions: z
+            .array(
+              z
+                .object({
+                  name: z.string().min(1).max(100),
+                  values: z.array(z.string().min(1).max(100)).min(1).max(8),
+                })
+                .strict(),
+            )
+            .min(1)
+            .max(3),
+        })
+        .strict(),
+      body,
+    );
+    return this.catalog.matrix(
+      (await requireSession(r)).user.id,
+      uuid(id),
+      uuid(product),
+      input,
+    );
+  }
   @Get('products/:id') async detail(
     @Req() r: Request,
     @Param('id') id: string,

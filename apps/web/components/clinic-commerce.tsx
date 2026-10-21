@@ -7,6 +7,7 @@ import { IdentityShell } from './identity-shell';
 import { CareForm, CareAction } from './care-shared';
 import { api } from '../lib/auth-client';
 import { ProductCatalogEditor } from './product-catalog-editor';
+import { ProductMatrixEditor } from './product-matrix-editor';
 import {
   PlatformHeading,
   SandboxNotice,
@@ -135,6 +136,15 @@ export function ClinicCommerce({
                     key={`${p.id}:${p.version}`}
                     product={p}
                     clinicId={clinic.id}
+                    refresh={refresh}
+                  />
+                  <ProductMatrixEditor
+                    key={`matrix:${p.id}:${p.version}`}
+                    product={p}
+                    clinicId={clinic.id}
+                    hasVariants={data.products.some(
+                      (v) => v.parent_product_id === p.id,
+                    )}
                     refresh={refresh}
                   />
                 </div>
@@ -294,7 +304,7 @@ export function ClinicCommerce({
                 <select name="parent">
                   <option value="">منتج مستقل</option>
                   {data.products
-                    .filter((p) => !p.parent_product_id)
+                    .filter((p) => !p.parent_product_id && !p.matrix_dimensions)
                     .map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.name}

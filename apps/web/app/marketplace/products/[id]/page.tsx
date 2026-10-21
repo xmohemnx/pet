@@ -17,5 +17,5 @@ export default async function Page({
     `products/${encodeURIComponent(id)}`,
   );
   const store = await loadApi<Storefront>(`stores/${detail.product.clinic_id}`);
-  return <ProductDetail me={me} {...detail} store={store} />;
+  return <ProductDetail key={id} me={me} {...detail} store={store} />;
 }
