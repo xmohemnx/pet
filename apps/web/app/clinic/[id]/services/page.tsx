@@ -19,6 +19,14 @@ export default async function Page({
   const [clinic, initial, services, cases] = await Promise.all([
     loadApi<ClinicInfo>(base),
     loadApi<{
+      branches: { id: string; name: string }[];
+      sales: {
+        id: string;
+        name: string;
+        subscriptions: number;
+        sold_minor: string;
+        recognized_minor: string;
+      }[];
       plans: Plan[];
       units: BoardingUnit[];
       boarding: {

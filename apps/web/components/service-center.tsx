@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import type {
   IdentityMe,
@@ -31,6 +31,31 @@ export function ServiceCenter({
 }) {
   const [data, setData] = useState(initial),
     [cancelKind, setCancelKind] = useState('boarding');
+  const pendingKeys = useRef(new Map<string, string>());
+  async function sendKeyed(path: string, body: Record<string, unknown>) {
+    const signature = JSON.stringify([path, body]);
+    const key = pendingKeys.current.get(signature) ?? crypto.randomUUID();
+    pendingKeys.current.set(signature, key);
+    await mutate(path, { ...body, idempotencyKey: key });
+    await refresh();
+    pendingKeys.current.delete(signature);
+  }
+  function upgradeOptions(s: MyServices['subscriptions'][number]) {
+    return catalog.plans.filter(
+      (p) =>
+        p.clinic_id === s.clinic_id &&
+        p.branch_id === s.branch_id &&
+        BigInt(p.price_minor) > BigInt(s.price_minor) &&
+        p.valid_days >= s.valid_days &&
+        p.waiting_days <= s.waiting_days &&
+        p.max_pause_days >= s.max_pause_days &&
+        s.entitlements.every((e) =>
+          p.entitlements.some(
+            (t) => t.service_id === e.service_id && t.uses >= e.uses,
+          ),
+        ),
+    );
+  }
   async function refresh() {
     setData(await api<MyServices>('me/services'));
   }
@@ -79,18 +104,26 @@ export function ServiceCenter({
               <p className="eyebrow">{p.clinic_name}</p>
               <h3>{p.name}</h3>
               <p>
-                {p.service_name} · {p.uses} استخدام · {p.valid_days} يومًا
+                {p.category} · {p.uses} استخدام · {p.valid_days} يومًا
+              </p>
+              {p.entitlements.map((e) => (
+                <p key={e.service_id}>
+                  {e.service_name}: {e.uses} استخدام
+                </p>
+              ))}
+              <p>
+                {p.branch_name || 'جميع فروع العيادة'} · انتظار {p.waiting_days}{' '}
+                يوم · تعليق حتى {p.max_pause_days} يوم
               </p>
               <strong>{formatIqd(p.price_minor)}</strong>
               <CareForm
                 label="اشتراك اختباري"
                 submit={async (f) => {
-                  await mutate('sandbox/subscriptions', {
+                  await sendKeyed('sandbox/subscriptions', {
                     planId: p.id,
                     petId: f.get('pet'),
-                    idempotencyKey: crypto.randomUUID(),
+                    priceMinor: p.price_minor,
                   });
-                  await refresh();
                 }}
               >
                 <label>
@@ -114,21 +147,143 @@ export function ServiceCenter({
       <section className="panel care-section">
         <h2>اشتراكاتي</h2>
         {data.subscriptions.map((s) => (
-          <div key={s.id} className="care-list-row">
+          <article key={s.id} className="panel care-section">
             <div>
               <h3>
                 {s.name} · {s.pet_name}
               </h3>
-              {s.status === 'cancelled' && <Status value="cancelled" />}
+              <Status value={s.state} />
               <p>
                 استُخدم {s.uses_used} من {s.uses_total} · حتى{' '}
                 {careDate(s.expires_at)}
               </p>
+              <p>
+                {s.branch_name || 'جميع فروع العيادة'} · تبدأ الأهلية{' '}
+                {careDate(s.available_at)}
+              </p>
+              {s.entitlements.map((e) => (
+                <p key={e.service_id}>
+                  {e.service_name}: استُخدم {e.used} من {e.uses}
+                </p>
+              ))}
+              {s.state === 'paused' && s.paused_until && (
+                <p>الاستئناف التلقائي {careDate(s.paused_until)}</p>
+              )}
               <p className="panel-intro">
                 معرف الاشتراك للطبيب: <bdi>{s.id}</bdi>
               </p>
             </div>
-          </div>
+            {['active', 'waiting'].includes(s.state) &&
+              Math.floor(s.max_pause_days - Number(s.pause_seconds) / 86400) >=
+                1 && (
+                <CareForm
+                  label={`تعليق ${s.name}`}
+                  submit={async (f) => {
+                    await sendKeyed(`subscriptions/${s.id}/pause`, {
+                      version: s.version,
+                      days: Number(f.get('days')),
+                    });
+                  }}
+                >
+                  <label>
+                    مدة التعليق بالأيام
+                    <input
+                      name="days"
+                      type="number"
+                      min="1"
+                      max={Math.floor(
+                        s.max_pause_days - Number(s.pause_seconds) / 86400,
+                      )}
+                      required
+                    />
+                  </label>
+                  <p className="panel-intro">
+                    يتوقف الاستهلاك وتمتد الصلاحية. الاستئناف تلقائي بعد المدة
+                    أو مبكر بطلبك.
+                  </p>
+                </CareForm>
+              )}
+            {s.state === 'paused' && (
+              <CareAction
+                action={async () => {
+                  await sendKeyed(`subscriptions/${s.id}/resume`, {
+                    version: s.version,
+                  });
+                }}
+              >
+                استئناف {s.name} الآن
+              </CareAction>
+            )}
+            {!s.successor_id &&
+              ['expired', 'exhausted'].includes(s.state) &&
+              catalog.plans.find((p) => p.id === s.plan_id) && (
+                <CareForm
+                  label={`تجديد ${s.name} اختباريًا`}
+                  submit={async () => {
+                    const p = catalog.plans.find((p) => p.id === s.plan_id)!;
+                    await sendKeyed(`sandbox/subscriptions/${s.id}/renew`, {
+                      priceMinor: p.price_minor,
+                    });
+                  }}
+                >
+                  <p>
+                    دورة جديدة بسعر{' '}
+                    {formatIqd(
+                      catalog.plans.find((p) => p.id === s.plan_id)!
+                        .price_minor,
+                    )}
+                    . لا ترحيل للمتبقي أو تحصيل دوري تلقائي.
+                  </p>
+                  <label className="care-check">
+                    <input type="checkbox" required />
+                    أوافق على بدء دورة جديدة بالشروط المنشورة.
+                  </label>
+                </CareForm>
+              )}
+            {!s.successor_id &&
+              s.status === 'active' &&
+              s.uses_used === 0 &&
+              Date.now() - Date.parse(s.created_at) <= 7 * 86400000 &&
+              ['active', 'waiting', 'paused'].includes(s.state) &&
+              upgradeOptions(s).length > 0 && (
+                <CareForm
+                  label={`ترقية ${s.name} اختباريًا`}
+                  submit={async (f) => {
+                    const p = catalog.plans.find(
+                      (p) => p.id === f.get('plan'),
+                    )!;
+                    await sendKeyed(`sandbox/subscriptions/${s.id}/upgrade`, {
+                      planId: p.id,
+                      priceMinor: p.price_minor,
+                    });
+                  }}
+                >
+                  <label>
+                    الباقة الأعلى
+                    <select name="plan" required>
+                      {upgradeOptions(s).map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} · فرق{' '}
+                          {formatIqd(
+                            (
+                              BigInt(p.price_minor) - BigInt(s.price_minor)
+                            ).toString(),
+                          )}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <p className="panel-intro">
+                    لغير المستخدم خلال سبعة أيام، بفرع واحد وحقوق لا تقل. يتحقق
+                    الخادم من الشروط قبل عكس الاشتراك القديم وإنشاء الجديد.
+                  </p>
+                  <label className="care-check">
+                    <input type="checkbox" required />
+                    أوافق على استبدال الاشتراك ودفع الفرق اختباريًا.
+                  </label>
+                </CareForm>
+              )}
+          </article>
         ))}
       </section>
       <section className="care-section">
@@ -236,7 +391,10 @@ export function ServiceCenter({
                     ))
                 : data.subscriptions
                     .filter(
-                      (s) => s.uses_used === 0 && s.status !== 'cancelled',
+                      (s) =>
+                        s.uses_used === 0 &&
+                        s.status === 'active' &&
+                        Date.now() - Date.parse(s.created_at) <= 7 * 86400000,
                     )
                     .map((s) => (
                       <option key={s.id} value={s.id}>

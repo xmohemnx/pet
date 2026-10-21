@@ -5,11 +5,15 @@ import {
   ForbiddenException,
   BadRequestException,
 } from '@nestjs/common';
-import { usageRecognition } from '../../../../packages/contracts/src/index.js';
 import { transaction } from '../database.js';
 import { OrganizationService, audit, emit } from '../organizations/service.js';
 import { CareService } from '../care/service.js';
 import { entity, post, sandbox } from '../finance/ledger.js';
+import {
+  planEntitlementsSql,
+  subscriptionEntitlementsSql,
+  subscriptionStateSql,
+} from './plans.js';
 @Injectable()
 export class ServicesService {
   constructor(
@@ -20,7 +24,7 @@ export class ServicesService {
     return transaction(async (db) => ({
       plans: (
         await db.query(
-          "SELECT p.*,p.price_minor::text,c.name clinic_name,s.name service_name FROM care_plans p JOIN clinics c ON c.id=p.clinic_id JOIN clinic_services s ON s.id=p.service_id WHERE p.active AND s.active AND c.verification_status='verified' ORDER BY p.name LIMIT 100",
+          `SELECT p.*,p.price_minor::text,c.name clinic_name,s.name service_name,b.name branch_name,${planEntitlementsSql} entitlements FROM care_plans p JOIN clinics c ON c.id=p.clinic_id JOIN clinic_services s ON s.id=p.service_id LEFT JOIN clinic_branches b ON b.id=p.branch_id WHERE p.active AND s.active AND c.verification_status='verified' AND NOT EXISTS(SELECT 1 FROM care_plan_entitlements pe JOIN clinic_services cs ON cs.id=pe.service_id WHERE pe.plan_id=p.id AND NOT cs.active) ORDER BY p.name LIMIT 100`,
         )
       ).rows,
       units: (
@@ -34,7 +38,7 @@ export class ServicesService {
     return transaction(async (db) => ({
       subscriptions: (
         await db.query(
-          'SELECT s.*,s.price_minor::text,p.name,p.clinic_id,p.service_id,pet.name pet_name FROM care_subscriptions s JOIN care_plans p ON p.id=s.plan_id JOIN pets pet ON pet.id=s.pet_id WHERE s.user_id=$1 ORDER BY s.created_at DESC',
+          `SELECT s.*,s.price_minor::text,p.name,p.service_id,p.valid_days,p.waiting_days,pet.name pet_name,b.name branch_name,${subscriptionStateSql} state,${subscriptionEntitlementsSql} entitlements,(SELECT n.id FROM care_subscriptions n WHERE n.predecessor_id=s.id) successor_id FROM care_subscriptions s JOIN care_plans p ON p.id=s.plan_id JOIN pets pet ON pet.id=s.pet_id LEFT JOIN clinic_branches b ON b.id=s.branch_id WHERE s.user_id=$1 AND pet.owner_id=$1 AND pet.archived_at IS NULL ORDER BY s.created_at DESC LIMIT 200`,
           [actor],
         )
       ).rows,
@@ -56,12 +60,28 @@ export class ServicesService {
     return transaction(async (db) => {
       await this.org.membership(actor, clinic, undefined, db);
       return {
-        plans: (
+        branches: (
           await db.query(
-            'SELECT *,price_minor::text FROM care_plans WHERE clinic_id=$1',
+            'SELECT id,name FROM clinic_branches WHERE clinic_id=$1 ORDER BY name',
             [clinic],
           )
         ).rows,
+        plans: (
+          await db.query(
+            `SELECT p.*,p.price_minor::text,b.name branch_name,${planEntitlementsSql} entitlements FROM care_plans p LEFT JOIN clinic_branches b ON b.id=p.branch_id WHERE p.clinic_id=$1 ORDER BY p.name LIMIT 200`,
+            [clinic],
+          )
+        ).rows,
+        sales: (
+          await this.org.membership(actor, clinic, undefined, db)
+        ).capabilities.includes('clinic_admin')
+          ? (
+              await db.query(
+                `SELECT p.id,p.name,count(s.id)::int subscriptions,coalesce(sum(s.price_minor) FILTER(WHERE s.status NOT IN ('cancelled','upgraded')),0)::text sold_minor,coalesce(sum((SELECT coalesce(sum(u.recognized_minor),0) FROM entitlement_usage u WHERE u.subscription_id=s.id)),0)::text recognized_minor FROM care_plans p LEFT JOIN care_subscriptions s ON s.plan_id=p.id WHERE p.clinic_id=$1 GROUP BY p.id ORDER BY p.name`,
+                [clinic],
+              )
+            ).rows
+          : [],
         units: (
           await db.query(
             'SELECT *,night_price::text FROM boarding_units WHERE clinic_id=$1',
@@ -75,164 +95,6 @@ export class ServicesService {
           )
         ).rows,
       };
-    });
-  }
-  async plan(
-    actor: string,
-    clinic: string,
-    i: {
-      serviceId: string;
-      name: string;
-      priceMinor: string;
-      uses: number;
-      validDays: number;
-    },
-  ) {
-    return transaction(async (db) => {
-      await this.org.membership(actor, clinic, 'clinic_admin', db);
-      if (
-        !(
-          await db.query(
-            'SELECT 1 FROM clinic_services WHERE id=$1 AND clinic_id=$2',
-            [i.serviceId, clinic],
-          )
-        ).rowCount
-      )
-        throw new NotFoundException();
-      const r = (
-        await db.query(
-          'INSERT INTO care_plans(clinic_id,service_id,name,price_minor,uses,valid_days) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
-          [clinic, i.serviceId, i.name, i.priceMinor, i.uses, i.validDays],
-        )
-      ).rows[0];
-      await audit(db, actor, 'services.plan_created', clinic, { planId: r.id });
-      return r;
-    });
-  }
-  async buy(actor: string, planId: string, petId: string, key: string) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      await this.care.pet(db, actor, petId, 'profile', true);
-      const old = (
-        await db.query(
-          'SELECT * FROM care_subscriptions WHERE user_id=$1 AND idempotency_key=$2',
-          [actor, key],
-        )
-      ).rows[0];
-      if (old) {
-        if (old.plan_id !== planId || old.pet_id !== petId)
-          throw new ConflictException();
-        return old;
-      }
-      const p = (
-        await db.query(
-          "SELECT p.* FROM care_plans p JOIN clinics c ON c.id=p.clinic_id WHERE p.id=$1 AND p.active AND c.verification_status='verified'",
-          [planId],
-        )
-      ).rows[0];
-      if (!p) throw new NotFoundException();
-      const s = (
-        await db.query(
-          "INSERT INTO care_subscriptions(plan_id,pet_id,user_id,uses_total,price_minor,expires_at,idempotency_key) VALUES($1,$2,$3,$4,$5,now()+($6::text||' days')::interval,$7) RETURNING *",
-          [planId, petId, actor, p.uses, p.price_minor, p.valid_days, key],
-        )
-      ).rows[0];
-      const amount = BigInt(p.price_minor);
-      await post(
-        db,
-        actor,
-        await entity(db, p.clinic_id),
-        `plan:${s.id}`,
-        'اشتراك رعاية اختباري مؤجل',
-        [
-          { account: '1200', debit: amount },
-          { account: '2100', credit: amount },
-        ],
-      );
-      await post(
-        db,
-        actor,
-        await entity(db, null),
-        `plan:${s.id}`,
-        'تحصيل اشتراك اختباري',
-        [
-          { account: '1100', debit: amount },
-          { account: '2000', credit: amount, partyId: p.clinic_id },
-        ],
-      );
-      await audit(db, actor, 'services.subscription_created', p.clinic_id, {
-        subscriptionId: s.id,
-      });
-      await emit(db, actor, 'SubscriptionCreated', s.id, 1, p.clinic_id);
-      return s;
-    });
-  }
-  async redeem(actor: string, id: string, encounterId: string) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      const s = (
-        await db.query(
-          'SELECT s.*,p.clinic_id,p.service_id FROM care_subscriptions s JOIN care_plans p ON p.id=s.plan_id WHERE s.id=$1 FOR UPDATE OF s',
-          [id],
-        )
-      ).rows[0];
-      if (!s) throw new NotFoundException();
-      await this.care.medical(db, actor, s.pet_id, s.clinic_id);
-      const old = (
-        await db.query(
-          'SELECT * FROM entitlement_usage WHERE subscription_id=$1 AND encounter_id=$2',
-          [id, encounterId],
-        )
-      ).rows[0];
-      if (old) return old;
-      if (
-        s.status !== 'active' ||
-        s.uses_used >= s.uses_total ||
-        new Date(s.expires_at) <= new Date()
-      )
-        throw new ConflictException('الاشتراك منتهٍ أو مستنفد');
-      if (
-        !(
-          await db.query(
-            'SELECT 1 FROM encounters e JOIN appointments a ON a.id=e.appointment_id JOIN appointment_slots sl ON sl.id=a.slot_id WHERE e.id=$1 AND e.pet_id=$2 AND e.clinic_id=$3 AND e.signed_at IS NOT NULL AND sl.service_id=$4',
-            [encounterId, s.pet_id, s.clinic_id, s.service_id],
-          )
-        ).rowCount
-      )
-        throw new ConflictException('الزيارة الموقعة لا تطابق حق الاشتراك');
-      const u = (
-        await db.query(
-          'INSERT INTO entitlement_usage(subscription_id,encounter_id,actor_id) VALUES($1,$2,$3) RETURNING *',
-          [id, encounterId, actor],
-        )
-      ).rows[0];
-      const amount = usageRecognition(
-        BigInt(s.price_minor),
-        s.uses_used,
-        s.uses_total,
-      );
-      await db.query(
-        'UPDATE care_subscriptions SET uses_used=uses_used+1 WHERE id=$1',
-        [id],
-      );
-      if (amount > 0n)
-        await post(
-          db,
-          actor,
-          await entity(db, s.clinic_id),
-          `usage:${u.id}`,
-          'اعتراف بخدمة اشتراك منفذة',
-          [
-            { account: '2100', debit: amount },
-            { account: '4100', credit: amount },
-          ],
-        );
-      await audit(db, actor, 'services.entitlement_used', s.clinic_id, {
-        usageId: u.id,
-      });
-      return u;
     });
   }
   async unit(
@@ -378,58 +240,6 @@ export class ServicesService {
       );
       await audit(db, actor, 'services.boarding_cancelled', b.clinic_id, {
         bookingId: id,
-      });
-      return { status: 'cancelled' };
-    });
-  }
-  async cancelSubscription(actor: string, id: string) {
-    sandbox();
-    return transaction(async (db) => {
-      await db.query('SELECT pg_advisory_xact_lock(823702)');
-      const s = (
-        await db.query(
-          'SELECT s.*,p.clinic_id FROM care_subscriptions s JOIN care_plans p ON p.id=s.plan_id WHERE s.id=$1 AND s.user_id=$2 FOR UPDATE OF s',
-          [id, actor],
-        )
-      ).rows[0];
-      if (!s) throw new NotFoundException();
-      if (
-        s.status !== 'active' ||
-        s.uses_used !== 0 ||
-        Date.now() - new Date(s.created_at).getTime() > 7 * 86400000
-      )
-        throw new ConflictException(
-          'الإلغاء الاختباري لاشتراك غير مستخدم خلال 7 أيام',
-        );
-      const amount = BigInt(s.price_minor);
-      await post(
-        db,
-        actor,
-        await entity(db, s.clinic_id),
-        `plan-cancel:${id}`,
-        'إلغاء اشتراك غير مستخدم',
-        [
-          { account: '2100', debit: amount },
-          { account: '1200', credit: amount },
-        ],
-      );
-      await post(
-        db,
-        actor,
-        await entity(db, null),
-        `plan-cancel:${id}`,
-        'رد اشتراك اختباري',
-        [
-          { account: '2000', debit: amount, partyId: s.clinic_id },
-          { account: '1100', credit: amount },
-        ],
-      );
-      await db.query(
-        "UPDATE care_subscriptions SET status='cancelled' WHERE id=$1",
-        [id],
-      );
-      await audit(db, actor, 'services.subscription_cancelled', s.clinic_id, {
-        subscriptionId: id,
       });
       return { status: 'cancelled' };
     });

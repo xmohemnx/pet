@@ -151,6 +151,12 @@ for (const route of routes)
 test('إغلاق العرض التجريبي في الويب وAPI دون flag صريح', async ({
   request,
 }) => {
+  const health = await request.get('http://127.0.0.1:3200/api/v1/health');
+  expect(health.status()).toBe(200);
+  expect(await health.json()).toMatchObject({
+    status: 'ok',
+    demoEnabled: false,
+  });
   const api = await request.get('http://127.0.0.1:4101/api/v1/demo/customer');
   expect(api.status()).toBe(404);
   expect(await api.text()).not.toContain('لونا');

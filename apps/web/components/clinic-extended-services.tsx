@@ -8,6 +8,7 @@ import type {
   BoardingUnit,
   RescueCase,
 } from '@petra/contracts';
+import { formatIqd } from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
 import { CareForm, CareAction } from './care-shared';
 import { api } from '../lib/auth-client';
@@ -18,6 +19,14 @@ import {
   mutate,
 } from './platform-shared';
 type Data = {
+  branches: { id: string; name: string }[];
+  sales: {
+    id: string;
+    name: string;
+    subscriptions: number;
+    sold_minor: string;
+    recognized_minor: string;
+  }[];
   plans: Plan[];
   units: BoardingUnit[];
   boarding: {
@@ -153,10 +162,18 @@ export function ClinicExtendedServices({
               submit={(f) =>
                 send('care-plans', {
                   name: f.get('name'),
-                  serviceId: f.get('service'),
                   priceMinor: f.get('price'),
-                  uses: Number(f.get('uses')),
                   validDays: Number(f.get('days')),
+                  category: f.get('category'),
+                  branchId: f.get('branch') || null,
+                  waitingDays: Number(f.get('waiting')),
+                  maxPauseDays: Number(f.get('pause')),
+                  entitlements: services
+                    .map((s) => ({
+                      serviceId: s.id,
+                      uses: Number(f.get(`uses:${s.id}`)),
+                    }))
+                    .filter((s) => s.uses > 0),
                 })
               }
             >
@@ -165,11 +182,41 @@ export function ClinicExtendedServices({
                 <input name="name" required maxLength={100} />
               </label>
               <label>
-                الخدمة المشمولة
-                <select name="service" required>
-                  {services.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.name}
+                فئة الباقة
+                <input
+                  name="category"
+                  required
+                  maxLength={60}
+                  defaultValue="رعاية عامة"
+                />
+              </label>
+              <fieldset>
+                <legend>حصص الخدمات المشمولة</legend>
+                <p className="panel-intro">
+                  صفر لاستبعاد الخدمة. حتى عشر خدمات ومئة استخدام إجمالاً.
+                  الشروط محفوظة؛ أنشئ باقة جديدة لتغييرها.
+                </p>
+                {services.map((s) => (
+                  <label key={s.id}>
+                    حصة {s.name}
+                    <input
+                      type="number"
+                      name={`uses:${s.id}`}
+                      min="0"
+                      max="100"
+                      defaultValue="0"
+                      required
+                    />
+                  </label>
+                ))}
+              </fieldset>
+              <label>
+                نطاق الفرع
+                <select name="branch">
+                  <option value="">جميع فروع العيادة</option>
+                  {data.branches.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.name}
                     </option>
                   ))}
                 </select>
@@ -179,8 +226,26 @@ export function ClinicExtendedServices({
                 <input name="price" pattern="[1-9][0-9]{0,11}" required />
               </label>
               <label>
-                عدد الاستخدامات
-                <input name="uses" type="number" min="1" max="100" required />
+                الانتظار قبل الأهلية بالأيام
+                <input
+                  name="waiting"
+                  type="number"
+                  min="0"
+                  max="365"
+                  defaultValue="0"
+                  required
+                />
+              </label>
+              <label>
+                حد التعليق بالأيام
+                <input
+                  name="pause"
+                  type="number"
+                  min="0"
+                  max="90"
+                  defaultValue="30"
+                  required
+                />
               </label>
               <label>
                 الصلاحية بالأيام
@@ -188,10 +253,52 @@ export function ClinicExtendedServices({
               </label>
             </CareForm>
             {data.plans.map((p) => (
-              <p key={p.id}>
-                {p.name} · {p.uses} استخدام
-              </p>
+              <div className="care-list-row" key={p.id}>
+                <div>
+                  <h3>{p.name}</h3>
+                  <p>
+                    {p.uses} استخدام · {p.branch_name || 'جميع الفروع'} ·{' '}
+                    {p.active ? 'متاحة' : 'مخفية'}
+                  </p>
+                  {p.entitlements.map((e) => (
+                    <p key={e.service_id}>
+                      {e.service_name}: {e.uses}
+                    </p>
+                  ))}
+                </div>
+                <CareAction
+                  action={() =>
+                    send(`care-plans/${p.id}/availability`, {
+                      version: p.version,
+                      active: !p.active,
+                    })
+                  }
+                >
+                  {p.active ? 'إخفاء' : 'إتاحة'} {p.name}
+                </CareAction>
+              </div>
             ))}
+            {!!data.sales.length && (
+              <>
+                <h3>مبيعات الباقات والاستهلاك</h3>
+                <p className="panel-intro">
+                  مبالغ اختبارية، لا تشمل المردود أو المستبدل. الاعتراف موزع
+                  بالتساوي على الاستخدامات.
+                </p>
+                {data.sales.map((s) => (
+                  <div key={s.id} className="care-list-row">
+                    <div>
+                      <h4>{s.name}</h4>
+                      <p>
+                        {s.subscriptions} اشتراك · قيمة غير مردودة{' '}
+                        {formatIqd(s.sold_minor)} · إيراد معترف به{' '}
+                        {formatIqd(s.recognized_minor)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </section>
           <section className="panel care-section">
             <h2>إضافة وحدة إقامة</h2>

@@ -604,6 +604,20 @@ export interface Plan {
   valid_days: number;
   clinic_name: string;
   service_name: string;
+  category: string;
+  branch_id: string | null;
+  branch_name: string | null;
+  waiting_days: number;
+  max_pause_days: number;
+  version: number;
+  active: boolean;
+  entitlements: PlanEntitlement[];
+}
+export interface PlanEntitlement {
+  service_id: string;
+  service_name: string;
+  uses: number;
+  used?: number;
 }
 export interface BoardingUnit {
   id: string;
@@ -627,6 +641,28 @@ export interface MyServices {
     uses_total: number;
     expires_at: string;
     clinic_id: string;
+    plan_id: string;
+    valid_days: number;
+    waiting_days: number;
+    price_minor: string;
+    state:
+      | 'active'
+      | 'waiting'
+      | 'paused'
+      | 'expired'
+      | 'exhausted'
+      | 'cancelled'
+      | 'upgraded';
+    branch_id: string | null;
+    branch_name: string | null;
+    available_at: string;
+    paused_until: string | null;
+    max_pause_days: number;
+    pause_seconds: string;
+    version: number;
+    successor_id: string | null;
+    created_at: string;
+    entitlements: PlanEntitlement[];
   }[];
   boarding: {
     id: string;

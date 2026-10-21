@@ -42,7 +42,9 @@ async function send(c: APIRequestContext, path: string, data: unknown = {}) {
   return c.post(apiRoot + path, { data });
 }
 async function get(c: APIRequestContext, path: string) {
-  return c.get(apiRoot + path);
+  // Retry one transport reset for read-only requests.
+  // HTTP errors and the load test's latency assertions still fail normally.
+  return c.get(apiRoot + path, { maxRetries: 1 });
 }
 async function expectJson(
   c: APIRequestContext,
@@ -477,8 +479,8 @@ test.describe
       expiresAt: new Date(Date.now() + 86400000).toISOString(),
     });
     await db.query(
-      "UPDATE appointments SET starts_at=now()-interval '1 hour',ends_at=now()-interval '30 minutes' WHERE id=$1",
-      [appointment.id],
+      "UPDATE appointments SET starts_at=s.available_at,ends_at=s.available_at+interval '30 minutes' FROM care_subscriptions s WHERE appointments.id=$1 AND s.id=$2",
+      [appointment.id, subscriptionId],
     );
     const e = await expectJson(
       doctor,
@@ -1338,10 +1340,10 @@ test.describe
     ).toString();
     expect(JSON.parse(result).status).toBe('verified');
   });
-  test('واجهات جميع الأقسام تحفظ وتعرض وتتجاوب وتسمح بلوحة المفاتيح', async ({
+  test('صفحات العميل تتجاوب على ثلاثة أحجام وتجتاز الوصول الآلي', async ({
     browser,
   }) => {
-    test.setTimeout(90000);
+    test.setTimeout(60000);
     const context = await browser.newContext();
     await cookies(context, 'owner');
     const page = await context.newPage();
@@ -1377,6 +1379,14 @@ test.describe
         fullPage: true,
       });
     }
+    await context.close();
+  });
+  test('الشراء والملف الاجتماعي يحفظان من الواجهة ولوحة المفاتيح', async ({
+    browser,
+  }) => {
+    const context = await browser.newContext();
+    await cookies(context, 'owner');
+    const page = await context.newPage();
     await page.goto('/marketplace');
     await page.getByLabel(/كمية منتج اختبار A-/).fill('1.5');
     await expect(page.getByLabel(/كمية منتج اختبار A-/)).toHaveValue('1');
@@ -1412,6 +1422,12 @@ test.describe
     await expect(
       page.getByRole('textbox', { name: 'نبذة', exact: true }),
     ).toHaveValue('نبذة حُفظت من الواجهة');
+    await context.close();
+  });
+  test('صفحات العيادة والإدارة تتجاوب وتجتاز الوصول ويعتمد القيد بلوحة المفاتيح', async ({
+    browser,
+  }) => {
+    test.setTimeout(60000);
     const adminContext = await browser.newContext();
     await cookies(adminContext, 'manager');
     const ap = await adminContext.newPage();
@@ -1477,6 +1493,9 @@ test.describe
           ).rows[0].status,
       )
       .toBe('posted');
+    await adminContext.close();
+  });
+  test('السائق يقرأ رحلاته ومستحقاته من الواجهة', async ({ browser }) => {
     const driverContext = await browser.newContext();
     await cookies(driverContext, 'doctor');
     const dp = await driverContext.newPage();
@@ -1488,8 +1507,6 @@ test.describe
       path: 'docs/evidence/platform-driver-1440.png',
       fullPage: true,
     });
-    await context.close();
-    await adminContext.close();
     await driverContext.close();
   });
 });

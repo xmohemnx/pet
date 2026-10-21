@@ -128,6 +128,16 @@ try {
     'care_article_revision_immutable',
     'care_article_review_immutable',
     'care_correction_immutable',
+    'care_plan_terms_immutable',
+    'care_plan_entitlements_immutable',
+    'care_subscription_snapshot_immutable',
+    'care_subscription_entitlements_immutable',
+    'care_subscription_events_immutable',
+    'care_plan_entitlements_balance',
+    'care_plan_terms_balance',
+    'care_subscription_usage_balance',
+    'care_usage_balance',
+    'care_subscription_terms_balance',
   ];
   const triggerCount = (
     await clone.query(

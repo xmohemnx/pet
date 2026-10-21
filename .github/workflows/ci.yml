@@ -22,6 +22,7 @@ jobs:
       - run: pnpm env:prepare
       - run: pnpm infra:up
       - run: pnpm db:migrate && pnpm db:seed && pnpm test:db
+      - run: node scripts/verify-plan-migration.mjs
       - run: pnpm build
         env:
           NEXT_TELEMETRY_DISABLED: '1'

@@ -32,7 +32,7 @@ export default defineConfig({
     {
       command: 'pnpm --filter @petra/web start --port 3200',
       url: 'http://127.0.0.1:3200',
-      env: { PETRA_DEMO_MODE: 'false' },
+      env: { PETRA_DEMO_MODE: 'false', API_BASE_URL: 'http://127.0.0.1:4101' },
       reuseExistingServer: false,
     },
     {
