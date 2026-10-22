@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-22",
+  "project": "Petra",
+  "repository_quality_check": "pnpm check passed; 34 unit tests",
+  "supabase": {
+    "organization": "pet",
+    "project_ref": "yzvcinbdeoffygmtptxi",
+    "region": "eu-central-1",
+    "status": "ACTIVE_HEALTHY",
+    "quoted_project_cost_monthly_usd": 0,
+    "schema": "petra",
+    "application_migrations": 44,
+    "original_migration_checksums_match": true,
+    "tables": 141,
+    "tables_with_rls": 141,
+    "application_triggers_including_realtime": 99,
+    "application_tables_in_public": 0,
+    "users_after_rolled_back_checks": 0,
+    "auth_users_after_rolled_back_checks": 0,
+    "application_login_roles": [],
+    "security_advisors": [],
+    "verified_in_isolated_postgres_and_remote_supabase": [
+      "browser_roles_cannot_read_private_users_or_auth_sessions",
+      "runtime_can_write_identity_and_identity_trigger_resolves_private_schema",
+      "runtime_cannot_create_application_tables",
+      "runtime_cannot_modify_migration_history",
+      "audit_event_update_rejected_by_immutable_trigger",
+      "verification_fixture_writes_rolled_back"
+    ]
+  },
+  "railway": {
+    "project_created": false,
+    "services_created": 0,
+    "provider_error": "Deploys have been paused due to an upstream issue"
+  },
+  "not_verified": [
+    "hosted_api_database_login_and_tls",
+    "role_default_search_path_through_real_login_or_pooler",
+    "public_https_site",
+    "smtp_redis_storage_scanner_and_remote_backup",
+    "production_approval"
+  ],
+  "application_database_passwords_created": false,
+  "secrets_committed": false,
+  "external_financial_operations_enabled": false
+}
