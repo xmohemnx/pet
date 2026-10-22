@@ -8,6 +8,7 @@ import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync } from 'node:fs';
 import pg from 'pg';
+import AxeBuilder from '@axe-core/playwright';
 const root = 'http://127.0.0.1:4100/api/v1/',
   origin = 'http://127.0.0.1:3100';
 const db = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -303,5 +304,74 @@ test.describe
     await expect(
       db.query('UPDATE rides SET auto_dispatch=false WHERE id=$1', [r]),
     ).rejects.toMatchObject({ code: '23514' });
+  });
+  test('driver workspace discovers offers automatically, expires offline, and clears revoked access', async ({
+    page,
+    context,
+  }) => {
+    await post(driverA, 'driver/vehicle', vehicle);
+    await post(driverB, 'driver/vehicle', { ...vehicle, autoDispatch: false });
+    await context.addCookies(
+      f.accounts.doctor!.cookie.split('; ').map((c) => {
+        const i = c.indexOf('=');
+        return {
+          name: c.slice(0, i),
+          value: c.slice(i + 1),
+          domain: '127.0.0.1',
+          path: '/',
+          httpOnly: true,
+          sameSite: 'Lax' as const,
+        };
+      }),
+    );
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/driver');
+    await expect(
+      page.getByRole('button', { name: 'قبول عرض الإسناد', exact: true }),
+    ).toHaveCount(0);
+    const r = await request();
+    tick();
+    await expect(
+      page.getByRole('button', { name: 'قبول عرض الإسناد', exact: true }),
+    ).toHaveCount(1, { timeout: 12000 });
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({
+      path: 'docs/evidence/driver-auto-updates-390.png',
+      fullPage: true,
+    });
+    // Lose the network and advance the browser clock past the 45-second offer lease.
+    await page.clock.install();
+    await context.setOffline(true);
+    await page.clock.fastForward(46000);
+    await expect(
+      page.getByRole('button', { name: 'قبول عرض الإسناد', exact: true }),
+    ).toHaveCount(0);
+    await post(owner, `rides/${r.id}/cancel`);
+    await db.query(
+      "UPDATE professional_profiles SET status='suspended' WHERE user_id=$1 AND kind='driver'",
+      [f.accounts.doctor!.id],
+    );
+    await page.clock.resume();
+    await context.setOffline(false);
+    await expect(
+      page.getByRole('alert').filter({ hasText: 'انتهى إذن عرض مساحة السائق' }),
+    ).toContainText('انتهى إذن عرض مساحة السائق', { timeout: 15000 });
+    await expect(
+      page.getByText('المستحق الاختباري من الدفتر', { exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole('button', { name: 'قبول الرحلة', exact: true }),
+    ).toHaveCount(0);
   });
 });

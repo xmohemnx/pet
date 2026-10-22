@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-22",
+  "baseCommit": "3fd8cc3053f3528e6b33ef0ba098dcb12148bbeb",
+  "scope": [
+    "driver-offer-refresh",
+    "legacy-private-video-maintenance",
+    "cloud-road-routing",
+    "container-deployment-preparation"
+  ],
+  "unit": { "passed": 34 },
+  "fullBrowserRegression": {
+    "passed": 209,
+    "failed": 0,
+    "skipped": 0,
+    "workers": 1,
+    "durationMinutes": 8.6
+  },
+  "postReviewFocusedBrowser": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 58.6
+  },
+  "postPackagingMaintenanceBrowser": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 32.8
+  },
+  "actualLocalPrivateProviders": {
+    "passed": 17,
+    "includes": [
+      "legacy-s3-scanner-outage-preserves-original",
+      "legacy-s3-hls-backfill-private-encrypted-idempotent"
+    ]
+  },
+  "containerImages": {
+    "built": ["api", "worker", "web"],
+    "smokeChecksPassed": 12,
+    "isolatedDatabaseWithoutSeed": true,
+    "nonRootReadOnly": true,
+    "webDoesNotReceiveApiSecrets": true,
+    "maintenanceWithoutSourceEnvFile": true,
+    "publicDeploymentPerformed": false,
+    "productionTlsOrRolesVerified": false
+  },
+  "roadProvider": {
+    "host": "router.project-osrm.org",
+    "syntheticCoordinates": true,
+    "nodeRequestsVerified": 1,
+    "httpStatus": 200,
+    "code": "Ok",
+    "metres": 4993.6,
+    "seconds": 369.2,
+    "geometryPoints": 114,
+    "environmentProxyUsed": true,
+    "tlsVerificationEnabled": true,
+    "productionSlaClaim": false
+  },
+  "developmentMediaDryRunCandidates": 0,
+  "productionStatus": "blocked",
+  "ownerDomainAndHostingProvided": false,
+  "notice": "Local tests and container verification do not establish production approval, external provider integration, or completion of every item in the master plan."
+}

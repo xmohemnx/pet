@@ -6,9 +6,11 @@
 
 قيم الهوية الفعلية وقواعد الواجهات والحركة محفوظة في [نظام تصميم الويب](apps/web/DESIGN.md)، ومعها ملف `.impeccable/design.json` داخل تطبيق الويب.
 
+تجهيز النشر والحاويات وقوالب إعداد المشغل في [دليل النشر](docs/PRODUCTION_DEPLOYMENT.md). أوامر إعادة البناء والتحقق المحلي: `pnpm containers:build` ثم `pnpm test:containers`. النطاق والاستضافة وخدمات الإنتاج لم تُربط بعد؛ بقية المتطلبات في خطة الإنتاج وحدود الاكتمال.
+
 ## التشغيل
 
-المتطلبات: Node 24، pnpm 11.25.0، Docker Compose، FFmpeg وFFprobe. من `/workspace/pet`:
+المتطلبات: Node 24.5 أو أحدث ضمن سلسلة 24، pnpm 11.25.0، Docker Compose، FFmpeg وFFprobe. من `/workspace/pet`:
 
 ```bash
 bash scripts/install-cloud.sh
@@ -22,7 +24,11 @@ pnpm dev:web
 pnpm dev:worker
 ```
 
-API على 4000 والويب 3000 وفحص العامل 4002. أعد تشغيل API بعد تعديل الشفرة؛ الويب يدعم HMR. بعد استعادة بيئة لا تفترض بقاء العمليات أو Docker volumes. APP_ORIGIN يطابق origin الويب، وAPI_BASE_URL وجهة داخلية للـBFF؛ الافتراضي loopback. لا تضع --env-file في NODE_OPTIONS. إذا احتاج pnpm مسارات كتابة:
+API على 4000 والويب 3000 وفحص العامل 4002. أعد تشغيل API بعد تعديل الشفرة؛ الويب يدعم HMR. بعد استعادة بيئة لا تفترض بقاء العمليات أو Docker volumes. APP_ORIGIN يطابق origin الويب، وAPI_BASE_URL وجهة داخلية للـBFF؛ الافتراضي loopback. لا تضع --env-file في NODE_OPTIONS.
+
+بدء API يدعم `HTTP_PROXY/HTTPS_PROXY/NO_PROXY` عبر `--use-env-proxy` مع إبقاء التحقق من TLS. اضبط `NO_PROXY` لاتصالات البنية الداخلية وفق البيئة؛ لا تعطّل الوكيل أو التحقق لتجاوز سياسة الشبكة. دليل تهيئة الفيديوهات القديمة دون تغيير MP4 أو الخصوصية في [صيانة الوسائط](docs/MEDIA_MAINTENANCE.md).
+
+إذا احتاج pnpm مسارات كتابة:
 
 ```bash
 export XDG_DATA_HOME=/workspace/.cache/data

@@ -4,7 +4,7 @@
   "version": "0.19.0",
   "packageManager": "pnpm@11.25.0",
   "engines": {
-    "node": ">=24 <25"
+    "node": ">=24.5 <25"
   },
   "scripts": {
     "dev:web": "pnpm --filter @petra/web dev",
@@ -32,6 +32,9 @@
     "release:source": "python3 scripts/package-source.py",
     "production:check": "node --env-file-if-exists=.env scripts/production-check.mjs",
     "private:services": "node scripts/private-services.mjs",
+    "media:backfill-hls": "node scripts/backfill-hls.mjs",
+    "containers:build": "bash scripts/build-containers.sh",
+    "test:containers": "node scripts/verify-containers.mjs",
     "test:providers": "pnpm --filter @petra/api build && pnpm private:services && node scripts/verify-private-providers.mjs"
   },
   "devDependencies": {

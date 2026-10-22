@@ -1,5 +1,6 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDriverUpdates } from './use-driver-updates';
 import type { IdentityMe, Pet, Ride, DriverHome } from '@petra/contracts';
 import { formatIqd } from '@petra/contracts';
 import {
@@ -39,6 +40,20 @@ export function TaxiCenter({
     dlng: '',
   });
   const [roadQuote, setRoadQuote] = useState<RoadQuote | null>(null);
+  const [driverRevoked, setDriverRevoked] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+  const revokeDriver = useCallback(() => {
+    setDriverRevoked(true);
+    setHome(undefined);
+    setRides([]);
+    setLocations({});
+  }, []);
+  useDriverUpdates(!!driverData && !driverRevoked, setHome, revokeDriver);
+  useEffect(() => {
+    if (!driverData || driverRevoked) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [driverData, driverRevoked]);
   const requestKeys = useRef(new Map<string, string>());
   function changeCoordinates(next: TaxiCoordinates) {
     setCoordinates(next);
@@ -94,6 +109,14 @@ export function TaxiCenter({
       shared: true,
     });
   }
+  if (driverRevoked)
+    return (
+      <IdentityShell me={me}>
+        <p role="alert">
+          انتهى إذن عرض مساحة السائق. سجّل الدخول وتحقق من اعتمادك.
+        </p>
+      </IdentityShell>
+    );
   return (
     <IdentityShell me={me}>
       <PlatformHeading title={home ? 'رحلاتك ومستحقاتك' : 'رحلة مهيأة لرفيقك'}>
@@ -118,38 +141,40 @@ export function TaxiCenter({
               <h2>عروض الإسناد الخاصة</h2>
               <p>
                 عروض المدينة المطابقة لمركبتك؛ لا يجمع النظام موقع انتظارك ولا
-                يدعي اختيار الأقرب. حدّث القائمة لرؤية العروض الجديدة أو انتهاء
-                مهلتها.
+                يدعي اختيار الأقرب. تُحدَّث القائمة تلقائياً كل خمس ثوانٍ أثناء
+                فتح الصفحة، وتختفي العروض عند انتهاء مهلتها.
               </p>
-              {(home.offers ?? []).map((o) => (
-                <article key={o.id} className="care-list-row">
-                  <div>
-                    <h3>
-                      {o.city} · {o.species}
-                    </h3>
-                    <p>
-                      {formatIqd(o.fare_minor)} · مهلة القبول حتى{' '}
-                      {careDate(o.expires_at)}
-                    </p>
-                  </div>
-                  <div className="care-stack">
-                    <CareAction
-                      action={() =>
-                        send(`driver/dispatch-offers/${o.id}/accept`)
-                      }
-                    >
-                      قبول عرض الإسناد
-                    </CareAction>
-                    <CareAction
-                      action={() =>
-                        send(`driver/dispatch-offers/${o.id}/decline`)
-                      }
-                    >
-                      رفض عرض الإسناد
-                    </CareAction>
-                  </div>
-                </article>
-              ))}
+              {(home.offers ?? [])
+                .filter((o) => new Date(o.expires_at).getTime() > now)
+                .map((o) => (
+                  <article key={o.id} className="care-list-row">
+                    <div>
+                      <h3>
+                        {o.city} · {o.species}
+                      </h3>
+                      <p>
+                        {formatIqd(o.fare_minor)} · مهلة القبول حتى{' '}
+                        {careDate(o.expires_at)}
+                      </p>
+                    </div>
+                    <div className="care-stack">
+                      <CareAction
+                        action={() =>
+                          send(`driver/dispatch-offers/${o.id}/accept`)
+                        }
+                      >
+                        قبول عرض الإسناد
+                      </CareAction>
+                      <CareAction
+                        action={() =>
+                          send(`driver/dispatch-offers/${o.id}/decline`)
+                        }
+                      >
+                        رفض عرض الإسناد
+                      </CareAction>
+                    </div>
+                  </article>
+                ))}
               <CareAction action={refresh}>تحديث عروض النقل</CareAction>
               <h2>طلبات في مدينتك</h2>
               {home.requests.map((r) => (

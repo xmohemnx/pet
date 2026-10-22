@@ -353,6 +353,55 @@ async function verifyPipeline() {
       ).rows.every((r) => r.storage_backend === 's3'),
     );
     checks.push('s3-worker-opus-and-adaptive-video');
+    const { backfillHls } =
+      await import('../apps/api/dist/apps/api/src/media/backfill.js');
+    const legacy = randomUUID(),
+      legacyKey = `${legacy}.mp4`;
+    objects.push(legacyKey);
+    await storage.put(legacyKey, video);
+    await db.query(
+      "INSERT INTO media_assets(id,owner_id,chat_peer_id,kind,status,mime,byte_count,storage_key,storage_backend,scanned_at,scanner_version) SELECT $1,owner_id,chat_peer_id,'video','ready','video/mp4',$2,$3,'s3',scanned_at,scanner_version FROM media_assets WHERE id=$4",
+      [legacy, video.length, legacyKey, movie.id],
+    );
+    const legacySocket = process.env.PETRA_CLAMAV_SOCKET;
+    process.env.PETRA_CLAMAV_SOCKET = '/tmp/petra-unavailable-scanner.sock';
+    try {
+      assert.equal((await backfillHls(10, true)).failed, 1);
+      assert.equal(
+        (
+          await db.query('SELECT id FROM media_streams WHERE asset_id=$1', [
+            legacy,
+          ])
+        ).rowCount,
+        0,
+      );
+      assert.deepEqual(await storage.get(legacyKey, 1024 * 1024), video);
+    } finally {
+      process.env.PETRA_CLAMAV_SOCKET = legacySocket;
+    }
+    checks.push('legacy-s3-scanner-outage-preserves-original');
+    assert.equal((await backfillHls(10, true)).completed, 1);
+    assert.equal((await backfillHls(10, true)).completed, 0);
+    assert.deepEqual(await storage.get(legacyKey, 1024 * 1024), video);
+    await social.conversation(
+      actor,
+      peer,
+      'فيديو قديم مهيأ',
+      randomUUID(),
+      legacy,
+    );
+    assert.equal((await media.hls(peer, legacy)).available, true);
+    const legacyStreams = (
+      await db.query(
+        'SELECT id,storage_key FROM media_streams WHERE asset_id=$1',
+        [legacy],
+      )
+    ).rows;
+    for (const row of legacyStreams) {
+      const served = await media.stream(peer, legacy, row.id);
+      assert.ok(served.bytes.length > 0);
+    }
+    checks.push('legacy-s3-hls-backfill-private-encrypted-idempotent');
     const pending = await media.upload(actor, {
         dataBase64: wav.toString('base64'),
         chatPeerId: peer,

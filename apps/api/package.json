@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "pnpm build && node --env-file-if-exists=../../.env dist/apps/api/src/main.js",
-    "start": "node --env-file-if-exists=../../.env dist/apps/api/src/main.js",
+    "dev": "pnpm build && node --use-env-proxy --env-file-if-exists=../../.env dist/apps/api/src/main.js",
+    "start": "node --use-env-proxy --env-file-if-exists=../../.env dist/apps/api/src/main.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

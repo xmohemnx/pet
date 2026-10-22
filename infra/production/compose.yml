@@ -43,7 +43,13 @@ services:
       APP_ORIGIN: https://${PETRA_DOMAIN:?Set the real domain}
       API_HOST: 0.0.0.0
       API_PORT: '4000'
+      RELEASE_COMMIT: ${RELEASE_COMMIT:?Set the reviewed release commit}
       PETRA_DEMO_MODE: 'false'
+      PETRA_MEDIA_ROOT: /tmp/petra-media
+      PETRA_CLAMAV_SOCKET: /run/petra-scanner/clamd.sock
+    volumes:
+      - ${PETRA_SCANNER_SOCKET_DIR:?Set the private ClamAV socket directory}:/run/petra-scanner:ro
+    group_add: ['${PETRA_SCANNER_GID:?Set the scanner socket group ID}']
     user: '1000:1000'
     read_only: true
     tmpfs: ['/tmp:rw,noexec,nosuid,size=128m']
@@ -72,6 +78,12 @@ services:
       APP_ENV: production
       APP_ORIGIN: https://${PETRA_DOMAIN:?Set the real domain}
       PETRA_DEMO_MODE: 'false'
+      RELEASE_COMMIT: ${RELEASE_COMMIT:?Set the reviewed release commit}
+      PETRA_MEDIA_ROOT: /tmp/petra-media
+      PETRA_CLAMAV_SOCKET: /run/petra-scanner/clamd.sock
+    volumes:
+      - ${PETRA_SCANNER_SOCKET_DIR:?Set the private ClamAV socket directory}:/run/petra-scanner:ro
+    group_add: ['${PETRA_SCANNER_GID:?Set the scanner socket group ID}']
     user: '1000:1000'
     read_only: true
     tmpfs: ['/tmp:rw,noexec,nosuid,size=256m']
