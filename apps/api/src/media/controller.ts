@@ -24,17 +24,47 @@ export class MediaController {
         .object({
           dataBase64: z.string().min(4).max(28000000),
           petId: z.uuid().optional(),
+          chatPeerId: z.uuid().optional(),
+          kind: z.literal('audio').optional(),
         })
         .strict(),
       b,
     );
     return this.media.upload(actor, i);
   }
-  @Get() async list(@Req() r: Request, @Query('petId') petId?: string) {
+  @Get() async list(
+    @Req() r: Request,
+    @Query('petId') petId?: string,
+    @Query('chatPeerId') chatPeerId?: string,
+  ) {
     return this.media.list(
       (await requireSession(r)).user.id,
       petId ? uuid(petId) : undefined,
+      chatPeerId ? uuid(chatPeerId) : undefined,
     );
+  }
+  @Get(':id/hls') async hls(@Req() r: Request, @Param('id') id: string) {
+    return this.media.hls((await requireSession(r)).user.id, uuid(id));
+  }
+  @Get(':id/streams/:streamId') async stream(
+    @Req() r: Request,
+    @Param('id') id: string,
+    @Param('streamId') streamId: string,
+    @Res() response: Response,
+  ) {
+    const a = await this.media.stream(
+      (await requireSession(r)).user.id,
+      uuid(id),
+      uuid(streamId),
+    );
+    response
+      .set({
+        'Content-Type': a.mime,
+        'Content-Length': String(a.bytes.length),
+        'Cache-Control': 'private, no-store',
+        'X-Content-Type-Options': 'nosniff',
+      })
+      .send(a.bytes);
   }
   @Get(':id/file') async file(
     @Req() r: Request,

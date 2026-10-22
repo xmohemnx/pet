@@ -1,324 +1,335 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-  ArrowUpLeft,
-  ArrowLeft,
-  Heart,
-  Stethoscope,
-  ShoppingBag,
-  CarFront,
-  House,
-  Sparkles,
-  PawPrint,
-  ShieldCheck,
-  CalendarDays,
-  Check,
-  MoveUpLeft,
-} from 'lucide-react';
+import { ArrowUpLeft, ArrowLeft, Plus } from 'lucide-react';
 import { Brand } from '../components/brand';
-const services = [
-  {
-    icon: Stethoscope,
-    title: 'رعاية تشبه حبّك لهم',
-    text: 'عيادات وأطباء، ومكان واحد لكل تفاصيل صحتهم.',
-    tag: 'الصحة والرعاية',
-    tone: 'mint',
-  },
-  {
-    icon: ShoppingBag,
-    title: 'كل ما يجعل يومهم أجمل',
-    text: 'منتجات وخدمات من متاجر العيادات، في تجربة واحدة.',
-    tag: 'متجر العيادات',
-    tone: 'peach',
-  },
-  {
-    icon: Heart,
-    title: 'فرصة جديدة، لحكاية جديدة',
-    text: 'مساحة للتبني والإنقاذ، ومجتمع يهتم فعلًا.',
-    tag: 'المجتمع والتبني',
-    tone: 'lavender',
-  },
+import { ServiceFinder } from '../components/service-finder';
+import { PublicExperience } from '../components/public-experience';
+
+const questions = [
+  [
+    'ما الذي أستطيع فعله في Petra؟',
+    'أنشئ ملفاً لحيوانك، واستكشف المواعيد والخدمات المنشورة، وتصفّح متاجر العيادات، وشارك في المجتمع. تحتاج بعض الخدمات إلى تسجيل الدخول وموافقات محددة.',
+  ],
+  [
+    'من يستطيع رؤية الملف الطبي؟',
+    'صاحب الحيوان والأشخاص المخوّلون ضمن نطاق الرعاية وموافقاتها. مشاركة منشور في المجتمع لا تجعل الملف الطبي أو مرفقاته عامة.',
+  ],
+  [
+    'هل أستطيع الانضمام كطبيب أو عيادة؟',
+    'نعم. أنشئ حساباً، ثم قدّم طلب اعتماد من مساحتك. تُراجع الطلبات قبل منح الصلاحيات المهنية. العضوية لا تعني تحققاً خارجياً من الترخيص.',
+  ],
+  [
+    'هل الدفع متاح حالياً؟',
+    'العمليات المالية الحالية اختبارية. لن تُفعّل المدفوعات الحقيقية قبل اعتماد مزود الدفع واستكمال متطلبات التشغيل.',
+  ],
 ];
+
 export default function Home() {
   return (
-    <>
-      <div className="announcement">
-        نبني Petra معًا <span>✦</span> حسابات ورعاية وخدمات متصلة — المعاملات
-        المالية اختبارية
-      </div>
-      <header className="site-header wrap">
+    <PublicExperience>
+      <header className="petra-site-header petra-container">
         <Brand />
         <nav aria-label="التنقل الرئيسي">
           <a href="#services">عالم Petra</a>
           <a href="#journey">كيف نعتني بهم؟</a>
           <a href="#community">مجتمعنا</a>
         </nav>
-        <Link href="/login" className="button small outline">
-          تسجيل الدخول <ArrowUpLeft size={17} />
+        <Link href="/login" className="petra-login">
+          تسجيل الدخول <ArrowUpLeft size={17} aria-hidden="true" />
         </Link>
       </header>
-      <main id="main">
-        <section className="hero wrap">
-          <div className="hero-copy reveal">
-            <span className="eyebrow">
-              <span className="tiny-paw">
-                <PawPrint size={15} />
-              </span>{' '}
-              لهم في قلبك مكان. ولهم عندنا عالم.
-            </span>
-            <h1>
-              كل حكاية جميلة
-              <br />
-              تبدأ{' '}
-              <span className="serif-accent">
-                برعاية<span className="title-dot">.</span>
-              </span>
-            </h1>
-            <p>
-              لأنهم أكثر من حيوانات أليفة، جمعنا لك عالمًا من الرعاية والخدمات
-              والرفقة. أنت تهتم بالحب، ونحن نسهّل الباقي.
-            </p>
-            <div className="hero-actions">
-              <Link href="/care" className="button primary">
-                ابدأ رحلة الرعاية <ArrowUpLeft size={20} />
-              </Link>
-              <a href="#services" className="text-link">
-                تعرّف على عالمهم <ArrowLeft size={18} />
-              </a>
-            </div>
-            <div className="hero-note">
-              <span className="mini-paws">
-                <PawPrint />
-                <Heart />
-                <ShieldCheck />
-              </span>
-              <span>صُمّمت بحبّ للحيوان، وراحة للإنسان.</span>
-            </div>
-          </div>
-          <div className="hero-art reveal">
-            <div className="orbit-label" lang="en" dir="ltr">
-              A LITTLE LOVE. A WHOLE WORLD.
-            </div>
-            <div className="garden-frame">
+      <main id="main" tabIndex={-1}>
+        <section
+          className="petra-intro petra-container"
+          aria-labelledby="petra-title"
+        >
+          <h1 id="petra-title">
+            عالمهم،{' '}
+            <span className="petra-inline-photo" aria-hidden="true">
               <Image
-                src="/pet-garden.svg"
-                alt="قطة وكلب في حديقة؛ رسم أصلي لهوية Petra"
-                width={700}
-                height={720}
+                src="/images/companions.png"
+                alt=""
+                width={240}
+                height={130}
                 priority
+                sizes="(max-width: 600px) 90px, 180px"
               />
-            </div>
-            <div className="floating-note care-note">
-              <span className="note-icon">
-                <Heart size={21} />
-              </span>
-              <div>
-                <strong>عائلة واحدة، رعاية متكاملة</strong>
-                <small>من أول يوم، وفي كل خطوة.</small>
-              </div>
-              <span className="spark">✦</span>
-            </div>
-            <div className="floating-note pet-note">
-              <span className="pet-note-paw">
-                <PawPrint size={22} />
-              </span>
-              <span>
-                تفاصيل صغيرة.
-                <br />
-                <strong>حبّ بلا حدود.</strong>
-              </span>
-            </div>
-            <span className="art-spark spark-one">✳</span>
-            <span className="art-spark spark-two">✦</span>
-            <span className="art-number" dir="ltr">
-              01 / THE PETRA WAY
-            </span>
-          </div>
-        </section>
-        <div className="values-strip">
-          <div className="wrap values">
-            <span>
-              <PawPrint />
-              لأنهم جزء من العائلة
-            </span>
-            <span>
-              <ShieldCheck />
-              رعاية بخصوصية واهتمام
-            </span>
-            <span>
-              <Heart />
-              مجتمع يجمعنا حبّهم
-            </span>
-            <span>
-              <Sparkles />
-              تفاصيل تصنع الفرق
-            </span>
-          </div>
-        </div>
-        <section id="services" className="section wrap">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">عالم كامل، لأجلهم</span>
-              <h2>
-                احتياجات كثيرة.
-                <br />
-                ومكان واحد يهتم.
-              </h2>
-            </div>
+            </span>{' '}
+            أقرب إليك.
+          </h1>
+          <div className="petra-intro-bottom">
             <p>
-              من الاطمئنان على صحتهم إلى تفاصيل يومهم،
-              <br />
-              كل رحلة تبدأ بخطوة بسيطة.
-            </p>
-          </div>
-          <div className="service-grid">
-            {services.map((s, i) => (
-              <Link
-                key={s.title}
-                href={
-                  i === 1 ? '/marketplace' : i === 2 ? '/adoption' : '/care'
-                }
-                className={`service-card ${s.tone}`}
-              >
-                <div className="service-top">
-                  <s.icon size={30} strokeWidth={1.5} />
-                  <span className="round-arrow">
-                    <ArrowUpLeft size={20} />
-                  </span>
-                </div>
-                <span className="service-tag">{s.tag}</span>
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-                <span className="service-foot">
-                  استكشف القسم <ArrowLeft size={17} />
-                </span>
-              </Link>
-            ))}
-          </div>
-          <div className="service-extras">
-            <Link href="/taxi">
-              <CarFront size={20} /> Pet Taxi
-            </Link>
-            <Link href="/services">
-              <House size={20} /> إقامة مريحة
-            </Link>
-            <Link href="/care">
-              <Sparkles size={20} /> عناية وتجميل
-            </Link>
-            <small>الأوقات والخدمات تظهر عندما تنشرها الجهات المعتمدة</small>
-          </div>
-        </section>
-        <section id="journey" className="journey-section">
-          <div className="wrap journey-layout">
-            <div className="journey-preview">
-              <div className="preview-top">
-                <span className="preview-icon">
-                  <PawPrint />
-                </span>
-                <span>رفيقك، في قلب التجربة</span>
-                <span className="small-chip">نموذج تصميم</span>
-              </div>
-              <div className="preview-pet">
-                <div className="cat-avatar">ل</div>
-                <div>
-                  <h3>أهلًا، لونا</h3>
-                  <p>كل تفاصيلك الجميلة، في مكان واحد.</p>
-                </div>
-                <Heart className="preview-heart" />
-              </div>
-              <div className="preview-reminder">
-                <CalendarDays />
-                <div>
-                  <strong>موعد للاطمئنان</strong>
-                  <p>سجل مرتب، ورحلة رعاية أوضح.</p>
-                </div>
-                <Check size={20} />
-              </div>
-              <div className="preview-line">
-                <span>ملف الحيوان</span>
-                <span>التقويم</span>
-                <span>المتابعة</span>
-              </div>
-            </div>
-            <div className="journey-copy">
-              <span className="eyebrow">أقرب لهم. أسهل لك.</span>
-              <h2>
-                من أول «أهلًا»،
-                <br />
-                إلى كل يوم معًا.
-              </h2>
-              <div className="steps">
-                {[
-                  [
-                    '01',
-                    'عرّفنا على رفيقك',
-                    'ملف يجمع التفاصيل التي تحتاجها رعايته.',
-                  ],
-                  [
-                    '02',
-                    'اختر الرعاية المناسبة',
-                    'اكتشف العيادات والخدمات التي تناسب رحلتكم.',
-                  ],
-                  ['03', 'ابقَ مطمئنًا', 'مواعيد وسجل ومتابعة، بصورة أوضح.'],
-                ].map(([n, t, d]) => (
-                  <div className="step" key={n}>
-                    <span dir="ltr">{n}</span>
-                    <div>
-                      <h3>{t}</h3>
-                      <p>{d}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Link href="/care" className="text-link">
-                جرّب مساحة العميل <ArrowLeft size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-        <section id="community" className="community wrap section">
-          <div>
-            <span className="eyebrow">حبّهم يجمعنا</span>
-            <h2>
-              كل رفيق يستحق
-              <br />
-              حكاية فيها دفء.
-            </h2>
-            <p>
-              نبني مساحة لأصحاب الحيوانات والأطباء والعيادات؛ للرعاية، وللمعرفة،
-              ولفرص البدايات الجديدة.
+              من أول موعد إلى تفاصيل كل يوم. رعاية، مستلزمات، ورفقة تجمع كل ما
+              يخص حيوانك في مكان واحد.
             </p>
             <Link href="/care" className="button primary">
-              شاهد ملامح التجربة <ArrowUpLeft size={19} />
+              ابدأ رحلة الرعاية <ArrowUpLeft size={20} aria-hidden="true" />
             </Link>
           </div>
-          <div className="community-art" aria-hidden="true">
-            <span className="community-word">
-              معًا<span>لأجلهم.</span>
-            </span>
-            <PawPrint className="big-paw" />
-            <span className="community-bubble">
-              <Heart size={38} strokeWidth={1.3} />
-            </span>
-            <span className="community-caption">
-              SMALL PAWS, BIG CONNECTIONS
-            </span>
+          <div className="petra-cover">
+            <Image
+              src="/images/companions.png"
+              alt="قطة وكلب في صورة مُنشأة لهوية Petra"
+              width={1536}
+              height={1024}
+              priority
+              sizes="(max-width: 1440px) 95vw, 1344px"
+            />
+            <div className="petra-cover-caption">
+              <span>لأنهم جزء من العائلة.</span>
+              <span lang="en" dir="ltr">
+                A little closer. Every day.
+              </span>
+            </div>
+          </div>
+          <ServiceFinder />
+        </section>
+
+        <section
+          id="services"
+          tabIndex={-1}
+          className="petra-world petra-container"
+          aria-labelledby="petra-world-title"
+        >
+          <div className="petra-section-heading">
+            <h2 id="petra-world-title">
+              عالم كامل.
+              <br />
+              لرفيقك الصغير.
+            </h2>
+            <p>
+              تختلف احتياجاتهم، ويبقى اهتمامك واحداً.
+              <br />
+              اختر من أين تبدأ، ودع التفاصيل تأخذ مكانها.
+            </p>
+          </div>
+          <div className="petra-editorial-grid">
+            <Link
+              href="/care/directory"
+              className="petra-story petra-story-care"
+            >
+              <div className="petra-story-image">
+                <Image
+                  src="/images/care.png"
+                  alt="صورة توضيحية لفحص قطة برفق"
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width: 760px) 94vw, 60vw"
+                />
+              </div>
+              <div className="petra-story-copy">
+                <div>
+                  <h3>اطمئنان، في كل زيارة.</h3>
+                  <p>أطباء وعيادات ومواعيد، وملف يحتفظ بتفاصيل الرعاية.</p>
+                </div>
+                <ArrowUpLeft size={26} aria-hidden="true" />
+              </div>
+            </Link>
+            <Link href="/marketplace" className="petra-story petra-story-shop">
+              <div className="petra-story-image">
+                <Image
+                  src="/images/essentials.png"
+                  alt="تكوين توضيحي لمستلزمات الحيوانات الأليفة"
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width: 760px) 94vw, 38vw"
+                />
+              </div>
+              <div className="petra-story-copy">
+                <div>
+                  <h3>تفاصيل تصنع يومهم.</h3>
+                  <p>مستلزمات ومنتجات من متاجر العيادات.</p>
+                </div>
+                <ArrowUpLeft size={26} aria-hidden="true" />
+              </div>
+            </Link>
+          </div>
+          <div className="petra-service-index">
+            <Link href="/taxi">
+              <span>نقل الحيوانات</span>
+              <span>
+                رحلتهم، بترتيب أوضح <ArrowUpLeft size={19} aria-hidden="true" />
+              </span>
+            </Link>
+            <Link href="/services">
+              <span>الباقات والإقامة</span>
+              <span>
+                لأيامهم معك، وأيام سفرك{' '}
+                <ArrowUpLeft size={19} aria-hidden="true" />
+              </span>
+            </Link>
+            <Link href="/grooming">
+              <span>العناية والتجميل</span>
+              <span>
+                اهتمام بالتفاصيل الصغيرة{' '}
+                <ArrowUpLeft size={19} aria-hidden="true" />
+              </span>
+            </Link>
+            <Link href="/home-visits">
+              <span>الزيارات المنزلية</span>
+              <span>
+                الرعاية في مكانهم المألوف{' '}
+                <ArrowUpLeft size={19} aria-hidden="true" />
+              </span>
+            </Link>
           </div>
         </section>
-        <section className="final-cta wrap">
-          <span className="eyebrow">هذه البداية فقط</span>
-          <h2>عالمهم أجمل، وأنت معهم.</h2>
-          <p>أنشئ ملف رفيقك وتابع رعايته وخدماته من حسابك.</p>
-          <Link href="/care" className="button cream">
-            ادخل التجربة <MoveUpLeft size={20} />
-          </Link>
+
+        <section
+          id="journey"
+          tabIndex={-1}
+          className="petra-journey"
+          aria-labelledby="petra-journey-title"
+        >
+          <div className="petra-container">
+            <div className="petra-section-heading">
+              <h2 id="petra-journey-title">
+                الرعاية تبدأ
+                <br />
+                بمعرفتهم أكثر.
+              </h2>
+              <p>
+                حساب واحد يحفظ التفاصيل.
+                <br />
+                وأنت تختار متى تشاركها، ومع من.
+              </p>
+            </div>
+            <ol className="petra-steps">
+              <li>
+                <h3>عرّفنا برفيقك</h3>
+                <p>
+                  أنشئ حسابك وأضف ملف حيوانك وبياناته الأساسية. لكل رفيق مساحة
+                  تخصّه.
+                </p>
+                <Link href="/register">
+                  أنشئ حسابك <ArrowLeft size={17} aria-hidden="true" />
+                </Link>
+              </li>
+              <li>
+                <h3>اختر ما يحتاجه</h3>
+                <p>
+                  استكشف الجهات والخدمات والأوقات المنشورة، وراجع التفاصيل قبل
+                  تأكيد طلبك.
+                </p>
+                <Link href="/care/directory">
+                  استكشف الرعاية <ArrowLeft size={17} aria-hidden="true" />
+                </Link>
+              </li>
+              <li>
+                <h3>ابقَ قريباً من التفاصيل</h3>
+                <p>
+                  تابع المواعيد والسجل من حسابك، وشارك المعلومات الطبية بموافقتك
+                  وفي نطاقها.
+                </p>
+                <Link href="/care">
+                  افتح مركز الرعاية <ArrowLeft size={17} aria-hidden="true" />
+                </Link>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section
+          id="community"
+          tabIndex={-1}
+          className="petra-community petra-container"
+          aria-labelledby="petra-community-title"
+        >
+          <div className="petra-community-photo">
+            <Image
+              src="/images/companion.png"
+              alt="صورة توضيحية لقطة تستريح قرب نافذة"
+              width={1536}
+              height={1024}
+              sizes="(max-width: 760px) 94vw, 48vw"
+            />
+          </div>
+          <div className="petra-community-copy">
+            <h2 id="petra-community-title">
+              حكايات صغيرة.
+              <br />
+              روابط تبقى.
+            </h2>
+            <p>
+              صورة من يومهم، سؤال يشغلك، أو فرصة لبيت جديد. مساحة يجمعنا فيها
+              حبّهم، مع خيارات للخصوصية والتحكم بمن تتواصل معه.
+            </p>
+            <Link href="/social" className="button primary">
+              تعرّف على المجتمع <ArrowUpLeft size={20} aria-hidden="true" />
+            </Link>
+            <Link href="/adoption" className="petra-inline-link">
+              اكتشف التبني والإنقاذ <ArrowLeft size={18} aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
+        <section
+          className="petra-faq petra-container"
+          aria-labelledby="petra-faq-title"
+        >
+          <h2 id="petra-faq-title">قبل أن تبدأ.</h2>
+          <div>
+            {questions.map(([question, answer]) => (
+              <details key={question}>
+                <summary>
+                  {question}
+                  <Plus size={21} aria-hidden="true" />
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+        <section
+          className="petra-closing petra-container"
+          aria-labelledby="petra-closing-title"
+        >
+          <h2 id="petra-closing-title">
+            مساحة لك.
+            <br />
+            وعالم لهم.
+          </h2>
+          <div>
+            <p>
+              خطوتك الأولى بسيطة.
+              <br />
+              أنشئ حساباً، وابدأ بملف رفيقك.
+            </p>
+            <Link href="/register" className="button primary">
+              انضم إلى Petra <ArrowUpLeft size={20} aria-hidden="true" />
+            </Link>
+          </div>
         </section>
       </main>
-      <footer className="footer wrap">
-        <Brand />
-        <p>Petra · رعاية بحبّ، في كل خطوة.</p>
-        <span>قيد البناء · نسخة تجريبية ٢٠٢٦</span>
+      <footer className="petra-footer">
+        <div className="petra-container">
+          <div className="petra-footer-top">
+            <Brand light />
+            <p>نقرّب الرعاية، ونترك للحبّ مساحته.</p>
+            <nav aria-label="روابط إضافية">
+              <Link href="/care">الرعاية</Link>
+              <Link href="/marketplace">المتجر</Link>
+              <Link href="/social">المجتمع</Link>
+              <Link href="/login">حسابك</Link>
+            </nav>
+          </div>
+          <div className="petra-footer-bottom">
+            <span>Petra · العراق</span>
+            <span>المعاملات المالية حالياً اختبارية.</span>
+            <Link href="/security">
+              أمان الحساب والخصوصية <ArrowUpLeft size={16} aria-hidden="true" />
+            </Link>
+          </div>
+          <span
+            className="petra-footer-word"
+            aria-hidden="true"
+            lang="en"
+            dir="ltr"
+          >
+            petra.
+          </span>
+        </div>
       </footer>
-    </>
+    </PublicExperience>
   );
 }

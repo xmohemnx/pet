@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 const config: NextConfig = {
+  output: 'standalone',
   agentRules: false,
   allowedDevOrigins: ['127.0.0.1'],
   transpilePackages: ['@petra/contracts', '@petra/ui'],

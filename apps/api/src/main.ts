@@ -18,6 +18,9 @@ import { CommunityService } from './community/service.js';
 import { RescueController } from './community/rescue-controller.js';
 import { RescueService } from './community/rescue.js';
 import { RideController } from './services/rides-controller.js';
+import { RideDisputes, RideDisputesController } from './services/disputes.js';
+import { DispatchService, DispatchController } from './services/dispatch.js';
+import { RoutingService, RoutingController } from './services/routing.js';
 import { RideService } from './services/rides.js';
 import { OperationsController } from './operations/controller.js';
 import { OperationsService } from './operations/service.js';
@@ -30,6 +33,8 @@ import { CommerceController } from './commerce/controller.js';
 import { CommerceService } from './commerce/service.js';
 import { CatalogService } from './commerce/catalog.js';
 import { CatalogController } from './commerce/catalog-controller.js';
+import { RealtimeGateway, realtimeSettings } from './community/realtime.js';
+import { TaxonomyService, TaxonomyController } from './commerce/taxonomy.js';
 import { InventoryService } from './commerce/inventory.js';
 import { InventoryController } from './commerce/inventory-controller.js';
 import { DeliveryService } from './commerce/delivery.js';
@@ -87,7 +92,7 @@ class HealthController {
     return {
       status: 'ok',
       service: 'petra-api',
-      phase: 'variant-matrices-local',
+      phase: 'connected-care-redesign-local',
       demoEnabled: process.env.PETRA_DEMO_MODE === 'true',
     };
   }
@@ -111,7 +116,8 @@ class HealthController {
       await pool.query('SELECT 1');
       await redis.connect();
       if ((await redis.ping()) !== 'PONG') throw new Error('redis unavailable');
-      return { status: 'ready', postgres: 'ok', redis: 'ok' };
+      if (!realtimeSettings().enabled) throw new Error('realtime unavailable');
+      return { status: 'ready', postgres: 'ok', redis: 'ok', realtime: 'ok' };
     } catch {
       throw new ServiceUnavailableException(
         'إحدى خدمات البنية المحلية غير متاحة',
@@ -187,6 +193,7 @@ class Errors implements ExceptionFilter {
     PetSafetyController,
     CommerceController,
     CatalogController,
+    TaxonomyController,
     InventoryController,
     DeliveryController,
     CommercePricingController,
@@ -202,6 +209,9 @@ class Errors implements ExceptionFilter {
     RescueController,
     RescueLifecycleController,
     RideController,
+    RoutingController,
+    DispatchController,
+    RideDisputesController,
     OperationsController,
   ],
   providers: [
@@ -227,7 +237,12 @@ class Errors implements ExceptionFilter {
     RescueService,
     RescueLifecycleService,
     RideService,
+    RoutingService,
+    DispatchService,
+    RideDisputes,
     OperationsService,
+    RealtimeGateway,
+    TaxonomyService,
     MediaService,
     BankService,
   ],
@@ -251,12 +266,13 @@ async function main() {
       .setDescription(
         'هوية ورعاية وتجارة ودفتر وخدمات ومجتمع وإنقاذ ونقل. التحصيل والصرف محليان في sandbox فقط.',
       )
-      .setVersion('0.11.0')
+      .setVersion('0.19.0')
       .build(),
   );
   if (process.env.APP_ENV === 'local')
     SwaggerModule.setup('api/docs', app, doc);
   app.enableShutdownHooks();
+  await app.get(RealtimeGateway).start(app.getHttpServer());
   await app.listen(
     Number(process.env.API_PORT ?? 4000),
     process.env.API_HOST ?? '127.0.0.1',

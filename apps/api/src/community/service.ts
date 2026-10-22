@@ -40,6 +40,27 @@ export async function unblocked(db: PoolClient, a: string, b: string) {
   )
     throw new NotFoundException('الحساب غير متاح');
 }
+export async function conversationAccess(
+  db: PoolClient,
+  actor: string,
+  id: string,
+) {
+  await unblocked(db, actor, id);
+  const profile = (
+    await db.query('SELECT * FROM social_profiles WHERE user_id=$1', [id])
+  ).rows[0];
+  if (!profile || actor === id) throw new NotFoundException();
+  if (
+    profile.privacy === 'private' &&
+    !(
+      await db.query(
+        "SELECT 1 FROM social_follows WHERE status='accepted' AND ((follower_id=$1 AND followed_id=$2) OR (follower_id=$2 AND followed_id=$1))",
+        [actor, id],
+      )
+    ).rowCount
+  )
+    throw new ForbiddenException('المراسلة تتطلب متابعة مقبولة');
+}
 export const visibleSql = `p.deleted_at IS NULL AND p.moderated_at IS NULL AND (p.expires_at IS NULL OR p.expires_at>now() OR EXISTS(SELECT 1 FROM story_highlights h WHERE h.post_id=p.id AND h.user_id=p.user_id AND h.expires_at>now())) AND NOT EXISTS(SELECT 1 FROM social_blocks b WHERE (b.blocker_id=$1 AND b.blocked_id=p.user_id) OR (b.blocker_id=p.user_id AND b.blocked_id=$1)) AND (p.user_id=$1 OR (p.visibility<>'private' AND (sp.privacy='public' OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=$1 AND f.followed_id=p.user_id AND f.status='accepted')) AND (p.visibility='public' OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=$1 AND f.followed_id=p.user_id AND f.status='accepted'))))`;
 export async function visiblePost(db: PoolClient, actor: string, id: string) {
   const p = (
@@ -55,13 +76,24 @@ export async function visiblePost(db: PoolClient, actor: string, id: string) {
 export class CommunityService {
   async profile(
     actor: string,
-    input?: { displayName: string; bio: string; privacy: 'public' | 'private' },
+    input?: {
+      displayName: string;
+      bio: string;
+      privacy: 'public' | 'private';
+      presenceEnabled?: boolean;
+    },
   ) {
     return transaction(async (db) => {
       if (input) {
         await db.query(
-          'INSERT INTO social_profiles(user_id,display_name,bio,privacy) VALUES($1,$2,$3,$4) ON CONFLICT(user_id) DO UPDATE SET display_name=$2,bio=$3,privacy=$4',
-          [actor, input.displayName, input.bio, input.privacy],
+          'INSERT INTO social_profiles(user_id,display_name,bio,privacy,presence_enabled) VALUES($1,$2,$3,$4,coalesce($5,false)) ON CONFLICT(user_id) DO UPDATE SET display_name=$2,bio=$3,privacy=$4,presence_enabled=coalesce($5,social_profiles.presence_enabled)',
+          [
+            actor,
+            input.displayName,
+            input.bio,
+            input.privacy,
+            input.presenceEnabled ?? null,
+          ],
         );
         await audit(db, actor, 'social.profile_saved');
       }
@@ -119,7 +151,7 @@ export class CommunityService {
       if (i.assetId) {
         const asset = (
           await db.query(
-            "SELECT * FROM media_assets WHERE id=$1 AND owner_id=$2 AND pet_id IS NULL AND status='ready'",
+            "SELECT * FROM media_assets WHERE id=$1 AND owner_id=$2 AND pet_id IS NULL AND chat_peer_id IS NULL AND status='ready'",
             [i.assetId, actor],
           )
         ).rows[0];
@@ -348,23 +380,15 @@ export class CommunityService {
         ).rows,
     );
   }
-  async conversation(actor: string, id: string, body?: string, key?: string) {
+  async conversation(
+    actor: string,
+    id: string,
+    body?: string,
+    key?: string,
+    assetId?: string,
+  ) {
     return transaction(async (db) => {
-      await unblocked(db, actor, id);
-      const profile = (
-        await db.query('SELECT * FROM social_profiles WHERE user_id=$1', [id])
-      ).rows[0];
-      if (!profile || actor === id) throw new NotFoundException();
-      if (
-        profile.privacy === 'private' &&
-        !(
-          await db.query(
-            "SELECT 1 FROM social_follows WHERE status='accepted' AND ((follower_id=$1 AND followed_id=$2) OR (follower_id=$2 AND followed_id=$1))",
-            [actor, id],
-          )
-        ).rowCount
-      )
-        throw new ForbiddenException('المراسلة تتطلب متابعة مقبولة');
+      await conversationAccess(db, actor, id);
       if (body) {
         await rate(db, actor, 'message', 20);
         const old = (
@@ -374,14 +398,30 @@ export class CommunityService {
           )
         ).rows[0];
         if (old) {
-          if (old.recipient_id !== id || old.body !== body)
+          if (
+            old.recipient_id !== id ||
+            old.body !== body ||
+            old.asset_id !== (assetId?.toLowerCase() ?? null)
+          )
             throw new ConflictException();
           return old;
         }
+        if (
+          assetId &&
+          !(
+            await db.query(
+              "SELECT 1 FROM media_assets WHERE id=$1 AND owner_id=$2 AND chat_peer_id=$3 AND pet_id IS NULL AND status='ready' AND kind IN ('image','video','audio') FOR SHARE",
+              [assetId, actor, id],
+            )
+          ).rowCount
+        )
+          throw new BadRequestException(
+            'المرفق ليس جاهزاً أو غير مرتبط بهذه المحادثة',
+          );
         const m = (
           await db.query(
-            'INSERT INTO direct_messages(sender_id,recipient_id,body,idempotency_key) VALUES($1,$2,$3,$4) RETURNING *',
-            [actor, id, body, key],
+            'INSERT INTO direct_messages(sender_id,recipient_id,body,idempotency_key,asset_id) VALUES($1,$2,$3,$4,$5) RETURNING *',
+            [actor, id, body, key, assetId ?? null],
           )
         ).rows[0];
         await emit(db, actor, 'DirectMessageCreated', m.id, 1);
@@ -393,7 +433,7 @@ export class CommunityService {
       );
       return (
         await db.query(
-          'SELECT * FROM (SELECT * FROM direct_messages WHERE (sender_id=$1 AND recipient_id=$2) OR (sender_id=$2 AND recipient_id=$1) ORDER BY created_at DESC LIMIT 100) m ORDER BY created_at',
+          'SELECT m.*,(SELECT kind FROM media_assets a WHERE a.id=m.asset_id) asset_kind FROM (SELECT * FROM direct_messages WHERE (sender_id=$1 AND recipient_id=$2) OR (sender_id=$2 AND recipient_id=$1) ORDER BY created_at DESC LIMIT 100) m ORDER BY created_at',
           [actor, id],
         )
       ).rows;

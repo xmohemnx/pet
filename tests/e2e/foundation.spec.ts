@@ -10,9 +10,9 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await page.goto(route);
       const title =
         route === '/'
-          ? 'كل حكاية جميلة تبدأ برعاية.'
+          ? 'عالمهم، أقرب إليك.'
           : route.includes('customer')
-            ? 'أهلًا بك في عالمهم ✦'
+            ? 'أهلًا بك في عالمهم'
             : 'صورة أوضح، لكل التفاصيل.';
       await expect(
         page.getByRole('heading', { level: 1, name: title }),
@@ -27,11 +27,24 @@ for (const width of [320, 390, 768, 1024, 1440]) {
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
       ).toBe(true);
-      if (width === 390 || width === 1440)
+      if (width === 390 || width === 1440) {
+        for (const image of await page.locator('main img').all()) {
+          await image.scrollIntoViewIfNeeded();
+          await expect
+            .poll(() =>
+              image.evaluate(
+                (element: HTMLImageElement) =>
+                  element.complete && element.naturalWidth > 0,
+              ),
+            )
+            .toBe(true);
+        }
+        await page.evaluate(() => scrollTo(0, 0));
         await page.screenshot({
           path: `docs/evidence/${route === '/' ? 'home' : route.includes('customer') ? 'customer' : 'finance'}-${width}.png`,
           fullPage: true,
         });
+      }
     }
   });
 }
@@ -105,6 +118,7 @@ test('عقود API وجاهزية الخدمات وأخطاء المسارات',
     status: 'ready',
     postgres: 'ok',
     redis: 'ok',
+    realtime: 'ok',
   });
   const data = await request.get('http://127.0.0.1:4100/api/v1/demo/customer');
   expect((await data.json()).mode).toBe('design-demo');
@@ -121,7 +135,7 @@ test('تقليل الحركة يبقي الصفحة كاملة دون حركة �
   await page.goto('/');
   expect(
     await page
-      .locator('.hero-copy')
+      .locator('.petra-intro h1')
       .evaluate((el) => getComputedStyle(el).animationName),
   ).toBe('none');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();

@@ -1,5 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import { PrivateVideo } from './private-video';
+import { ChatAttachments } from './chat-attachments';
+import { useChatRealtime } from './use-chat-realtime';
 import Link from 'next/link';
 import { StoryHighlights } from './story-highlights';
 import type {
@@ -56,35 +59,12 @@ export function SocialCenter({
       Record<string, { display_name: string }[]>
     >({}),
     [highlightUser, setHighlightUser] = useState<string | null>(null);
-  useEffect(() => {
-    if (!chat) return;
-    const controller = new AbortController();
-    let live = true,
-      busy = false;
-    const timer = setInterval(async () => {
-      if (document.visibilityState !== 'visible' || busy) return;
-      busy = true;
-      try {
-        const next = await api<SocialMessage[]>(
-          `social/messages/${chat.user_id}`,
-          { signal: controller.signal },
-        );
-        if (live) setMessages(next);
-      } catch {
-        if (live && !controller.signal.aborted) {
-          setChat(null);
-          setMessages([]);
-        }
-      } finally {
-        busy = false;
-      }
-    }, 4000);
-    return () => {
-      live = false;
-      clearInterval(timer);
-      controller.abort();
-    };
-  }, [chat]);
+  const clearChat = useCallback(() => {
+    setChat(null);
+    setMessages([]);
+  }, []);
+  const realtime = useChatRealtime(chat?.user_id, setMessages, clearChat);
+  const messageKeys = useRef(new Map<string, string>());
   async function feed(k = kind, saved = savedOnly, search = query) {
     setPosts(
       await api<SocialPost[]>(
@@ -92,6 +72,10 @@ export function SocialCenter({
       ),
     );
   }
+  const [chatAsset, setChatAsset] = useState<{
+    peer: string;
+    asset: MediaAsset;
+  } | null>(null);
   async function refresh() {
     await feed();
     setAssets(await api<MediaAsset[]>('media'));
@@ -191,13 +175,7 @@ export function SocialCenter({
               </div>
               {p.asset_id &&
                 (p.kind === 'reel' || p.asset_kind === 'video' ? (
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    src={`/api/v1/media/${p.asset_id}/file`}
-                    aria-label="فيديو المنشور"
-                  />
+                  <PrivateVideo assetId={p.asset_id} label="فيديو المنشور" />
                 ) : (
                   <img
                     src={`/api/v1/media/${p.asset_id}/file`}
@@ -391,6 +369,7 @@ export function SocialCenter({
                       displayName: f.get('name'),
                       bio: f.get('bio'),
                       privacy: f.get('privacy'),
+                      presenceEnabled: f.get('presence') === 'on',
                     }),
                   }),
                 );
@@ -424,6 +403,14 @@ export function SocialCenter({
                   <option value="private">خاص · متابعة بموافقتك</option>
                   <option value="public">عام للمستخدمين</option>
                 </select>
+              </label>
+              <label className="care-check">
+                <input
+                  type="checkbox"
+                  name="presence"
+                  defaultChecked={profile?.presence_enabled ?? false}
+                />
+                أشارك حالة اتصالي ومؤشر الكتابة مع من تسمح لهم سياسة المراسلة
               </label>
             </CareForm>
           </section>
@@ -589,34 +576,101 @@ export function SocialCenter({
                 رسائل · {chat.display_name}
               </h2>
               <p className="panel-intro">
-                رسائل محفوظة تتحدث كل أربع ثوانٍ عندما تكون الصفحة ظاهرة؛ لا
+                رسائل محفوظة باتصال فوري، مع إعادة مزامنة عند عودة الاتصال. لا
                 تتضمن محادثة طبية.
+              </p>
+              <p role="status">
+                {realtime.connected
+                  ? 'المحادثة متصلة فورياً'
+                  : 'إعادة الاتصال؛ تُحدّث الرسائل دورياً'}
+                {realtime.online === true ? ' · متصل الآن' : ''}
+                {realtime.typing ? ' · يكتب الآن…' : ''}
               </p>
               <CareAction action={() => openChat(chat)}>
                 تحديث الرسائل
               </CareAction>
               {messages.map((m) => (
-                <p
+                <div
                   className={`chat-bubble ${m.sender_id === me.user.id ? 'own' : ''}`}
                   key={m.id}
                 >
-                  {m.body}
+                  <p>{m.body}</p>
+                  {m.asset_id &&
+                    (m.asset_kind === 'audio' ? (
+                      <audio
+                        controls
+                        preload="none"
+                        aria-label="مقطع صوتي خاص"
+                        src={`/api/v1/media/${m.asset_id}/file`}
+                      />
+                    ) : m.asset_kind === 'video' ? (
+                      <PrivateVideo
+                        assetId={m.asset_id}
+                        label="فيديو محادثة خاص"
+                      />
+                    ) : (
+                      <img
+                        loading="lazy"
+                        src={`/api/v1/media/${m.asset_id}/file`}
+                        alt="صورة مرفقة بالمحادثة الخاصة"
+                      />
+                    ))}
                   <small>{careDate(m.created_at)}</small>
-                </p>
+                </div>
               ))}
+              <ChatAttachments
+                key={chat.user_id}
+                peer={chat.user_id}
+                selectedId={
+                  chatAsset?.peer === chat.user_id
+                    ? chatAsset.asset.id
+                    : undefined
+                }
+                onReady={(asset) =>
+                  setChatAsset(asset ? { peer: chat.user_id, asset } : null)
+                }
+              />
+              {chatAsset?.peer === chat.user_id && (
+                <p role="status">تم اختيار مرفق خاص للرسالة التالية.</p>
+              )}
               <CareForm
                 label="إرسال الرسالة"
                 submit={async (f) => {
+                  const body = String(f.get('body')),
+                    assetId =
+                      chatAsset?.peer === chat.user_id
+                        ? chatAsset.asset.id
+                        : undefined,
+                    signature = JSON.stringify([
+                      chat.user_id,
+                      body,
+                      assetId ?? null,
+                    ]),
+                    key =
+                      messageKeys.current.get(signature) ?? crypto.randomUUID();
+                  messageKeys.current.set(signature, key);
                   await mutate(`social/messages/${chat.user_id}`, {
-                    body: f.get('body'),
-                    idempotencyKey: crypto.randomUUID(),
+                    body,
+                    idempotencyKey: key,
+                    ...(assetId ? { assetId } : {}),
                   });
+                  realtime.indicateTyping(false);
                   await openChat(chat);
+                  messageKeys.current.delete(signature);
+                  setChatAsset(null);
                 }}
               >
                 <label>
                   نص الرسالة
-                  <textarea name="body" required maxLength={3000} />
+                  <textarea
+                    name="body"
+                    required
+                    maxLength={3000}
+                    onChange={(e) =>
+                      realtime.indicateTyping(!!e.target.value.trim())
+                    }
+                    onBlur={() => realtime.indicateTyping(false)}
+                  />
                 </label>
               </CareForm>
               <CareAction action={() => block(chat.user_id)}>

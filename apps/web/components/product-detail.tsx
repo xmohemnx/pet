@@ -57,6 +57,18 @@ export function ProductDetail({
             SKU: {p.sku} · {p.barcode}
           </p>
           <dl>
+            {p.classification && (
+              <div>
+                <dt>التصنيف المتسلسل</dt>
+                <dd>{p.classification.path.join(' / ')}</dd>
+              </div>
+            )}
+            {!!p.tags?.length && (
+              <div>
+                <dt>الوسوم</dt>
+                <dd>{p.tags.join(' · ')}</dd>
+              </div>
+            )}
             {p.variant_attributes?.map((a) => (
               <div key={a.name}>
                 <dt>{a.name}</dt>

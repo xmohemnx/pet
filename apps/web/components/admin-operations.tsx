@@ -74,6 +74,15 @@ export function AdminOperations({
         title="التشغيل والرقابة والمحتوى"
       />
       <div className="inline-actions">
+        {me.workspaces.some(
+          (w) =>
+            w.persona === 'platform_admin' &&
+            w.capabilities.includes('manage_transport_disputes'),
+        ) && (
+          <Link className="button outline" href="/admin/transport">
+            نزاعات النقل
+          </Link>
+        )}
         <Link className="button outline" href="/admin">
           مراجعة الاعتماد
         </Link>

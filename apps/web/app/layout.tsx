@@ -6,7 +6,9 @@ import '@fontsource/ibm-plex-sans-arabic/600.css';
 import '@fontsource/ibm-plex-sans-arabic/700.css';
 import '@fontsource/manrope/700.css';
 import '@petra/ui/tokens.css';
+import 'leaflet/dist/leaflet.css';
 import './globals.css';
+import './redesign.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000'),
   openGraph: { locale: 'ar_IQ', type: 'website', siteName: 'Petra' },

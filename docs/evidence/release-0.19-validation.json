@@ -1,0 +1,84 @@
+{
+  "release": "0.19.0",
+  "recordedAt": "2026-10-22T00:20:09.817764+00:00",
+  "scope": "local development verification, synthetic principals and fixtures; not independent security certification",
+  "quality": {
+    "lint": true,
+    "strictTypes": true,
+    "unitTestsPassed": 34,
+    "sourceAndBuiltSecurityChecks": true,
+    "secretScan": true,
+    "build": "Next.js and NestJS succeeded"
+  },
+  "browser": {
+    "passed": 204,
+    "failed": 0,
+    "skipped": 0,
+    "workers": 1,
+    "reportedDuration": "6.9m",
+    "includes": [
+      "authorization and financial concurrency",
+      "actual FFmpeg audio and HLS decoding",
+      "WebSocket policy/session revocation",
+      "320/390/768/1440 responsive personas and axe",
+      "GSAP/Lenis keyboard/hash navigation and cleanup",
+      "reduced motion, native touch and no-JS public reading"
+    ]
+  },
+  "migration": "legacy snapshots and journals preserved; 0037–0044 applied after private pre-upgrade dump",
+  "backup": {
+    "status": "verified",
+    "tables": 141,
+    "readyMedia": 0,
+    "mediaFiles": 0,
+    "protectionTriggers": 73
+  },
+  "privateServices": {
+    "status": "verified-local-providers",
+    "checks": [
+      "private-bucket-acl-policy",
+      "encrypted-storage-roundtrip",
+      "anonymous-object-denied",
+      "object-identity-authenticated",
+      "ciphertext-tampering-denied",
+      "overwrite-denied",
+      "actual-clamav-clean-and-eicar",
+      "scanner-unavailable-fails-closed",
+      "s3-chat-delivery-authorization",
+      "s3-medical-attachment-isolation",
+      "infected-upload-never-persisted",
+      "s3-worker-opus-and-adaptive-video",
+      "provider-outage-defers-processing",
+      "encrypted-ready-and-pending-backup-restored",
+      "retired-raw-cleanup-preserves-ready-media"
+    ],
+    "notice": "Isolated service and media pipeline validation; production remains blocked."
+  },
+  "dependencies": "No known vulnerabilities found by pnpm audit --audit-level low at this check",
+  "visual": {
+    "inspectorFailures": 0,
+    "inspectorWarnings": 4,
+    "fullReviewRequiredCaptures": 16,
+    "materialFixes": 1,
+    "verdict": "sole correction resolved; ship at scored scope"
+  },
+  "production": {
+    "status": "blocked",
+    "passed": 12,
+    "blocked": [
+      "PRODUCTION_MODE",
+      "PUBLIC_HTTPS_ORIGIN",
+      "DATABASE_VERIFIED_TLS",
+      "REDIS_VERIFIED_TLS",
+      "SMTP_CONFIGURED",
+      "PRIVATE_MEDIA_CONFIGURATION",
+      "IMPLEMENTED_externalLicenseVerification",
+      "IMPLEMENTED_realPayment",
+      "IMPLEMENTED_legalInvoices",
+      "IMPLEMENTED_shippingProvider",
+      "IMPLEMENTED_retentionWorkflow",
+      "INDEPENDENT_SECURITY_REVIEW",
+      "APPROVED_RETENTION_POLICY"
+    ]
+  }
+}

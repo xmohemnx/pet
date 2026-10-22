@@ -6,6 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import type { PoolClient } from 'pg';
+import { dispatchLock } from './dispatch-lock.js';
 import { transaction } from '../database.js';
 import { CareService } from '../care/service.js';
 import { audit, emit } from '../organizations/service.js';
@@ -20,6 +21,8 @@ export interface RideInput {
   destinationLat: number;
   destinationLng: number;
   idempotencyKey: string;
+  routeQuoteId?: string;
+  autoDispatch?: boolean;
   extraPetIds?: string[];
   scheduledAt?: string | null;
   transportNotes?: string;
@@ -42,6 +45,7 @@ export class RideService {
   async vehicle(
     actor: string,
     i: {
+      autoDispatch?: boolean;
       plate: string;
       description: string;
       city: string;
@@ -53,11 +57,12 @@ export class RideService {
     },
   ) {
     return transaction(async (db) => {
+      await dispatchLock(db);
       await this.driver(db, actor);
       if (i.expiresOn < new Date().toISOString().slice(0, 10))
         throw new BadRequestException('صلاحية المركبة منتهية');
       await db.query(
-        'INSERT INTO driver_vehicles(user_id,plate,description,city,expires_on,available,capacity,allowed_species,passenger_allowed) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT(user_id) DO UPDATE SET plate=$2,description=$3,city=$4,expires_on=$5,available=$6,capacity=$7,allowed_species=$8,passenger_allowed=$9',
+        'INSERT INTO driver_vehicles(user_id,plate,description,city,expires_on,available,capacity,allowed_species,passenger_allowed,auto_dispatch) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) ON CONFLICT(user_id) DO UPDATE SET plate=$2,description=$3,city=$4,expires_on=$5,available=$6,capacity=$7,allowed_species=$8,passenger_allowed=$9,auto_dispatch=$10',
         [
           actor,
           i.plate,
@@ -68,7 +73,12 @@ export class RideService {
           i.capacity,
           i.allowedSpecies,
           i.passengerAllowed,
+          i.autoDispatch ?? false,
         ],
+      );
+      await db.query(
+        "UPDATE ride_dispatch_offers SET status='withdrawn' WHERE driver_id=$1 AND status='pending'",
+        [actor],
       );
       await audit(db, actor, 'taxi.vehicle_saved');
       return { status: 'saved' };
@@ -94,6 +104,8 @@ export class RideService {
       ).rows[0];
       if (old) {
         if (
+          old.auto_dispatch !== (i.autoDispatch ?? false) ||
+          old.route_quote_id !== (i.routeQuoteId?.toLowerCase() ?? null) ||
           old.pet_id !== i.petId.toLowerCase() ||
           (old.scheduled_at
             ? new Date(old.scheduled_at).toISOString()
@@ -135,11 +147,29 @@ export class RideService {
         6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
       );
       if (km > 100) throw new BadRequestException('نطاق التجربة حتى 100 كم');
-      const fare = 5000000n + BigInt(Math.max(km, 1)) * 1000000n;
+      let fare = 5000000n + BigInt(Math.max(km, 1)) * 1000000n;
+      if (i.routeQuoteId) {
+        const quote = (
+          await db.query(
+            'SELECT * FROM ride_route_quotes WHERE id=$1 AND user_id=$2 FOR SHARE',
+            [i.routeQuoteId, actor],
+          )
+        ).rows[0];
+        if (!quote) throw new NotFoundException('المسار غير متاح');
+        if (
+          new Date(quote.expires_at).getTime() <= Date.now() ||
+          Number(quote.origin_lat) !== i.originLat ||
+          Number(quote.origin_lng) !== i.originLng ||
+          Number(quote.destination_lat) !== i.destinationLat ||
+          Number(quote.destination_lng) !== i.destinationLng
+        )
+          throw new ConflictException('انتهى المسار أو تغيرت إحداثياته');
+        fare = BigInt(quote.fare_minor);
+      }
       const share = (fare * 9n) / 10n;
       const r = (
         await db.query(
-          'INSERT INTO rides(user_id,pet_id,city,origin_label,destination_label,origin_lat,origin_lng,destination_lat,destination_lng,fare_minor,driver_share,idempotency_key,scheduled_at,transport_notes,accompanying) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *',
+          'INSERT INTO rides(user_id,pet_id,city,origin_label,destination_label,origin_lat,origin_lng,destination_lat,destination_lng,fare_minor,driver_share,idempotency_key,scheduled_at,transport_notes,accompanying,route_quote_id,auto_dispatch) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',
           [
             actor,
             i.petId,
@@ -156,6 +186,8 @@ export class RideService {
             i.scheduledAt ?? null,
             i.transportNotes ?? '',
             i.accompanying ?? false,
+            i.routeQuoteId ?? null,
+            i.autoDispatch ?? false,
           ],
         )
       ).rows[0];
@@ -193,13 +225,14 @@ export class RideService {
       const requests = vehicle?.available
         ? (
             await db.query(
-              "SELECT r.id,r.city,r.fare_minor::text,p.species FROM rides r JOIN pets p ON p.id=r.pet_id WHERE r.status='requested' AND r.city=$1 AND $2::date>=CURRENT_DATE AND (r.scheduled_at IS NULL OR r.scheduled_at BETWEEN now()-interval '2 hours' AND now()+interval '30 minutes') AND (SELECT count(*) FROM ride_pets WHERE ride_id=r.id)<=$3 AND (NOT r.accompanying OR $5) AND NOT EXISTS(SELECT 1 FROM ride_pets rp JOIN pets pp ON pp.id=rp.pet_id WHERE rp.ride_id=r.id AND NOT ('all'=ANY($4::text[]) OR pp.species=ANY($4::text[]))) ORDER BY r.created_at LIMIT 100",
+              "SELECT r.id,r.city,r.fare_minor::text,p.species FROM rides r JOIN pets p ON p.id=r.pet_id WHERE r.status='requested' AND NOT EXISTS(SELECT 1 FROM ride_dispatch_offers o WHERE o.ride_id=r.id AND o.status='pending' AND o.expires_at>now() AND o.driver_id<>$6) AND r.city=$1 AND $2::date>=CURRENT_DATE AND (r.scheduled_at IS NULL OR r.scheduled_at BETWEEN now()-interval '2 hours' AND now()+interval '30 minutes') AND (SELECT count(*) FROM ride_pets WHERE ride_id=r.id)<=$3 AND (NOT r.accompanying OR $5) AND NOT EXISTS(SELECT 1 FROM ride_pets rp JOIN pets pp ON pp.id=rp.pet_id WHERE rp.ride_id=r.id AND NOT ('all'=ANY($4::text[]) OR pp.species=ANY($4::text[]))) ORDER BY r.created_at LIMIT 100",
               [
                 vehicle.city,
                 vehicle.expires_on,
                 vehicle.capacity,
                 vehicle.allowed_species,
                 vehicle.passenger_allowed,
+                actor,
               ],
             )
           ).rows
@@ -210,13 +243,36 @@ export class RideService {
           [actor],
         )
       ).rows[0].amount;
-      return { vehicle, requests, walletMinor: wallet, mode: 'sandbox' };
+      const offers = (
+        await db.query(
+          "SELECT o.id,o.ride_id,o.expires_at,r.city,r.fare_minor::text,p.species FROM ride_dispatch_offers o JOIN rides r ON r.id=o.ride_id JOIN pets p ON p.id=r.pet_id WHERE o.driver_id=$1 AND o.status='pending' AND o.expires_at>now() AND r.status='requested'",
+          [actor],
+        )
+      ).rows;
+      return {
+        vehicle,
+        requests,
+        offers,
+        walletMinor: wallet,
+        mode: 'sandbox',
+      };
     });
   }
-  async claim(actor: string, id: string) {
+  async claim(actor: string, id: string, offerId?: string) {
     sandbox();
     return transaction(async (db) => {
+      await dispatchLock(db);
       await this.driver(db, actor);
+      if (
+        offerId &&
+        !(
+          await db.query(
+            "SELECT 1 FROM ride_dispatch_offers WHERE id=$1 AND ride_id=$2 AND driver_id=$3 AND status='pending' AND expires_at>now() FOR UPDATE",
+            [offerId, id, actor],
+          )
+        ).rowCount
+      )
+        throw new ConflictException('انتهى عرض الإسناد أو تغيرت حالته');
       const v = (
         await db.query(
           'SELECT * FROM driver_vehicles WHERE user_id=$1 AND available AND expires_on>=CURRENT_DATE FOR UPDATE',
@@ -224,6 +280,26 @@ export class RideService {
         )
       ).rows[0];
       if (!v) throw new ForbiddenException('يلزم مركبة سارية ومتاحة');
+      if (
+        (
+          await db.query(
+            "SELECT 1 FROM rides WHERE driver_id=$1 AND status IN ('accepted','driver_en_route','arrived','in_transit')",
+            [actor],
+          )
+        ).rowCount
+      )
+        throw new ConflictException(
+          'لديك رحلة نشطة؛ أكملها أو ألغها قبل قبول أخرى',
+        );
+      if (
+        (
+          await db.query(
+            "SELECT 1 FROM ride_dispatch_offers WHERE ride_id=$1 AND driver_id<>$2 AND status='pending' AND expires_at>now()",
+            [id, actor],
+          )
+        ).rowCount
+      )
+        throw new ConflictException('الرحلة معروضة مؤقتاً لسائق آخر');
       const r = (
         await db.query('SELECT * FROM rides WHERE id=$1 FOR UPDATE', [id])
       ).rows[0];
@@ -258,6 +334,14 @@ export class RideService {
         await this.care.pet(db, r.user_id, pet.id, 'booking');
       await db.query(
         "UPDATE rides SET driver_id=$2,status='accepted' WHERE id=$1",
+        [id, actor],
+      );
+      await db.query(
+        "UPDATE ride_dispatch_offers SET status='expired' WHERE ride_id=$1 AND status='pending' AND expires_at<=now()",
+        [id],
+      );
+      await db.query(
+        "UPDATE ride_dispatch_offers SET status=CASE WHEN ride_id=$1 AND driver_id=$2 THEN 'accepted' ELSE 'withdrawn' END WHERE status='pending' AND (ride_id=$1 OR driver_id=$2)",
         [id, actor],
       );
       await audit(db, actor, 'taxi.ride_accepted', null, { rideId: id });
@@ -308,6 +392,7 @@ export class RideService {
   }
   async cancel(actor: string, id: string) {
     return transaction(async (db) => {
+      await dispatchLock(db);
       const r = (
         await db.query(
           'SELECT * FROM rides WHERE id=$1 AND (user_id=$2 OR driver_id=$2) FOR UPDATE',
@@ -323,6 +408,10 @@ export class RideService {
         throw new ConflictException('لا يمكن الإلغاء في هذه الحالة');
       await db.query("UPDATE rides SET status='cancelled' WHERE id=$1", [id]);
       await db.query('DELETE FROM ride_locations WHERE ride_id=$1', [id]);
+      await db.query(
+        "UPDATE ride_dispatch_offers SET status='withdrawn' WHERE ride_id=$1 AND status='pending'",
+        [id],
+      );
       await audit(db, actor, 'taxi.cancelled', null, { rideId: id });
       return { status: 'cancelled' };
     });

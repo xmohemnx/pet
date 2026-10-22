@@ -8,7 +8,7 @@ import type { Request } from 'express';
 import { z } from 'zod';
 import { auth } from './auth.js';
 import { database } from '../database.js';
-export async function requireSession(req: Request) {
+export async function requireSession(req: Pick<Request, 'headers'>) {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
   });

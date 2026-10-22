@@ -10,6 +10,7 @@ export default ts.config(
       'playwright-report/**',
       'test-results/**',
       '**/next-env.d.ts',
+      '.agents/skills/**',
     ],
   },
   js.configs.recommended,

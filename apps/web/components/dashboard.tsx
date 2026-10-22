@@ -167,7 +167,7 @@ export function CustomerDashboard({ data }: { data: CustomerDemo }) {
             </div>
             <div className="pet-hero-image">
               <Image
-                src="/pet-garden.svg"
+                src="/images/companions.png"
                 alt="رسم توضيحي لحيوانات Petra"
                 width={280}
                 height={288}

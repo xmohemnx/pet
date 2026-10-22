@@ -9,3 +9,6 @@ test-results
 **/next-env.d.ts
 
 .data/**
+.agents/skills/**
+.taste-skill/**
+.impeccable/**

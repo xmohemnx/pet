@@ -87,13 +87,26 @@ try {
   const mediaRoot = resolve(process.env.PETRA_MEDIA_ROOT ?? '.data/media');
   const files = (
     await clone.query(
-      "SELECT storage_key FROM media_assets WHERE status='ready'",
+      "SELECT storage_key,storage_backend,status='ready' ready FROM media_assets WHERE status IN ('ready','pending','processing') UNION ALL SELECT s.storage_key,s.storage_backend,true ready FROM media_streams s JOIN media_assets a ON a.id=s.asset_id WHERE a.status='ready'",
     )
   ).rows;
   mkdirSync(join(directory, 'media'), { mode: 0o700 });
   for (const f of files) {
-    if (!/^[a-f0-9-]{36}\.(webp|mp4)$/.test(f.storage_key))
+    if (!/^[a-f0-9-]{36}\.(webp|mp4|ogg|upload|m3u8|ts)$/.test(f.storage_key))
       throw new Error('Unsafe asset key');
+    if (f.storage_backend === 's3') {
+      const { privateStorage } =
+        await import('../apps/api/dist/apps/api/src/media/private-storage.js');
+      const bytes = await privateStorage().exportCiphertext(
+        f.storage_key,
+        64 * 1024 * 1024,
+      );
+      const destination = join(directory, 'media', f.storage_key);
+      writeFileSync(destination, bytes, { mode: 0o600 });
+      if (!bytes.equals(readFileSync(destination)))
+        throw new Error('Encrypted backup mismatch');
+      continue;
+    }
     const p = join(mediaRoot, f.storage_key);
     if (!existsSync(p))
       throw new Error('Ready media asset missing during backup');
@@ -155,6 +168,28 @@ try {
     'variant_product_identity_guard',
     'variant_matrix_complete',
     'variant_product_complete',
+    'direct_message_realtime',
+    'social_profile_realtime',
+    'social_block_realtime',
+    'social_follow_realtime',
+    'social_session_realtime',
+    'catalog_category_guard',
+    'product_classification_guard',
+    'road_quote_guard',
+    'quoted_ride_guard',
+    'dispatch_offer_guard',
+    'ride_dispatch_consent_guard',
+    'ride_dispute_guard',
+    'dispute_statement_guard',
+    'transport_refund_guard',
+    'chat_asset_guard',
+    'direct_message_attachment_guard',
+    'social_chat_asset_guard',
+    'catalog_chat_asset_guard',
+    'storefront_chat_asset_guard',
+    'grooming_chat_asset_guard',
+    'media_stream_guard',
+    'media_gc_guard',
   ];
   const triggerCount = (
     await clone.query(
@@ -195,7 +230,8 @@ try {
   const result = {
     status: 'verified',
     tables: tables.length,
-    readyMedia: files.length,
+    readyMedia: files.filter((f) => f.ready).length,
+    mediaFiles: files.length,
     protectionTriggers: triggerCount,
   };
   writeFileSync(

@@ -1,0 +1,13 @@
+# ADR 026 — Progressive public motion and review corrections
+
+Status: accepted for local implementation, not production certification.
+
+The owner requested GSAP skills, Lenis and Cloudflare security guidance after approving the full editorial redesign. Eight official GSAP skills and the Cloudflare skill are pinned by reviewed repository commit in `.agents/skills/INSTALLATION.json`. Lenis is a library; Petra provides a local integration guide and preserves upstream docs/license. Application dependencies are locked by pnpm.
+
+The public content stays server rendered. A small client boundary defers GSAP, its React hook, ScrollTrigger and Lenis; no modules load for reduced motion or Save-Data. GSAP uses scoped targets, a single entrance timeline and short section reveals without hiding content, pinning or scroll locks. Lenis shares the GSAP ticker only for fine pointers; touch, forms and operating dashboards keep native scrolling. Live reduced-motion changes tear down the enhancement. Contexts, triggers, ticker callback and Lenis are disposed on route exit. Native hash links and a no-JS reading path remain.
+
+Cloudflare's skill is applied in focused guidance/source-review mode, not the full audit workflow. No target-controlled audit execution was performed under an assumed sandbox or against external/shared services. A source trace found attachment authorization checked the recipient policy but not the reader's current access to the sender. Both perspectives are now checked: either participant's privacy/follow revocation can deny recipient attachment access. Owners retain their own original. All file/HLS paths reuse this decision. A development regression exercises file, master, rendition and segment reads with synthetic principals, accepted follow and revocation. These ordinary project tests do not substitute for the skill's stricter independent audit sandbox or certify production security.
+
+The complete development suite also exposed a pre-existing Baghdad/UTC mismatch in journals using the default posting date: between 21:00 and 24:00 UTC, reports used Baghdad's current business day while some automatic postings used UTC's previous date. Default posting dates now use the same PostgreSQL transaction clock converted to Asia/Baghdad. Explicit accounting dates and existing immutable journals remain unchanged. The historical-payables regression is retained; no financial assertion or timeout was weakened.
+
+The workspace sidebar is named for assistive technologies so it remains distinguishable from medical/commerce complementary panels. Standalone web startup and production packaging include both static and public assets. No security credential, provider account, paid service, or website publication is implied.

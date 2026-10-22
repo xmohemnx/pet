@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   ArrowLeft,
   Heart,
@@ -8,6 +9,16 @@ import {
   Building2,
   LogOut,
   PawPrint,
+  ShoppingBag,
+  CarFront,
+  Users,
+  Bell,
+  CalendarDays,
+  LayoutDashboard,
+  Stethoscope,
+  BookOpen,
+  Menu,
+  X,
 } from 'lucide-react';
 import { Brand } from './brand';
 import { authClient, api } from '../lib/auth-client';
@@ -19,6 +30,9 @@ export function IdentityShell({
   me: IdentityMe;
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const [menu, setMenu] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   async function change(id: string) {
@@ -54,95 +68,196 @@ export function IdentityShell({
     }
     window.location.assign('/login');
   }
+  const clinicId = me.activeWorkspace.clinicId;
+  const professionalLinks =
+    me.activeWorkspace.persona === 'clinic_member' && clinicId
+      ? ([
+          [`/clinic/${clinicId}`, 'نظرة عامة', LayoutDashboard],
+          [`/clinic/${clinicId}/calendar`, 'تقويم العيادة', CalendarDays],
+          [`/clinic/${clinicId}/commerce`, 'متجر العيادة', ShoppingBag],
+          [`/clinic/${clinicId}/inventory`, 'المخزون', Building2],
+          [`/clinic/${clinicId}/finance`, 'مالية العيادة', BookOpen],
+          [`/clinic/${clinicId}/services`, 'الخدمات والباقات', PawPrint],
+        ] as const)
+      : me.activeWorkspace.persona === 'doctor'
+        ? ([
+            ['/doctor', 'مساحة الطبيب', Stethoscope],
+            ['/doctor/planning', 'تخطيط المواعيد', CalendarDays],
+          ] as const)
+        : me.activeWorkspace.persona === 'driver'
+          ? ([['/driver', 'مساحة السائق', CarFront]] as const)
+          : me.activeWorkspace.persona === 'platform_admin'
+            ? ([
+                ['/admin', 'مراجعات الاعتماد', ShieldCheck],
+                ['/admin/operations', 'التشغيل والرقابة', LayoutDashboard],
+                ['/admin/finance', 'مالية المنصة', BookOpen],
+                ['/admin/transport', 'نزاعات النقل', CarFront],
+              ] as const)
+            : [];
+  const destinations = [
+    ['/app', 'مساحتي', LayoutDashboard],
+    ['/care', 'مركز الرعاية', PawPrint],
+    ['/marketplace', 'المتجر', ShoppingBag],
+    ['/services', 'الباقات والإقامة', Building2],
+    ['/social', 'المجتمع', Users],
+    ['/adoption', 'التبني والإنقاذ', Heart],
+    ['/taxi', 'نقل الحيوانات', CarFront],
+    ['/notifications', 'الإشعارات', Bell],
+  ] as const;
+  function active(href: string) {
+    return (
+      pathname === href ||
+      (href !== '/app' &&
+        !professionalLinks.some(
+          ([item]) =>
+            item !== href &&
+            item.startsWith(href + '/') &&
+            pathname?.startsWith(item),
+        ) &&
+        pathname?.startsWith(href + '/'))
+    );
+  }
   return (
-    <div className="real-app">
-      <header className="real-header">
-        <Brand />
-        <nav aria-label="تنقل الحساب">
-          <Link href="/app">
-            <Heart size={18} />
-            مساحتي
-          </Link>
-          <Link href="/care">
-            <PawPrint size={18} />
-            مركز الرعاية
-          </Link>
-          {me.workspaces.some((w) => w.persona === 'doctor') && (
-            <Link href="/doctor">مساحة الطبيب</Link>
-          )}
-          <Link href="/security">
-            <ShieldCheck size={18} />
-            أمان الحساب
-          </Link>
-          <Link href="/">
-            <PawPrint size={18} />
-            الرئيسية
-          </Link>
-        </nav>
+    <div
+      className="real-app petra-workspace"
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && menu) {
+          setMenu(false);
+          menuButton.current?.focus();
+        }
+      }}
+    >
+      <header className="petra-workspace-top">
         <button
-          className="icon-button"
-          onClick={logout}
-          aria-label="تسجيل الخروج"
+          type="button"
+          className="icon-button petra-menu-toggle"
+          ref={menuButton}
+          onClick={() => setMenu(!menu)}
+          aria-expanded={menu}
+          aria-controls="petra-workspace-navigation"
+          aria-label={menu ? 'إغلاق قائمة التنقل' : 'فتح قائمة التنقل'}
         >
-          <LogOut size={18} />
+          {menu ? (
+            <X size={21} aria-hidden="true" />
+          ) : (
+            <Menu size={21} aria-hidden="true" />
+          )}
         </button>
+        <div className="petra-workspace-context">
+          <span>Petra / مساحة العمل</span>
+          <strong>{me.activeWorkspace.name}</strong>
+        </div>
+        <div className="petra-user-menu">
+          <span className="petra-user-name">{me.user.name}</span>
+          <Link
+            className="icon-button"
+            href="/notifications"
+            aria-label="فتح الإشعارات"
+          >
+            <Bell size={19} aria-hidden="true" />
+          </Link>
+          <button
+            className="icon-button"
+            onClick={logout}
+            aria-label="تسجيل الخروج"
+          >
+            <LogOut size={19} aria-hidden="true" />
+          </button>
+        </div>
       </header>
-      <div className="workspace-bar" role="region" aria-label="مساحة الحساب">
-        <span>
-          <Building2 size={17} />
-          مرحبًا، {me.user.name}
-        </span>
-        <label>
-          مساحة العمل
+      <aside
+        id="petra-workspace-navigation"
+        aria-label="شريط مساحات Petra"
+        className={`petra-workspace-sidebar ${menu ? 'is-open' : ''}`}
+      >
+        <Brand />
+        <div
+          className="petra-workspace-switch"
+          role="region"
+          aria-label="مساحة الحساب"
+        >
+          <label htmlFor="petra-workspace-select">مساحة العمل</label>
           <select
+            id="petra-workspace-select"
             value={me.activeWorkspace.id}
-            onChange={(e) => change(e.target.value)}
+            onChange={(event) => change(event.target.value)}
             disabled={busy}
             aria-label="مساحة العمل"
           >
-            {me.workspaces.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
+            {me.workspaces.map((workspace) => (
+              <option key={workspace.id} value={workspace.id}>
+                {workspace.name}
               </option>
             ))}
           </select>
-        </label>
-      </div>
-      {error && (
-        <div className="form-error wrap" role="alert">
-          {error}
         </div>
-      )}
-      <nav className="feature-nav" aria-label="أقسام Petra">
-        {[
-          ['/care', 'الرعاية'],
-          ['/marketplace', 'المتجر'],
-          ['/services', 'الباقات والإقامة'],
-          ['/social', 'المجتمع'],
-          ['/adoption', 'التبني والإنقاذ'],
-          ['/taxi', 'نقل الحيوانات'],
-          ['/notifications', 'الإشعارات'],
-        ].map(([href, label]) => (
-          <Link key={href} href={href!}>
-            {label}
+        {professionalLinks.length > 0 && (
+          <nav className="petra-workspace-nav" aria-label="تنقل الحساب">
+            <p>العمل اليومي</p>
+            {professionalLinks.map(([href, label, Icon]) => (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active(href) ? 'page' : undefined}
+                onClick={() => setMenu(false)}
+              >
+                <Icon size={18} aria-hidden="true" />
+                {label}
+              </Link>
+            ))}
+          </nav>
+        )}
+        <nav className="petra-workspace-nav" aria-label="أقسام Petra">
+          <p>عالم Petra</p>
+          {destinations.map(([href, label, Icon]) => (
+            <Link
+              href={href}
+              key={href}
+              aria-current={active(href) ? 'page' : undefined}
+              onClick={() => setMenu(false)}
+            >
+              <Icon size={18} aria-hidden="true" />
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <div className="petra-workspace-utilities">
+          <Link
+            href="/security"
+            aria-current={active('/security') ? 'page' : undefined}
+          >
+            <ShieldCheck size={18} aria-hidden="true" />
+            أمان الحساب
           </Link>
-        ))}
-        {me.workspaces.some((w) => w.persona === 'driver') && (
-          <Link href="/driver">مساحة السائق</Link>
+          <Link href="/">
+            <ArrowLeft size={18} aria-hidden="true" />
+            الصفحة الرئيسية
+          </Link>
+        </div>
+        <div className="petra-sidebar-account">
+          <span aria-hidden="true">{me.user.name.slice(0, 1)}</span>
+          <div>
+            <strong>{me.user.name}</strong>
+            <small>حساب Petra</small>
+          </div>
+        </div>
+      </aside>
+      <div className="petra-workspace-canvas">
+        {error && (
+          <div className="form-error" role="alert">
+            {error}
+          </div>
         )}
-        {me.workspaces.some((w) => w.persona === 'platform_admin') && (
-          <Link href="/admin/operations">التشغيل والرقابة</Link>
-        )}
-      </nav>
-      <main id="main" className="real-main">
-        {children}
-      </main>
-      <footer className="real-footer">
-        <span>Petra · رعاية خاصة، وسجلات بموافقة صاحبها.</span>
-        <Link href="/demo/customer">
-          شاهد نموذج التصميم <ArrowLeft size={14} />
-        </Link>
-      </footer>
+        <main id="main" className="real-main">
+          {children}
+        </main>
+        <footer className="real-footer">
+          <span>Petra · رعاية خاصة، وسجلات بموافقة صاحبها.</span>
+          <Link href="/security">
+            إدارة أمان الحساب <ArrowLeft size={14} aria-hidden="true" />
+          </Link>
+        </footer>
+      </div>
     </div>
   );
 }

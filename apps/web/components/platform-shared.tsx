@@ -17,14 +17,14 @@ export function PlatformHeading({
   title,
   children,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   children?: ReactNode;
 }) {
   return (
     <div className="care-heading">
       <div>
-        <p className="eyebrow">{eyebrow}</p>
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h1>{title}</h1>
         {children && <p>{children}</p>}
       </div>

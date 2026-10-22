@@ -18,6 +18,11 @@ export default defineConfig({
   },
   webServer: [
     {
+      command: 'node scripts/osrm-test-fixture.mjs',
+      url: 'http://127.0.0.1:4199/health',
+      reuseExistingServer: false,
+    },
+    {
       command: 'node scripts/run-worker.mjs',
       url: 'http://127.0.0.1:4102',
       env: { WORKER_HEALTH_PORT: '4102' },
@@ -26,7 +31,11 @@ export default defineConfig({
     {
       command: 'pnpm --filter @petra/api start',
       url: 'http://127.0.0.1:4101/api/v1/health',
-      env: { API_PORT: '4101', PETRA_DEMO_MODE: 'false' },
+      env: {
+        API_PORT: '4101',
+        PETRA_DEMO_MODE: 'false',
+        OSRM_ENDPOINT: 'http://127.0.0.1:4199',
+      },
       reuseExistingServer: false,
     },
     {
@@ -38,7 +47,11 @@ export default defineConfig({
     {
       command: 'pnpm dev:api',
       url: 'http://127.0.0.1:4100/api/v1/health',
-      env: { API_PORT: '4100', PETRA_DEMO_MODE: 'true' },
+      env: {
+        API_PORT: '4100',
+        PETRA_DEMO_MODE: 'true',
+        OSRM_ENDPOINT: 'http://127.0.0.1:4199',
+      },
       reuseExistingServer: false,
       timeout: 60000,
     },

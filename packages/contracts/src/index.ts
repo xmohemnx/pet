@@ -502,6 +502,9 @@ export function iqdToMinor(input: string) {
 }
 
 export interface Product {
+  category_id?: string | null;
+  tags?: string[];
+  classification?: { id: string; name: string; path: string[] } | null;
   id: string;
   clinic_id: string;
   name: string;
@@ -637,6 +640,7 @@ export interface FinanceReport {
   }[];
 }
 export interface SocialProfile {
+  presence_enabled?: boolean;
   user_id: string;
   display_name: string;
   bio: string;
@@ -661,6 +665,8 @@ export interface SocialPerson extends SocialProfile {
   follow_status: string | null;
 }
 export interface SocialMessage {
+  asset_id?: string | null;
+  asset_kind?: string | null;
   id: string;
   sender_id: string;
   recipient_id: string;
@@ -821,6 +827,8 @@ export interface MyRescue {
   }[];
 }
 export interface Ride {
+  auto_dispatch?: boolean;
+  route_quote_id?: string | null;
   id: string;
   scheduled_at?: string | null;
   pet_count?: number;
@@ -838,6 +846,14 @@ export interface Ride {
   status: string;
 }
 export interface DriverHome {
+  offers: {
+    id: string;
+    ride_id: string;
+    expires_at: string;
+    city: string;
+    fare_minor: string;
+    species: string;
+  }[];
   mode: string;
   vehicle: {
     plate: string;
@@ -845,6 +861,7 @@ export interface DriverHome {
     city: string;
     expires_on: string;
     available: boolean;
+    auto_dispatch?: boolean;
     capacity?: number;
     allowed_species?: string[];
     passenger_allowed?: boolean;

@@ -1,0 +1,18 @@
+{
+  email {$ACME_EMAIL}
+}
+{$PETRA_DOMAIN} {
+  @hidden path_regexp hidden (?i)(^|/)(\.[^/]*|node_modules)(/|$)|\.(pem|key|sql|dump|bak|log)$
+  respond @hidden 404
+  header {
+    Strict-Transport-Security "max-age=31536000"
+    X-Content-Type-Options nosniff
+    -Server
+  }
+  handle /api/v1/social/realtime/socket {
+    reverse_proxy api:4000
+  }
+  handle {
+    reverse_proxy web:3000
+  }
+}

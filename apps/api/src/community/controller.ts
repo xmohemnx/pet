@@ -19,6 +19,7 @@ import {
   uuid,
 } from '../identity/session.js';
 import { CommunityService } from './service.js';
+import { realtimeSettings } from './realtime.js';
 const text = z.string().trim().min(1).max(3000);
 @ApiTags('المجتمع والرسائل والرقابة')
 @Controller('api/v1')
@@ -34,6 +35,7 @@ export class CommunityController {
           displayName: z.string().trim().min(2).max(100),
           bio: z.string().trim().max(500),
           privacy: z.enum(['public', 'private']),
+          presenceEnabled: z.boolean().optional(),
         })
         .strict(),
       b,
@@ -184,6 +186,10 @@ export class CommunityController {
   @Get('social/blocks') async blocks(@Req() r: Request) {
     return this.social.blocks((await requireSession(r)).user.id);
   }
+  @Get('social/realtime') async realtime(@Req() r: Request) {
+    await requireSession(r);
+    return realtimeSettings();
+  }
   @Get('social/inbox') async inbox(@Req() r: Request) {
     return this.social.inbox((await requireSession(r)).user.id);
   }
@@ -202,7 +208,13 @@ export class CommunityController {
     @Body() b: unknown,
   ) {
     const i = parse(
-      z.object({ body: text, idempotencyKey: z.uuid() }).strict(),
+      z
+        .object({
+          body: text,
+          idempotencyKey: z.uuid(),
+          assetId: z.uuid().optional(),
+        })
+        .strict(),
       b,
     );
     return this.social.conversation(
@@ -210,6 +222,7 @@ export class CommunityController {
       uuid(id),
       i.body,
       i.idempotencyKey,
+      i.assetId,
     );
   }
   @Post('social/posts/:id/reports') async report(

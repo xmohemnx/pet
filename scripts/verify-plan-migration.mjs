@@ -176,7 +176,7 @@ try {
   ).rows[0].id;
   const oldProducts = (
     await db.query(
-      'SELECT row_to_json(p) data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id',
+      "SELECT (to_jsonb(p)-'category_id'-'tags') data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id",
       [[legacyProduct, legacyChild]],
     )
   ).rows;
@@ -216,10 +216,43 @@ try {
       'utf8',
     ),
   );
+  await db.query(
+    await readFile(new URL('0037_social_realtime.sql', migrationRoot), 'utf8'),
+  );
+  await db.query(
+    await readFile(new URL('0038_catalog_taxonomy.sql', migrationRoot), 'utf8'),
+  );
+  await db.query(
+    await readFile(new URL('0039_road_routing.sql', migrationRoot), 'utf8'),
+  );
+  await db.query(
+    await readFile(
+      new URL('0040_consented_dispatch.sql', migrationRoot),
+      'utf8',
+    ),
+  );
+  await db.query(
+    await readFile(
+      new URL('0041_transport_disputes.sql', migrationRoot),
+      'utf8',
+    ),
+  );
+  await db.query(
+    await readFile(new URL('0042_chat_attachments.sql', migrationRoot), 'utf8'),
+  );
+  await db.query(
+    await readFile(new URL('0043_adaptive_video.sql', migrationRoot), 'utf8'),
+  );
+  await db.query(
+    await readFile(
+      new URL('0044_private_media_storage.sql', migrationRoot),
+      'utf8',
+    ),
+  );
   assert.deepEqual(
     (
       await db.query(
-        'SELECT row_to_json(p) data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id',
+        "SELECT (to_jsonb(p)-'category_id'-'tags') data FROM products p WHERE id=ANY($1::uuid[]) ORDER BY id",
         [[legacyProduct, legacyChild]],
       )
     ).rows,

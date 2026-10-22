@@ -1,14 +1,8 @@
 'use client';
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  Heart,
-  ShieldCheck,
-  PawPrint,
-  Mail,
-  KeyRound,
-} from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, ShieldCheck, Mail, KeyRound } from 'lucide-react';
 import { Brand } from './brand';
 import { authClient, authError } from '../lib/auth-client';
 export function AuthForm({
@@ -130,22 +124,26 @@ export function AuthForm({
   return (
     <div className="auth-page">
       <div className="auth-story">
-        <Brand light />
-        <div>
-          <span className="eyebrow">عالمهم يبدأ بقربك.</span>
+        <Brand />
+        <div className="petra-auth-copy">
           <h2>
-            لهم في قلبك مكان،
+            مساحة لك.
             <br />
-            ولك هنا مساحة.
+            وعالم لهم.
           </h2>
-          <p>حساب واحد لرعاية رفيقك، وفريق عيادتك، وكل ما يأتي لاحقًا.</p>
-          <div className="auth-story-symbols">
-            <PawPrint />
-            <Heart />
-            <ShieldCheck />
-          </div>
+          <p>رعاية، رفقة، وتفاصيل أقرب إليك.</p>
         </div>
-        <small>Petra · نبني الرعاية خطوة بخطوة.</small>
+        <div className="petra-auth-photo">
+          <Image
+            src="/images/companions.png"
+            alt="قطة وكلب في صورة مُنشأة لهوية Petra"
+            width={1536}
+            height={1024}
+            priority
+            sizes="(max-width: 900px) 100vw, 50vw"
+          />
+        </div>
+        <small>Petra · لأنهم جزء من العائلة.</small>
       </div>
       <main id="main" className="auth-main">
         <Link href="/" className="text-link">
@@ -314,8 +312,8 @@ export function AuthForm({
           )}
         </div>
         <p className="auth-footnote">
-          الخدمات الطبية والمالية لم تُطلق بعد. الحسابات هنا هي أساس المرحلة
-          الجديدة.
+          المدفوعات حالياً اختبارية. الخدمات والأوقات تظهر عندما تنشرها الجهات
+          المعتمدة، والمعلومات الطبية تبقى ضمن صلاحياتها.
         </p>
       </main>
     </div>

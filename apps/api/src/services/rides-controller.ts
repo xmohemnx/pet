@@ -27,6 +27,7 @@ export class RideController {
           city: name,
           expiresOn: z.iso.date(),
           available: z.boolean(),
+          autoDispatch: z.boolean().default(false),
           capacity: z.number().int().min(1).max(5).default(1),
           allowedSpecies: z
             .array(z.enum(['all', 'cat', 'dog', 'bird', 'rabbit', 'other']))
@@ -45,7 +46,9 @@ export class RideController {
       z
         .object({
           policyAccepted: z.literal(true),
+          autoDispatch: z.boolean().default(false),
           petId: z.uuid(),
+          routeQuoteId: z.uuid().optional(),
           city: name,
           originLabel: text,
           destinationLabel: text,

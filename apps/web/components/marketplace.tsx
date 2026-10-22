@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { DeliveryAddressBook } from './delivery-address-book';
+import { CatalogSearch } from './catalog-taxonomy';
 import type {
   IdentityMe,
   Product,
@@ -24,7 +25,7 @@ import {
 } from './platform-shared';
 export function Marketplace({
   me,
-  products,
+  products: initialProducts,
   initialOrders,
   initialCart,
   initialWishlist,
@@ -37,6 +38,8 @@ export function Marketplace({
   initialWishlist: string[];
   initialAddresses: DeliveryAddress[];
 }) {
+  const [products, setProducts] = useState(initialProducts),
+    [catalogResults, setCatalogResults] = useState<Product[] | null>(null);
   const [addresses, setAddresses] = useState(initialAddresses),
     [chosenAddress, setChosenAddress] = useState('');
   const [couponCodes, setCouponCodes] = useState<Record<string, string>>({}),
@@ -104,6 +107,18 @@ export function Marketplace({
               placeholder="اسم منتج أو عيادة"
             />
           </label>
+          <CatalogSearch
+            query={q}
+            onResults={(results) => {
+              setCatalogResults(results);
+              if (results)
+                setProducts((previous) => [
+                  ...new Map(
+                    [...previous, ...results].map((p) => [p.id, p]),
+                  ).values(),
+                ]);
+            }}
+          />
           <div className="catalog-filters">
             <label>
               التصنيف
@@ -189,7 +204,7 @@ export function Marketplace({
             المفضلة فقط
           </label>
           <div className="market-products">
-            {products
+            {(catalogResults ?? products)
               .filter(
                 (p) =>
                   `${p.name} ${p.clinic_name} ${p.species} ${p.brand} ${p.category} ${p.variant_label}`
@@ -266,7 +281,13 @@ export function Marketplace({
                 </article>
               ))}
           </div>
-          {!products.length && (
+          {catalogResults !== null && !catalogResults.length && (
+            <Empty>
+              لا توجد نتائج مطابقة للتصنيف والوسم والبحث الحالي. اختيارات السلة
+              محفوظة.
+            </Empty>
+          )}
+          {catalogResults === null && !products.length && (
             <Empty>
               لا توجد منتجات منشورة بعد. تظهر منتجات العيادات بعد إضافتها
               واستلام مخزونها.

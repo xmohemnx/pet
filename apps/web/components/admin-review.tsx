@@ -76,10 +76,10 @@ export function AdminReview({
     <IdentityShell me={context}>
       <div className="page-title">
         <div>
-          <span className="eyebrow">إدارة المنصة · جلسة موثقة بخطوتين</span>
           <h1>مراجعة تستحق الثقة.</h1>
           <p>
-            اعتماد المهنيين قرار مسؤول وموثّق، وليس فحصًا آليًا لرقم الترخيص.
+            جلسة موثقة بخطوتين. اعتماد المهنيين قرار مسؤول وموثّق، وليس فحصًا
+            آليًا لرقم الترخيص.
           </p>
         </div>
         <ShieldCheck size={38} />

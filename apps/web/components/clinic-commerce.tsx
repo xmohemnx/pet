@@ -39,6 +39,9 @@ export function ClinicCommerce({
         كتالوج ومشتريات وطلبات، داخل منشأتك وبصلاحيات فريقها.
       </PlatformHeading>
       <div className="inline-actions">
+        <Link className="button outline" href={`/clinic/${clinic.id}/catalog`}>
+          التصنيفات والوسوم
+        </Link>
         <Link
           className="button outline"
           href={`/clinic/${clinic.id}/promotions`}

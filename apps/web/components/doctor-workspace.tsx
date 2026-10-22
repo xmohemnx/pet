@@ -63,7 +63,6 @@ export function DoctorWorkspace({
     <IdentityShell me={context}>
       <div className="care-heading">
         <div>
-          <p className="eyebrow">مساحة الطبيب</p>
           <h1>يومك في الرعاية</h1>
           <p>أوقاتك المنشورة، زياراتك المسندة، وسجلاتك الموقعة.</p>
         </div>

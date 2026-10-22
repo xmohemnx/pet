@@ -29,6 +29,11 @@ try {
     'INSERT INTO admin_grants(user_id) VALUES($1) ON CONFLICT(user_id) DO UPDATE SET revoked_at=NULL,session_after=clock_timestamp()',
     [u.id],
   );
+  if (process.argv.includes('--transport-disputes'))
+    await db.query(
+      "UPDATE admin_grants SET capabilities=array_append(array_remove(capabilities,'manage_transport_disputes'),'manage_transport_disputes') WHERE user_id=$1",
+      [u.id],
+    );
   await db.query('DELETE FROM auth_sessions WHERE "userId"=$1', [u.id]);
   await db.query(
     "INSERT INTO audit_events(id,actor_id,request_id,action,details) VALUES($1,$2,$3,'admin.local_operator_granted',$4)",
@@ -36,7 +41,10 @@ try {
       randomUUID(),
       u.id,
       randomUUID(),
-      { source: 'explicit-local-operator-cli' },
+      {
+        source: 'explicit-local-operator-cli',
+        transportDisputes: process.argv.includes('--transport-disputes'),
+      },
     ],
   );
   await db.query('COMMIT');

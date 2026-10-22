@@ -16,3 +16,8 @@ coverage/
 *.sql.gz
 *.bak
 *.sqlite
+
+# Local design-tool state and browser captures; reviewed evidence lives in docs/.
+.impeccable/questions/
+.impeccable/review/
+.taste-skill/inspect/

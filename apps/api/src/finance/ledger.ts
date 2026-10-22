@@ -100,7 +100,13 @@ export async function post(
     )
   ).rows[0];
   if (previous) return previous.id as string;
-  const date = options.date ?? new Date().toISOString().slice(0, 10);
+  const date =
+    options.date ??
+    (
+      await db.query(
+        "SELECT (now() AT TIME ZONE 'Asia/Baghdad')::date::text business_day",
+      )
+    ).rows[0].business_day;
   if (
     (
       await db.query(

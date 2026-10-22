@@ -1,0 +1,475 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T00:13:32Z",
+  "title": "Design System: Petra",
+  "extensions": {
+    "colorMeta": {
+      "brand": {
+        "role": "primary",
+        "displayName": "Care blue",
+        "tonalRamp": [
+          "oklch(15% 0.1 264)",
+          "oklch(27% 0.1 264)",
+          "oklch(39% 0.1 264)",
+          "oklch(51% 0.1 264)",
+          "oklch(63% 0.1 264)",
+          "oklch(75% 0.1 264)",
+          "oklch(87% 0.1 264)",
+          "oklch(95% 0.1 264)"
+        ]
+      },
+      "brand-dark": {
+        "role": "primary",
+        "displayName": "Deep blue",
+        "tonalRamp": [
+          "oklch(15% 0.06 260)",
+          "oklch(27% 0.06 260)",
+          "oklch(39% 0.06 260)",
+          "oklch(51% 0.06 260)",
+          "oklch(63% 0.06 260)",
+          "oklch(75% 0.06 260)",
+          "oklch(87% 0.06 260)",
+          "oklch(95% 0.06 260)"
+        ]
+      },
+      "brand-deep": {
+        "role": "primary",
+        "displayName": "Night blue",
+        "tonalRamp": [
+          "oklch(15% 0.04 260)",
+          "oklch(27% 0.04 260)",
+          "oklch(39% 0.04 260)",
+          "oklch(51% 0.04 260)",
+          "oklch(63% 0.04 260)",
+          "oklch(75% 0.04 260)",
+          "oklch(87% 0.04 260)",
+          "oklch(95% 0.04 260)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Reading ink",
+        "tonalRamp": [
+          "oklch(15% 0.015 260)",
+          "oklch(27% 0.015 260)",
+          "oklch(39% 0.015 260)",
+          "oklch(51% 0.015 260)",
+          "oklch(63% 0.015 260)",
+          "oklch(75% 0.015 260)",
+          "oklch(87% 0.015 260)",
+          "oklch(95% 0.015 260)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet slate",
+        "tonalRamp": [
+          "oklch(15% 0.02 255)",
+          "oklch(27% 0.02 255)",
+          "oklch(39% 0.02 255)",
+          "oklch(51% 0.02 255)",
+          "oklch(63% 0.02 255)",
+          "oklch(75% 0.02 255)",
+          "oklch(87% 0.02 255)",
+          "oklch(95% 0.02 255)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Cool paper",
+        "tonalRamp": [
+          "oklch(15% 0.007 260)",
+          "oklch(27% 0.007 260)",
+          "oklch(39% 0.007 260)",
+          "oklch(51% 0.007 260)",
+          "oklch(63% 0.007 260)",
+          "oklch(75% 0.007 260)",
+          "oklch(87% 0.007 260)",
+          "oklch(95% 0.007 260)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(87% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "mint": {
+        "role": "neutral",
+        "displayName": "Legacy pale blue",
+        "tonalRamp": [
+          "oklch(15% 0.012 250)",
+          "oklch(27% 0.012 250)",
+          "oklch(39% 0.012 250)",
+          "oklch(51% 0.012 250)",
+          "oklch(63% 0.012 250)",
+          "oklch(75% 0.012 250)",
+          "oklch(87% 0.012 250)",
+          "oklch(95% 0.012 250)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "tonalRamp": [
+          "oklch(15% 0.01 255)",
+          "oklch(27% 0.01 255)",
+          "oklch(39% 0.01 255)",
+          "oklch(51% 0.01 255)",
+          "oklch(63% 0.01 255)",
+          "oklch(75% 0.01 255)",
+          "oklch(87% 0.01 255)",
+          "oklch(95% 0.01 255)"
+        ]
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "Success green",
+        "tonalRamp": [
+          "oklch(15% 0.06 160)",
+          "oklch(27% 0.06 160)",
+          "oklch(39% 0.06 160)",
+          "oklch(51% 0.06 160)",
+          "oklch(63% 0.06 160)",
+          "oklch(75% 0.06 160)",
+          "oklch(87% 0.06 160)",
+          "oklch(95% 0.06 160)"
+        ]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "Warning amber",
+        "tonalRamp": [
+          "oklch(15% 0.07 65)",
+          "oklch(27% 0.07 65)",
+          "oklch(39% 0.07 65)",
+          "oklch(51% 0.07 65)",
+          "oklch(63% 0.07 65)",
+          "oklch(75% 0.07 65)",
+          "oklch(87% 0.07 65)",
+          "oklch(95% 0.07 65)"
+        ]
+      },
+      "petra-blue-wash": {
+        "role": "neutral",
+        "displayName": "Blue wash",
+        "tonalRamp": [
+          "oklch(15% 0.015 260)",
+          "oklch(27% 0.015 260)",
+          "oklch(39% 0.015 260)",
+          "oklch(51% 0.015 260)",
+          "oklch(63% 0.015 260)",
+          "oklch(75% 0.015 260)",
+          "oklch(87% 0.015 260)",
+          "oklch(95% 0.015 260)"
+        ]
+      },
+      "petra-blue-field": {
+        "role": "neutral",
+        "displayName": "Photographic blue",
+        "tonalRamp": [
+          "oklch(15% 0.025 240)",
+          "oklch(27% 0.025 240)",
+          "oklch(39% 0.025 240)",
+          "oklch(51% 0.025 240)",
+          "oklch(63% 0.025 240)",
+          "oklch(75% 0.025 240)",
+          "oklch(87% 0.025 240)",
+          "oklch(95% 0.025 240)"
+        ]
+      },
+      "petra-control": {
+        "role": "neutral",
+        "displayName": "Control edge",
+        "tonalRamp": [
+          "oklch(15% 0.025 255)",
+          "oklch(27% 0.025 255)",
+          "oklch(39% 0.025 255)",
+          "oklch(51% 0.025 255)",
+          "oklch(63% 0.025 255)",
+          "oklch(75% 0.025 255)",
+          "oklch(87% 0.025 255)",
+          "oklch(95% 0.025 255)"
+        ]
+      },
+      "petra-neutral": {
+        "role": "neutral",
+        "displayName": "Cool neutral",
+        "tonalRamp": [
+          "oklch(15% 0.008 255)",
+          "oklch(27% 0.008 255)",
+          "oklch(39% 0.008 255)",
+          "oklch(51% 0.008 255)",
+          "oklch(63% 0.008 255)",
+          "oklch(75% 0.008 255)",
+          "oklch(87% 0.008 255)",
+          "oklch(95% 0.008 255)"
+        ]
+      },
+      "public-button-hover": {
+        "role": "primary",
+        "displayName": "Public action hover",
+        "tonalRamp": [
+          "oklch(15% 0.1 264)",
+          "oklch(27% 0.1 264)",
+          "oklch(39% 0.1 264)",
+          "oklch(51% 0.1 264)",
+          "oklch(63% 0.1 264)",
+          "oklch(75% 0.1 264)",
+          "oklch(87% 0.1 264)",
+          "oklch(95% 0.1 264)"
+        ]
+      },
+      "operating-button-hover": {
+        "role": "neutral",
+        "displayName": "Operating action hover",
+        "tonalRamp": [
+          "oklch(15% 0.025 260)",
+          "oklch(27% 0.025 260)",
+          "oklch(39% 0.025 260)",
+          "oklch(51% 0.025 260)",
+          "oklch(63% 0.025 260)",
+          "oklch(75% 0.025 260)",
+          "oklch(87% 0.025 260)",
+          "oklch(95% 0.025 260)"
+        ]
+      },
+      "navigation-current": {
+        "role": "neutral",
+        "displayName": "Selected navigation",
+        "tonalRamp": [
+          "oklch(15% 0.012 255)",
+          "oklch(27% 0.012 255)",
+          "oklch(39% 0.012 255)",
+          "oklch(51% 0.012 255)",
+          "oklch(63% 0.012 255)",
+          "oklch(75% 0.012 255)",
+          "oklch(87% 0.012 255)",
+          "oklch(95% 0.012 255)"
+        ]
+      },
+      "legacy-focus": {
+        "role": "semantic",
+        "displayName": "Incumbent warm focus",
+        "tonalRamp": [
+          "oklch(15% 0.08 50)",
+          "oklch(27% 0.08 50)",
+          "oklch(39% 0.08 50)",
+          "oklch(51% 0.08 50)",
+          "oklch(63% 0.08 50)",
+          "oklch(75% 0.08 50)",
+          "oklch(87% 0.08 50)",
+          "oklch(95% 0.08 50)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Arabic public display",
+        "purpose": "Desktop introduction; responsive overrides are recorded in DESIGN.md."
+      },
+      "headline": {
+        "displayName": "Editorial headline",
+        "purpose": "Public section headings."
+      },
+      "title": {
+        "displayName": "Working title",
+        "purpose": "Real account and professional workspace headings."
+      },
+      "section-title": {
+        "displayName": "Panel heading",
+        "purpose": "Compact operating sections."
+      },
+      "body": {
+        "displayName": "Base Arabic body",
+        "purpose": "Global body; public and domain copy can override size and line height."
+      },
+      "operating-body": {
+        "displayName": "Operating copy",
+        "purpose": "Descriptions, section paragraphs and definition-list content."
+      },
+      "label": {
+        "displayName": "Compact navigation",
+        "purpose": "Rail links; form label line-height varies by context."
+      },
+      "button": {
+        "displayName": "Action label",
+        "purpose": "Standard shared buttons; small and identity form variants differ."
+      },
+      "brand": {
+        "displayName": "Latin brand",
+        "purpose": "Manrope wordmark; separate rail and footer sizes."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "duration-micro",
+        "value": "160ms",
+        "purpose": "Root token; button transform and background transitions."
+      },
+      {
+        "name": "duration-page",
+        "value": "280ms",
+        "purpose": "Existing shared root duration token; not the public GSAP timeline duration."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "600ms",
+        "purpose": "Existing root reveal duration; editorial image hover also uses a literal 600ms."
+      },
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.2, 0.65, 0.3, 1)",
+        "purpose": "Shared ease token for photographic hover and supporting transitions."
+      },
+      {
+        "name": "public-opening",
+        "value": "0.7s power3.out; y:18px heading; y:12px supporting content; stagger:0.07s",
+        "purpose": "Deferred GSAP intro, only near document top, never opacity-hidden."
+      },
+      {
+        "name": "public-cover",
+        "value": "1s power3.out; scale:1.035; start:0.04s",
+        "purpose": "One photographic settle in the opening timeline."
+      },
+      {
+        "name": "public-section",
+        "value": "0.55s power3.out; y:18px; stagger:0.06s; start:top 92%; once:true",
+        "purpose": "Scoped section entrance; transforms clear after completion."
+      },
+      {
+        "name": "fine-pointer-scroll",
+        "value": "lerp:0.14; smoothWheel:true; syncTouch:false; anchor duration:0.75s",
+        "purpose": "Lenis enhancement shares the GSAP ticker. Touch and workspace scrolling stay native."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation:none!important; transition:none!important; scroll-behavior:auto!important",
+        "purpose": "Global CSS fallback; public motion module also omitted for reduced motion and Save-Data."
+      }
+    ],
+    "breakpoints": [
+      { "name": "wide-canvas-min", "value": "1800px" },
+      { "name": "operating-collapse-max", "value": "1200px" },
+      { "name": "mobile-shell-max", "value": "1000px" },
+      { "name": "single-column-max", "value": "760px" },
+      { "name": "compact-mobile-max", "value": "420px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Public Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Blue action on public discovery surfaces. Focus reproduces the existing cascade.",
+      "html": "<button class=\"ds-public-primary\" dir=\"rtl\" type=\"button\">استكشف الخدمة<svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M7 17V7h10M7 7l10 10\"/></svg></button>",
+      "css": ".ds-public-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--brand,#2358ce);border-radius:8px;background:var(--brand,#2358ce);color:var(--surface,#ffffff);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-public-primary svg{flex-shrink:0;pointer-events:none}.ds-public-primary:hover{background:#1946b2;transform:translateY(-2px)}.ds-public-primary:active{transform:translateY(1px)}.ds-public-primary:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-public-primary{transition:none}}"
+    },
+    {
+      "name": "Operating Primary Button",
+      "kind": "button",
+      "refersTo": "button-operating",
+      "description": "Neutral action used inside real workspaces; an isolated standard button, outside identity-form sizing.",
+      "html": "<button class=\"ds-operating-primary\" dir=\"rtl\" type=\"button\">حفظ التغييرات</button>",
+      "css": ".ds-operating-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-dark,#202733);border-radius:8px;background:var(--petra-dark,#202733);color:var(--surface,#ffffff);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-operating-primary:hover{background:#394558;border-color:#394558;transform:translateY(-2px)}.ds-operating-primary:active{transform:translateY(1px)}.ds-operating-primary:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}.ds-operating-primary:disabled{background:#e9edf2;border-color:#d1d8e2;color:#586273;opacity:.6;cursor:wait;transform:none}@media(prefers-reduced-motion:reduce){.ds-operating-primary{transition:none}}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary navigation or action with a stronger control edge.",
+      "html": "<button class=\"ds-outline\" dir=\"rtl\" type=\"button\">إدارة المواعيد</button>",
+      "css": ".ds-outline{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-control,#b7c2d1);border-radius:8px;background:var(--surface,#ffffff);color:var(--ink,#202733);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-outline:hover{background:#f5f8ff;border-color:var(--brand,#2358ce);color:var(--brand,#2358ce);transform:translateY(-2px)}.ds-outline:active{transform:translateY(1px)}.ds-outline:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none}}"
+    },
+    {
+      "name": "Operating Identity Field",
+      "kind": "input",
+      "refersTo": "field-identity",
+      "description": "Native identity-form input. The later operating border declaration wins over the older focus border shift.",
+      "html": "<label class=\"ds-field-label\" dir=\"rtl\">اسم الحيوان<input class=\"ds-field\" type=\"text\" placeholder=\"الاسم\" /></label>",
+      "css": ".ds-field-label{display:grid;gap:8px;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:13px;font-weight:500;line-height:1.8;color:var(--ink,#202733)}.ds-field{display:block;width:100%;max-width:100%;min-width:0;padding:11px 13px;border:1px solid var(--petra-control,#b7c2d1);border-radius:7px;background:var(--surface,#ffffff);color:var(--ink,#202733);caret-color:var(--brand,#2358ce);font-family:inherit;font-size:14px;font-weight:400;line-height:1.7}.ds-field::placeholder{color:#626e7e;opacity:1}.ds-field:focus{border-color:var(--petra-control,#b7c2d1)}.ds-field:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}"
+    },
+    {
+      "name": "Workspace Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-item",
+      "description": "Quiet task navigation with a neutral current-page state and mobile touch sizing.",
+      "html": "<nav class=\"ds-nav\" dir=\"rtl\" aria-label=\"مساحة العمل\"><a class=\"ds-nav-link\" href=\"/care\" aria-current=\"page\">مركز الرعاية</a><a class=\"ds-nav-link\" href=\"/marketplace\">المتجر</a></nav>",
+      "css": ".ds-nav{display:grid;gap:4px;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-nav-link{display:flex;align-items:center;gap:12px;padding:8px 12px;min-height:40px;border-radius:7px;color:var(--muted,#566171);font-size:13px;font-weight:400;line-height:1.7;text-decoration:none;touch-action:manipulation}.ds-nav-link:hover{color:var(--ink,#202733);background:#e9edf3}.ds-nav-link[aria-current='page']{background:#e5eaf1;color:var(--ink,#202733);font-weight:500}.ds-nav-link:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(max-width:1000px){.ds-nav-link{min-height:44px}}"
+    },
+    {
+      "name": "Operating Informational Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Small noninteractive status/context tag. Border color alone does not create an outline.",
+      "html": "<span class=\"ds-chip\" dir=\"rtl\">معلومات الحساب</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;background:var(--petra-neutral,#f0f3f7);color:#4c596b;border-color:var(--line,#e3e8ef);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:12px;font-weight:400;line-height:1.8;white-space:nowrap}"
+    },
+    {
+      "name": "Care Panel",
+      "kind": "card",
+      "refersTo": "care-panel",
+      "description": "Flat operating section with compact Arabic hierarchy and responsive padding.",
+      "html": "<section class=\"ds-panel\" dir=\"rtl\"><h2 class=\"ds-panel-heading\">الزيارات المسندة إليك</h2><p class=\"ds-panel-copy\">لا توجد زيارات لعرضها حاليًا.</p></section>",
+      "css": ".ds-panel{min-width:0;margin-block:24px;padding:24px;background:var(--surface,#ffffff);color:var(--ink,#202733);border:1px solid var(--line,#e3e8ef);border-radius:12px;box-shadow:none;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-panel-heading{display:flex;align-items:center;gap:10px;margin:0 0 20px;font-size:19px;font-weight:500;line-height:1.7}.ds-panel-copy{margin:0;color:var(--muted,#566171);font-size:14px;font-weight:400;line-height:1.9;overflow-wrap:anywhere}@media(max-width:760px){.ds-panel{padding:20px}.ds-panel-heading{font-size:18px}}@media(max-width:420px){.ds-panel{padding:18px}}"
+    },
+    {
+      "name": "Native FAQ Disclosure",
+      "kind": "custom",
+      "refersTo": "faq-disclosure",
+      "description": "Native details/summary with a rotating plus; opening remains keyboard and browser controlled.",
+      "html": "<details class=\"ds-faq\" dir=\"rtl\"><summary class=\"ds-faq-summary\">كيف أبدأ؟<svg class=\"ds-faq-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p class=\"ds-faq-copy\">أنشئ حسابًا وأضف رفيقك إلى ملفه الخاص.</p></details>",
+      "css": ".ds-faq{padding:20px 24px;margin-bottom:12px;background:var(--paper,#f7f9fc);color:var(--ink,#202733);border-radius:8px;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-faq-summary{display:flex;align-items:center;justify-content:space-between;gap:24px;list-style:none;cursor:pointer;font-size:18px;font-weight:500;line-height:1.8}.ds-faq-summary::-webkit-details-marker{display:none}.ds-faq-icon{flex-shrink:0;transition:transform 180ms}.ds-faq[open] .ds-faq-icon{transform:rotate(45deg)}.ds-faq-summary:focus-visible{outline:3px solid var(--brand,#2358ce);outline-offset:4px}.ds-faq-copy{padding-top:16px;margin:0;max-width:65ch;color:var(--ink,#202733);font-size:16px;font-weight:400;line-height:2}@media(max-width:1000px){.ds-faq-summary{font-size:16px}}@media(max-width:760px){.ds-faq{padding:18px}.ds-faq-copy{font-size:15px}}@media(prefers-reduced-motion:reduce){.ds-faq-icon{transition:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Companion editorial journal",
+    "overview": "Petra is calm, open and personal: clear Arabic typography, blue accents, white and pale blue fields, and photographs that give animals room in the composition. The owner approved this identity and delegated its application. This is a scan of the implemented web system, not a claim of fidelity to an approved image comp.\n\nPublic discovery uses generous space and large sentences; operating screens use compact headings, neutral navigation, tabular figures and flat panels. They share an identity without sharing density. Conceptual brand photographs are authored imagery, not evidence of actual patients, premises or endorsements.",
+    "keyCharacteristics": [
+      "Arabic first, RTL, with locally bundled fonts.",
+      "One blue brand accent, supported by cool neutrals and semantic status colors.",
+      "Photographic public storytelling and compact, task-led workspaces.",
+      "Readable content before motion, with native touch scrolling and reduced motion support."
+    ],
+    "rules": [
+      {
+        "name": "The Contextual Accent Rule",
+        "body": "Use blue for public emphasis and neutral ink for operating primary actions; do not turn the working rail into a saturated marketing surface.",
+        "section": "colors"
+      },
+      {
+        "name": "The Arabic Breathing Rule",
+        "body": "Preserve the established line heights and wrapping when changing copy; do not compress Arabic to imitate Latin display density.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Working Surface Rule",
+        "body": "Give operating panels hierarchy with spacing, borders and headings; do not add ornamental elevation to routine tasks.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** share the blue/white identity while keeping public discovery generous and operating work compact.",
+      "**Do** keep Arabic RTL, logical spacing, local fonts, visible focus and semantic controls.",
+      "**Do** use real content and honest loading, empty, error and unavailable states in account workspaces.",
+      "**Do** keep photographs conceptual when their provenance is conceptual; preserve their provenance records.",
+      "**Do** preserve native touch and workspace scrolling and respect reduced motion and Save-Data."
+    ],
+    "donts": [
+      "**Don't** invent metrics, testimonials, endorsements or verification claims to fill visual space.",
+      "**Don't** replace task panels with ornamental gradients, floating badges or decorative charts.",
+      "**Don't** repeat a persona kicker above professional overview headings.",
+      "**Don't** infer universal styling from a legacy selector or claim the current focus cascade has been normalized.",
+      "**Don't** add external font, image or animation runtime requests to reproduce the identity."
+    ]
+  }
+}

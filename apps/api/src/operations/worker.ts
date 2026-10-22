@@ -1,3 +1,5 @@
+import { dispatchRides } from '../services/dispatch.js';
+import { expireRoadQuotes } from '../services/routing.js';
 import { expireScheduledRides } from '../services/rides.js';
 import 'reflect-metadata';
 import {
@@ -7,11 +9,13 @@ import {
 import { createServer } from 'node:http';
 import { createClient } from 'redis';
 import { database, transaction } from '../database.js';
-import { processMedia } from '../media/service.js';
+import { processMedia, processMediaGc } from '../media/service.js';
 const titles: Record<string, string> = {
   DirectMessageCreated: 'وصلت رسالة جديدة',
   AppointmentConfirmed: 'تأكد موعد رعاية',
   VisitSigned: 'حُفظت زيارة موقعة ومتابعتها',
+  RideDisputeResolved: 'حسم نزاع الرحلة؛ راجع سجل النزاع الخاص',
+  RideDispatchOffered: 'عرض رحلة متاح للقبول خلال 45 ثانية',
   RideAccepted: 'قبل سائق رحلة النقل',
   RescueCaseAccepted: 'قبلت عيادة بلاغ الإنقاذ',
   OrderCaptured: 'حُفظ التحصيل الاختباري للطلب',
@@ -143,7 +147,9 @@ export async function runWorker() {
   try {
     while (!stopping) {
       await scheduleCareReminders();
+      await expireRoadQuotes();
       await expireScheduledRides();
+      await dispatchRides();
       await deliverDeferredNotifications();
       const jobs = await transaction(async (db) => {
         const rows = (
@@ -172,6 +178,7 @@ export async function runWorker() {
         }
       }
       await processMedia();
+      await processMediaGc();
       await transaction(async (db) => {
         const expired = (
           await db.query(

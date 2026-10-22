@@ -1,0 +1,125 @@
+name: petra-production
+services:
+  web:
+    image: petra-web:${RELEASE_COMMIT:?Set the reviewed release commit}
+    build:
+      context: ../..
+      dockerfile: infra/production/Dockerfile
+      target: web
+    environment:
+      API_BASE_URL: http://api:4000
+      APP_ENV: production
+      APP_ORIGIN: https://${PETRA_DOMAIN:?Set the real domain}
+    user: '1000:1000'
+    read_only: true
+    tmpfs:
+      [
+        '/tmp:rw,noexec,nosuid,size=64m',
+        '/app/apps/web/.next/cache:rw,noexec,nosuid,size=64m,uid=1000,gid=1000',
+      ]
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:3000/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  api:
+    image: petra-api:${RELEASE_COMMIT:?Set the reviewed release commit}
+    build:
+      context: ../..
+      dockerfile: infra/production/Dockerfile
+      target: api
+    env_file: ${PETRA_PRODUCTION_ENV_FILE:?Set a private environment file outside source control}
+    environment:
+      APP_ENV: production
+      APP_ORIGIN: https://${PETRA_DOMAIN:?Set the real domain}
+      API_HOST: 0.0.0.0
+      API_PORT: '4000'
+      PETRA_DEMO_MODE: 'false'
+    user: '1000:1000'
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=128m']
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:4000/api/v1/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  worker:
+    image: petra-worker:${RELEASE_COMMIT:?Set the reviewed release commit}
+    build:
+      context: ../..
+      dockerfile: infra/production/Dockerfile
+      target: worker
+    env_file: ${PETRA_PRODUCTION_ENV_FILE:?Set a private environment file outside source control}
+    environment:
+      APP_ENV: production
+      APP_ORIGIN: https://${PETRA_DOMAIN:?Set the real domain}
+      PETRA_DEMO_MODE: 'false'
+    user: '1000:1000'
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=256m']
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:4002/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  edge:
+    image: caddy:2-alpine
+    ports: ['80:80', '443:443', '443:443/udp']
+    environment:
+      PETRA_DOMAIN: ${PETRA_DOMAIN:?Set the real domain}
+      ACME_EMAIL: ${ACME_EMAIL:?Set the certificate contact}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      web: { condition: service_healthy }
+      api: { condition: service_healthy }
+    restart: unless-stopped
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=16m']
+  migrate:
+    image: petra-api:${RELEASE_COMMIT:?Set the reviewed release commit}
+    profiles: [maintenance]
+    env_file: ${PETRA_PRODUCTION_ENV_FILE:?Set a private environment file outside source control}
+    environment:
+      APP_ENV: production
+    command: ['node', 'scripts/production-migrate.mjs']
+    user: '1000:1000'
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=16m']
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+volumes:
+  caddy-data:
+  caddy-config:

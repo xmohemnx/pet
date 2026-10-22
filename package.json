@@ -1,7 +1,7 @@
 {
   "name": "petra",
   "private": true,
-  "version": "0.18.0",
+  "version": "0.19.0",
   "packageManager": "pnpm@11.25.0",
   "engines": {
     "node": ">=24 <25"
@@ -29,7 +29,10 @@
     "backup:verify": "node scripts/verify-backup.mjs",
     "security:check": "node scripts/security-check.mjs",
     "security:built": "node scripts/security-check.mjs --built",
-    "release:source": "python3 scripts/package-source.py"
+    "release:source": "python3 scripts/package-source.py",
+    "production:check": "node --env-file-if-exists=.env scripts/production-check.mjs",
+    "private:services": "node scripts/private-services.mjs",
+    "test:providers": "pnpm --filter @petra/api build && pnpm private:services && node scripts/verify-private-providers.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
@@ -37,6 +40,7 @@
     "@playwright/test": "^1.56.0",
     "@secretlint/secretlint-rule-preset-recommend": "13.0.7",
     "@types/node": "^24.10.0",
+    "@types/ws": "^8.18.2",
     "eslint": "^10.0.0",
     "otpauth": "^9.5.2",
     "pg": "^8.16.3",
@@ -44,6 +48,7 @@
     "secretlint": "13.0.7",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.0",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "ws": "^8.22.0"
   }
 }

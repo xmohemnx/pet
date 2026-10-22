@@ -4734,3 +4734,27 @@ td small {
   background: var(--surface);
   color: inherit;
 }
+
+.taxi-road-map {
+  height: 320px;
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--radius-md, 12px);
+  z-index: 0;
+}
+.taxi-road-planner {
+  min-width: 0;
+}
+
+.chat-bubble audio,
+.chat-bubble video,
+.chat-bubble img {
+  max-width: 100%;
+}
+
+.private-video,
+.private-video video {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}

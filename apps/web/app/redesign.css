@@ -1,0 +1,1760 @@
+/* Petra companion editorial. Public and operating surfaces share type and tokens. */
+:root {
+  --petra-blue-wash: #edf3fc;
+  --petra-blue-field: #dcebf8;
+  --petra-control: #b7c2d1;
+  --petra-neutral: #f0f3f7;
+  --petra-dark: #202733;
+  color-scheme: light;
+  scrollbar-color: #9ba9bf var(--paper);
+}
+body {
+  font-size: 16px;
+}
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+input,
+textarea {
+  caret-color: var(--brand);
+}
+::selection {
+  background: #c6dbff;
+  color: #142442;
+}
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 4px;
+}
+:where(h1, h2, h3) {
+  text-wrap: balance;
+}
+:where(p) {
+  text-wrap: pretty;
+}
+:where(input, select, textarea) {
+  max-width: 100%;
+}
+:where(table, .num, .finance-real-stats, .stat-value) {
+  font-variant-numeric: tabular-nums;
+}
+.brand {
+  gap: 10px;
+  font-size: 35px;
+  letter-spacing: -1.4px;
+  color: var(--ink);
+}
+.brand-symbol {
+  width: 37px;
+  height: 40px;
+  border-radius: 13px 13px 13px 4px;
+  transform: none;
+  background: var(--brand);
+}
+.brand-symbol svg {
+  width: 23px;
+}
+.brand-dot {
+  color: var(--brand);
+}
+.brand-light {
+  color: white;
+}
+.brand-light .brand-symbol {
+  background: white;
+  color: var(--brand-deep);
+}
+.brand-light .brand-dot {
+  color: #b6d4ff;
+}
+.button {
+  min-height: 46px;
+  padding: 10px 20px;
+  gap: 18px;
+  border-radius: 8px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+.button.primary {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+.button.primary:hover {
+  background: #1946b2;
+  transform: translateY(-2px);
+}
+.button.outline {
+  border-color: var(--petra-control);
+  background: white;
+  color: var(--ink);
+}
+.button.outline:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: #f5f8ff;
+}
+.button.small {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+.button:active {
+  transform: translateY(1px);
+}
+.icon-button {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--muted);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+.icon-button:hover {
+  color: var(--ink);
+  background: var(--petra-neutral);
+}
+
+/* Read and discover: an Arabic sentence opens onto the animals themselves. */
+.petra-public {
+  background: white;
+  color: var(--ink);
+  overflow: clip;
+}
+.petra-container {
+  width: min(1344px, calc(100% - 96px));
+  margin-inline: auto;
+}
+.petra-site-header {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+.petra-site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+}
+.petra-site-header nav a,
+.petra-login {
+  padding-block: 12px;
+}
+.petra-site-header nav a:hover,
+.petra-login:hover {
+  color: var(--brand);
+}
+.petra-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.petra-intro {
+  padding-top: 46px;
+}
+.petra-intro h1 {
+  font-size: clamp(52px, 7.5vw, 100px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+.petra-inline-photo {
+  display: inline-block;
+  width: 1.7em;
+  height: 0.95em;
+  margin-inline: 0.14em;
+  border-radius: 0.5em;
+  overflow: hidden;
+  vertical-align: -0.12em;
+  background: var(--petra-blue-field);
+}
+.petra-inline-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 47%;
+}
+.petra-intro-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 24px 0 38px;
+}
+.petra-intro-bottom p {
+  font-size: 18px;
+  line-height: 1.95;
+  max-width: 620px;
+  color: var(--muted);
+}
+.petra-intro-bottom .button {
+  flex-shrink: 0;
+}
+.petra-cover {
+  position: relative;
+  height: clamp(320px, 39vw, 520px);
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--petra-blue-field);
+}
+.petra-cover > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.petra-cover-caption {
+  position: absolute;
+  inset: auto 28px 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 14px;
+  color: #172b44;
+  font-weight: 500;
+}
+.petra-finder {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 28px;
+}
+.petra-finder label {
+  font-size: 18px;
+  font-weight: 500;
+}
+.petra-finder p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.petra-finder-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.petra-finder select {
+  height: 48px;
+  min-width: 178px;
+  padding: 6px 14px;
+  border: 1px solid var(--petra-control);
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  color: var(--ink);
+}
+.petra-world {
+  padding-block: 126px 124px;
+}
+.petra-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 44px;
+}
+.petra-public h2 {
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.petra-section-heading > p {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 2;
+  max-width: 480px;
+}
+.petra-editorial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 28px;
+}
+.petra-story {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.petra-story-image {
+  overflow: hidden;
+  height: 380px;
+  border-radius: 16px;
+  background: var(--petra-neutral);
+}
+.petra-story-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease);
+}
+.petra-story:hover .petra-story-image img {
+  transform: scale(1.035);
+}
+.petra-story-copy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 22px;
+}
+.petra-story h3 {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.petra-story p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 16px;
+}
+.petra-story-copy > svg {
+  flex-shrink: 0;
+  transition: transform 200ms var(--ease);
+}
+.petra-story:hover .petra-story-copy > svg {
+  transform: translate(-3px, -3px);
+}
+.petra-service-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+  margin-top: 44px;
+}
+.petra-service-index > a {
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: background 180ms;
+}
+.petra-service-index > a > span:first-child {
+  font-size: 18px;
+  font-weight: 500;
+}
+.petra-service-index > a > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.petra-service-index > a:hover {
+  background: var(--petra-blue-wash);
+}
+.petra-journey {
+  background: var(--petra-blue-wash);
+  padding-block: 96px;
+}
+.petra-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 64px;
+}
+.petra-steps h3 {
+  font-size: 23px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.petra-steps p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 2;
+}
+.petra-steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  margin-top: 22px;
+  font-weight: 500;
+}
+.petra-steps a:hover {
+  color: var(--brand);
+}
+.petra-community {
+  padding-block: 128px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 96px;
+  align-items: center;
+}
+.petra-community-photo {
+  height: 540px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.petra-community-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 63%;
+}
+.petra-community-copy p {
+  margin-block: 24px 30px;
+  font-size: 17px;
+  line-height: 2;
+  color: var(--muted);
+  max-width: 480px;
+}
+.petra-inline-link {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
+  font-size: 15px;
+}
+.petra-inline-link:hover {
+  color: var(--brand);
+}
+.petra-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 80px;
+  padding-block: 24px 120px;
+}
+.petra-faq details {
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.petra-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  list-style: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+}
+.petra-faq summary::-webkit-details-marker {
+  display: none;
+}
+.petra-faq summary svg {
+  flex-shrink: 0;
+  transition: transform 180ms;
+}
+.petra-faq details[open] summary svg {
+  transform: rotate(45deg);
+}
+.petra-faq details p {
+  padding-top: 16px;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--muted);
+}
+.petra-closing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 48px;
+  padding: 62px;
+  border-radius: 16px;
+  background: var(--petra-blue-field);
+  margin-bottom: 80px;
+}
+.petra-closing p {
+  font-size: 18px;
+  margin-bottom: 24px;
+  line-height: 2;
+}
+.petra-footer {
+  background: var(--brand-deep);
+  color: #ecf3ff;
+  padding-top: 52px;
+  overflow: hidden;
+}
+.petra-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+.petra-footer-top p {
+  font-size: 16px;
+}
+.petra-footer-top nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 14px;
+}
+.petra-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 48px;
+  font-size: 13px;
+  color: #bdcce2;
+}
+.petra-footer-bottom a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.petra-footer a:hover {
+  color: white;
+}
+.petra-footer-word {
+  display: block;
+  font-family: Manrope, sans-serif;
+  font-size: clamp(100px, 25vw, 390px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.22;
+  margin-top: 24px;
+  color: #aec9ed;
+}
+
+/* Operate: a quiet labelled right rail with real scope and real actions. */
+.petra-workspace {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  grid-template-rows: 76px 1fr;
+  background: var(--paper);
+}
+.petra-workspace-sidebar {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: 24px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  border-inline-end: 1px solid var(--line);
+  gap: 24px;
+}
+.petra-workspace-sidebar > .brand {
+  margin: 0 10px;
+  font-size: 31px;
+}
+.petra-workspace-sidebar .brand-symbol {
+  width: 32px;
+  height: 34px;
+  border-radius: 10px 10px 10px 3px;
+}
+.petra-workspace-top {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding-inline: 32px;
+  background: white;
+}
+.petra-workspace-context {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  font-size: 13px;
+}
+.petra-workspace-context > span {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.petra-workspace-context strong {
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.petra-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.petra-user-name {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-inline-end: 10px;
+}
+.petra-workspace-switch label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 10px 8px;
+}
+.petra-workspace-switch select {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  padding: 7px 10px;
+  border: 1px solid var(--petra-control);
+  border-radius: 8px;
+  color: var(--ink);
+  background: white;
+  font-size: 13px;
+}
+.petra-workspace-nav {
+  display: grid;
+  gap: 4px;
+}
+.petra-workspace-nav p {
+  font-size: 12px;
+  color: var(--muted);
+  padding-inline: 12px;
+  margin-bottom: 6px;
+}
+.petra-workspace-nav a,
+.petra-workspace-utilities a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  min-height: 40px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  border-radius: 7px;
+}
+.petra-workspace-nav a > svg,
+.petra-workspace-utilities a > svg {
+  flex-shrink: 0;
+}
+.petra-workspace-nav a:hover,
+.petra-workspace-utilities a:hover {
+  color: var(--ink);
+  background: #e9edf3;
+}
+.petra-workspace-nav a[aria-current='page'],
+.petra-workspace-utilities a[aria-current='page'] {
+  background: #e5eaf1;
+  color: var(--ink);
+  font-weight: 500;
+}
+.petra-workspace-utilities {
+  margin-top: auto;
+  padding-top: 12px;
+}
+.petra-sidebar-account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 10px 0;
+  border-top: 1px solid var(--line);
+}
+.petra-sidebar-account > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: #e1e9f3;
+  border-radius: 50%;
+  color: #364c69;
+  flex-shrink: 0;
+}
+.petra-sidebar-account > div {
+  min-width: 0;
+}
+.petra-sidebar-account strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.petra-sidebar-account small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+.petra-workspace-canvas {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+}
+.petra-workspace-canvas > .form-error {
+  margin: 24px 32px 0;
+}
+.petra-menu-toggle {
+  display: none;
+}
+.petra-workspace .real-main {
+  width: 100%;
+  max-width: 1520px;
+  padding: 32px;
+  min-height: calc(100dvh - 160px);
+}
+.petra-workspace .real-footer {
+  width: calc(100% - 64px);
+  padding-block: 20px;
+  font-size: 12px;
+}
+.petra-workspace .real-footer a {
+  color: var(--muted);
+}
+.real-main .care-heading,
+.real-main .page-title {
+  margin-block: 0 28px;
+  align-items: start;
+}
+.real-main .care-heading h1,
+.real-main .page-title h1,
+.account-welcome h1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-block: 0 8px;
+  letter-spacing: -0.015em;
+}
+.real-main .care-heading p,
+.real-main .page-title p,
+.account-welcome p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 65ch;
+}
+.real-main .eyebrow {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.real-main .panel,
+.dashboard .panel,
+.dashboard .care-panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+.real-main .panel-heading h2,
+.real-main .care-section h2 {
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.real-main .care-section {
+  padding: 24px;
+  margin-block: 24px;
+}
+.real-main .care-stack .care-section {
+  margin: 0;
+}
+.real-main .care-section p,
+.real-main .care-section dd,
+.real-main .panel-intro {
+  font-size: 14px;
+  line-height: 1.9;
+}
+.real-main .panel-intro {
+  margin-bottom: 20px;
+}
+.real-main .care-columns,
+.real-main .account-grid {
+  gap: 24px;
+}
+.real-main .care-stack,
+.account-primary,
+.account-aside {
+  gap: 24px;
+}
+.real-app .button.primary {
+  background: var(--petra-dark);
+  border-color: var(--petra-dark);
+}
+.real-app .button.primary:hover {
+  background: #394558;
+  border-color: #394558;
+}
+.real-app
+  :where(.identity-form, .care-form, .care-fields)
+  :where(input:not([type='checkbox']):not([type='radio']), select, textarea) {
+  border-color: var(--petra-control);
+  background: white;
+  color: var(--ink);
+  border-radius: 7px;
+  font-size: 14px;
+}
+.real-app :where(.identity-form, .care-form) :where(label, legend) {
+  font-size: 13px;
+}
+.real-app :where(input, textarea)::placeholder {
+  color: #626e7e;
+  opacity: 1;
+}
+.real-app :where(button):disabled {
+  opacity: 1;
+  background: #e9edf2;
+  border-color: #d1d8e2;
+  color: #586273;
+}
+.real-app .small-chip {
+  background: var(--petra-neutral);
+  color: #4c596b;
+  border-color: var(--line);
+  font-size: 12px;
+}
+.real-app .sandbox-notice {
+  background: #fbf4e8;
+  border: 1px solid #e2d4ba;
+  color: #6e4c1b;
+  font-size: 13px;
+  border-radius: 8px;
+}
+.real-app .account-welcome {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0 0 28px;
+  margin-bottom: 0;
+}
+.account-welcome .welcome-paw {
+  display: none;
+}
+.real-app .pet-real-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--petra-neutral);
+  color: var(--muted);
+}
+.real-app .pet-real-card h3 {
+  font-size: 21px;
+}
+.real-app .pet-real-card {
+  padding: 24px;
+  gap: 10px;
+}
+.real-app .clinic-id {
+  background: white;
+  border-color: var(--line);
+}
+.real-app .clinic-id > span,
+.real-app .clinic-id bdi {
+  font-size: 12px;
+}
+.real-app .care-list-row,
+.real-app .simple-row {
+  border-color: var(--line);
+  font-size: 14px;
+}
+.real-app .care-empty {
+  background: white;
+}
+.real-app
+  :where(.stat-card, .finance-real-stats > *, .mini-stat, .account-status) {
+  box-shadow: none;
+  background: white;
+  border-color: var(--line);
+  border-radius: 12px;
+}
+.real-app .finance-real-stats strong {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.real-app :where(table) {
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.real-app :where(th) {
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--muted);
+}
+.real-app :where(td) {
+  padding-block: 16px;
+}
+.real-app :where(th, td) {
+  border-color: var(--line);
+}
+.real-app .market-card {
+  padding: 20px;
+}
+.real-app .market-product-art {
+  background: var(--petra-neutral);
+  color: #71839e;
+  border-radius: 8px;
+}
+.real-app .market-card h2 {
+  font-size: 19px;
+}
+.real-app .social-card {
+  padding: 24px;
+}
+.real-app .chat-messages {
+  background: #f5f7fb;
+  border-color: var(--line);
+  border-radius: 10px;
+}
+.real-app .chat-bubble {
+  background: white;
+  border-color: var(--line);
+  border-radius: 12px 12px 4px 12px;
+}
+.real-app .chat-bubble.mine {
+  background: #e4edfc;
+}
+.real-app .care-tabs button,
+.real-app .social-tabs button {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--line);
+  border-radius: 6px;
+}
+.real-app .care-tabs button[aria-selected='true'],
+.real-app .social-tabs button[aria-pressed='true'] {
+  background: #e5eaf1;
+  color: var(--ink);
+}
+
+/* Authentication shares the photographic identity, keeping form semantics intact. */
+.auth-page {
+  background: white;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.auth-story {
+  background: var(--petra-blue-field);
+  color: var(--ink);
+  padding: 40px;
+  overflow: hidden;
+  min-height: 100dvh;
+}
+.auth-story::after {
+  display: none;
+}
+.auth-story .brand {
+  color: var(--ink);
+}
+.auth-story .brand-symbol {
+  background: var(--brand);
+  color: white;
+}
+.auth-story h2 {
+  color: var(--ink);
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 500;
+  line-height: 1.6;
+}
+.auth-story p {
+  color: #3b526c;
+  font-size: 17px;
+  line-height: 1.9;
+}
+.petra-auth-copy {
+  margin-top: 48px;
+}
+.petra-auth-photo {
+  margin: 30px -40px 12px;
+  flex: 1;
+  min-height: 260px;
+}
+.petra-auth-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 57%;
+}
+.auth-story > small {
+  color: #3b526c;
+  font-size: 13px;
+}
+.auth-main {
+  padding: 36px 48px;
+}
+.auth-card {
+  max-width: 410px;
+}
+.auth-icon {
+  background: var(--petra-blue-wash);
+  color: var(--brand);
+  border-radius: 12px;
+}
+.auth-card > .eyebrow {
+  display: none;
+}
+.auth-card h1 {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.auth-card > p {
+  font-size: 14px;
+  color: var(--muted);
+}
+.auth-card .identity-form :where(input, select) {
+  border-color: var(--petra-control);
+  background: white;
+  font-size: 15px;
+}
+.auth-card input::placeholder {
+  color: #626e7e;
+}
+.auth-footnote {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Existing demonstration surfaces remain clearly marked and use the same system. */
+.dashboard {
+  background: var(--paper);
+}
+.dashboard .sidebar {
+  background: var(--paper);
+  color: var(--ink);
+  border-inline-end: 1px solid var(--line);
+}
+.dashboard .sidebar nav a {
+  color: var(--muted);
+}
+.dashboard .sidebar nav a.active {
+  background: #e5eaf1;
+  color: var(--ink);
+}
+.dashboard .nav-dot {
+  background: var(--brand);
+}
+.dashboard .sidebar-bottom {
+  background: var(--petra-neutral);
+  color: var(--ink);
+  border: 0;
+}
+.dashboard .sidebar-bottom p,
+.dashboard .sidebar-label,
+.dashboard .sidebar-version {
+  color: var(--muted);
+}
+.dashboard .sidebar-bottom > svg {
+  color: var(--brand);
+}
+.dashboard .demo-banner {
+  background: #eaf0f9;
+  color: #344b70;
+}
+.dashboard .dashboard-header {
+  background: white;
+}
+.dashboard .page-title h1 {
+  font-size: 28px;
+  font-weight: 500;
+}
+.dashboard .page-title .eyebrow {
+  display: none;
+}
+.dashboard .page-title .wave {
+  display: none;
+}
+.dashboard .pet-hero {
+  background: var(--petra-blue-field);
+  border: 0;
+}
+.dashboard .pet-hero h2 {
+  font-size: 32px;
+}
+.dashboard .pet-hero-image img {
+  border-radius: 12px;
+  object-fit: cover;
+  height: 100%;
+}
+.dashboard .stat-card {
+  box-shadow: none;
+  background: white;
+  border-color: var(--line);
+}
+.dashboard .dashboard-main {
+  padding-top: 32px;
+}
+.dashboard .finance-heading .eyebrow {
+  display: none;
+}
+
+/* PublicExperience defers GSAP/Lenis; readable content is the default. */
+.petra-public {
+  overflow-anchor: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .petra-public {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 1800px) {
+  .petra-workspace .real-main {
+    margin-inline: auto;
+  }
+}
+@media (max-width: 1200px) {
+  .petra-community {
+    gap: 48px;
+  }
+  .petra-workspace .real-main {
+    padding: 28px;
+  }
+  .petra-workspace .care-columns,
+  .petra-workspace .account-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .petra-workspace .care-slot-grid,
+  .petra-workspace .pet-real-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .petra-story-image {
+    height: 320px;
+  }
+}
+@media (max-width: 1000px) {
+  .petra-container {
+    width: calc(100% - 48px);
+  }
+  .petra-site-header {
+    min-height: 88px;
+  }
+  .petra-site-header nav {
+    gap: 20px;
+    font-size: 13px;
+  }
+  .petra-intro {
+    padding-top: 32px;
+  }
+  .petra-intro h1 {
+    font-size: clamp(48px, 7.3vw, 80px);
+  }
+  .petra-intro-bottom p {
+    font-size: 16px;
+  }
+  .petra-finder {
+    align-items: start;
+  }
+  .petra-finder-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .petra-section-heading > p {
+    font-size: 16px;
+  }
+  .petra-world {
+    padding-block: 90px;
+  }
+  .petra-service-index > a {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .petra-community-photo {
+    height: 460px;
+  }
+  .petra-faq {
+    gap: 40px;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  }
+  .petra-faq summary {
+    font-size: 16px;
+  }
+  .petra-footer-top {
+    flex-wrap: wrap;
+  }
+  .petra-footer-top nav {
+    width: 100%;
+  }
+  .petra-steps {
+    gap: 28px;
+  }
+  .petra-workspace {
+    display: block;
+  }
+  .petra-workspace-top {
+    min-height: 68px;
+    padding: 10px 24px;
+  }
+  .petra-menu-toggle {
+    display: inline-flex;
+  }
+  .petra-workspace-context {
+    flex: 1;
+  }
+  .petra-workspace-context > span {
+    display: none;
+  }
+  .petra-workspace-sidebar {
+    display: none;
+    position: static;
+    height: auto;
+    max-height: none;
+    border-bottom: 1px solid var(--line);
+    border-inline-end: 0;
+    padding: 24px;
+  }
+  .petra-workspace-sidebar.is-open {
+    display: flex;
+  }
+  .petra-workspace-sidebar > .brand {
+    display: none;
+  }
+  .petra-workspace-sidebar .petra-workspace-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .petra-workspace-nav p {
+    grid-column: 1 / -1;
+  }
+  .petra-workspace-nav a {
+    min-height: 44px;
+  }
+  .petra-workspace-utilities {
+    margin-top: 0;
+  }
+  .petra-sidebar-account {
+    display: none;
+  }
+  .petra-workspace .real-main {
+    padding: 28px 24px;
+  }
+  .petra-workspace .real-footer {
+    width: calc(100% - 48px);
+  }
+  .petra-workspace .care-columns {
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  }
+  .petra-workspace .account-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .auth-story {
+    padding: 28px;
+  }
+  .petra-auth-photo {
+    margin-inline: -28px;
+  }
+  .auth-main {
+    padding: 28px;
+  }
+}
+@media (max-width: 760px) {
+  .petra-site-header nav {
+    display: none;
+  }
+  .petra-site-header {
+    min-height: 80px;
+  }
+  .petra-intro {
+    padding-top: 18px;
+  }
+  .petra-intro h1 {
+    font-size: clamp(40px, 9.5vw, 70px);
+    white-space: normal;
+    line-height: 1.5;
+  }
+  .petra-inline-photo {
+    width: 1.7em;
+    height: 0.95em;
+  }
+  .petra-intro-bottom {
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+    margin-block: 20px 30px;
+  }
+  .petra-intro-bottom p {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .petra-cover {
+    height: 340px;
+  }
+  .petra-cover > img {
+    object-position: 56% 55%;
+  }
+  .petra-cover-caption {
+    inset: auto 18px 16px;
+    font-size: 12px;
+  }
+  .petra-cover-caption > span:last-child {
+    display: none;
+  }
+  .petra-finder {
+    flex-direction: column;
+    gap: 18px;
+    padding-block: 24px;
+  }
+  .petra-finder-controls {
+    flex-direction: row;
+    width: 100%;
+  }
+  .petra-finder select {
+    min-width: 0;
+    flex: 1;
+    width: 100px;
+  }
+  .petra-finder-controls .button {
+    padding-inline: 14px;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .petra-world {
+    padding-block: 64px 72px;
+  }
+  .petra-section-heading {
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+    margin-bottom: 30px;
+  }
+  .petra-public h2 {
+    font-size: 36px;
+    line-height: 1.5;
+  }
+  .petra-editorial-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .petra-story-image {
+    height: 300px;
+  }
+  .petra-story h3 {
+    font-size: 23px;
+  }
+  .petra-story p {
+    font-size: 15px;
+  }
+  .petra-story-copy {
+    padding-top: 18px;
+  }
+  .petra-service-index {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .petra-service-index > a {
+    padding: 18px 20px;
+  }
+  .petra-service-index > a > span:last-child {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .petra-journey {
+    padding-block: 64px;
+  }
+  .petra-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .petra-steps h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .petra-steps a {
+    margin-top: 14px;
+  }
+  .petra-community {
+    padding-block: 72px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .petra-community-photo {
+    height: 380px;
+  }
+  .petra-community-copy p {
+    font-size: 16px;
+    margin-block: 20px 24px;
+  }
+  .petra-faq {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-block: 8px 64px;
+  }
+  .petra-faq details {
+    padding: 18px;
+  }
+  .petra-faq details p {
+    font-size: 15px;
+  }
+  .petra-closing {
+    flex-direction: column;
+    align-items: start;
+    padding: 30px 24px;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .petra-closing p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .petra-footer {
+    padding-top: 36px;
+  }
+  .petra-footer-top {
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+  }
+  .petra-footer-top p {
+    font-size: 15px;
+  }
+  .petra-footer-top nav {
+    gap: 20px;
+  }
+  .petra-footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .petra-workspace .care-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .petra-workspace .care-slot-grid,
+  .petra-workspace .pet-real-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .petra-user-name {
+    display: none;
+  }
+  .petra-workspace .care-heading {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .real-main .care-heading h1,
+  .real-main .page-title h1,
+  .account-welcome h1 {
+    font-size: 24px;
+  }
+  .real-main .care-section {
+    padding: 20px;
+  }
+  .real-main .care-section h2 {
+    font-size: 18px;
+  }
+  .real-main .account-welcome {
+    flex-direction: column;
+    align-items: start;
+    gap: 18px;
+  }
+  .real-main .account-grid .panel {
+    padding: 20px;
+  }
+  .petra-workspace .real-footer {
+    flex-direction: column;
+    align-items: start;
+    gap: 12px;
+  }
+  .auth-page {
+    display: block;
+  }
+  .auth-story {
+    min-height: auto;
+    padding: 24px;
+    display: block;
+  }
+  .auth-story .petra-auth-copy,
+  .auth-story .petra-auth-photo,
+  .auth-story > small {
+    display: none;
+  }
+  .auth-main {
+    min-height: calc(100dvh - 88px);
+    padding: 24px;
+  }
+  .auth-card {
+    margin-block: 36px;
+  }
+  .auth-card h1 {
+    font-size: 28px;
+  }
+}
+@media (max-width: 420px) {
+  .petra-container {
+    width: calc(100% - 36px);
+  }
+  .brand {
+    font-size: 31px;
+  }
+  .brand-symbol {
+    width: 32px;
+    height: 35px;
+  }
+  .petra-login {
+    font-size: 12px;
+    gap: 5px;
+  }
+  .petra-intro h1 {
+    font-size: 41px;
+  }
+  .petra-inline-photo {
+    width: 1.65em;
+    height: 0.9em;
+  }
+  .petra-cover {
+    height: 300px;
+    border-radius: 12px;
+  }
+  .petra-story-image {
+    height: 240px;
+    border-radius: 12px;
+  }
+  .petra-finder label {
+    font-size: 17px;
+  }
+  .petra-finder p {
+    font-size: 13px;
+  }
+  .petra-finder-controls {
+    gap: 8px;
+  }
+  .petra-finder-controls .button {
+    font-size: 12px;
+    padding-inline: 10px;
+  }
+  .petra-finder select {
+    font-size: 13px;
+    padding-inline: 8px;
+  }
+  .petra-community-photo {
+    height: 320px;
+  }
+  .petra-public h2 {
+    font-size: 32px;
+  }
+  .petra-workspace-top {
+    padding-inline: 16px;
+    gap: 12px;
+  }
+  .petra-user-menu {
+    gap: 6px;
+  }
+  .petra-workspace-top .icon-button {
+    min-width: 38px;
+    min-height: 44px;
+  }
+  .petra-workspace-context {
+    font-size: 12px;
+  }
+  .petra-workspace .real-main {
+    padding: 24px 16px;
+  }
+  .petra-workspace .real-footer {
+    width: calc(100% - 32px);
+  }
+  .petra-workspace-sidebar {
+    padding: 20px 16px;
+  }
+  .petra-workspace-sidebar .petra-workspace-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .real-main .care-section {
+    padding: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media print {
+  .petra-workspace {
+    display: block;
+  }
+  .petra-workspace-top,
+  .petra-workspace-sidebar,
+  .petra-workspace .real-footer {
+    display: none;
+  }
+  .petra-workspace .real-main {
+    padding: 0;
+    max-width: none;
+  }
+}
+
+/* Final alignment and readable controls, informed by 21st.dev's public UI sources. */
+.button > svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.petra-public p {
+  color: var(--ink);
+  max-width: 65ch;
+}
+.petra-public .petra-section-heading > p,
+.petra-public .petra-community-copy > p {
+  font-size: 18px;
+}
+.petra-service-index > a {
+  background: transparent;
+  border-radius: 0;
+  padding-inline: 0;
+}
+.petra-service-index > a:hover {
+  background: transparent;
+  color: var(--brand);
+}
+.petra-closing {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.petra-closing > div {
+  justify-self: start;
+}
+.petra-cover > img {
+  object-position: center 43%;
+}
+.petra-footer p {
+  color: #ecf3ff;
+}
+.petra-workspace-context > span {
+  color: var(--muted);
+}
+@media (max-width: 1000px) {
+  .petra-workspace-context {
+    display: grid;
+    gap: 0;
+  }
+  .petra-workspace-context > span {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .petra-intro-bottom p {
+    font-size: 18px;
+  }
+}
+@media (max-width: 760px) {
+  .petra-public .petra-section-heading > p,
+  .petra-public .petra-community-copy > p {
+    font-size: 16px;
+  }
+  .petra-closing {
+    display: flex;
+  }
+  .petra-cover-caption,
+  .petra-login,
+  .petra-finder-controls .button {
+    font-size: 13px;
+  }
+}
+
+/* Dense working content keeps the same measured controls as the shell. */
+.real-app .care-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.real-app .care-actions .button {
+  width: auto;
+}
+.real-app .identity-form input:not([type='checkbox']):not([type='radio']),
+.real-app .identity-form select,
+.real-app .identity-form textarea,
+.real-app .care-form input:not([type='checkbox']):not([type='radio']),
+.real-app .care-form select,
+.real-app .care-form textarea,
+.real-app .care-standalone-label select {
+  background: white;
+  border-color: var(--petra-control);
+  color: var(--ink);
+  border-radius: 7px;
+}
+.real-app .account-security-card {
+  background: var(--petra-blue-wash);
+  color: var(--ink);
+  border: 0;
+  border-radius: 12px;
+}
+.real-app .account-security-card > svg {
+  color: var(--brand);
+}
+.real-app .account-security-card h2 {
+  color: var(--ink);
+  font-size: 20px;
+}
+.real-app .account-security-card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.real-app .permission-tags span {
+  color: #3b526f;
+  border-color: #cbd9ec;
+  background: white;
+  font-size: 12px;
+}
+.real-app .finance-notice {
+  background: var(--petra-blue-wash);
+  border-color: #d6e1f1;
+  color: #344b6d;
+  border-radius: 8px;
+}
+.real-app .finance-notice p {
+  font-size: 13px;
+  color: #415777;
+}
+.real-app .finance-notice > svg {
+  color: #415777;
+}
+.petra-care-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.real-main .petra-care-overview > .care-section {
+  padding: 0;
+  margin: 0;
+}
+.real-main .petra-care-overview h2 {
+  font-size: 18px;
+}
+.real-main .petra-care-overview .pet-real-grid,
+.real-main .petra-care-overview .care-slot-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.petra-care-overview .care-empty {
+  padding: 28px 24px;
+  min-height: 180px;
+  align-content: center;
+}
+@media (max-width: 760px) {
+  .petra-care-overview {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .real-app .care-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .real-app .care-actions .button {
+    font-size: 12px;
+    padding-inline: 8px;
+    min-height: 44px;
+  }
+}

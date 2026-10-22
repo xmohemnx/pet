@@ -1,7 +1,13 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { IdentityMe, Pet, Ride, DriverHome } from '@petra/contracts';
 import { formatIqd } from '@petra/contracts';
+import {
+  TaxiRoutePlanner,
+  type TaxiCoordinates,
+  type RoadQuote,
+} from './taxi-route-planner';
+import { RideDisputeCard } from './ride-disputes';
 import { IdentityShell } from './identity-shell';
 import { CareForm, CareAction, localToUtc, careDate } from './care-shared';
 import { api } from '../lib/auth-client';
@@ -26,6 +32,29 @@ export function TaxiCenter({
   const [rides, setRides] = useState(initial),
     [home, setHome] = useState(driverData),
     [locations, setLocations] = useState<Record<string, string>>({});
+  const [coordinates, setCoordinates] = useState<TaxiCoordinates>({
+    olat: '',
+    olng: '',
+    dlat: '',
+    dlng: '',
+  });
+  const [roadQuote, setRoadQuote] = useState<RoadQuote | null>(null);
+  const requestKeys = useRef(new Map<string, string>());
+  function changeCoordinates(next: TaxiCoordinates) {
+    setCoordinates(next);
+    setRoadQuote(null);
+  }
+  async function requestRide(body: Record<string, unknown>) {
+    const serialized = JSON.stringify(body);
+    let key = requestKeys.current.get(serialized);
+    if (!key) {
+      key = crypto.randomUUID();
+      requestKeys.current.set(serialized, key);
+    }
+    await mutate('sandbox/rides', { ...body, idempotencyKey: key });
+    await refresh();
+    requestKeys.current.delete(serialized);
+  }
   async function refresh() {
     const current = await api<Ride[]>('me/rides');
     setRides(current);
@@ -67,10 +96,7 @@ export function TaxiCenter({
   }
   return (
     <IdentityShell me={me}>
-      <PlatformHeading
-        eyebrow={home ? 'مساحة السائق' : 'نقل الحيوانات'}
-        title={home ? 'رحلاتك ومستحقاتك' : 'رحلة مهيأة لرفيقك'}
-      >
+      <PlatformHeading title={home ? 'رحلاتك ومستحقاتك' : 'رحلة مهيأة لرفيقك'}>
         قبول فعلي من سائق معتمد. مشاركة الموقع أثناء الرحلة فقط ولمدة دقيقة بعد
         كل تحديث.
       </PlatformHeading>
@@ -89,6 +115,42 @@ export function TaxiCenter({
         <div className="care-stack">
           {home && (
             <section className="panel care-section">
+              <h2>عروض الإسناد الخاصة</h2>
+              <p>
+                عروض المدينة المطابقة لمركبتك؛ لا يجمع النظام موقع انتظارك ولا
+                يدعي اختيار الأقرب. حدّث القائمة لرؤية العروض الجديدة أو انتهاء
+                مهلتها.
+              </p>
+              {(home.offers ?? []).map((o) => (
+                <article key={o.id} className="care-list-row">
+                  <div>
+                    <h3>
+                      {o.city} · {o.species}
+                    </h3>
+                    <p>
+                      {formatIqd(o.fare_minor)} · مهلة القبول حتى{' '}
+                      {careDate(o.expires_at)}
+                    </p>
+                  </div>
+                  <div className="care-stack">
+                    <CareAction
+                      action={() =>
+                        send(`driver/dispatch-offers/${o.id}/accept`)
+                      }
+                    >
+                      قبول عرض الإسناد
+                    </CareAction>
+                    <CareAction
+                      action={() =>
+                        send(`driver/dispatch-offers/${o.id}/decline`)
+                      }
+                    >
+                      رفض عرض الإسناد
+                    </CareAction>
+                  </div>
+                </article>
+              ))}
+              <CareAction action={refresh}>تحديث عروض النقل</CareAction>
               <h2>طلبات في مدينتك</h2>
               {home.requests.map((r) => (
                 <article className="care-list-row" key={r.id}>
@@ -207,7 +269,7 @@ export function TaxiCenter({
                   </p>
                 )}
                 <details>
-                  <summary>بلاغ سلامة أو نزاع</summary>
+                  <summary>بلاغ سلامة خاص</summary>
                   <CareForm
                     label="إرسال بلاغ الرحلة"
                     submit={(f) =>
@@ -227,6 +289,9 @@ export function TaxiCenter({
                     </label>
                   </CareForm>
                 </details>
+                {['completed', 'cancelled'].includes(r.status) && (
+                  <RideDisputeCard rideId={r.id} />
+                )}
               </article>
             ))}
           </section>
@@ -245,6 +310,7 @@ export function TaxiCenter({
                     city: f.get('city'),
                     expiresOn: f.get('expires'),
                     available: f.get('available') === 'on',
+                    autoDispatch: f.get('autoDispatch') === 'on',
                     capacity: Number(f.get('capacity')),
                     allowedSpecies: f.getAll('species'),
                     passengerAllowed: f.get('passenger') === 'on',
@@ -333,6 +399,15 @@ export function TaxiCenter({
                   />
                   متاح لقبول رحلات
                 </label>
+                <label className="care-check">
+                  <input
+                    type="checkbox"
+                    name="autoDispatch"
+                    defaultChecked={home.vehicle?.auto_dispatch}
+                  />
+                  أوافق على استقبال عروض إسناد آلية اختيارية؛ قبول الرحلة يحتاج
+                  موافقتي خلال 45 ثانية.
+                </label>
               </CareForm>
             </section>
           ) : (
@@ -341,8 +416,9 @@ export function TaxiCenter({
               <CareForm
                 label="إنشاء طلب النقل وعرض السعر"
                 submit={(f) =>
-                  send('sandbox/rides', {
+                  requestRide({
                     policyAccepted: true,
+                    autoDispatch: f.get('autoDispatch') === 'on',
                     petId: f.get('pet'),
                     extraPetIds: f.getAll('extraPets'),
                     scheduledAt: f.get('schedule')
@@ -357,7 +433,7 @@ export function TaxiCenter({
                     originLng: Number(f.get('olng')),
                     destinationLat: Number(f.get('dlat')),
                     destinationLng: Number(f.get('dlng')),
-                    idempotencyKey: crypto.randomUUID(),
+                    ...(roadQuote ? { routeQuoteId: roadQuote.id } : {}),
                   })
                 }
               >
@@ -438,15 +514,35 @@ export function TaxiCenter({
                         min={min}
                         max={max}
                         name={String(name)}
+                        value={
+                          coordinates[String(name) as keyof TaxiCoordinates]
+                        }
+                        onChange={(e) =>
+                          changeCoordinates({
+                            ...coordinates,
+                            [String(name)]: e.target.value,
+                          })
+                        }
                         required
                       />
                     </label>
                   ))}
                 </div>
                 <p className="panel-intro">
-                  الإحداثيات خاصة. السعر التجريبي يُحسب على الخادم حسب المسافة
-                  المباشرة، ولا يعتمد خريطة طرق أو مزود دفع.
+                  الإحداثيات خاصة. دون اختيار مسار طرق أدناه، يعتمد الطلب
+                  الاختباري المسافة المباشرة. لا يوجد خصم مالي حقيقي.
                 </p>
+                <label className="care-check">
+                  <input type="checkbox" name="autoDispatch" />
+                  أوافق على توزيع طلب الرحلة آلياً على سائق مؤهل في المدينة. لا
+                  يتم القبول حتى يوافق السائق؛ قد لا يتوفر سائق.
+                </label>
+                <TaxiRoutePlanner
+                  coordinates={coordinates}
+                  onCoordinates={changeCoordinates}
+                  quote={roadQuote}
+                  onQuote={setRoadQuote}
+                />
                 <label className="care-check">
                   <input type="checkbox" required />
                   سأجهز وسيلة تثبيت مناسبة للحيوان وأقبل طلب النقل الاختباري.

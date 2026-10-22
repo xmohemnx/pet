@@ -145,9 +145,11 @@ export function ClinicWorkspace({
       )}
       <div className="page-title">
         <div>
-          <span className="eyebrow">منشأة معتمدة · صلاحيات بنطاق العيادة</span>
           <h1>{clinic.name}</h1>
-          <p>إدارة هوية المنشأة وفريقها وفروعها.</p>
+          <p>
+            منشأة معتمدة بصلاحيات بنطاق العيادة. إدارة هوية المنشأة وفريقها
+            وفروعها.
+          </p>
         </div>
         <span className="clinic-id">
           <span>معرف العيادة للانتساب</span>
