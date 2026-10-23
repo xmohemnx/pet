@@ -214,9 +214,9 @@ export function SocialStudio({
             )}
             <div className="social-studio-preview-top">
               <span>معاينة الوسائط</span>
-              <span>
+              <bdi dir="ltr">
                 {selected.length} / {kind === 'post' ? 10 : 1}
-              </span>
+              </bdi>
             </div>
             {selected.length ? (
               <div className="social-studio-images">

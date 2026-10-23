@@ -435,6 +435,9 @@ test.describe.serial('شريحة السوشل: ألبوم وموجز وملف و
       .filter({ hasText: 'سارة — حساب اختبار' })
       .click();
     await expect(
+      page.locator('.social-thread [aria-label$="رسائل غير مقروءة"]'),
+    ).toHaveCount(0);
+    await expect(
       page
         .locator('.social-chat-messages')
         .getByText(greeting, { exact: true }),

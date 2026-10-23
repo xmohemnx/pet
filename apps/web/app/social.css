@@ -1649,8 +1649,8 @@
     border-radius: 10px;
   }
   .social-reel-frame .private-video video {
-    min-height: 330px;
-    max-height: 56dvh;
+    min-height: 260px;
+    max-height: 45dvh;
   }
   .social-reel-caption {
     padding: 12px 14px;

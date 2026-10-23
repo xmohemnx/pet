@@ -408,8 +408,16 @@ test('دليل بصري جديد من commit نظيف وبيانات اختبا�
       animations: 'disabled',
       caret: 'hide',
     });
+    const viewportFile = screen.file.replace('.png', '-viewport.png');
+    await page.screenshot({
+      path: `${directory}/${viewportFile}`,
+      fullPage: false,
+      animations: 'disabled',
+      caret: 'hide',
+    });
     evidence.push({
       ...screen,
+      viewportFile,
       heading: await page.locator('h1').innerText(),
       capturedAt: new Date().toISOString(),
       capturedAtBaghdad: new Intl.DateTimeFormat('sv-SE', {
@@ -465,7 +473,7 @@ test('دليل بصري جديد من commit نظيف وبيانات اختبا�
       },
       null,
       2,
-    ),
+    ) + '\n',
   );
   await Promise.all(Object.values(contexts).map((c) => c.close()));
   console.log(

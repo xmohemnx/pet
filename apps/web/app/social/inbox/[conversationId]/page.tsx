@@ -21,12 +21,13 @@ export default async function Page({
   const me = await loadIdentity(),
     { conversationId } = await params,
     id = encodeURIComponent(conversationId);
-  const [profile, peer, messages, threads] = await Promise.all([
+  const [profile, peer, messages] = await Promise.all([
     loadApi<SocialProfile | null>('social/profile'),
     loadApi<SocialPerson>(`social/users/${id}/profile`),
     loadApi<SocialMessage[]>(`social/messages/${id}`),
-    loadApi<SocialThread[]>('social/inbox'),
   ]);
+  // Reading the messages marks them as read; fetch counts after that write.
+  const threads = await loadApi<SocialThread[]>('social/inbox');
   return (
     <SocialInbox
       key={conversationId}
