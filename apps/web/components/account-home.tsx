@@ -159,6 +159,10 @@ export function AccountHome({ me }: { me: IdentityMe }) {
       )}
       <div className="account-grid">
         <div className="account-primary">
+          <Link className="button outline" href="/account/verification">
+            <ShieldCheck size={18} aria-hidden="true" />
+            توثيق هوية الحساب
+          </Link>
           <AccountTypeControls type={me.user.accountType} />
           {me.user.accountType !== 'customer' && (
             <>

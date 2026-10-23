@@ -23,8 +23,8 @@ export function StorefrontHeader({ store: s }: { store: Storefront }) {
       >
         {s.description}
       </PlatformHeading>
-      <div className="panel care-section">
-        <h2>سياسات المتجر وأوقات التوفر</h2>
+      <details className="store-policies-panel">
+        <summary>سياسات المتجر وأوقات التوفر</summary>
         <dl className="store-policies">
           <dt>أوقات التوفر</dt>
           <dd>{s.opening_hours || 'لم تُحدد بعد'}</dd>
@@ -33,7 +33,7 @@ export function StorefrontHeader({ store: s }: { store: Storefront }) {
           <dt>الإرجاع</dt>
           <dd>{s.return_policy || 'لم تُحدد بعد'}</dd>
         </dl>
-      </div>
+      </details>
     </section>
   );
 }

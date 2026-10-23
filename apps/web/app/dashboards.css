@@ -1,0 +1,625 @@
+/* Glass is reserved for controls, keeping operational content on solid paper. */
+:root {
+  --control-glass: rgb(255 255 255 / 82%);
+  --control-glass-line: rgb(14 104 115 / 25%);
+  --control-elevation: 0 3px 9px rgb(18 50 56 / 9%);
+}
+.button,
+button.button,
+.desk-tabs a,
+.store-departments button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 44px;
+  border-radius: 12px;
+  transition:
+    background-color var(--duration-micro),
+    box-shadow var(--duration-micro),
+    border-color var(--duration-micro);
+}
+.button > svg {
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+.button.outline,
+.glass-action,
+.store-departments button {
+  color: var(--brand-dark);
+  background: var(--control-glass);
+  border: 1px solid var(--control-glass-line);
+  box-shadow: var(--control-elevation);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+.button.primary {
+  background:
+    linear-gradient(160deg, rgb(255 255 255 / 11%), transparent 65%),
+    var(--brand);
+  color: white;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 25%),
+    var(--control-elevation);
+}
+.button:hover:not(:disabled),
+.store-departments button:hover:not(:disabled) {
+  box-shadow: 0 5px 14px rgb(18 50 56 / 15%);
+}
+.button.outline:hover:not(:disabled),
+.glass-action:hover {
+  background: var(--mint);
+}
+.button:disabled {
+  box-shadow: none;
+  opacity: 0.65;
+  cursor: wait;
+}
+.desk-destination {
+  gap: 0.85rem;
+}
+.desk-destination .destination-icon {
+  color: var(--brand);
+  flex: 0 0 auto;
+}
+.desk-destination > div {
+  flex: 1;
+  min-inline-size: 0;
+}
+.dashboard-summary {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.15rem 0;
+  margin-block-end: 1.5rem;
+  border-block: 1px solid var(--line);
+}
+.dashboard-summary dl,
+.store-summary {
+  display: flex;
+  flex: 1;
+  gap: 2rem;
+  margin: 0;
+}
+.dashboard-summary dl > div {
+  flex: 1;
+}
+.dashboard-summary dt,
+.store-summary dt,
+.portfolio-statistics dt,
+.admin-dashboard-summary dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.dashboard-summary dt svg,
+.store-summary dt svg,
+.portfolio-statistics dt svg,
+.admin-dashboard-summary dt svg {
+  color: var(--brand);
+  flex-shrink: 0;
+}
+.dashboard-summary dd,
+.store-summary dd,
+.portfolio-statistics dd,
+.admin-dashboard-summary dd {
+  margin: 0.4rem 0 0;
+  font-size: 1.65rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.dashboard-summary dd a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.dashboard-summary dd a svg {
+  color: var(--brand);
+}
+.dashboard-verification {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--brand-dark);
+  font-size: 0.88rem;
+  max-inline-size: 10rem;
+}
+.dashboard-loading {
+  margin: 0;
+  color: var(--muted);
+}
+.driver-dashboard-summary .dashboard-summary {
+  flex-direction: column;
+  align-items: stretch;
+}
+.driver-dashboard-summary .dashboard-summary dl {
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.driver-dashboard-summary .dashboard-summary dl > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.driver-dashboard-summary .dashboard-summary dd {
+  font-size: 1.3rem;
+  margin: 0;
+}
+.driver-dashboard-summary .dashboard-verification {
+  max-inline-size: none;
+}
+.dashboard-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-block-end: 1rem;
+  color: var(--brand-dark);
+}
+.dashboard-section-title h2 {
+  margin: 0;
+  color: var(--ink);
+}
+.banner-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  gap: 1rem;
+  margin-block-end: 1.75rem;
+  padding-block-end: 0.5rem;
+}
+.customer-banner {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  background: var(--mint);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  min-block-size: 190px;
+}
+.customer-banner.with-image {
+  grid-template-columns: 1fr 1fr;
+}
+.customer-banner img {
+  inline-size: 100%;
+  block-size: 100%;
+  max-block-size: 300px;
+  object-fit: cover;
+  grid-column: 2;
+  grid-row: 1;
+}
+.banner-copy {
+  padding: 1.5rem 2rem;
+  grid-column: 1;
+  grid-row: 1;
+}
+.banner-copy h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+}
+.banner-copy > p {
+  max-inline-size: 55ch;
+  margin-block: 0.5rem 1rem;
+  color: var(--brand-dark);
+}
+.banner-copy .banner-attribution {
+  font-size: 0.8rem;
+  margin-block: 0 0.5rem;
+}
+.store-departments {
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--line);
+  margin-block: 1.5rem;
+}
+.store-departments nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.store-departments button {
+  padding: 0.7rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+.store-departments button[aria-pressed='true'] {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+.store-departments button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.store-summary {
+  justify-content: space-between;
+  border-block: 1px solid var(--line);
+  padding-block: 1.25rem;
+  margin-block-end: 2rem;
+}
+.store-management-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+.store-management-tools h2 {
+  margin-block: 0 1rem;
+}
+.store-management-tools > a,
+.admin-tools nav > a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.2rem;
+  border-block-end: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+}
+.store-management-tools > a:hover,
+.admin-tools nav > a:hover {
+  color: var(--brand);
+}
+.store-management-tools > a > svg,
+.admin-tools nav > a > svg {
+  flex-shrink: 0;
+  color: var(--brand);
+}
+.store-management-tools > a > div,
+.admin-tools nav > a > div {
+  flex: 1;
+  min-inline-size: 0;
+}
+.store-management-tools h3,
+.admin-tools h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+.store-management-tools p,
+.admin-tools p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.store-warehouse {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding-block: 1rem;
+  border-block-end: 1px solid var(--line);
+}
+.store-warehouse > span {
+  color: var(--muted);
+  margin-inline-start: auto;
+  font-size: 0.85rem;
+}
+.store-policy {
+  display: flex;
+  gap: 0.6rem;
+  align-items: start;
+  margin-block: 1.3rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.store-policy svg {
+  flex-shrink: 0;
+  margin-block-start: 0.3rem;
+}
+.clinic-store aside > .button {
+  margin-block-start: 1.5rem;
+}
+.professional-profile-heading {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-block-end: 2rem;
+  padding-block: 1rem 1.5rem;
+  border-block-end: 1px solid var(--line);
+}
+.professional-profile-heading h1 {
+  margin: 0 0 0.6rem;
+}
+.professional-profile-heading > .button {
+  margin-inline-start: auto;
+}
+.professional-monogram {
+  display: grid;
+  place-items: center;
+  inline-size: 80px;
+  block-size: 80px;
+  border-radius: 16px;
+  background: var(--mint);
+  color: var(--brand-dark);
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.professional-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--brand-dark);
+  font-size: 0.9rem;
+}
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-block-end: 2rem;
+}
+.portfolio-bio {
+  max-inline-size: 65ch;
+}
+.portfolio-statistics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--line);
+}
+.portfolio-work-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.3rem;
+  border-block-end: 1px solid var(--line);
+}
+.portfolio-work-row h3 {
+  margin: 0 0 0.5rem;
+}
+.portfolio-work-row p {
+  margin: 0 0 0.5rem;
+}
+.portfolio-work-row time {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.admin-dashboard-summary {
+  padding-block: 0.25rem 1.5rem;
+  border-block-end: 1px solid var(--line);
+  margin-block-end: 2rem;
+}
+.admin-dashboard-summary > svg {
+  color: var(--brand);
+  display: inline-block;
+  vertical-align: middle;
+  margin-inline-end: 0.5rem;
+}
+.admin-dashboard-summary h2 {
+  display: inline;
+  font-size: 1.2rem;
+}
+.admin-dashboard-summary dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-block: 1.5rem 0;
+  gap: 1.5rem;
+}
+.admin-tools nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}
+.admin-control > .desk-panel {
+  margin-block-start: 2rem;
+  scroll-margin-block-start: 5rem;
+}
+.banner-management-list article,
+.admin-review-row {
+  padding-block: 1.3rem;
+  border-block-end: 1px solid var(--line);
+}
+.banner-management-list h4 {
+  margin: 0 0 0.6rem;
+}
+.banner-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px dashed var(--brand);
+  border-radius: 12px;
+  background: var(--mint);
+  margin-block-end: 1.5rem;
+}
+.banner-upload input {
+  max-inline-size: 100%;
+}
+.admin-review-row .care-form {
+  max-inline-size: 40rem;
+  margin-block-start: 1rem;
+}
+.admin-user-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-block-end: 1px solid var(--line);
+}
+.admin-user-row > div {
+  flex: 1;
+  min-inline-size: min(100%, 12rem);
+}
+.admin-user-row h3,
+.admin-user-row p {
+  margin: 0;
+}
+.admin-user-row p,
+.admin-review-row details p {
+  overflow-wrap: anywhere;
+}
+.verification-desk .care-form {
+  max-inline-size: 40rem;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .button.outline,
+  .glass-action,
+  .store-departments button {
+    background: var(--surface);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .button.outline,
+  .glass-action,
+  .store-departments button {
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .store-departments button {
+    transition: none;
+  }
+}
+@media (max-width: 900px) {
+  .dashboard-summary {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .dashboard-summary dl {
+    gap: 1rem;
+    flex-basis: 100%;
+  }
+  .dashboard-verification {
+    max-inline-size: none;
+  }
+  .store-management-layout,
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+  }
+  .portfolio-statistics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-tools nav {
+    grid-template-columns: 1fr;
+  }
+  .admin-dashboard-summary dl {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-summary dt {
+    font-size: 0.78rem;
+    gap: 0.3rem;
+    align-items: start;
+  }
+  .dashboard-summary dt svg {
+    inline-size: 16px;
+    block-size: 16px;
+  }
+  .dashboard-summary dl {
+    gap: 0.6rem;
+  }
+  .dashboard-summary dd {
+    font-size: 1.4rem;
+  }
+  .customer-banner.with-image {
+    grid-template-columns: 1fr;
+  }
+  .customer-banner img {
+    grid-column: 1;
+    grid-row: 1;
+    block-size: 150px;
+  }
+  .customer-banner.with-image .banner-copy {
+    grid-row: 2;
+  }
+  .banner-copy {
+    padding: 1.25rem;
+  }
+  .banner-copy h2 {
+    font-size: 1.45rem;
+  }
+  .professional-profile-heading {
+    flex-wrap: wrap;
+  }
+  .professional-profile-heading > .button {
+    inline-size: 100%;
+    margin: 0;
+  }
+  .professional-monogram {
+    inline-size: 56px;
+    block-size: 56px;
+    font-size: 1.5rem;
+  }
+  .professional-profile-heading > div {
+    flex: 1;
+    min-inline-size: 0;
+  }
+  .professional-profile-heading h1 {
+    font-size: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+  .portfolio-work-row {
+    align-items: start;
+    flex-direction: column;
+  }
+  .store-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .admin-control .desk-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .admin-control .desk-body > * {
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+}
+
+/* Compact records keep management actions discoverable without opening every revocation form. */
+.review-decision,
+.admin-users-list {
+  margin-block-start: 0.8rem;
+}
+.review-decision > summary,
+.admin-users-list > summary,
+.store-policies-panel > summary {
+  min-block-size: 44px;
+  cursor: pointer;
+  color: var(--brand-dark);
+  padding-block: 0.65rem;
+}
+.professional-profile-heading .professional-badge {
+  margin-block: 0.2rem;
+  margin-inline-end: 0.8rem;
+}
+.store-policies-panel {
+  border-block-end: 1px solid var(--line);
+  padding-block-end: 0.75rem;
+  margin-block-end: 1.25rem;
+}
+.store-policies-panel .store-policies {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.5rem;
+  max-inline-size: 65ch;
+}
+.store-policies-panel dd {
+  margin: 0;
+  color: var(--muted);
+}
+.market-layout .market-products {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  align-items: start;
+}
+.market-card > p,
+.market-card > h2 {
+  margin: 0;
+}
+.market-card > .care-form {
+  margin-block: 0.35rem;
+}
+.market-card > .care-form fieldset {
+  gap: 0.5rem;
+}

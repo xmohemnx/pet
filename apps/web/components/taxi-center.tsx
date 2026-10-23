@@ -1,4 +1,5 @@
 'use client';
+import { DashboardSummary } from './dashboard-summary';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { WorkspaceHeading, WorkspaceEmpty } from './workspace-overview';
@@ -461,6 +462,12 @@ export function TaxiCenter({
                   </p>
                   <span>الرصيد وفق الدفتر الاختباري</span>
                 </section>
+                <div className="driver-dashboard-summary">
+                  <DashboardSummary
+                    kind="driver"
+                    revision={activeRides.length}
+                  />
+                </div>
                 <section className="desk-note">
                   <h2>نقل آمن وواضح</h2>
                   <p>

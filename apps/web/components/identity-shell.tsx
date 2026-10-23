@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   Heart,
   ShieldCheck,
+  Settings2,
   Building2,
   LogOut,
   PawPrint,
@@ -98,7 +99,8 @@ export function IdentityShell({
         ? ([
             [`/clinic/${clinicId}`, 'نظرة عامة', LayoutDashboard],
             [`/clinic/${clinicId}/calendar`, 'تقويم العيادة', CalendarDays],
-            [`/clinic/${clinicId}/commerce`, 'متجر العيادة', ShoppingBag],
+            [`/clinic/${clinicId}/store`, 'إدارة المتجر', ShoppingBag],
+            [`/clinic/${clinicId}/commerce`, 'المنتجات والطلبات', ShoppingBag],
             [`/clinic/${clinicId}/inventory`, 'المخزون', Building2],
             [`/clinic/${clinicId}/finance`, 'مالية العيادة', BookOpen],
             [`/clinic/${clinicId}/services`, 'الخدمات والباقات', PawPrint],
@@ -112,7 +114,9 @@ export function IdentityShell({
             ? ([['/driver', 'مساحة السائق', CarFront]] as const)
             : me.activeWorkspace.persona === 'platform_admin'
               ? ([
-                  ['/admin', 'مراجعات الاعتماد', ShieldCheck],
+                  ['/admin', 'لوحة المدير', LayoutDashboard],
+                  ['/admin/professionals', 'مراجعات الاعتماد', ShieldCheck],
+                  ['/admin/control', 'المحتوى والتوثيق', Settings2],
                   ['/admin/account-types', 'تغيير نوع الحساب', Users],
                   ['/admin/operations', 'التشغيل والرقابة', LayoutDashboard],
                   ['/admin/finance', 'مالية المنصة', BookOpen],
@@ -125,6 +129,7 @@ export function IdentityShell({
     const required: Record<string, string[]> = {
       calendar: ['clinic_admin', 'receptionist'],
       commerce: ['clinic_admin', 'commerce_manager'],
+      store: ['clinic_admin'],
       inventory: ['clinic_admin', 'inventory_clerk'],
       finance: ['clinic_admin', 'clinic_accountant', 'cashier'],
     };

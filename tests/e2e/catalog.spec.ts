@@ -565,6 +565,9 @@ test.describe.serial('كتالوج بصور وخيارات ومتجر تابع �
     await expect(
       page.getByRole('heading', { name: 'متجر الرفيق المعتمد', exact: true }),
     ).toBeVisible();
+    await page
+      .getByText('سياسات المتجر وأوقات التوفر', { exact: true })
+      .click();
     await expect(
       page.getByText('تسليم تجريبي داخل بغداد بعد التأكيد', { exact: true }),
     ).toBeVisible();

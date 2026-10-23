@@ -1368,3 +1368,126 @@ export function variantMatrix(input: VariantDimension[]): {
     throw new Error('وصف التركيبة أطول من 100 حرف؛ اختصر أسماء الأبعاد والقيم');
   return { dimensions, choices };
 }
+
+// Dashboard, publication and independently reviewed professional claims.
+export const bannerInputSchema = z
+  .object({
+    title: z.string().trim().min(2).max(100),
+    body: z.string().trim().max(500),
+    assetId: z.uuid().nullable(),
+    imageAlt: z.string().trim().max(180),
+    href: z
+      .string()
+      .regex(/^\/[a-zA-Z0-9/?=&_%#.-]*$/)
+      .refine((v) => !v.startsWith('//')),
+    position: z.number().int().min(0).max(999),
+    published: z.boolean(),
+    startsAt: z.iso.datetime().nullable(),
+    endsAt: z.iso.datetime().nullable(),
+    publicationConsent: z.literal(true),
+  })
+  .strict()
+  .refine((v) => !v.assetId || v.imageAlt.length >= 2)
+  .refine((v) => !v.startsAt || !v.endsAt || v.endsAt > v.startsAt);
+export type BannerInput = z.infer<typeof bannerInputSchema>;
+export interface SiteBanner {
+  id: string;
+  title: string;
+  body: string;
+  asset_id: string | null;
+  image_alt: string;
+  href: string;
+  position: number;
+  published: boolean;
+  starts_at: string | null;
+  ends_at: string | null;
+  version: number;
+}
+export interface DashboardData {
+  kind: string;
+  verified: boolean;
+  metrics: { label: string; value: number; href: string }[];
+}
+export const caseReportInputSchema = z
+  .object({
+    appointmentId: z.uuid(),
+    procedureKind: z.enum(['surgery', 'treatment']),
+    publicTitle: z.string().trim().min(2).max(180),
+    outcome: z.enum(['pending', 'successful', 'unsuccessful']),
+    charitable: z.boolean(),
+    evidenceReference: z.string().trim().min(10).max(1000),
+    publicationConsent: z.literal(true),
+  })
+  .strict();
+export type CaseReportInput = z.infer<typeof caseReportInputSchema>;
+export interface VerificationRequest {
+  id: string;
+  user_id: string;
+  reference: string;
+  status: 'pending' | 'verified' | 'rejected' | 'revoked';
+  review_reason: string | null;
+  applicant: string;
+  account_type: string;
+  version: number;
+}
+export interface ProfessionalCaseReport {
+  id: string;
+  appointment_id: string;
+  doctor_name: string;
+  clinic_name: string;
+  public_title: string;
+  procedure_kind: 'surgery' | 'treatment';
+  outcome: 'pending' | 'successful' | 'unsuccessful';
+  charitable: boolean;
+  evidence_reference: string;
+  status: 'pending' | 'approved' | 'rejected' | 'revoked';
+  review_reason: string | null;
+  version: number;
+}
+export interface ProfessionalPortfolio {
+  id: string;
+  name: string;
+  kind: 'doctor' | 'clinic';
+  bio: string;
+  specialty: string;
+  languages: string[];
+  professionalVerified: boolean;
+  identityVerified: boolean;
+  completedVisits: number;
+  statistics: {
+    total: number;
+    surgeries: number;
+    successful: number;
+    unsuccessful: number;
+    pending: number;
+    charitable: number;
+  };
+  highlights: {
+    id: string;
+    public_title: string;
+    procedure_kind: string;
+    outcome: string;
+    charitable: boolean;
+    reviewed_at: string;
+  }[];
+}
+export interface AdminDashboardData {
+  counts: {
+    users: number;
+    clinics: number;
+    applications: number;
+    verifications: number;
+    reports: number;
+    banners: number;
+  };
+  users: {
+    id: string;
+    name: string;
+    email: string;
+    account_type: string;
+    identity_verified: boolean;
+  }[];
+  banners: SiteBanner[];
+  verifications: VerificationRequest[];
+  reports: ProfessionalCaseReport[];
+}

@@ -4,6 +4,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Req,
   Param,
   Body,
@@ -58,7 +59,7 @@ export class TaxonomyService {
       await this.staff(db, actor, clinic);
       return (
         await db.query(
-          'SELECT * FROM catalog_categories WHERE clinic_id=$1 ORDER BY path,name',
+          'SELECT * FROM catalog_categories WHERE clinic_id=$1 AND deleted_at IS NULL ORDER BY sort_order,name',
           [clinic],
         )
       ).rows;
@@ -88,7 +89,7 @@ export class TaxonomyService {
       if (
         (
           await db.query(
-            'SELECT count(*)::int n FROM catalog_categories WHERE clinic_id=$1',
+            'SELECT count(*)::int n FROM catalog_categories WHERE clinic_id=$1 AND deleted_at IS NULL',
             [clinic],
           )
         ).rows[0].n >= 500
@@ -110,14 +111,21 @@ export class TaxonomyService {
     actor: string,
     clinic: string,
     id: string,
-    i: { version: number; active: boolean },
+    i: { version: number; active?: boolean; name?: string; sortOrder?: number },
   ) {
     return transaction(async (db) => {
       await this.staff(db, actor, clinic);
       const c = (
         await db.query(
-          'UPDATE catalog_categories SET active=$4,version=version+1 WHERE id=$1 AND clinic_id=$2 AND version=$3 RETURNING *',
-          [id, clinic, i.version, i.active],
+          'UPDATE catalog_categories SET active=coalesce($4,active),name=coalesce($5,name),sort_order=coalesce($6,sort_order),version=version+1 WHERE id=$1 AND clinic_id=$2 AND version=$3 AND deleted_at IS NULL RETURNING *',
+          [
+            id,
+            clinic,
+            i.version,
+            i.active ?? null,
+            i.name ?? null,
+            i.sortOrder ?? null,
+          ],
         )
       ).rows[0];
       if (!c) throw new ConflictException('حدّث التصنيف قبل تغيير إتاحته');
@@ -126,6 +134,39 @@ export class TaxonomyService {
         active: i.active,
       });
       return c;
+    });
+  }
+  remove(actor: string, clinic: string, id: string, version: number) {
+    return transaction(async (db) => {
+      await this.staff(db, actor, clinic);
+      const c = (
+        await db.query(
+          'SELECT * FROM catalog_categories WHERE id=$1 AND clinic_id=$2 AND deleted_at IS NULL FOR UPDATE',
+          [id, clinic],
+        )
+      ).rows[0];
+      if (!c) throw new NotFoundException();
+      if (c.version !== version)
+        throw new ConflictException('حدّث القسم قبل حذفه');
+      if (
+        (
+          await db.query(
+            'SELECT 1 FROM products WHERE clinic_id=$1 AND category_id=$2 UNION ALL SELECT 1 FROM catalog_categories WHERE clinic_id=$1 AND parent_id=$2 AND deleted_at IS NULL LIMIT 1',
+            [clinic, id],
+          )
+        ).rowCount
+      )
+        throw new ConflictException(
+          'انقل منتجات القسم وأقسامه الفرعية قبل الحذف',
+        );
+      await db.query(
+        'UPDATE catalog_categories SET deleted_at=now(),active=false,version=version+1 WHERE id=$1',
+        [id],
+      );
+      await audit(db, actor, 'commerce.category_deleted', clinic, {
+        categoryId: id,
+      });
+      return { deleted: true };
     });
   }
   classify(
@@ -180,7 +221,7 @@ export class TaxonomyService {
       async (db) =>
         (
           await db.query(
-            `SELECT taxonomy.id,taxonomy.clinic_id,taxonomy.name,taxonomy.path,(SELECT jsonb_agg(a.name ORDER BY array_position(taxonomy.path,a.id)) FROM catalog_categories a WHERE a.id=ANY(taxonomy.path)) names FROM catalog_categories taxonomy WHERE NOT EXISTS(SELECT 1 FROM catalog_categories a WHERE a.id=ANY(taxonomy.path) AND NOT a.active) AND EXISTS(SELECT 1 FROM products p ${storefrontJoin} JOIN catalog_categories selected ON selected.id=p.category_id WHERE taxonomy.id=ANY(selected.path) AND NOT EXISTS(SELECT 1 FROM catalog_categories a WHERE a.id=ANY(selected.path) AND NOT a.active) AND ${sellableSql}) ORDER BY taxonomy.name LIMIT 500`,
+            `SELECT taxonomy.id,taxonomy.clinic_id,taxonomy.name,taxonomy.path,(SELECT jsonb_agg(a.name ORDER BY array_position(taxonomy.path,a.id)) FROM catalog_categories a WHERE a.id=ANY(taxonomy.path)) names FROM catalog_categories taxonomy WHERE NOT EXISTS(SELECT 1 FROM catalog_categories a WHERE a.id=ANY(taxonomy.path) AND NOT a.active) AND EXISTS(SELECT 1 FROM products p ${storefrontJoin} JOIN catalog_categories selected ON selected.id=p.category_id WHERE taxonomy.id=ANY(selected.path) AND NOT EXISTS(SELECT 1 FROM catalog_categories a WHERE a.id=ANY(selected.path) AND NOT a.active) AND ${sellableSql}) ORDER BY taxonomy.sort_order,taxonomy.name LIMIT 500`,
           )
         ).rows,
     );
@@ -231,7 +272,12 @@ export class TaxonomyController {
   ) {
     const i = parse(
       z
-        .object({ version: z.number().int().positive(), active: z.boolean() })
+        .object({
+          version: z.number().int().positive(),
+          active: z.boolean().optional(),
+          name: label.optional(),
+          sortOrder: z.number().int().min(0).max(999).optional(),
+        })
         .strict(),
       body,
     );
@@ -240,6 +286,23 @@ export class TaxonomyController {
       uuid(id),
       uuid(category),
       i,
+    );
+  }
+  @Delete('clinics/:id/categories/:categoryId') async remove(
+    @Req() r: Request,
+    @Param('id') id: string,
+    @Param('categoryId') category: string,
+    @Body() body: unknown,
+  ) {
+    const i = parse(
+      z.object({ version: z.number().int().positive() }).strict(),
+      body,
+    );
+    return this.taxonomy.remove(
+      (await requireSession(r)).user.id,
+      uuid(id),
+      uuid(category),
+      i.version,
     );
   }
   @Post('clinics/:id/products/:productId/classification') async classify(

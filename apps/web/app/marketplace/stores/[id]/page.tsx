@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import type { Product, Storefront } from '@petra/contracts';
-import { formatIqd } from '@petra/contracts';
 import { loadIdentity } from '../../../../lib/server-identity';
 import { loadApi } from '../../../../lib/platform-server';
 import { IdentityShell } from '../../../../components/identity-shell';
 import { StorefrontHeader } from '../../../../components/storefront-header';
+import { StoreProductSections } from '../../../../components/store-product-sections';
 export const metadata = {
   title: 'متجر العيادة',
   robots: { index: false, follow: false },
@@ -26,21 +26,7 @@ export default async function Page({
       <Link className="button outline" href="/marketplace">
         كل المتاجر والسلة
       </Link>
-      <div className="market-products">
-        {products
-          .filter((p) => p.clinic_id === id)
-          .map((p) => (
-            <article key={p.id} className="panel market-card">
-              <h2>
-                <Link href={`/marketplace/products/${p.id}`}>{p.name}</Link>
-              </h2>
-              <p>{p.variant_label}</p>
-              <p>
-                {formatIqd(p.price_minor)} · {p.available} {p.unit} متاحة
-              </p>
-            </article>
-          ))}
-      </div>
+      <StoreProductSections products={products} clinicId={id} />
     </IdentityShell>
   );
 }

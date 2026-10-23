@@ -1,6 +1,18 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { ArrowUpLeft } from 'lucide-react';
+import {
+  ArrowUpLeft,
+  CalendarDays,
+  Store,
+  Warehouse,
+  Stethoscope,
+  BadgeCheck,
+  UserRound,
+  CarFront,
+  Settings2,
+  PawPrint,
+  type LucideIcon,
+} from 'lucide-react';
 
 export function baghdadDay(value: string | Date = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Baghdad' }).format(
@@ -36,6 +48,17 @@ export function WorkspaceHeading({
     </header>
   );
 }
+function destinationIcon(href: string): LucideIcon {
+  if (/inventory/.test(href)) return Warehouse;
+  if (/catalog|store|commerce|marketplace/.test(href)) return Store;
+  if (/calendar|planning|directory/.test(href)) return CalendarDays;
+  if (/portfolio|professional-profiles|doctor/.test(href)) return Stethoscope;
+  if (/verification|admin/.test(href)) return BadgeCheck;
+  if (/driver|taxi/.test(href)) return CarFront;
+  if (/account/.test(href)) return UserRound;
+  if (/pet|care/.test(href)) return PawPrint;
+  return Settings2;
+}
 export function WorkspaceLink({
   href,
   title,
@@ -45,8 +68,10 @@ export function WorkspaceLink({
   title: string;
   children: ReactNode;
 }) {
+  const Icon = destinationIcon(href);
   return (
     <Link className="desk-destination" href={href}>
+      <Icon className="destination-icon" size={23} aria-hidden="true" />
       <div>
         <strong>{title}</strong>
         <span>{children}</span>

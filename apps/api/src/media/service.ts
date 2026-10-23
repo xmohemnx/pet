@@ -249,7 +249,7 @@ export class MediaService {
           !(
             await db.query(
               `SELECT 1 FROM product_images i JOIN products p ON p.id=i.product_id ${storefrontJoin} WHERE i.asset_id=$1 AND ${sellableSql}
-               UNION ALL SELECT 1 FROM clinic_storefronts s JOIN clinics c ON c.id=s.clinic_id WHERE s.is_primary AND s.published AND c.verification_status='verified' AND ($1=s.logo_asset_id OR $1=s.cover_asset_id) LIMIT 1`,
+               UNION ALL SELECT 1 FROM clinic_storefronts s JOIN clinics c ON c.id=s.clinic_id WHERE s.is_primary AND s.published AND c.verification_status='verified' AND ($1=s.logo_asset_id OR $1=s.cover_asset_id) UNION ALL SELECT 1 FROM site_banners b WHERE b.asset_id=$1 AND b.published AND b.deleted_at IS NULL AND (b.starts_at IS NULL OR b.starts_at<=now()) AND (b.ends_at IS NULL OR b.ends_at>now()) LIMIT 1`,
               [id],
             )
           ).rowCount
@@ -333,7 +333,7 @@ export async function processMedia() {
   const result = await transaction(async (db) => {
     const a = (
       await db.query(
-        "SELECT * FROM media_assets WHERE status='pending' AND processing_retry_at<=now() ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1",
+        "SELECT * FROM media_assets WHERE status='pending' AND kind IN ('audio','video') AND processing_retry_at<=now() ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1",
       )
     ).rows[0];
     if (!a) return false;

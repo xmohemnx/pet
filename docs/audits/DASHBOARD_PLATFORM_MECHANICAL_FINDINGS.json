@@ -1,0 +1,98 @@
+[
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 108,
+    "snippet": "font-size: 1.65rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.65rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 149,
+    "snippet": "font-size: 1.3rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.3rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 202,
+    "snippet": "font-size: clamp(1.4rem, 2.3vw, 2rem) has fluid endpoint 2rem off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "2rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 279,
+    "snippet": "font-size: 1.1rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.1rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 337,
+    "snippet": "font-size: 2rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "2rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 539,
+    "snippet": "font-size: 1.45rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.45rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 551,
+    "snippet": "font-size: 1.5rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.5rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/workspace/pet/apps/web/app/dashboards.css",
+    "line": 558,
+    "snippet": "font-size: 1.5rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.5rem"
+  }
+]

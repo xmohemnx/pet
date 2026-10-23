@@ -1,5 +1,7 @@
 'use client';
+import { DashboardSummary } from './dashboard-summary';
 import Link from 'next/link';
+import { CalendarDays, Plus } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import type {
   IdentityMe,
@@ -98,9 +100,14 @@ export function DoctorWorkspace({
           description="الزيارة أولًا. تابع الحضور وافتح الملف ووثّق الرعاية من مكان واحد."
           action={
             <Link className="button primary" href="/doctor/planning">
+              <CalendarDays size={18} aria-hidden="true" />
               إدارة جدول العمل
             </Link>
           }
+        />
+        <DashboardSummary
+          kind="doctor"
+          revision={appointments.filter((a) => a.status === 'completed').length}
         />
         <nav className="desk-tabs" aria-label="تصفية زيارات الطبيب">
           <button
@@ -155,6 +162,7 @@ export function DoctorWorkspace({
                         className="button outline"
                         onClick={openPublisher}
                       >
+                        <Plus size={18} aria-hidden="true" />
                         نشر وقت للحجز
                       </button>
                     )
@@ -247,6 +255,12 @@ export function DoctorWorkspace({
             <section className="desk-panel doctor-tools">
               <h2>مساحة العمل الطبي</h2>
               <nav aria-label="أقسام عمل الطبيب">
+                <WorkspaceLink
+                  href="/doctor/portfolio"
+                  title="ملفي المهني والنتائج"
+                >
+                  سجّل النتائج الموثقة واعرض أعمالك المعتمدة.
+                </WorkspaceLink>
                 <WorkspaceLink
                   href="/doctor/planning"
                   title="الدوام والملف المهني"

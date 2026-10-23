@@ -509,6 +509,43 @@ test.describe.serial('خدمة التجميل وصلاحياتها وسعة طب
         [asset, f.accounts.manager!.id],
       ),
     ).rejects.toMatchObject({ code: '23514' });
+    const bannerData = {
+      title: 'بنر حدود الخصوصية · اختبار محلي',
+      body: 'اختبار فقط',
+      assetId: asset,
+      imageAlt: 'صورة اختبار للخصوصية',
+      href: '/care',
+      position: 0,
+      published: false,
+      startsAt: null,
+      endsAt: null,
+      publicationConsent: true,
+    };
+    expect(
+      (
+        await manager.post(root + 'admin/banners', { data: bannerData })
+      ).status(),
+    ).toBe(400);
+    const bannerAsset = (
+      await post(manager, 'media', { dataBase64: bytes.toString('base64') })
+    ).id;
+    const banner = await post(manager, 'admin/banners', {
+      ...bannerData,
+      assetId: bannerAsset,
+    });
+    await expect(
+      db.query(
+        'INSERT INTO grooming_photos(booking_id,asset_id) VALUES($1,$2)',
+        [b.id, bannerAsset],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
+    expect(
+      (
+        await manager.delete(root + `admin/banners/${banner.id}`, {
+          data: { version: 1 },
+        })
+      ).status(),
+    ).toBe(200);
     const albumAsset = (
       await post(manager, 'media', { dataBase64: bytes.toString('base64') })
     ).id;
