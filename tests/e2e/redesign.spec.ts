@@ -85,7 +85,7 @@ test('الهوية الجديدة تخدم الشخصيات الخمس والت�
       href: `/clinic/${fixture.clinicId}`,
       name: 'clinic',
     },
-    { role: 'doctor', persona: 'driver', href: '/driver', name: 'driver' },
+    { role: 'driver', persona: 'driver', href: '/driver', name: 'driver' },
     {
       role: 'manager',
       persona: 'platform_admin',

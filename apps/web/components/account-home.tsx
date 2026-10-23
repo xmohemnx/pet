@@ -6,7 +6,6 @@ import {
   ShieldCheck,
   Building2,
   UserRound,
-  CarFront,
   Mail,
   Check,
   Clock3,
@@ -19,6 +18,8 @@ import type {
 } from '@petra/contracts';
 import { api } from '../lib/auth-client';
 import { IdentityShell } from './identity-shell';
+import { AccountTypeControls } from './account-type-controls';
+import { accountTypeNames } from '@petra/contracts';
 export function AccountHome({ me }: { me: IdentityMe }) {
   const [applications, setApplications] = useState<ProfessionalApplication[]>(
     [],
@@ -67,7 +68,7 @@ export function AccountHome({ me }: { me: IdentityMe }) {
       await api('applications', {
         method: 'POST',
         body: JSON.stringify({
-          kind: f.get('kind'),
+          kind: me.user.accountType,
           displayName: f.get('displayName'),
           registrationNumber: f.get('registrationNumber'),
           notes: f.get('notes'),
@@ -95,6 +96,10 @@ export function AccountHome({ me }: { me: IdentityMe }) {
         method: 'POST',
         body: '{}',
       });
+      if (me.user.accountType === 'doctor') {
+        window.location.assign('/doctor');
+        return;
+      }
       await api('me/active-workspace', {
         method: 'POST',
         body: JSON.stringify({ workspaceId: `clinic:${r.clinicId}` }),
@@ -126,13 +131,13 @@ export function AccountHome({ me }: { me: IdentityMe }) {
     <IdentityShell me={me}>
       <section className="account-welcome">
         <div>
-          <span className="eyebrow">
-            <Check size={15} /> بريد موثّق، ومساحة تخصّك
-          </span>
           <h1>أهلًا، {me.user.name}.</h1>
           <p>
-            بيانات حسابك وعضوياتك محفوظة. أضف حيوانك وتابع مواعيده وسجله من مركز
-            الرعاية.
+            <Check size={15} /> بريد موثّق
+          </p>
+          <p>
+            حساب {accountTypeNames[me.user.accountType]} ثابت النوع، وصلاحيات
+            العمل تُمنح بعد الاعتماد فقط.
           </p>
         </div>
         <span className="welcome-paw">
@@ -154,98 +159,110 @@ export function AccountHome({ me }: { me: IdentityMe }) {
       )}
       <div className="account-grid">
         <div className="account-primary">
-          <section className="panel">
-            <div className="panel-heading">
-              <div>
-                <span className="eyebrow">هويتك المهنية</span>
-                <h2>انضم إلى منظومة الرعاية</h2>
-              </div>
-              <Building2 size={23} />
-            </div>
-            <p className="panel-intro">
-              العضوية المهنية تحتاج مراجعة مستقلة. رقم الترخيص المدخل لا يعني أن
-              الترخيص قد تم التحقق منه.
-            </p>
-            <form onSubmit={apply} className="identity-form">
-              <div className="form-row">
-                <label>
-                  نوع الطلب
-                  <select name="kind" required>
-                    <option value="clinic">اعتماد عيادة</option>
-                    <option value="doctor">اعتماد طبيب</option>
-                    <option value="driver">اعتماد سائق</option>
-                  </select>
-                </label>
-                <label>
-                  الاسم المهني أو اسم العيادة
-                  <input
-                    name="displayName"
-                    required
-                    minLength={2}
-                    maxLength={100}
-                  />
-                </label>
-              </div>
-              <label>
-                رقم الترخيص أو مرجع المستند
-                <input
-                  name="registrationNumber"
-                  required
-                  minLength={3}
-                  maxLength={100}
-                />
-                <small>
-                  أدخل المرجع فقط؛ لا تضع هوية كاملة أو وثائق حساسة هنا.
-                </small>
-              </label>
-              <label>
-                ملاحظات للمراجع
-                <textarea name="notes" maxLength={1000} rows={3} />
-              </label>
-              <button className="button primary" disabled={busy}>
-                إرسال طلب الاعتماد <ArrowUpLeft size={18} />
-              </button>
-            </form>
-          </section>
-          <section className="panel">
-            <div className="panel-heading">
-              <h2>طلباتك المهنية</h2>
-              <Clock3 size={20} />
-            </div>
-            {!loaded ? (
-              <p className="subtle-note">جارٍ تحميل الطلبات…</p>
-            ) : !applications.length ? (
-              <div className="compact-empty">
-                <UserRound />
-                <p>لا توجد طلبات بعد. حسابك الحالي هو حساب عميل.</p>
-              </div>
-            ) : (
-              <div className="application-list">
-                {applications.map((a) => (
-                  <article key={a.id} className="application-row">
-                    <div>
-                      <span className="eyebrow">{kindNames[a.kind]}</span>
-                      <h3>{a.display_name}</h3>
-                      <small>
-                        مرجع المستند: <bdi>{a.registration_number}</bdi>
-                      </small>
-                      {a.review_reason && (
-                        <p className="review-reason">
-                          ملاحظة المراجع: {a.review_reason}
-                        </p>
-                      )}
+          <AccountTypeControls type={me.user.accountType} />
+          {me.user.accountType !== 'customer' && (
+            <>
+              {loaded &&
+                !applications.some(
+                  (a) =>
+                    a.kind === me.user.accountType &&
+                    ['pending', 'approved'].includes(a.status),
+                ) && (
+                  <section className="panel">
+                    <div className="panel-heading">
+                      <div>
+                        <h2>انضم إلى منظومة الرعاية</h2>
+                      </div>
+                      <Building2 size={23} />
                     </div>
-                    <span
-                      className={`status ${a.status === 'approved' ? 'paid' : a.status === 'pending' ? 'pending' : 'refunded'}`}
-                    >
-                      {statusNames[a.status]}
-                    </span>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
-          {me.workspaces.some((w) => w.persona === 'doctor') && (
+                    <p className="panel-intro">
+                      العضوية المهنية تحتاج مراجعة مستقلة. رقم الترخيص المدخل لا
+                      يعني أن الترخيص قد تم التحقق منه.
+                    </p>
+                    <form onSubmit={apply} className="identity-form">
+                      <div className="form-row">
+                        <label>
+                          نوع الطلب
+                          <input
+                            readOnly
+                            value={`اعتماد ${accountTypeNames[me.user.accountType]}`}
+                          />
+                        </label>
+                        <label>
+                          الاسم المهني أو اسم العيادة
+                          <input
+                            name="displayName"
+                            required
+                            minLength={2}
+                            maxLength={100}
+                          />
+                        </label>
+                      </div>
+                      <label>
+                        رقم الترخيص أو مرجع المستند
+                        <input
+                          name="registrationNumber"
+                          required
+                          minLength={3}
+                          maxLength={100}
+                        />
+                        <small>
+                          أدخل المرجع فقط؛ لا تضع هوية كاملة أو وثائق حساسة هنا.
+                        </small>
+                      </label>
+                      <label>
+                        ملاحظات للمراجع
+                        <textarea name="notes" maxLength={1000} rows={3} />
+                      </label>
+                      <button className="button primary" disabled={busy}>
+                        إرسال طلب الاعتماد <ArrowUpLeft size={18} />
+                      </button>
+                    </form>
+                  </section>
+                )}
+              <section className="panel">
+                <div className="panel-heading">
+                  <h2>طلباتك المهنية</h2>
+                  <Clock3 size={20} />
+                </div>
+                {!loaded ? (
+                  <p className="subtle-note">جارٍ تحميل الطلبات…</p>
+                ) : !applications.length ? (
+                  <div className="compact-empty">
+                    <UserRound />
+                    <p>لا توجد طلبات اعتماد لهذا الحساب بعد.</p>
+                  </div>
+                ) : (
+                  <div className="application-list">
+                    {applications.map((a) => (
+                      <article key={a.id} className="application-row">
+                        <div>
+                          <span className="eyebrow">{kindNames[a.kind]}</span>
+                          <h3>{a.display_name}</h3>
+                          <small>
+                            مرجع المستند: <bdi>{a.registration_number}</bdi>
+                          </small>
+                          {a.review_reason && (
+                            <p className="review-reason">
+                              ملاحظة المراجع: {a.review_reason}
+                            </p>
+                          )}
+                        </div>
+                        <span
+                          className={`status ${a.status === 'approved' ? 'paid' : a.status === 'pending' ? 'pending' : 'refunded'}`}
+                        >
+                          {statusNames[a.status]}
+                        </span>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </section>
+            </>
+          )}
+          {me.workspaces.some(
+            (w) => w.persona === 'doctor' && w.id === 'doctor',
+          ) && (
             <section className="panel">
               <div className="panel-heading">
                 <h2>انتساب الطبيب إلى عيادة</h2>
@@ -356,23 +373,8 @@ export function AccountHome({ me }: { me: IdentityMe }) {
               إدارة أمان الحساب <ArrowUpLeft size={16} />
             </Link>
           </section>
-          <section className="future-card">
-            <HeartText />
-          </section>
         </aside>
       </div>
     </IdentityShell>
-  );
-}
-function HeartText() {
-  return (
-    <>
-      <CarFront size={25} />
-      <h3>الرعاية والخدمات في الطريق.</h3>
-      <p>
-        لا توجد حجوزات أو رحلات أو مدفوعات متاحة بعد. الحسابات والعضويات هي
-        الأساس الأول.
-      </p>
-    </>
   );
 }

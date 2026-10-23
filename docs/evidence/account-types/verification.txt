@@ -1,0 +1,48 @@
+Actual test-run excerpts for fixed account types, 2026-10-23
+228 distinct functional E2E scenarios across runs; repeated passes are not added.
+48 unit tests. First full suite was not green; do not describe it as one green run.
+
+Full regression (not green)
+account-full-e2e.log
+  7 failed
+  2 skipped
+  35 did not run
+  185 passed (11.0m)
+
+First correction rerun (not green)
+account-resolved-e2e.log
+  2 failed
+  1 skipped
+  15 did not run
+  76 passed (4.7m)
+
+Remaining correction and legacy migration
+account-last-e2e.log
+  33 passed (1.7m)
+
+Latest UI/auth tests and first capture
+account-proof-final.log
+  21 passed (1.6m)
+
+Normalized committed-source capture
+account-proof-normalized.log
+  9 passed (1.1m)
+
+Final source checks
+account-polish-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+All matched files use Prettier code style!
+Security file checks passed: private env, source, public assets.
+
+Final source after independent UI review
+35ea04603e6a6a1c0d00565a03b30430cd102257
+account-proof-reviewed.log
+  9 passed (1.1m)
+account-finish-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+All matched files use Prettier code style!
+Security file checks passed: private env, source, public assets.
+account-finish-build.log
+ API and Next.js production build completed successfully.

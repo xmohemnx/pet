@@ -4,6 +4,7 @@ import { fromNodeHeaders } from 'better-auth/node';
 import { z } from 'zod';
 import { auth, origin } from './auth.js';
 import { database } from '../database.js';
+import { accountTypes } from './account-policy.js';
 export function registerIdentity(app: Express) {
   app.use('/api/v1', (req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Cache-Control', 'no-store');
@@ -22,7 +23,7 @@ export function registerIdentity(app: Express) {
     '/api/v1/auth/*splat',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const path = req.path.replace('/api/v1/auth', '');
+        const path = req.path.replace('/api/v1/auth', '').replace(/\/+$/, '');
         if (path === '/sign-up/email') {
           const parsed = z
             .object({
@@ -30,6 +31,7 @@ export function registerIdentity(app: Express) {
               email: z.email().max(254),
               password: z.string().min(12).max(128),
               callbackURL: z.string().max(1000).optional(),
+              accountType: z.enum(accountTypes).default('customer'),
             })
             .strict()
             .safeParse(req.body);
@@ -42,6 +44,16 @@ export function registerIdentity(app: Express) {
             });
           req.body = parsed.data;
         }
+        if (
+          path === '/update-user' &&
+          ('accountType' in (req.body ?? {}) ||
+            'account_type' in (req.body ?? {}) ||
+            'closed_at' in (req.body ?? {}))
+        )
+          return res.status(403).json({
+            code: 'ACCOUNT_TYPE_LOCKED',
+            message: 'تغيير نوع الحساب يتطلب طلباً وموافقة الإدارة',
+          });
         // Trusted-device bypass is deliberately unavailable, especially for administrators.
         if (req.body?.trustDevice === true)
           return res.status(400).json({

@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 import type { IdentityMe } from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
 import { authClient, authError, api } from '../lib/auth-client';
+import { AccountDelete } from './account-delete';
 interface Session {
   id: string;
   token: string;
@@ -97,7 +98,6 @@ export function SecurityPanel({ me }: { me: IdentityMe }) {
     <IdentityShell me={me}>
       <div className="page-title">
         <div>
-          <span className="eyebrow">مساحة للاطمئنان</span>
           <h1>أمان حسابك، بيدك.</h1>
           <p>راجع جلساتك وأضف خطوة لحماية الدخول.</p>
         </div>
@@ -278,6 +278,7 @@ export function SecurityPanel({ me }: { me: IdentityMe }) {
           </section>
         </div>
         <aside>
+          <AccountDelete />
           <section className="panel">
             <div className="panel-heading">
               <h2>تغيير كلمة المرور</h2>

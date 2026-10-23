@@ -13,7 +13,8 @@ export const metadata = {
 };
 export default async function Page() {
   const me = await loadIdentity();
-  if (!me.workspaces.some((w) => w.persona === 'doctor')) redirect('/app');
+  if (me.user.accountType !== 'doctor') redirect('/app');
+  if (!me.workspaces.some((w) => w.id === 'doctor')) redirect('/account');
   const clinics = await loadApi<DoctorClinic[]>('doctor/clinics');
   const [profile, initial] = await Promise.all([
     loadApi<DoctorPublicProfile | null>('doctor/public-profile'),

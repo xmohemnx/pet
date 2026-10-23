@@ -24,7 +24,11 @@ let owner: APIRequestContext,
   other: APIRequestContext,
   manager: APIRequestContext,
   doctor: APIRequestContext,
-  stranger: APIRequestContext;
+  stranger: APIRequestContext,
+  accountant: APIRequestContext,
+  cashier: APIRequestContext,
+  driverA: APIRequestContext,
+  driverB: APIRequestContext;
 let productA: string,
   productB: string,
   purchaseId: string,
@@ -113,7 +117,17 @@ test.describe
       rmSync(file, { force: true });
     }
     const contexts = await Promise.all(
-      ['owner', 'other', 'manager', 'doctor', 'stranger'].map((role) =>
+      [
+        'owner',
+        'other',
+        'manager',
+        'doctor',
+        'stranger',
+        'accountant',
+        'cashier',
+        'driver',
+        'driverOther',
+      ].map((role) =>
         requestFactory.newContext({
           extraHTTPHeaders: {
             Origin: origin,
@@ -122,7 +136,17 @@ test.describe
         }),
       ),
     );
-    [owner, other, manager, doctor, stranger] = contexts;
+    [
+      owner,
+      other,
+      manager,
+      doctor,
+      stranger,
+      accountant,
+      cashier,
+      driverA,
+      driverB,
+    ] = contexts;
   });
   test.afterAll(async () => {
     await Promise.all([
@@ -131,6 +155,10 @@ test.describe
       manager?.dispose(),
       doctor?.dispose(),
       stranger?.dispose(),
+      accountant?.dispose(),
+      cashier?.dispose(),
+      driverA?.dispose(),
+      driverB?.dispose(),
     ]);
     await db.end();
   });
@@ -329,7 +357,7 @@ test.describe
   });
   test('قاعدة البيانات ترفض القيد غير المتوازن وتعديل المرحل وتفرض اعتمادًا مستقلًا', async () => {
     const report = await (
-      await get(doctor, `clinics/${fixture.clinicId}/finance`)
+      await get(accountant, `clinics/${fixture.clinicId}/finance`)
     ).json();
     const posted = report.journals.find(
       (j: { status: string }) => j.status === 'posted',
@@ -348,7 +376,7 @@ test.describe
       const j = (
         await client.query(
           "INSERT INTO journals(entity_id,source_key,description,created_by) VALUES($1,$2,'unbalanced fixture',$3) RETURNING id",
-          [report.entityId, randomUUID(), fixture.accounts.doctor.id],
+          [report.entityId, randomUUID(), fixture.accounts.accountant.id],
         )
       ).rows[0];
       await client.query(
@@ -373,7 +401,7 @@ test.describe
       ],
     };
     const j = await expectJson(
-      doctor,
+      accountant,
       `clinics/${fixture.clinicId}/finance/journals`,
       input,
     );
@@ -386,17 +414,17 @@ test.describe
     expect(
       (
         await send(
-          doctor,
+          accountant,
           `clinics/${fixture.clinicId}/finance/approvals/${approval}/approve`,
         )
       ).status(),
     ).toBe(403);
     await expectJson(
-      stranger,
+      cashier,
       `clinics/${fixture.clinicId}/finance/approvals/${approval}/approve`,
     );
     const a = await expectJson(
-      doctor,
+      accountant,
       `clinics/${fixture.clinicId}/finance/approvals`,
       {
         kind: 'vendor_payment',
@@ -405,13 +433,13 @@ test.describe
       },
     );
     await expectJson(
-      stranger,
+      cashier,
       `clinics/${fixture.clinicId}/finance/approvals/${a.id}/approve`,
     );
     expect(
       (
         await send(
-          stranger,
+          cashier,
           `clinics/${fixture.clinicId}/finance/approvals/${a.id}/approve`,
         )
       ).status(),
@@ -423,7 +451,7 @@ test.describe
     );
     expect(
       (
-        await send(doctor, `clinics/${fixture.clinicId}/finance/journals`, {
+        await send(accountant, `clinics/${fixture.clinicId}/finance/journals`, {
           ...input,
           idempotencyKey: randomUUID(),
           date: '2020-01-15',
@@ -803,45 +831,45 @@ test.describe
     const s = (
       await db.query(
         'SELECT id,"createdAt" FROM auth_sessions WHERE "userId"=$1',
-        [fixture.accounts.stranger.id],
+        [fixture.accounts.cashier.id],
       )
     ).rows[0];
     const u = (
       await db.query('SELECT mfa_session_after FROM auth_users WHERE id=$1', [
-        fixture.accounts.stranger.id,
+        fixture.accounts.cashier.id,
       ])
     ).rows[0];
     try {
       await db.query(
         "UPDATE auth_users SET mfa_session_after=now()-interval '40 minutes' WHERE id=$1",
-        [fixture.accounts.stranger.id],
+        [fixture.accounts.cashier.id],
       );
       await db.query(
         'UPDATE auth_sessions SET "createdAt"=now()-interval \'31 minutes\' WHERE id=$1',
         [s.id],
       );
-      expect((await send(stranger, path)).status()).toBe(403);
+      expect((await send(cashier, path)).status()).toBe(403);
       await db.query('UPDATE auth_sessions SET "createdAt"=$2 WHERE id=$1', [
         s.id,
         s.createdAt,
       ]);
       await db.query(
         'UPDATE auth_users SET mfa_session_after=clock_timestamp() WHERE id=$1',
-        [fixture.accounts.stranger.id],
+        [fixture.accounts.cashier.id],
       );
-      expect((await send(stranger, path)).status()).toBe(403);
+      expect((await send(cashier, path)).status()).toBe(403);
     } finally {
       await db.query('UPDATE auth_sessions SET "createdAt"=$2 WHERE id=$1', [
         s.id,
         s.createdAt,
       ]);
       await db.query('UPDATE auth_users SET mfa_session_after=$2 WHERE id=$1', [
-        fixture.accounts.stranger.id,
+        fixture.accounts.cashier.id,
         u.mfa_session_after,
       ]);
     }
     // Fresh MFA passes the session gate, then the unrelated approval is rejected.
-    expect((await send(stranger, path)).status()).toBe(409);
+    expect((await send(cashier, path)).status()).toBe(409);
   });
   test('تبنٍ ببيانات خاصة وقبول ثم تسليم، وبلاغ لا يكشف موقعه', async () => {
     const pet = (
@@ -976,7 +1004,7 @@ test.describe
     });
   });
   test('السائق: سباق قبول واحد، موقع مؤقت، ومستحق مشتق من الدفتر', async () => {
-    for (const c of [doctor, stranger])
+    for (const c of [driverA, driverB])
       await expectJson(c, 'driver/vehicle', {
         plate: 'TEST-ONLY',
         description: 'مركبة اختبار مجهزة',
@@ -998,16 +1026,16 @@ test.describe
         policyAccepted: true,
       })
     ).id;
-    const requests = await (await get(doctor, 'driver/home')).json();
+    const requests = await (await get(driverA, 'driver/home')).json();
     const pub = requests.requests.find((r: { id: string }) => r.id === rideId);
     expect(pub.origin_lat).toBeUndefined();
     const r = await Promise.all([
-      send(doctor, `rides/${rideId}/claim`),
-      send(stranger, `rides/${rideId}/claim`),
+      send(driverA, `rides/${rideId}/claim`),
+      send(driverB, `rides/${rideId}/claim`),
     ]);
     expect(r.map((x) => x.status()).sort()).toEqual([201, 409]);
-    const driver = r[0]!.status() === 201 ? doctor : stranger,
-      loser = driver === doctor ? stranger : doctor;
+    const driver = r[0]!.status() === 201 ? driverA : driverB,
+      loser = driver === driverA ? driverB : driverA;
     expect((await get(loser, `rides/${rideId}/location`)).status()).toBe(404);
     await expectJson(driver, `rides/${rideId}/location`, {
       lat: 33.3,
@@ -1158,7 +1186,7 @@ test.describe
       { name: 'مصرف fixture', reference: 'TEST-ACCOUNT' },
     );
     await expectJson(
-      doctor,
+      accountant,
       `clinics/${fixture.clinicId}/finance/banks/${bank.id}/import`,
       {
         lines: [
@@ -1465,7 +1493,7 @@ test.describe
       });
     }
     const keyboardJournal = await expectJson(
-      doctor,
+      accountant,
       `clinics/${fixture.clinicId}/finance/journals`,
       {
         idempotencyKey: randomUUID(),
@@ -1499,7 +1527,7 @@ test.describe
   });
   test('السائق يقرأ رحلاته ومستحقاته من الواجهة', async ({ browser }) => {
     const driverContext = await browser.newContext();
-    await cookies(driverContext, 'doctor');
+    await cookies(driverContext, 'driver');
     const dp = await driverContext.newPage();
     await dp.goto('/driver');
     await expect(dp.getByRole('heading', { level: 1 })).toHaveText(

@@ -8,6 +8,30 @@ export const workspaceSchema = z.enum([
   'platform_admin',
 ]);
 export type Workspace = z.infer<typeof workspaceSchema>;
+export const accountTypeSchema = z.enum([
+  'customer',
+  'doctor',
+  'clinic',
+  'driver',
+]);
+export type AccountType = z.infer<typeof accountTypeSchema>;
+export const accountTypeNames: Record<AccountType, string> = {
+  customer: 'عميل',
+  doctor: 'طبيب',
+  clinic: 'عيادة',
+  driver: 'سائق تكسي الحيوانات',
+};
+export interface AccountTypeRequest {
+  id: string;
+  from_type: AccountType;
+  target_type: AccountType;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  review_reason: string | null;
+  version: number;
+  created_at: string;
+  applicant?: string;
+}
 export const minorUnitsSchema = z
   .string()
   .regex(/^(0|[1-9]\d*)$/, 'المبلغ يجب أن يكون عددًا صحيحًا غير سالب');
@@ -98,6 +122,7 @@ export const identityMeSchema = z.object({
     email: z.email(),
     emailVerified: z.boolean(),
     twoFactorEnabled: z.boolean(),
+    accountType: accountTypeSchema,
   }),
   sessionId: z.uuid(),
   workspaces: z.array(

@@ -11,6 +11,7 @@ import { transaction } from '../database.js';
 import { CareService } from '../care/service.js';
 import { audit, emit } from '../organizations/service.js';
 import { entity, post, sandbox } from '../finance/ledger.js';
+import { requireAccountType } from '../identity/account-policy.js';
 export interface RideInput {
   petId: string;
   city: string;
@@ -32,6 +33,7 @@ export interface RideInput {
 export class RideService {
   constructor(private readonly care: CareService) {}
   async driver(db: PoolClient, actor: string) {
+    await requireAccountType(actor, ['driver'], db);
     if (
       !(
         await db.query(

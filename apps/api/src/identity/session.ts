@@ -8,6 +8,7 @@ import type { Request } from 'express';
 import { z } from 'zod';
 import { auth } from './auth.js';
 import { database } from '../database.js';
+import { accountPolicy } from './account-policy.js';
 export async function requireSession(req: Pick<Request, 'headers'>) {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
@@ -15,6 +16,11 @@ export async function requireSession(req: Pick<Request, 'headers'>) {
   if (!session) throw new UnauthorizedException('سجل الدخول للمتابعة');
   if (!session.user.emailVerified)
     throw new ForbiddenException('أكّد بريدك الإلكتروني أولًا');
+  const type = await accountPolicy(session.user.id);
+  const path = (req as { originalUrl?: string }).originalUrl ?? '';
+  const section = path.match(/^\/api\/v1\/(doctor|driver)(?:\/|$)/)?.[1];
+  if (section && section !== type)
+    throw new ForbiddenException('هذا القسم غير متاح لنوع حسابك');
   return session;
 }
 export async function requireAdmin(req: Request) {

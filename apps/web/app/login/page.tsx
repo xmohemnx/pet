@@ -1,4 +1,9 @@
 import { AuthForm } from '../../components/auth-forms';
-export default function Page() {
-  return <AuthForm mode="login" />;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ closed?: string }>;
+}) {
+  const { closed } = await searchParams;
+  return <AuthForm mode="login" closed={closed === '1'} />;
 }

@@ -74,7 +74,7 @@ test.describe.serial('حجز نقل مجدول ومتعدد الحيوانات',
       rmSync(file, { force: true });
     }
     [owner, other, driver] = await Promise.all(
-      ['owner', 'other', 'doctor'].map((role) =>
+      ['owner', 'other', 'driver'].map((role) =>
         factory.newContext({
           extraHTTPHeaders: {
             Origin: origin,

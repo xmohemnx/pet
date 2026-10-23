@@ -43,7 +43,7 @@ test.describe
       rmSync(path, { force: true });
     }
     [owner, other, driver] = await Promise.all(
-      ['owner', 'other', 'doctor'].map((role) =>
+      ['owner', 'other', 'driver'].map((role) =>
         factory.newContext({
           extraHTTPHeaders: {
             Origin: origin,
@@ -228,7 +228,7 @@ test.describe
     expect((await driver.get(root + `rides/${ride}/route`)).status()).toBe(200);
     await db.query(
       "UPDATE professional_profiles SET status='suspended' WHERE user_id=$1 AND kind='driver'",
-      [f.accounts.doctor!.id],
+      [f.accounts.driver!.id],
     );
     expect((await driver.get(root + `rides/${ride}/route`)).status()).toBe(404);
   });

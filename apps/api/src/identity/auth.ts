@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth';
 import { twoFactor } from 'better-auth/plugins';
 import { database } from '../database.js';
 import { createMailer } from './mail.js';
+import { APIError } from 'better-auth/api';
 const origin = process.env.APP_ORIGIN || 'http://127.0.0.1:3000';
 const originUrl = new URL(origin);
 if (originUrl.origin !== origin)
@@ -54,7 +55,35 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   database,
   trustedOrigins: [origin],
-  user: { modelName: 'auth_users' },
+  user: {
+    modelName: 'auth_users',
+    additionalFields: {
+      accountType: {
+        type: 'string',
+        fieldName: 'account_type',
+        required: false,
+        defaultValue: 'customer',
+        input: true,
+      },
+    },
+  },
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          const user = (
+            await database.query(
+              'SELECT closed_at FROM auth_users WHERE id=$1',
+              [session.userId],
+            )
+          ).rows[0];
+          if (!user || user.closed_at)
+            throw new APIError('FORBIDDEN', { message: 'هذا الحساب مغلق' });
+          return { data: session };
+        },
+      },
+    },
+  },
   session: {
     modelName: 'auth_sessions',
     expiresIn: 60 * 60 * 24 * 7,

@@ -57,6 +57,8 @@ import { HomeVisitsController } from './care/home-controller.js';
 import { registerIdentity } from './identity/bridge.js';
 import { IdentityController } from './organizations/controller.js';
 import { OrganizationService } from './organizations/service.js';
+import { AccountLifecycle } from './organizations/account-lifecycle.js';
+import { AccountController } from './organizations/account-controller.js';
 import {
   Controller,
   Get,
@@ -187,6 +189,7 @@ class Errors implements ExceptionFilter {
     HealthController,
     DemoController,
     IdentityController,
+    AccountController,
     CareController,
     HomeVisitsController,
     SchedulingController,
@@ -216,6 +219,7 @@ class Errors implements ExceptionFilter {
   ],
   providers: [
     OrganizationService,
+    AccountLifecycle,
     CareService,
     HomeVisitsService,
     SchedulingService,

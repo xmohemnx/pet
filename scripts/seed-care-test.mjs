@@ -21,7 +21,20 @@ try {
     manager: 'مدير عيادة الاختبار',
   })) {
     const email = `care-${role}-${randomUUID()}@petra.test`;
-    const r = await auth.api.signUpEmail({ body: { email, password, name } });
+    const r = await auth.api.signUpEmail({
+      body: {
+        email,
+        password,
+        name,
+        accountType:
+          role === 'manager' ||
+          (role === 'other' && process.env.PETRA_FIXTURE_PLATFORM === 'true')
+            ? 'clinic'
+            : role === 'doctor' || role === 'stranger'
+              ? 'doctor'
+              : 'customer',
+      },
+    });
     await db.query('UPDATE auth_users SET "emailVerified"=true WHERE id=$1', [
       r.user.id,
     ]);
