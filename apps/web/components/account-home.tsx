@@ -131,10 +131,10 @@ export function AccountHome({ me }: { me: IdentityMe }) {
     <IdentityShell me={me}>
       <section className="account-welcome">
         <div>
-          <span className="eyebrow">
-            <Check size={15} /> بريد موثّق، ومساحة تخصّك
-          </span>
           <h1>أهلًا، {me.user.name}.</h1>
+          <p>
+            <Check size={15} /> بريد موثّق
+          </p>
           <p>
             حساب {accountTypeNames[me.user.accountType]} ثابت النوع، وصلاحيات
             العمل تُمنح بعد الاعتماد فقط.
@@ -171,7 +171,6 @@ export function AccountHome({ me }: { me: IdentityMe }) {
                   <section className="panel">
                     <div className="panel-heading">
                       <div>
-                        <span className="eyebrow">هويتك المهنية</span>
                         <h2>انضم إلى منظومة الرعاية</h2>
                       </div>
                       <Building2 size={23} />

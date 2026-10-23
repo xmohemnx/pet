@@ -98,7 +98,6 @@ export function SecurityPanel({ me }: { me: IdentityMe }) {
     <IdentityShell me={me}>
       <div className="page-title">
         <div>
-          <span className="eyebrow">مساحة للاطمئنان</span>
           <h1>أمان حسابك، بيدك.</h1>
           <p>راجع جلساتك وأضف خطوة لحماية الدخول.</p>
         </div>
