@@ -1,0 +1,31 @@
+# Shared UI/UX design-system record — 2026-10-23
+
+The final source `41851243224fbc66907cca32d5510f138e9f975e` extends Petra's incumbent **Companion photo journal**. This pass merges the authorized shared browsing/account refinement into the existing system; it introduces no new visual world, approved palette, image comp, imagery or provider.
+
+Written: `PRODUCT.md`, `apps/web/DESIGN.md`, `apps/web/.impeccable/design.json` and `apps/web/.impeccable/surfaces/apps-web-components-identity-shell-tsx.md`. The existing product/identity decisions and historical social/account proof remain preserved. No application code or other root documentation was changed by this documenter.
+
+## Ground truth checked
+
+Read the documenter role and `reference/document.md`, root `AGENTS.md`, product/system/sidecar/surface contract, shared `packages/ui/src/tokens.css`, final `app/layout.tsx` stylesheet order and relevant globals/redesign/social/rebuild/experience CSS. Sampled IdentityShell, MobileNavigation, PasswordField, ConnectionStatus, auth forms and PlatformHeading source. Opened the actual `login-1440.png`, `account-390.png`, `navigation-390.png`, `doctor-1440.png` and `security-390-full.png` from `docs/evidence/ui-ux/41851243/`; no new browser run or image modification was made.
+
+The independent final review at `docs/audits/UI_UX_DESIGN_REVIEW.md` returns `ship` for the shared refinement after checking all 40 native PNGs, dimensions and hashes. The first reviewer attempt failed at the usage quota before issuing a verdict and was replaced by a fresh independent reviewer; the completed verdict is the replacement review, not a self-review.
+
+## Recorded system
+
+- **Palette:** incumbent teal `#0e6873`, deep task hover `#124b53`, mint `#e8f2ef`, paper/white and restrained story orange remain the world. Shared `--field-edge` is `#a9c1b9`; `--error-ink`/`--error-ground` are `#8c3028`/`#fff1ec`. Shared offline status uses existing warning ink `#88520d` over its actual local ground `#fff4df`. Social field/error literals remain separately named `social-field-edge` (`#b6cac3`) and `social-error-ground` (`#fff0ee`), rather than being overwritten in the record.
+- **Type:** bundled IBM Plex Sans Arabic and Manrope remain unchanged. Real repeated shared roles are recorded: direct panel headings 22px/600/1.7 (20px mobile), task descriptions 15px/1.95, text controls 15px/1.7 (16px mobile), password hints 12px/1.8 and quick-destination captions 11px. Existing 19px care-section headings, 13px post captions and smaller social metadata remain distinct; no synthetic global ramp replaces them.
+- **Shape/layout:** flat bordered panels and existing radii remain. The desktop workspace retains its 232px rail; final main content has a 1440px maximum and responsive padding. At 1000px the rail becomes the bounded native modal drawer; at 760px four safe-area-aware quick destinations appear. Doctor actions wrap with a 10px gap and become full-width on mobile.
+- **Control rules:** shared task primary buttons now use teal/deep-teal, current rail state uses mint/deep-teal, authentication story/icon grounds use mint, and the last stylesheet supplies teal 3px focus with 4px offset. Both normative frontmatter and the operating-action sidecar specimen were reconciled; the obsolete warm-focus/ink-primary/pale-blue-auth prose no longer describes these shared surfaces.
+- **Named rules:** Story Accent keeps orange on story emphasis and teal on shared actions/focus; Arabic Room preserves line heights/wrapping; Flat Surface preserves border/tonal structure. Ten self-contained sidecar specimens retain social primitives and add the final task field, workspace navigation and offline status. Narrative and component references match the frontmatter/document.
+
+The record also describes destination-label search and empty recovery, normal desktop aside versus native mobile dialog, backdrop/Escape dismissal, Tab cycling/return, scroll locking/resizing, active-persona quick access, native validation/autocomplete, reversible password reveal, honest connectivity/resend outcomes and contextual copy below shared headings. Account closure remains findable and retains its actual confirmation/retention disclosure. Four fixed public types, five internal personas and independent professional/medical/financial authorization remain unchanged.
+
+## Verification and bounds
+
+Documentation-only verification passed: Prettier on the four written source documents, `git diff --check`, JSON parsing, frontmatter token references, sidecar metadata/component references, canonical section order and exact narrative lists. No context, detector, browser or application tests were rerun in this pass.
+
+The supplied final selected application run records **31 passed, 1 intentionally skipped**: 30 functional scenarios plus capture; the old account-only capture is the intentional skip. Supplied checks report 48 unit tests, lint, types, formatting, secret/files checks and Next/Nest build passing; skills verification records 21 skills / 441 files / 105 syntax checks. These are upstream verification results, not newly executed documenter tests. The saved detector has exactly **10 advisories and zero primary findings**, covering nine size occurrences and the offline warning ground. It remains the original pre-documentation result; no new detector-clean claim is made.
+
+Not canonized or repaired: remaining local cool-blue generic authentication hover, notices, disabled controls and legacy selected-tab declarations. They remain narrowly disclosed source compatibility states, not future shared action rules. Old warm global focus declarations are superseded in the final cascade. Existing world provenance is retained without fabricating tonal ramps, missing media or owner approval.
+
+This `ship` verdict covers the contract and captured states. It does not complete all social/professional surfaces, certify APIs/security, physical iOS/Android devices or other browsers, establish legal retention approval or production readiness, apply migrations, deploy publicly, activate paid services or merge to main. Prior social/account evidence remains historical and unmodified; see `docs/audits/UI_UX_RELEASE.md` for the full correction history and limitations.

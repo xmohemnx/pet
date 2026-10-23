@@ -1,0 +1,51 @@
+Actual UI/UX verification excerpts,2026-10-23
+Source41851243224fbc66907cca32d5510f138e9f975e
+30distinct functional scenarios +1capture in final selected cohort; no all-platform or physical-device claim.
+
+First selected run (not green)
+uiux-e2e.log
+  3 failed
+  1 skipped
+  27 passed (4.3m)
+
+First correction (not green)
+uiux-resolved-e2e.log
+  1 failed
+  1 skipped
+  13 passed (2.2m)
+
+Touch and first-profile diagnosis (not green)
+uiux-touch-e2e.log
+  1 failed
+  1 passed (56.5s)
+
+Final selected cohort, source41851243
+uiux-final-e2e.log
+  1 skipped
+  31 passed (3.3m)
+
+Source checks
+uiux-release-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+All matched files use Prettier code style!
+Security file checks passed: private env, source, public assets.
+
+Installed skill verification
+uiux-skills-check.log
+  "skills": 21,
+  "files": 441,
+  "syntaxChecks": 105,
+  "impeccable": "0.1.16",
+  "vercel": "65.2.0",
+  "failures": []
+
+Next/Nest build completed successfully:uiux-source-build.log
+Source diff clean for apps/packages/tests/scripts at final capture.
+
+Completion checks on final runtime source and prepared documentation
+uiux-completion-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+All matched files use Prettier code style!
+Security file checks passed: private env, source, public assets.

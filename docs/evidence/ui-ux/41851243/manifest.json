@@ -1,0 +1,200 @@
+{
+  "source": "41851243224fbc66907cca32d5510f138e9f975e",
+  "branch": "codex/ui-ux-20261023",
+  "timezone": "Asia/Baghdad",
+  "environment": "isolated local E2E database; synthetic test accounts",
+  "screens": [
+    {
+      "file": "home-390.png",
+      "route": "/",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:24.020Z"
+    },
+    {
+      "file": "home-1440.png",
+      "route": "/",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:24.679Z"
+    },
+    {
+      "file": "register-390.png",
+      "route": "/register",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:25.093Z"
+    },
+    {
+      "file": "register-1440.png",
+      "route": "/register",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:25.592Z"
+    },
+    {
+      "file": "login-390.png",
+      "route": "/login",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:26.100Z"
+    },
+    {
+      "file": "login-1440.png",
+      "route": "/login",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:26.523Z"
+    },
+    {
+      "file": "recovery-390.png",
+      "route": "/recover",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:26.872Z"
+    },
+    {
+      "file": "recovery-1440.png",
+      "route": "/recover",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:27.309Z"
+    },
+    {
+      "file": "account-390.png",
+      "route": "/account",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:27.774Z"
+    },
+    {
+      "file": "account-1440.png",
+      "route": "/account",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:28.493Z"
+    },
+    {
+      "file": "security-390.png",
+      "route": "/security",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:29.539Z"
+    },
+    {
+      "file": "security-1440.png",
+      "route": "/security",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:30.151Z"
+    },
+    {
+      "file": "care-390.png",
+      "route": "/care",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:30.693Z"
+    },
+    {
+      "file": "care-1440.png",
+      "route": "/care",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:31.187Z"
+    },
+    {
+      "file": "market-390.png",
+      "route": "/marketplace",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:31.674Z"
+    },
+    {
+      "file": "market-1440.png",
+      "route": "/marketplace",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:32.181Z"
+    },
+    {
+      "file": "services-390.png",
+      "route": "/services",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:32.672Z"
+    },
+    {
+      "file": "services-1440.png",
+      "route": "/services",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:33.137Z"
+    },
+    {
+      "file": "taxi-390.png",
+      "route": "/taxi",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:33.549Z"
+    },
+    {
+      "file": "taxi-1440.png",
+      "route": "/taxi",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:34.007Z"
+    },
+    {
+      "file": "social-390.png",
+      "route": "/social",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:34.843Z"
+    },
+    {
+      "file": "social-1440.png",
+      "route": "/social",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:35.796Z"
+    },
+    {
+      "file": "doctor-390.png",
+      "route": "/doctor",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:36.187Z"
+    },
+    {
+      "file": "doctor-1440.png",
+      "route": "/doctor",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:36.650Z"
+    },
+    {
+      "file": "clinic-390.png",
+      "route": "/clinic/9ab0d9c5-05d1-4e91-b604-179d315b6751",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:37.095Z"
+    },
+    {
+      "file": "clinic-1440.png",
+      "route": "/clinic/9ab0d9c5-05d1-4e91-b604-179d315b6751",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:37.661Z"
+    },
+    {
+      "file": "driver-390.png",
+      "route": "/driver",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:38.140Z"
+    },
+    {
+      "file": "driver-1440.png",
+      "route": "/driver",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:38.686Z"
+    },
+    {
+      "file": "admin-390.png",
+      "route": "/admin",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:39.068Z"
+    },
+    {
+      "file": "admin-1440.png",
+      "route": "/admin",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:39.536Z"
+    },
+    {
+      "file": "not-found-390.png",
+      "route": "/uiux-missing-test-page",
+      "width": 390,
+      "capturedAt": "2026-10-23T15:00:39.883Z"
+    },
+    {
+      "file": "not-found-1440.png",
+      "route": "/uiux-missing-test-page",
+      "width": 1440,
+      "capturedAt": "2026-10-23T15:00:40.113Z"
+    }
+  ]
+}

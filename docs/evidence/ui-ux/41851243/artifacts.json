@@ -1,0 +1,286 @@
+{
+  "source": "41851243224fbc66907cca32d5510f138e9f975e",
+  "kind": "unaltered native Chromium browser screenshots",
+  "files": [
+    {
+      "file": "account-1440-full.png",
+      "width": 1440,
+      "height": 1187,
+      "bytes": 119142,
+      "sha256": "0de9706d8e592249c870671ec2d361a67cdd8f6b6a66d90308cc5cc30de950f7"
+    },
+    {
+      "file": "account-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 111136,
+      "sha256": "2edff80d8046165ce060df02a4f59ee4af6bc7c43c61ef9eb8eb194834958610"
+    },
+    {
+      "file": "account-390-full.png",
+      "width": 390,
+      "height": 1639,
+      "bytes": 82274,
+      "sha256": "134207ef5cfd11fb8175d91b66677a9c0a607524514445b5af547d95f666742f"
+    },
+    {
+      "file": "account-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 51299,
+      "sha256": "a2f8423846f9aae548e6482d034bdf43a44fdb0e2d033941821a8388ce9d1226"
+    },
+    {
+      "file": "admin-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 97744,
+      "sha256": "19bebb1edd4c35ffaef45100633065655742133b7043d986424f8d8ad0c64919"
+    },
+    {
+      "file": "admin-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 48219,
+      "sha256": "c2c8b632e5cabd5d3a8de5d92265bf12861a2e7242f52bd321aa7fd30f91c5fb"
+    },
+    {
+      "file": "care-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 91845,
+      "sha256": "4596f83753df32d4eaf900e6af3606af6cc96706e96ee8c95cf8c110d89c8c54"
+    },
+    {
+      "file": "care-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 45797,
+      "sha256": "72813df7cab4de637ee2e7b1c49e6a8f31e4269fdd01cba6a1e1c5f14569509d"
+    },
+    {
+      "file": "clinic-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 128290,
+      "sha256": "936a0dc9089c6d3ce221b73219cdd0d631969fb195c6de8387813bd5b68f6a74"
+    },
+    {
+      "file": "clinic-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 50757,
+      "sha256": "eac0ee92f2fd75a5cb069726635cf403c19fa92475dcb618d799341af21f3e01"
+    },
+    {
+      "file": "delete-confirmation-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 51343,
+      "sha256": "c0c7d69efd5266098d89372364df900bb57b859ebd906e482c20011918bda28b"
+    },
+    {
+      "file": "doctor-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 95118,
+      "sha256": "27f9bcbfd41edfc96b6112e52b751f165912be4c68bb182a6d81ec34aafaa1a3"
+    },
+    {
+      "file": "doctor-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 46249,
+      "sha256": "512864b84f0770597096c685bb4a364da58682a5a82e49f44026d59e72330c57"
+    },
+    {
+      "file": "driver-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 118749,
+      "sha256": "8a9e68c806a586b92645eea8f89d9b7dfc78ba41c2f004f7ff2538a6a16e0347"
+    },
+    {
+      "file": "driver-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 59990,
+      "sha256": "2e22e99ecf34d36e260c24ceed5c78fea30abc9baebefeae9c151025e0908d99"
+    },
+    {
+      "file": "home-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 367939,
+      "sha256": "03a312af1301745d1bd43af1c9f9a46a1c0ef1845694e18337562588e3fe6f70"
+    },
+    {
+      "file": "home-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 137307,
+      "sha256": "41a140a96fb0ed6802c868b6385db637a35f70ec9cc54b2ac96a1e05b91e99ca"
+    },
+    {
+      "file": "login-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 295038,
+      "sha256": "911aa62d54a7007e02fba89656a378ff848357c44706935dcdbe8d1761c95754"
+    },
+    {
+      "file": "login-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 24397,
+      "sha256": "6d5fa1194aca320f8b9cd041e13850859a6bc33ea851575276da715b19d531f6"
+    },
+    {
+      "file": "market-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 118292,
+      "sha256": "8b7eb5a252fe55f4f05d7c9f7f00493b2d10a6090d7e479afdfcedd80a47bc32"
+    },
+    {
+      "file": "market-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 53318,
+      "sha256": "e514e4e85641a5a1c82b0cc2eff4f060933ebac670796c5732d53e323082d319"
+    },
+    {
+      "file": "navigation-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 31880,
+      "sha256": "c03e93bcd1c8229c34cd1f07660eba2c1fd306f66dc2f2c8fc0cb20402a0f87a"
+    },
+    {
+      "file": "not-found-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 26288,
+      "sha256": "8c57a561d880906305cf1d0c7c2815c022e0929145677c63ddb8940d0e37302e"
+    },
+    {
+      "file": "not-found-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 18679,
+      "sha256": "636a3972e19d4f1264ca771b7c988a93966c8fd50c521c931ea6126f5f60369b"
+    },
+    {
+      "file": "recovery-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 291265,
+      "sha256": "8a6f64247f5f7aef0fa87d7a32d2ef4355cc76b4e3ef76e273fef9b96856ec21"
+    },
+    {
+      "file": "recovery-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 25631,
+      "sha256": "0bc0005a8e9442bf94b739a3f003d5ab0a2f2557da4145d0f978af3866a0ed2d"
+    },
+    {
+      "file": "register-1440-full.png",
+      "width": 1440,
+      "height": 1136,
+      "bytes": 321980,
+      "sha256": "225e6e6a8954e63f9756f8cd7dadd4172d726e75347fd1e42951579a9ec3c0eb"
+    },
+    {
+      "file": "register-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 309663,
+      "sha256": "7a65008829686b4a79d0b1edb6a3ea7f706ea54cfe7f3e9081337a2a4d6bdc56"
+    },
+    {
+      "file": "register-390-full.png",
+      "width": 390,
+      "height": 1174,
+      "bytes": 48191,
+      "sha256": "4f2734de3140913050aa2b68399e90268667139706c0165bf228edcf49400883"
+    },
+    {
+      "file": "register-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 34869,
+      "sha256": "c23dda87ac4feddcfaed72aafb58915ffff0ed913604eb294fba346912beb69c"
+    },
+    {
+      "file": "security-1440-full.png",
+      "width": 1440,
+      "height": 1439,
+      "bytes": 165399,
+      "sha256": "2f34e6b4cd0a0e3e3d8ce175d3e3425a3f0f98c446348eed0f632019e6c7988e"
+    },
+    {
+      "file": "security-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 146222,
+      "sha256": "5866aa9300497e41084fdd32170a725974ce56086381446c7b2f798c9ef66889"
+    },
+    {
+      "file": "security-390-full.png",
+      "width": 390,
+      "height": 2264,
+      "bytes": 121746,
+      "sha256": "251e2872c5de9d5b3517ca15d50e3a75d1d09b7f1241c20201fafe196587384e"
+    },
+    {
+      "file": "security-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 47502,
+      "sha256": "62cd3be9a97f74c4586256326d78d589aadeb0a9ad248277aa05d91c13f2167e"
+    },
+    {
+      "file": "services-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 81078,
+      "sha256": "67ba00d855de06a3c32251299d3ef78f8ed8b4a8c443469d05f760766610917e"
+    },
+    {
+      "file": "services-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 40451,
+      "sha256": "ae793604f34a7df9365ba919a37394d38f2a5eca86e09964e9e35603cb7c13c2"
+    },
+    {
+      "file": "social-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 514293,
+      "sha256": "292ab221a9fa92d583ef2c27da7d22681a78941926b8bac81e212fb66d8147ed"
+    },
+    {
+      "file": "social-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 186420,
+      "sha256": "b073897b05987a39147308ac573d97928eb696c8649ef3854402c6f93e0d6268"
+    },
+    {
+      "file": "taxi-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 97471,
+      "sha256": "27c84e85fc0e3df43aa4e4305bf960c9fbf7cc4e272528e31451ebd24adcc0ef"
+    },
+    {
+      "file": "taxi-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 40669,
+      "sha256": "31b568ab139b91516e544e38d5eadc8ef36a2b3b681f30cf4db3ddc2cfa37866"
+    }
+  ]
+}

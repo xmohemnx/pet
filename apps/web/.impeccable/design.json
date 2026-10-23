@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-23T08:57:34Z",
+  "generatedAt": "2026-10-23T15:19:08Z",
   "title": "Design System: Petra",
   "extensions": {
     "colorMeta": {
@@ -123,6 +123,18 @@
       "operating-neutral": {
         "role": "neutral",
         "displayName": "Retained operating neutral"
+      },
+      "social-field-edge": {
+        "role": "neutral",
+        "displayName": "Social field edge"
+      },
+      "social-error-ground": {
+        "role": "semantic",
+        "displayName": "Social error ground"
+      },
+      "connection-ground": {
+        "role": "semantic",
+        "displayName": "Shared offline warning ground"
       }
     },
     "typographyMeta": {
@@ -169,6 +181,26 @@
       "brand": {
         "displayName": "Latin wordmark",
         "purpose": "Manrope wordmark with local shell sizes."
+      },
+      "shared-panel-title": {
+        "displayName": "Shared panel title",
+        "purpose": "Direct task panel headings; 20px on mobile, separate from care-section headings."
+      },
+      "task-copy": {
+        "displayName": "Task description",
+        "purpose": "Direct panel and authentication descriptions; panel copy is bounded at 70ch."
+      },
+      "form-input": {
+        "displayName": "Native text control",
+        "purpose": "Shared task/authentication inputs; 16px on mobile, distinct from radios and checkboxes."
+      },
+      "caption": {
+        "displayName": "Supporting caption",
+        "purpose": "Password hints; 12px is also used for navigation support labels with contextual line height."
+      },
+      "quick-label": {
+        "displayName": "Mobile destination label",
+        "purpose": "Four labelled mobile quick destinations; this small size is not a body-copy default."
       }
     },
     "shadows": [
@@ -230,6 +262,10 @@
       },
       {
         "name": "public-container-compact",
+        "value": "1000px"
+      },
+      {
+        "name": "workspace-native-drawer",
         "value": "1000px"
       },
       {
@@ -296,12 +332,36 @@
       "css": ".ds-post{background:#fff;border:1px solid var(--social-line,#dce6e3);border-radius:var(--social-radius,14px);overflow:clip;color:var(--social-ink,#1a2c30);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-post header{padding:16px 18px;font-size:14px;font-weight:600}.ds-post-content{padding:12px 18px 18px}.ds-post-content p{font-size:13px;line-height:1.95;max-width:65ch;overflow-wrap:anywhere;white-space:pre-wrap;margin:7px 0 5px}.ds-post a{text-decoration:none;font-size:12px;color:var(--social-muted,#5d6f72)}.ds-post a:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Retained operating action",
+      "name": "Shared task action",
       "kind": "button",
       "refersTo": "operating-button",
-      "description": "Compatibility specimen from preserved professional forms; not the social primary.",
+      "description": "Teal primary action in shared professional/account task surfaces; retains native geometry and inherited press/hover motion.",
       "html": "<a class=\"ds-operating\" href=\"#task\" dir=\"rtl\">فتح المهمة</a>",
-      "css": ".ds-operating{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-dark,#202733);border-radius:8px;background:var(--petra-dark,#202733);color:#fff;font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-operating:hover{background:#394558;border-color:#394558;transform:translateY(-2px)}.ds-operating:active{transform:translateY(1px)}.ds-operating:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-operating{transition:none!important}}"
+      "css": ".ds-operating{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--brand,#0e6873);border-radius:8px;background:var(--brand,#0e6873);color:var(--surface,#fff);font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-operating:hover{background:var(--brand-dark,#124b53);border-color:var(--brand-dark,#124b53);transform:translateY(-2px)}.ds-operating:active{transform:translateY(1px)}.ds-operating:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-operating{transition:none!important}}"
+    },
+    {
+      "name": "Shared task field",
+      "kind": "input",
+      "refersTo": "task-field",
+      "description": "Native labelled task input; authentication retains its separate 9px corner and 48px minimum height.",
+      "html": "<label class=\"ds-task-field\" dir=\"rtl\">الاسم<input name=\"display-name\" autocomplete=\"name\" /></label>",
+      "css": ".ds-task-field{display:grid;gap:8px;font-family:'IBM Plex Sans Arabic',sans-serif;color:var(--ink,#1a2c30);font-size:13px;font-weight:500}.ds-task-field input{display:block;width:100%;min-width:0;min-height:46px;padding:11px 13px;border:1px solid var(--field-edge,#a9c1b9);border-radius:7px;background:var(--surface,#fff);color:var(--ink,#1a2c30);font:inherit;font-size:15px;line-height:1.7}.ds-task-field input:focus{border-color:var(--brand,#0e6873)}.ds-task-field input:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px}@media(max-width:760px){.ds-task-field input{font-size:16px}}"
+    },
+    {
+      "name": "Shared workspace navigation",
+      "kind": "nav",
+      "refersTo": "workspace-navigation-item",
+      "description": "Labelled authorized destination links, with an explicit current-page state; the mobile drawer requires native dialog behavior in the app.",
+      "html": "<nav class=\"ds-workspace-nav\" aria-label=\"أقسام Petra\" dir=\"rtl\"><a href=\"#account\" aria-current=\"page\">مساحتي</a><a href=\"#care\">مركز الرعاية</a></nav>",
+      "css": ".ds-workspace-nav{display:grid;gap:4px;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-workspace-nav a{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;border-radius:7px;color:var(--muted,#5d6f72);font-size:14px;line-height:1.7;text-decoration:none}.ds-workspace-nav a:hover{color:var(--brand-dark,#124b53);background:var(--paper,#f6f9f8)}.ds-workspace-nav a[aria-current=page]{color:var(--brand-dark,#124b53);background:var(--mint,#e8f2ef);font-weight:600}.ds-workspace-nav a:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px}"
+    },
+    {
+      "name": "Offline connection status",
+      "kind": "custom",
+      "refersTo": "connection-status",
+      "description": "Shared warning shown only when the browser reports offline. This specimen shows its visible state.",
+      "html": "<p class=\"ds-connection\" role=\"status\" dir=\"rtl\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m2 2 20 20M8.5 16.5a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.17-2.65M10.66 5a16 16 0 0 1 11.3 3.82M5 12.86a10 10 0 0 1 5.17-2.69M16.5 11.5a10 10 0 0 1 2.5 1.36M12 20h.01\"/></svg><span>أنت غير متصل. تحقق من اتصالك؛ لا تعتبر تغييراتك محفوظة حتى يظهر تأكيدها.</span></p>",
+      "css": ".ds-connection{display:flex;align-items:flex-start;gap:12px;padding:14px 24px;margin:0;background:#fff4df;color:var(--warning,#88520d);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;line-height:1.9}.ds-connection svg{flex-shrink:0;margin-block-start:4px}"
     }
   ],
   "narrative": {
@@ -317,7 +377,7 @@
     "rules": [
       {
         "name": "The Story Accent Rule",
-        "body": "Keep warm orange attached to story emphasis; use teal for the social action and selection hierarchy.",
+        "body": "Keep warm orange attached to story emphasis; use teal for social and shared task actions, focus and selection.",
         "section": "colors"
       },
       {
@@ -333,7 +393,7 @@
     ],
     "dos": [
       "**Do** lead social posts with the actual authorized photograph and author.",
-      "**Do** use teal for social actions and orange for story emphasis.",
+      "**Do** use teal for social/shared task actions and keyboard focus, mint for their selected grounds, and orange for story emphasis.",
       "**Do** preserve Arabic line height, RTL logical spacing and long-text wrapping.",
       "**Do** retain keyboard focus, native forms, reduced motion and honest loading/error/empty states.",
       "**Do** keep conceptual imagery, test data and incomplete capabilities explicitly disclosed.",
@@ -343,7 +403,7 @@
       "**Don't** describe the proposed palette as an exact color choice explicitly approved by the owner.",
       "**Don't** claim comp fidelity, external quality-board approval or production certification for this code-led POC.",
       "**Don't** fill community or professional screens with invented counts, endorsements or verification badges.",
-      "**Don't** promote retained cool-blue overrides or legacy global focus colors into the replacement world's rules.",
+      "**Don't** promote local cool-blue compatibility states into shared action rules or reinstate the superseded warm global focus treatment.",
       "**Don't** add ambient shadows to ordinary posts or use story-viewer gradients as general page decoration.",
       "**Don't** treat the clinic quick-task strip as proof of a completed professional-platform redesign."
     ]
