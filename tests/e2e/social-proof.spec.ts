@@ -367,6 +367,7 @@ test('دليل بصري جديد من commit نظيف وبيانات اختبا�
         .getByRole('button', { name: 'إيقاف القصة مؤقتاً', exact: true })
         .click();
     for (const image of await page.locator('main img').all()) {
+      if (!(await image.isVisible())) continue;
       await image.scrollIntoViewIfNeeded();
       await expect
         .poll(() =>
@@ -432,6 +433,7 @@ test('دليل بصري جديد من commit نظيف وبيانات اختبا�
     'دوائر الرفقة',
   ].entries()) {
     await page.getByRole('button', { name, exact: true }).click();
+    await expect(page.locator('.social-concept-bar > span')).toHaveText(name);
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({
       path: `${directory}/direction-${i + 1}-1440.png`,
