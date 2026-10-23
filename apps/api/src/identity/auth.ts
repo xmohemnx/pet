@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { twoFactor } from 'better-auth/plugins';
-import nodemailer from 'nodemailer';
 import { database } from '../database.js';
+import { createMailer } from './mail.js';
 const origin = process.env.APP_ORIGIN || 'http://127.0.0.1:3000';
 const originUrl = new URL(origin);
 if (originUrl.origin !== origin)
@@ -46,34 +46,7 @@ if (!local) {
       'Production databases require verified PostgreSQL TLS, authenticated Redis TLS, and private credentials',
     );
 }
-if (
-  !local &&
-  (process.env.MAIL_MODE !== 'smtp' ||
-    !process.env.SMTP_HOST ||
-    !process.env.SMTP_USER ||
-    !process.env.SMTP_PASSWORD)
-)
-  throw new Error('Production SMTP is not configured');
-const transport = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || '127.0.0.1',
-  port: Number(process.env.SMTP_PORT || 1025),
-  secure: process.env.SMTP_SECURE === 'true',
-  requireTLS: !local && process.env.SMTP_SECURE !== 'true',
-  ...(process.env.SMTP_USER
-    ? { auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD } }
-    : {}),
-  connectionTimeout: 5000,
-  greetingTimeout: 5000,
-  socketTimeout: 10000,
-});
-export async function sendMail(to: string, subject: string, text: string) {
-  await transport.sendMail({
-    from: process.env.SMTP_FROM || 'Petra <hello@petra.test>',
-    to,
-    subject,
-    text,
-  });
-}
+export const sendMail = createMailer();
 export const auth = betterAuth({
   appName: 'Petra',
   baseURL: origin,

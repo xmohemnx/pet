@@ -136,14 +136,19 @@ export function configurationGates(
       (!env.PGSSLMODE || env.PGSSLMODE === 'verify-full'),
   );
   check(
-    'SMTP_CONFIGURED',
-    env.MAIL_MODE === 'smtp' &&
+    'MAIL_PROVIDER_CONFIGURED',
+    (env.MAIL_MODE === 'smtp' &&
       !!env.SMTP_HOST &&
       !['localhost', '127.0.0.1'].includes(env.SMTP_HOST) &&
       !!env.SMTP_USER &&
       !!env.SMTP_PASSWORD &&
       !!env.SMTP_FROM &&
-      !/\.(?:test|invalid)>?$/.test(env.SMTP_FROM),
+      !/\.(?:test|invalid)>?$/.test(env.SMTP_FROM)) ||
+      (env.MAIL_MODE === 'resend' &&
+        !!env.RESEND_API_KEY &&
+        !!env.MAIL_FROM &&
+        /^[^\r\n<>]*<?[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+>?$/.test(env.MAIL_FROM) &&
+        !/@(?:resend\.dev|[^<>\s]*\.(?:test|invalid))>?$/i.test(env.MAIL_FROM)),
   );
   const storage = url(env.PETRA_S3_ENDPOINT);
   check(

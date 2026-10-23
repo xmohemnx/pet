@@ -27,6 +27,22 @@ it('يفشل مغلقاً للإعداد المحلي ولا يطبع الأسر
   ).toBe('blocked');
   expect(Object.values(capabilities).some((v) => v === false)).toBe(true);
 });
+it('لا يقبل مرسل Resend التجريبي كتهيئة بريد إطلاق عام', () => {
+  const mailStatus = (from: string) =>
+    configurationGates(
+      {
+        MAIL_MODE: 'resend',
+        RESEND_API_KEY: 'private-test-credential',
+        MAIL_FROM: from,
+      },
+      'a'.repeat(40),
+    ).checks.find(
+      (c: { code: string }) => c.code === 'MAIL_PROVIDER_CONFIGURED',
+    )?.status;
+  expect(mailStatus('Petra <onboarding@resend.dev>')).toBe('blocked');
+  expect(mailStatus('Petra <sender@petra.test>')).toBe('blocked');
+  expect(mailStatus('Petra <sender@example.org>')).toBe('passed');
+});
 it('يربط تقرير التدقيق بتوقيع المراجع والنسخة والصلاحية والمجالات المطلوبة', () => {
   const keys = generateKeyPairSync('ed25519'),
     commit = 'a'.repeat(40),

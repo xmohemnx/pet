@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-23",
+  "requested_scope": "functional_hosted_testing",
+  "monthly_budget": 0,
+  "payment_card_added": "reported_by_owner",
+  "email_provider": "owner_has_none",
+  "render": {
+    "workspace_id": "tea-dbci0259fdbs739vsfn0",
+    "web_services": 0,
+    "published_url": null,
+    "key_value": {
+      "id": "red-dbdchdjncjis739ngpb0",
+      "name": "petra-runtime-queue",
+      "status": "available",
+      "plan": "free",
+      "region": "frankfurt",
+      "maxmemory_policy": "noeviction",
+      "persistence_mode": "off",
+      "external_ip_allow_list": [],
+      "application_connection_verified": false
+    },
+    "billing_limits_verified": false
+  },
+  "mail_adapter": {
+    "provider": "resend",
+    "protocol": "https",
+    "account_connected": false,
+    "external_email_sent": false,
+    "verification_requirement_removed": false
+  },
+  "paid_services_created": false,
+  "validation": {
+    "quality_check": "passed",
+    "api_build": "passed",
+    "unit_tests_passed": 48,
+    "identity_and_auth_ux_e2e_passed": 12,
+    "identity_e2e_duration_seconds": 45.6,
+    "e2e_database": "isolated_local_database_removed_after_run",
+    "smtp_delivery_test": "local_mailpit_only",
+    "resend_transport_test": "mocked_https_requests_only",
+    "built_browser_secret_check": "passed",
+    "full_e2e_suite_rerun": false
+  },
+  "full_hosted_site_tested": false,
+  "financial_or_media_production_guards_removed": false,
+  "sources_reviewed": [
+    "https://render.com/docs/free",
+    "https://render.com/docs/key-value",
+    "https://render.com/docs/build-pipeline",
+    "https://resend.com/docs/api-reference/emails/send-email",
+    "https://resend.com/docs/api-reference/errors",
+    "https://resend.com/docs/knowledge-base/account-quotas-and-limits"
+  ]
+}

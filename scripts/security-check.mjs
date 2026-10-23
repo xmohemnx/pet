@@ -28,7 +28,7 @@ const secrets = [
     Object.entries({ ...settings, ...process.env })
       .filter(
         ([key, value]) =>
-          /SECRET|PASSWORD|PRIVATE_KEY|DATABASE_URL|REDIS_URL|SMTP_USER/.test(
+          /SECRET|PASSWORD|PRIVATE_KEY|DATABASE_URL|REDIS_URL|SMTP_USER|RESEND_API_KEY/.test(
             key,
           ) &&
           value &&
