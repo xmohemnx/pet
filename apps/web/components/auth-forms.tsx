@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useState, type FormEvent } from 'react';
+import { useContext, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -13,6 +13,8 @@ import {
   Building2,
 } from 'lucide-react';
 import { Brand } from './brand';
+import { PasswordField } from './password-field';
+import { ConnectionStatus } from './connection-status';
 import { authClient, authError } from '../lib/auth-client';
 import { accountTypeNames, type AccountType } from '@petra/contracts';
 import { WebPreviewContext } from './web-preview';
@@ -31,6 +33,8 @@ export function AuthForm({
   const [busy, setBusy] = useState(false);
   const [mfa, setMfa] = useState(false);
   const [backup, setBackup] = useState(false);
+  const emailInput = useRef<HTMLInputElement>(null);
+  const feedback = useRef<HTMLDivElement>(null);
   const titles = {
     login: 'أهلًا بعودتك.',
     register: 'بداية حكاية جميلة.',
@@ -110,6 +114,7 @@ export function AuthForm({
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'تعذر إتمام الطلب');
+      requestAnimationFrame(() => feedback.current?.focus());
     } finally {
       setBusy(false);
     }
@@ -118,19 +123,18 @@ export function AuthForm({
     if (preview) return;
     setBusy(true);
     setError('');
-    const email =
-      (document.querySelector('input[name=email]') as HTMLInputElement | null)
-        ?.value || '';
+    const email = emailInput.current?.value.trim() || '';
     if (!email) {
       setError('اكتب بريدك الإلكتروني أولًا');
       setBusy(false);
       return;
     }
     try {
-      await authClient.sendVerificationEmail({
+      const result = await authClient.sendVerificationEmail({
         email,
         callbackURL: '/login?verified=1',
       });
+      if (result.error) throw new Error(authError(result.error.code));
       setMessage('إذا كان الحساب يحتاج تأكيدًا ستصله رسالة جديدة.');
     } catch {
       setError('تعذر إرسال الرسالة');
@@ -162,7 +166,8 @@ export function AuthForm({
         </div>
         <small>Petra · لأنهم جزء من العائلة.</small>
       </div>
-      <main id="main" className="auth-main">
+      <main id="main" tabIndex={-1} className="auth-main">
+        <ConnectionStatus />
         <Link href="/" className="text-link">
           الرئيسية <ArrowLeft size={16} />
         </Link>
@@ -175,9 +180,6 @@ export function AuthForm({
             ) : (
               <KeyRound />
             )}
-          </span>
-          <span className="eyebrow">
-            {mfa ? 'خطوة أخيرة لحماية حسابك' : 'مساحتك في Petra'}
           </span>
           <h1>{mfa ? 'تحقق من هويتك.' : titles[mode]}</h1>
           {closed && (
@@ -200,7 +202,7 @@ export function AuthForm({
                   ? 'أدخل بريدك وسنرسل لك تعليمات الاستعادة.'
                   : 'بياناتك تبقى ضمن حسابك، بصلاحيات واضحة.'}
           </p>
-          <form onSubmit={submit} className="identity-form">
+          <form onSubmit={submit} className="identity-form" aria-busy={busy}>
             {!mfa && mode === 'register' && (
               <fieldset
                 className="account-type-options"
@@ -253,7 +255,10 @@ export function AuthForm({
                 البريد الإلكتروني
                 <input
                   name="email"
-                  disabled={preview}
+                  ref={emailInput}
+                  spellCheck={false}
+                  autoCapitalize="none"
+                  disabled={preview || busy}
                   type="email"
                   required
                   maxLength={254}
@@ -263,32 +268,22 @@ export function AuthForm({
               </label>
             )}
             {!mfa && mode !== 'recover' && (
-              <label>
-                {mode === 'reset' ? 'كلمة المرور الجديدة' : 'كلمة المرور'}
-                <input
-                  name="password"
-                  disabled={preview}
-                  aria-label={
-                    mode === 'reset' ? 'كلمة المرور الجديدة' : 'كلمة المرور'
-                  }
-                  aria-describedby={
-                    mode !== 'login' ? 'password-hint' : undefined
-                  }
-                  type="password"
-                  required
-                  minLength={mode === 'login' ? 1 : 12}
-                  maxLength={128}
-                  autoComplete={
-                    mode === 'login' ? 'current-password' : 'new-password'
-                  }
-                  dir="ltr"
-                />
-                {mode !== 'login' && (
-                  <small id="password-hint">
-                    12 حرفًا على الأقل؛ استخدم كلمة فريدة لهذا الحساب.
-                  </small>
-                )}
-              </label>
+              <PasswordField
+                label={mode === 'reset' ? 'كلمة المرور الجديدة' : 'كلمة المرور'}
+                name="password"
+                disabled={preview || busy}
+                required
+                minLength={mode === 'login' ? 1 : 12}
+                maxLength={128}
+                autoComplete={
+                  mode === 'login' ? 'current-password' : 'new-password'
+                }
+                hint={
+                  mode !== 'login'
+                    ? '12 حرفًا على الأقل؛ استخدم كلمة فريدة لهذا الحساب.'
+                    : undefined
+                }
+              />
             )}
             {mfa && (
               <label>
@@ -297,6 +292,7 @@ export function AuthForm({
                   name="code"
                   disabled={preview}
                   key={String(backup)}
+                  spellCheck={false}
                   required
                   inputMode={backup ? 'text' : 'numeric'}
                   autoComplete="one-time-code"
@@ -307,7 +303,12 @@ export function AuthForm({
               </label>
             )}
             {error && (
-              <div className="form-error" role="alert">
+              <div
+                className="form-error"
+                role="alert"
+                ref={feedback}
+                tabIndex={-1}
+              >
                 {error}
               </div>
             )}
@@ -336,7 +337,7 @@ export function AuthForm({
                       : mode === 'reset'
                         ? 'حفظ كلمة المرور'
                         : 'تسجيل الدخول'}
-              <ArrowLeft size={18} />
+              <ArrowLeft size={18} aria-hidden="true" />
             </button>
           </form>
           {mfa ? (

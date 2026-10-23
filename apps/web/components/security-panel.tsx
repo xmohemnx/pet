@@ -6,6 +6,7 @@ import type { IdentityMe } from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
 import { authClient, authError, api } from '../lib/auth-client';
 import { AccountDelete } from './account-delete';
+import { PasswordField } from './password-field';
 interface Session {
   id: string;
   token: string;
@@ -128,16 +129,14 @@ export function SecurityPanel({ me }: { me: IdentityMe }) {
             </p>
             {!enabled && !setup && (
               <form className="identity-form" onSubmit={enable}>
-                <label>
-                  كلمة المرور لتأكيد الإعداد
-                  <input
-                    name="password"
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    dir="ltr"
-                  />
-                </label>
+                <PasswordField
+                  label="كلمة المرور لتأكيد الإعداد"
+                  name="password"
+                  required
+                  autoComplete="current-password"
+                  disabled={busy}
+                  maxLength={128}
+                />
                 <button className="button primary" disabled={busy}>
                   بدء إعداد التحقق بخطوتين <ShieldCheck size={18} />
                 </button>
@@ -285,28 +284,23 @@ export function SecurityPanel({ me }: { me: IdentityMe }) {
               <KeyRound size={22} />
             </div>
             <form className="identity-form" onSubmit={changePassword}>
-              <label>
-                كلمة المرور الحالية
-                <input
-                  name="currentPassword"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  dir="ltr"
-                />
-              </label>
-              <label>
-                كلمة المرور الجديدة
-                <input
-                  name="newPassword"
-                  type="password"
-                  required
-                  minLength={12}
-                  maxLength={128}
-                  autoComplete="new-password"
-                  dir="ltr"
-                />
-              </label>
+              <PasswordField
+                label="كلمة المرور الحالية"
+                name="currentPassword"
+                required
+                autoComplete="current-password"
+                disabled={busy}
+                maxLength={128}
+              />
+              <PasswordField
+                label="كلمة المرور الجديدة"
+                name="newPassword"
+                required
+                autoComplete="new-password"
+                disabled={busy}
+                maxLength={128}
+                minLength={12}
+              />
               <button className="button primary" disabled={busy}>
                 حفظ كلمة المرور
               </button>

@@ -24,9 +24,14 @@ export function PlatformHeading({
   return (
     <div className="care-heading">
       <div>
-        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h1>{title}</h1>
-        {children && <p>{children}</p>}
+        {(eyebrow || children) && (
+          <p>
+            {eyebrow}
+            {eyebrow && children ? ' · ' : null}
+            {children}
+          </p>
+        )}
       </div>
     </div>
   );

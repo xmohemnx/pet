@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Home,
   Compass,
@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import type { IdentityMe, SocialProfile } from '@petra/contracts';
 import { Brand } from '../brand';
+import { ConnectionStatus } from '../connection-status';
 
 export function SocialAvatar({
   name,
@@ -53,17 +54,6 @@ export function SocialShell({
   wide?: boolean;
 }) {
   const path = usePathname();
-  const [offline, setOffline] = useState(false);
-  useEffect(() => {
-    const update = () => setOffline(!navigator.onLine);
-    update();
-    window.addEventListener('online', update);
-    window.addEventListener('offline', update);
-    return () => {
-      window.removeEventListener('online', update);
-      window.removeEventListener('offline', update);
-    };
-  }, []);
   const links = [
     ['/social', 'الرئيسية', Home],
     ['/social/explore', 'اكتشف', Compass],
@@ -131,10 +121,10 @@ export function SocialShell({
           </Link>
           <div className="social-top-actions">
             <Link href="/notifications" aria-label="الإشعارات">
-              <Bell size={21} />
+              <Bell size={21} aria-hidden="true" />
             </Link>
             <Link href="/social/inbox" aria-label="فتح الرسائل">
-              <Send size={21} />
+              <Send size={21} aria-hidden="true" />
             </Link>
             <Link
               href="/social/create"
@@ -144,12 +134,7 @@ export function SocialShell({
             </Link>
           </div>
         </header>
-        {offline && (
-          <p className="social-offline" role="status">
-            أنت غير متصل. أعد المحاولة بعد عودة الاتصال؛ لا تعتبر العملية محفوظة
-            حتى يظهر تأكيدها.
-          </p>
-        )}
+        <ConnectionStatus />
         <main
           id="main"
           tabIndex={-1}
@@ -175,7 +160,7 @@ export function SocialShell({
                 : undefined
             }
           >
-            <Icon size={23} />
+            <Icon size={23} aria-hidden="true" />
             <span>{label}</span>
           </Link>
         ))}

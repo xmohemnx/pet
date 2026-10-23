@@ -67,22 +67,27 @@ export function DoctorWorkspace({
           <p>أوقاتك المنشورة، زياراتك المسندة، وسجلاتك الموقعة.</p>
         </div>
       </div>
-      <Link className="button outline" href="/doctor/planning">
-        إدارة الدوام والإجازات والملف المهني
-      </Link>
-      {clinicId && (
-        <Link
-          className="button outline"
-          href={`/clinic/${clinicId}/home-visits`}
-        >
-          إرسال ومتابعة الزيارات المنزلية
+      <nav className="workspace-actions" aria-label="إجراءات الطبيب">
+        <Link className="button outline" href="/doctor/planning">
+          إدارة الدوام والإجازات والملف المهني
         </Link>
-      )}
-      {clinicId && (
-        <Link className="button outline" href={`/clinic/${clinicId}/boarding`}>
-          مراجعات قبول الإقامة والحوادث
-        </Link>
-      )}
+        {clinicId && (
+          <Link
+            className="button outline"
+            href={`/clinic/${clinicId}/home-visits`}
+          >
+            إرسال ومتابعة الزيارات المنزلية
+          </Link>
+        )}
+        {clinicId && (
+          <Link
+            className="button outline"
+            href={`/clinic/${clinicId}/boarding`}
+          >
+            مراجعات قبول الإقامة والحوادث
+          </Link>
+        )}
+      </nav>
       <div className="care-columns">
         <div className="care-stack">
           <section className="panel care-section">

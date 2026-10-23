@@ -8,9 +8,10 @@ import {
   Body,
   Param,
   Query,
+  Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import { z } from 'zod';
 import {
   requireSession,
@@ -25,8 +26,12 @@ const text = z.string().trim().min(1).max(3000);
 @Controller('api/v1')
 export class CommunityController {
   constructor(private readonly social: CommunityService) {}
-  @Get('social/profile') async profile(@Req() r: Request) {
-    return this.social.profile((await requireSession(r)).user.id);
+  @Get('social/profile') async profile(
+    @Req() r: Request,
+    @Res() res: Response,
+  ) {
+    // Nest otherwise sends an empty body for null, breaking a new user's first visit.
+    res.json(await this.social.profile((await requireSession(r)).user.id));
   }
   @Post('social/profile') async save(@Req() r: Request, @Body() b: unknown) {
     const i = parse(

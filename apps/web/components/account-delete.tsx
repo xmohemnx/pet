@@ -1,6 +1,7 @@
 'use client';
 import { useState, type FormEvent } from 'react';
 import { api } from '../lib/auth-client';
+import { PasswordField } from './password-field';
 export function AccountDelete() {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState('');
@@ -51,17 +52,14 @@ export function AccountDelete() {
             يلزم تسجيل دخول خلال آخر 15 دقيقة وكلمة المرور الحالية. يمكنك تسجيل
             الخروج ثم الدخول مجدداً من القائمة.
           </p>
-          <label>
-            كلمة المرور لتأكيد الحذف
-            <input
-              name="password"
-              type="password"
-              required
-              maxLength={128}
-              autoComplete="current-password"
-              disabled={busy}
-            />
-          </label>
+          <PasswordField
+            label="كلمة المرور لتأكيد الحذف"
+            name="password"
+            required
+            maxLength={128}
+            autoComplete="current-password"
+            disabled={busy}
+          />
           <label>
             اكتب «حذف حسابي» للتأكيد
             <input
