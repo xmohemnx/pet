@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-23",
+  "requested_scope": "free_interface_preview_only",
+  "workspace_confirmed_by_owner": "My Workspace",
+  "source_repository": "xmohemnx/pet",
+  "source_branch": "codex/deployment-preparation-20261022",
+  "dynamic_preview_commit": "6f5e69da6028d9de017a87066003b47b271ed05a",
+  "static_export_commit": "f90444048e26dec35f03a12c42ad4b83c6cb7027",
+  "validation": {
+    "next_build": "passed",
+    "quality_check": "passed",
+    "unit_tests_passed": 39,
+    "built_browser_secret_check": "passed",
+    "standalone_preview": "passed; API 503; forms disabled; zero backend requests; entrypoint self-check",
+    "static_export": "passed; interface source reused; inline script CSP hashes; no API runtime",
+    "browser_widths": [320, 390, 1440],
+    "axe": "passed",
+    "static_navigation": "passed",
+    "static_javascript_errors": 0,
+    "static_api_requests": 0
+  },
+  "render": {
+    "web_service_requested_plan": "free",
+    "web_service_creation": "blocked_http_402_payment_information_required",
+    "static_site_creation": "blocked_http_402_payment_information_required",
+    "services_created": 0,
+    "deployment_id": null,
+    "published_url": null,
+    "billing_url_from_provider": "https://dashboard.render.com/billing"
+  },
+  "not_verified": ["remote_build", "remote_runtime", "external_https"],
+  "supabase_connected_to_preview": false,
+  "paid_services_created": false,
+  "payment_details_submitted": false,
+  "production_or_financial_operations_enabled": false
+}
