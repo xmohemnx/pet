@@ -599,7 +599,7 @@ test.describe.serial('مصفوفة خيارات متعددة الأبعاد وSK
       }).toString(),
     );
     expect(result.status).toBe('verified');
-    expect(result.tables).toBe(141);
-    expect(result.protectionTriggers).toBe(73);
+    expect(result.tables).toBe(142);
+    expect(result.protectionTriggers).toBe(75);
   });
 });

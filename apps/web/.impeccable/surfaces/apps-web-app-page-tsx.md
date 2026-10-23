@@ -2,11 +2,19 @@
 version: 1
 slug: 'apps-web-app-page-tsx'
 primary_target: 'apps/web/app/page.tsx'
+related_targets: ['apps/web/app/rebuild.css']
+---
+
+---
+
+version: 1
+slug: 'apps-web-app-page-tsx'
+primary_target: 'apps/web/app/page.tsx'
 related_targets:
-  [
-    'apps/web/components/identity-shell.tsx',
-    'apps/web/components/public-motion.tsx',
-  ]
+[
+'apps/web/components/identity-shell.tsx',
+'apps/web/components/public-motion.tsx',
+]
 ---
 
 # Petra — companion editorial
@@ -22,3 +30,12 @@ SIGNATURE INTERACTION: A small service selector names the visitor's need and cha
 CROSS-SURFACE REACH: One blue accent, white/pale blue surfaces and Arabic type. Operate screens use neutral navigation, tabular figures, flat panels, compact headings, intact real forms and role-scoped routes. No invented metrics or charts. Sidebar 232px + content remaining; content gutter 32px, internal grid gap 24px, constrained by existing domain-specific grids.
 QUALITY BAR: Distinct photograph/type composition, no decorative dashboard statistics, all existing workflows retained, visible keyboard focus, no 320px overflow, descriptive links, honest unavailable states, local fonts/images, no new third-party browser requests. Inspect 1440/768/390 and E2E 320–1440, axe, reduced motion. Generated conceptual photography is documented; independent security approval remains outstanding.
 RISKS: Arabic display line height requires more room than Latin type; budget for it. Existing dense finance/medical forms may need narrow viewport corrections. 21st.dev was requested but HTTPS CONNECT denied by network policy; saved its hostname in the environment draft, not applied. Do not claim to have browsed or copied its components. No paid templates or new frontend service required.
+
+## Direction contract — 2026-10-23 rebuild proof
+
+THESIS: A companion's everyday care and community share one front door; no fabricated clinic proof or counters.
+OWN-WORLD: Brief-pinned teal and restrained warm accent, light surfaces, bundled Arabic IBM Plex. Existing authored photographs retain their conceptual provenance.
+STORY: Understand care, then choose the actual care or community route. Existing service finder and FAQ remain functional.
+FIRST VIEWPORT: Right 44% Arabic sentence in two lines with copy and two real destinations; left 56% large cat-and-dog photograph. Service finder is a complete horizontal row below; on390px copy precedes the photograph and actions remain touch-sized.
+FORM: The owner-requested photo-led community direction applied to the public entry; seed:9dba20ecac09d120. The earlier blue/white instruction is superseded by the accepted rebuild brief's teal/orange visual proof, not silently retained as final authority.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

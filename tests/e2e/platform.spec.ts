@@ -1415,7 +1415,7 @@ test.describe
     await expect(
       page.getByRole('button', { name: 'تحصيل اختباري', exact: true }),
     ).toHaveCount(0);
-    await page.goto('/social');
+    await page.goto('/social/settings');
     await page
       .getByRole('textbox', { name: 'نبذة', exact: true })
       .fill('نبذة حُفظت من الواجهة');

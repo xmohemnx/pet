@@ -259,7 +259,7 @@ test.describe.serial('بحث ومشاهدات ومميزة ومشاركة ومط
   }) => {
     await cookies(context, 'owner');
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/social');
+    await page.goto('/social/settings');
     await page
       .getByRole('searchbox', { name: 'نص البحث في المنشورات', exact: true })
       .fill('SEARCH-PRIVATE-CANARY');

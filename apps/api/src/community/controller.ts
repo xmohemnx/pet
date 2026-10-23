@@ -36,6 +36,13 @@ export class CommunityController {
           bio: z.string().trim().max(500),
           privacy: z.enum(['public', 'private']),
           presenceEnabled: z.boolean().optional(),
+          handle: z
+            .string()
+            .trim()
+            .toLowerCase()
+            .regex(/^[a-z][a-z0-9_]{2,29}$/)
+            .optional(),
+          avatarAssetId: z.uuid().nullable().optional(),
         })
         .strict(),
       b,
@@ -47,6 +54,12 @@ export class CommunityController {
       (await requireSession(r)).user.id,
       parse(z.string().max(100), q),
     );
+  }
+  @Get('social/users/:id/profile') async person(
+    @Req() r: Request,
+    @Param('id') id: string,
+  ) {
+    return this.social.person((await requireSession(r)).user.id, uuid(id));
   }
   @Get('social/feed') async feed(
     @Req() r: Request,
@@ -65,6 +78,45 @@ export class CommunityController {
       parse(z.string().trim().max(100), query),
     );
   }
+  @Get('social/timeline') async timeline(
+    @Req() r: Request,
+    @Query() q: unknown,
+  ) {
+    const i = parse(
+      z
+        .object({
+          kind: z.enum(['post', 'reel', 'story']).default('post'),
+          cursor: z
+            .string()
+            .max(512)
+            .regex(/^[A-Za-z0-9_-]+$/)
+            .optional(),
+          scope: z.enum(['all', 'following']).default('all'),
+          saved: z.enum(['true', 'false']).default('false'),
+          q: z.string().trim().max(100).default(''),
+          author: z.uuid().optional(),
+        })
+        .strict(),
+      q,
+    );
+    return this.social.timeline((await requireSession(r)).user.id, {
+      kind: i.kind,
+      cursor: i.cursor,
+      scope: i.scope,
+      savedOnly: i.saved === 'true',
+      query: i.q,
+      author: i.author,
+    });
+  }
+  @Get('social/profiles/:handle') async profileView(
+    @Req() r: Request,
+    @Param('handle') handle: string,
+  ) {
+    return this.social.profileView(
+      (await requireSession(r)).user.id,
+      parse(z.string().regex(/^[a-z][a-z0-9_]{2,29}$/), handle),
+    );
+  }
   @Post('social/posts') async create(@Req() r: Request, @Body() b: unknown) {
     const i = parse(
       z
@@ -73,6 +125,8 @@ export class CommunityController {
           visibility: z.enum(['public', 'followers', 'private']),
           kind: z.enum(['post', 'story', 'reel']),
           assetId: z.uuid().optional(),
+          assetIds: z.array(z.uuid()).max(10).optional(),
+          idempotencyKey: z.uuid().optional(),
         })
         .strict(),
       b,

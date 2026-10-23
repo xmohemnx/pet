@@ -492,7 +492,7 @@ test.describe
       }),
     );
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/social');
+    await page.goto('/social/settings');
     await page
       .locator('.care-list-row')
       .filter({

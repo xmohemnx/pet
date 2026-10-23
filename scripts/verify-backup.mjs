@@ -190,6 +190,8 @@ try {
     'grooming_chat_asset_guard',
     'media_stream_guard',
     'media_gc_guard',
+    'social_album_scope_guard',
+    'social_avatar_scope_guard',
   ];
   const triggerCount = (
     await clone.query(

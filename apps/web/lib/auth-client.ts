@@ -9,11 +9,20 @@ export async function api<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const r = await fetch(`/api/v1/${path}`, {
-    ...options,
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-    cache: 'no-store',
-  });
+  let r: Response;
+  try {
+    r = await fetch(`/api/v1/${path}`, {
+      ...options,
+      headers: { 'Content-Type': 'application/json', ...options.headers },
+      cache: 'no-store',
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') throw error;
+    throw new Error(
+      'تعذر الاتصال بالخدمة. تحقق من اتصالك وأعد المحاولة؛ لم يتأكد الحفظ.',
+      { cause: error },
+    );
+  }
   const body = await r.json();
   if (!r.ok) throw new Error(body.message || 'تعذر إتمام الطلب');
   return body as T;

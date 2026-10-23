@@ -11,6 +11,8 @@ import '@petra/ui/tokens.css';
 import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import './redesign.css';
+import './social.css';
+import './rebuild.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000'),
   openGraph: { locale: 'ar_IQ', type: 'website', siteName: 'Petra' },

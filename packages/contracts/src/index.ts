@@ -640,6 +640,8 @@ export interface FinanceReport {
   }[];
 }
 export interface SocialProfile {
+  handle?: string;
+  avatar_asset_id?: string | null;
   presence_enabled?: boolean;
   user_id: string;
   display_name: string;
@@ -647,6 +649,12 @@ export interface SocialProfile {
   privacy: 'public' | 'private';
 }
 export interface SocialPost {
+  expires_at?: string | null;
+  handle?: string;
+  avatar_asset_id?: string | null;
+  media?: { asset_id: string; kind: string; position: number }[];
+  comments_count?: number;
+  cursor_time?: string;
   asset_kind?: string | null;
   id: string;
   user_id: string;
@@ -663,6 +671,15 @@ export interface SocialPost {
 }
 export interface SocialPerson extends SocialProfile {
   follow_status: string | null;
+}
+export interface SocialTimeline {
+  items: SocialPost[];
+  nextCursor: string | null;
+}
+export interface SocialProfileView {
+  profile: SocialPerson;
+  canView: boolean;
+  counts: { posts: number; followers: number; following: number };
 }
 export interface SocialMessage {
   asset_id?: string | null;

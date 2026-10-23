@@ -156,6 +156,35 @@ export function ClinicWorkspace({
           <bdi>{clinic.id}</bdi>
         </span>
       </div>
+      <section
+        className="clinic-daily"
+        aria-label="الوصول السريع إلى عمل العيادة"
+      >
+        <div>
+          <h2>كلّ تفاصيل العيادة، أقرب لفريقك.</h2>
+          <p>
+            {branches.length} فروع مرتبطة بهذه المساحة. تظهر لك المهام بحسب
+            صلاحياتك.
+          </p>
+        </div>
+        <nav aria-label="مهام العيادة اليومية">
+          {clinic.capabilities.some((c) =>
+            ['clinic_admin', 'receptionist', 'doctor_member'].includes(c),
+          ) && (
+            <Link href={`/clinic/${clinic.id}/calendar`}>
+              المواعيد والاستقبال
+            </Link>
+          )}
+          {clinic.capabilities.some((c) =>
+            ['clinic_admin', 'commerce_manager'].includes(c),
+          ) && <Link href={`/clinic/${clinic.id}/commerce`}>متجر العيادة</Link>}
+          {clinic.capabilities.some((c) =>
+            ['clinic_admin', 'clinic_accountant', 'cashier'].includes(c),
+          ) && (
+            <Link href={`/clinic/${clinic.id}/finance`}>المالية والمحاسبة</Link>
+          )}
+        </nav>
+      </section>
       {clinic.capabilities.some((c) =>
         ['clinic_admin', 'receptionist'].includes(c),
       ) && (

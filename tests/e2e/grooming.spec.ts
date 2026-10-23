@@ -468,6 +468,75 @@ test.describe.serial('خدمة التجميل وصلاحياتها وسعة طب
         })
       ).status(),
     ).toBe(409);
+    expect(
+      (
+        await manager.post(root + 'social/posts', {
+          data: {
+            kind: 'post',
+            visibility: 'public',
+            body: 'منع الصورة الخاصة في الألبوم',
+            assetIds: [asset],
+          },
+        })
+      ).status(),
+    ).toBe(409);
+    expect(
+      (
+        await manager.post(root + 'social/profile', {
+          data: {
+            displayName: 'موظف تجميل اختباري',
+            bio: '',
+            privacy: 'public',
+            avatarAssetId: asset,
+          },
+        })
+      ).status(),
+    ).toBe(409);
+    const referencePost = await post(manager, 'social/posts', {
+      kind: 'post',
+      visibility: 'public',
+      body: 'اختبار حدود وسيط الألبوم',
+    });
+    await expect(
+      db.query(
+        'INSERT INTO social_post_media(post_id,asset_id,position) VALUES($1,$2,0)',
+        [referencePost.id, asset],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
+    await expect(
+      db.query(
+        'UPDATE social_profiles SET avatar_asset_id=$1 WHERE user_id=$2',
+        [asset, f.accounts.manager!.id],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
+    const albumAsset = (
+      await post(manager, 'media', { dataBase64: bytes.toString('base64') })
+    ).id;
+    await db.query(
+      'INSERT INTO social_post_media(post_id,asset_id,position) VALUES($1,$2,0)',
+      [referencePost.id, albumAsset],
+    );
+    await expect(
+      db.query(
+        'INSERT INTO grooming_photos(booking_id,asset_id) VALUES($1,$2)',
+        [b.id, albumAsset],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
+    const avatarAsset = (
+      await post(manager, 'media', { dataBase64: bytes.toString('base64') })
+    ).id;
+    await post(manager, 'social/profile', {
+      displayName: 'موظف تجميل اختباري',
+      bio: '',
+      privacy: 'public',
+      avatarAssetId: avatarAsset,
+    });
+    await expect(
+      db.query(
+        'INSERT INTO grooming_photos(booking_id,asset_id) VALUES($1,$2)',
+        [b.id, avatarAsset],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
     await expect(
       db.query('UPDATE grooming_bookings SET total_minor=1 WHERE id=$1', [
         b.id,

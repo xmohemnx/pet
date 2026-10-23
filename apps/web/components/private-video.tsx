@@ -5,9 +5,11 @@ import { api } from '../lib/auth-client';
 export function PrivateVideo({
   assetId,
   label,
+  autoPlayMuted = false,
 }: {
   assetId: string;
   label: string;
+  autoPlayMuted?: boolean;
 }) {
   const element = useRef<HTMLVideoElement>(null),
     player = useRef<Hls | null>(null),
@@ -18,6 +20,41 @@ export function PrivateVideo({
     [levels, setLevels] = useState<{ index: number; height: number }[]>([]),
     [quality, setQuality] = useState(-1);
   const file = `/api/v1/media/${assetId}/file`;
+  useEffect(() => {
+    const video = element.current;
+    if (!video) return;
+    let started = false;
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0]?.isIntersecting;
+        if (!visible) video.pause();
+        else if (
+          autoPlayMuted &&
+          !started &&
+          !connection?.saveData &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          started = true;
+          video.muted = true;
+          void video.play().catch(() => undefined);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    const visibility = () => {
+      if (document.hidden) video.pause();
+    };
+    observer.observe(video);
+    document.addEventListener('visibilitychange', visibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', visibility);
+      video.pause();
+    };
+  }, [assetId, autoPlayMuted]);
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -109,7 +146,24 @@ export function PrivateVideo({
         preload="none"
         src={file}
         aria-label={label}
+        onError={() =>
+          setError(
+            'تعذر تشغيل الفيديو؛ تحقق من الاتصال والصلاحية ثم أعد المحاولة.',
+          )
+        }
       />
+      {error && (
+        <button
+          type="button"
+          className="button outline"
+          onClick={() => {
+            setError('');
+            element.current?.load();
+          }}
+        >
+          إعادة تحميل الفيديو
+        </button>
+      )}
       {!adaptive ? (
         <button
           type="button"
