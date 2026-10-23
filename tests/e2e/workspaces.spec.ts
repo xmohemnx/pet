@@ -152,7 +152,9 @@ test('مساحات العمل: حالات فارغة ومملوءة ومهام �
     .getByRole('button', { name: 'نشر وقت للحجز', exact: true })
     .click();
   await expect(page.locator('#publish-time')).toHaveAttribute('open', '');
-  await expect(page.getByLabel('العيادة', { exact: true })).toBeFocused();
+  await expect(
+    page.getByRole('combobox', { name: 'العيادة', exact: true }),
+  ).toBeFocused();
   await inspect(page, 'doctor-publisher');
   await login(context, 'manager', 'clinic_member');
   await page.goto(`/clinic/${fixture.clinicId}`);
@@ -281,6 +283,36 @@ test('مساحات العمل: حالات فارغة ومملوءة ومهام �
   expect(actualRide.find((r: { id: string }) => r.id === ride.id).status).toBe(
     'driver_en_route',
   );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => scrollTo(0, 0));
+  const quickNavigation = await page
+    .getByRole('navigation', { name: 'الوصول السريع على الهاتف' })
+    .boundingBox();
+  const routeBox = await page
+    .locator('.driver-current .ride-route')
+    .boundingBox();
+  const transition = page.getByRole('button', {
+    name: 'وصلت إلى العميل',
+    exact: true,
+  });
+  const transitionBox = await transition.boundingBox();
+  expect(routeBox!.y + routeBox!.height).toBeLessThan(quickNavigation!.y);
+  expect(transitionBox!.y + transitionBox!.height).toBeLessThan(
+    quickNavigation!.y,
+  );
+  await page.getByRole('button', { name: /السجل 0/, exact: true }).focus();
+  await page.keyboard.press('Tab');
+  await expect(transition).toBeFocused();
+  expect(
+    await page.evaluate(() =>
+      Boolean(
+        document
+          .querySelector('.driver-current')!
+          .compareDocumentPosition(document.querySelector('.driver-offers')!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ),
+  ).toBe(true);
   await inspect(page, 'driver');
   await page.getByRole('button', { name: /السجل 0/, exact: true }).click();
   await expect(page.locator('.driver-current .ride-card')).toHaveCount(0);

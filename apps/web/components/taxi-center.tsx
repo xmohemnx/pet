@@ -168,7 +168,13 @@ export function TaxiCenter({
             بعد كل تحديث.
           </PlatformHeading>
         )}
-        <SandboxNotice />
+        {home ? (
+          <aside className="driver-test-notice" aria-label="وضع المعاملات">
+            نقل اختباري · لا دفع أو تحويل مالي حقيقي.
+          </aside>
+        ) : (
+          <SandboxNotice />
+        )}
         {home && (
           <section className="driver-readiness" aria-label="حالة عمل السائق">
             <div>
@@ -203,74 +209,6 @@ export function TaxiCenter({
         )}
         <div className={home ? 'desk-body' : 'care-columns'}>
           <div className={home ? 'desk-main driver-queues' : 'care-stack'}>
-            {home && (
-              <section className="panel care-section driver-offers">
-                <div className="desk-section-heading">
-                  <h2>عروض الإسناد الخاصة</h2>
-                  <span className="desk-count">{offers.length} عرض سارٍ</span>
-                </div>
-                <p>
-                  عروض المدينة المطابقة لمركبتك؛ لا يجمع النظام موقع انتظارك ولا
-                  يدعي اختيار الأقرب. تُحدَّث القائمة تلقائياً كل خمس ثوانٍ
-                  أثناء فتح الصفحة، وتختفي العروض عند انتهاء مهلتها.
-                </p>
-                {!offers.length && (
-                  <p className="driver-no-offers">
-                    لا عروض إسناد سارية. تظهر العروض المناسبة بعد إعداد مركبتك
-                    وتوفرك.
-                  </p>
-                )}
-                {offers.map((o) => (
-                  <article key={o.id} className="care-list-row">
-                    <div>
-                      <h3>
-                        {o.city} · {o.species}
-                      </h3>
-                      <p>
-                        {formatIqd(o.fare_minor)} · مهلة القبول حتى{' '}
-                        {careDate(o.expires_at)}
-                      </p>
-                    </div>
-                    <div className="care-stack">
-                      <CareAction
-                        action={() =>
-                          send(`driver/dispatch-offers/${o.id}/accept`)
-                        }
-                      >
-                        قبول عرض الإسناد
-                      </CareAction>
-                      <CareAction
-                        action={() =>
-                          send(`driver/dispatch-offers/${o.id}/decline`)
-                        }
-                      >
-                        رفض عرض الإسناد
-                      </CareAction>
-                    </div>
-                  </article>
-                ))}
-                <CareAction variant="outline" action={refresh}>
-                  تحديث عروض النقل
-                </CareAction>
-                <h2>طلبات في مدينتك</h2>
-                {home.requests.map((r) => (
-                  <article className="care-list-row" key={r.id}>
-                    <div>
-                      <h3>
-                        {r.city} · {r.species}
-                      </h3>
-                      <p>{formatIqd(r.fare_minor)}</p>
-                    </div>
-                    <CareAction action={() => send(`rides/${r.id}/claim`)}>
-                      قبول الرحلة
-                    </CareAction>
-                  </article>
-                ))}
-                {!home.requests.length && (
-                  <Empty>لا طلبات مطابقة لمركبتك المتاحة.</Empty>
-                )}
-              </section>
-            )}
             <section
               className={
                 home
@@ -318,8 +256,8 @@ export function TaxiCenter({
                     {r.scheduled_at ? careDate(r.scheduled_at) : 'رحلة فورية'}
                     {r.accompanying ? ' · راكب مصاحب' : ''}
                   </p>
-                  <p>{r.transport_notes}</p>
-                  <p>
+                  {r.transport_notes && <p>{r.transport_notes}</p>}
+                  <p className="ride-route">
                     {r.origin_label} ← {r.destination_label}
                   </p>
                   <strong>{formatIqd(r.fare_minor)}</strong>
@@ -439,6 +377,74 @@ export function TaxiCenter({
                 </article>
               ))}
             </section>
+            {home && (
+              <section className="panel care-section driver-offers">
+                <div className="desk-section-heading">
+                  <h2>عروض الإسناد الخاصة</h2>
+                  <span className="desk-count">{offers.length} عرض سارٍ</span>
+                </div>
+                <p>
+                  عروض المدينة المطابقة لمركبتك؛ لا يجمع النظام موقع انتظارك ولا
+                  يدعي اختيار الأقرب. تُحدَّث القائمة تلقائياً كل خمس ثوانٍ
+                  أثناء فتح الصفحة، وتختفي العروض عند انتهاء مهلتها.
+                </p>
+                {!offers.length && (
+                  <p className="driver-no-offers">
+                    لا عروض إسناد سارية. تظهر العروض المناسبة بعد إعداد مركبتك
+                    وتوفرك.
+                  </p>
+                )}
+                {offers.map((o) => (
+                  <article key={o.id} className="care-list-row">
+                    <div>
+                      <h3>
+                        {o.city} · {o.species}
+                      </h3>
+                      <p>
+                        {formatIqd(o.fare_minor)} · مهلة القبول حتى{' '}
+                        {careDate(o.expires_at)}
+                      </p>
+                    </div>
+                    <div className="care-stack">
+                      <CareAction
+                        action={() =>
+                          send(`driver/dispatch-offers/${o.id}/accept`)
+                        }
+                      >
+                        قبول عرض الإسناد
+                      </CareAction>
+                      <CareAction
+                        action={() =>
+                          send(`driver/dispatch-offers/${o.id}/decline`)
+                        }
+                      >
+                        رفض عرض الإسناد
+                      </CareAction>
+                    </div>
+                  </article>
+                ))}
+                <CareAction variant="outline" action={refresh}>
+                  تحديث عروض النقل
+                </CareAction>
+                <h2>طلبات في مدينتك</h2>
+                {home.requests.map((r) => (
+                  <article className="care-list-row" key={r.id}>
+                    <div>
+                      <h3>
+                        {r.city} · {r.species}
+                      </h3>
+                      <p>{formatIqd(r.fare_minor)}</p>
+                    </div>
+                    <CareAction action={() => send(`rides/${r.id}/claim`)}>
+                      قبول الرحلة
+                    </CareAction>
+                  </article>
+                ))}
+                {!home.requests.length && (
+                  <Empty>لا طلبات مطابقة لمركبتك المتاحة.</Empty>
+                )}
+              </section>
+            )}
             <CareAction variant="outline" action={refresh}>
               تحديث الرحلات
             </CareAction>

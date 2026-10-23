@@ -1331,7 +1331,9 @@ test.describe
         ),
     );
     const start = performance.now();
-    await page.getByRole('searchbox').fill('منتج قياس 119');
+    await page
+      .getByRole('searchbox', { name: 'البحث في المنتجات', exact: true })
+      .fill('منتج قياس 119');
     await expect(page.locator('.market-card')).toHaveCount(1);
     const interactionMs = performance.now() - start;
     const metrics = await page.evaluate(
