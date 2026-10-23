@@ -1,0 +1,30 @@
+{
+  "sourceTree": "8780a3b9b81961dd513967735824c5fa110c83d7",
+  "fixtures": "Synthetic local E2E test accounts, not production records",
+  "artifacts": [
+    "docs/evidence/workspaces/224086c2/customer-empty-1440.png",
+    "docs/evidence/workspaces/224086c2/customer-empty-390.png",
+    "docs/evidence/workspaces/224086c2/customer-1440.png",
+    "docs/evidence/workspaces/224086c2/customer-390.png",
+    "docs/evidence/workspaces/224086c2/doctor-empty-1440.png",
+    "docs/evidence/workspaces/224086c2/doctor-empty-390.png",
+    "docs/evidence/workspaces/224086c2/doctor-publisher-1440.png",
+    "docs/evidence/workspaces/224086c2/doctor-publisher-390.png",
+    "docs/evidence/workspaces/224086c2/clinic-empty-1440.png",
+    "docs/evidence/workspaces/224086c2/clinic-empty-390.png",
+    "docs/evidence/workspaces/224086c2/clinic-administration-1440.png",
+    "docs/evidence/workspaces/224086c2/clinic-administration-390.png",
+    "docs/evidence/workspaces/224086c2/doctor-1440.png",
+    "docs/evidence/workspaces/224086c2/doctor-390.png",
+    "docs/evidence/workspaces/224086c2/clinic-1440.png",
+    "docs/evidence/workspaces/224086c2/clinic-390.png",
+    "docs/evidence/workspaces/224086c2/driver-empty-1440.png",
+    "docs/evidence/workspaces/224086c2/driver-empty-390.png",
+    "docs/evidence/workspaces/224086c2/driver-configuration-1440.png",
+    "docs/evidence/workspaces/224086c2/driver-configuration-390.png",
+    "docs/evidence/workspaces/224086c2/driver-1440.png",
+    "docs/evidence/workspaces/224086c2/driver-390.png"
+  ],
+  "uiSourceCommit": "224086c252defbf28052e8d4a1e920aee68ad995",
+  "review": "All22files opened for capture validity after review fixes; no new self-directed polish. Native Chromium, full-page from document top, fonts ready, reduced motion."
+}

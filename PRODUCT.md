@@ -41,3 +41,7 @@ The shared UI/UX refinement has a separate independent `ship` verdict for its ca
 ## Open decisions
 
 Registered operating entity, production domain/hosting, live payment and shipping providers, external licensing authority and independent production security review remain unresolved. Brand imagery created for the redesign is conceptual; it is not evidence of actual patients, customers or premises.
+
+## أحدث شريحة لمساحات الحسابات — 2026-10-23
+
+رفض المالك بساطة واجهات السائق والعيادة والطبيب والعميل. أُعيد تكوين شاشاتها الرئيسية ضمن هوية Petra القائمة، مع فصل إعدادات الحساب عن رعاية العميل، وتقديم الزيارات والرحلات والاستقبال على النماذج الإدارية. مصدر الواجهات224086c2 على فرع مراجعة مستقل؛ [عقد المساحات](apps/web/.impeccable/surfaces/professional-workspaces.md) و[التحقق](docs/audits/WORKSPACES_RELEASE.md) و[الصور الفعلية](docs/evidence/workspaces/224086c2/README.md) تحدد النطاق. لم يمنح هذا الطلب أذونات مهنية أو نشرًا عامًا أو تشغيل خدمات مدفوعة.
