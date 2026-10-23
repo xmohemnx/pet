@@ -225,7 +225,11 @@ export function AuthForm({
                         required
                       />
                       <Icon size={21} aria-hidden="true" />
-                      <span>{accountTypeNames[type]}</span>
+                      <span>
+                        {type === 'driver'
+                          ? 'سائق تكسي'
+                          : accountTypeNames[type]}
+                      </span>
                     </label>
                   );
                 })}

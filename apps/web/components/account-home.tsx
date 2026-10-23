@@ -162,58 +162,65 @@ export function AccountHome({ me }: { me: IdentityMe }) {
           <AccountTypeControls type={me.user.accountType} />
           {me.user.accountType !== 'customer' && (
             <>
-              <section className="panel">
-                <div className="panel-heading">
-                  <div>
-                    <span className="eyebrow">هويتك المهنية</span>
-                    <h2>انضم إلى منظومة الرعاية</h2>
-                  </div>
-                  <Building2 size={23} />
-                </div>
-                <p className="panel-intro">
-                  العضوية المهنية تحتاج مراجعة مستقلة. رقم الترخيص المدخل لا
-                  يعني أن الترخيص قد تم التحقق منه.
-                </p>
-                <form onSubmit={apply} className="identity-form">
-                  <div className="form-row">
-                    <label>
-                      نوع الطلب
-                      <input
-                        readOnly
-                        value={`اعتماد ${accountTypeNames[me.user.accountType]}`}
-                      />
-                    </label>
-                    <label>
-                      الاسم المهني أو اسم العيادة
-                      <input
-                        name="displayName"
-                        required
-                        minLength={2}
-                        maxLength={100}
-                      />
-                    </label>
-                  </div>
-                  <label>
-                    رقم الترخيص أو مرجع المستند
-                    <input
-                      name="registrationNumber"
-                      required
-                      minLength={3}
-                      maxLength={100}
-                    />
-                    <small>
-                      أدخل المرجع فقط؛ لا تضع هوية كاملة أو وثائق حساسة هنا.
-                    </small>
-                  </label>
-                  <label>
-                    ملاحظات للمراجع
-                    <textarea name="notes" maxLength={1000} rows={3} />
-                  </label>
-                  <button className="button primary" disabled={busy}>
-                    إرسال طلب الاعتماد <ArrowUpLeft size={18} />
-                  </button>
-                </form>
-              </section>
+              {loaded &&
+                !applications.some(
+                  (a) =>
+                    a.kind === me.user.accountType &&
+                    ['pending', 'approved'].includes(a.status),
+                ) && (
+                  <section className="panel">
+                    <div className="panel-heading">
+                      <div>
+                        <span className="eyebrow">هويتك المهنية</span>
+                        <h2>انضم إلى منظومة الرعاية</h2>
+                      </div>
+                      <Building2 size={23} />
+                    </div>
+                    <p className="panel-intro">
+                      العضوية المهنية تحتاج مراجعة مستقلة. رقم الترخيص المدخل لا
+                      يعني أن الترخيص قد تم التحقق منه.
+                    </p>
+                    <form onSubmit={apply} className="identity-form">
+                      <div className="form-row">
+                        <label>
+                          نوع الطلب
+                          <input
+                            readOnly
+                            value={`اعتماد ${accountTypeNames[me.user.accountType]}`}
+                          />
+                        </label>
+                        <label>
+                          الاسم المهني أو اسم العيادة
+                          <input
+                            name="displayName"
+                            required
+                            minLength={2}
+                            maxLength={100}
+                          />
+                        </label>
+                      </div>
+                      <label>
+                        رقم الترخيص أو مرجع المستند
+                        <input
+                          name="registrationNumber"
+                          required
+                          minLength={3}
+                          maxLength={100}
+                        />
+                        <small>
+                          أدخل المرجع فقط؛ لا تضع هوية كاملة أو وثائق حساسة هنا.
+                        </small>
+                      </label>
+                      <label>
+                        ملاحظات للمراجع
+                        <textarea name="notes" maxLength={1000} rows={3} />
+                      </label>
+                      <button className="button primary" disabled={busy}>
+                        إرسال طلب الاعتماد <ArrowUpLeft size={18} />
+                      </button>
+                    </form>
+                  </section>
+                )}
               <section className="panel">
                 <div className="panel-heading">
                   <h2>طلباتك المهنية</h2>

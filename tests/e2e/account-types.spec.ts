@@ -252,6 +252,34 @@ test.describe.serial('نوع حساب ثابت وتغيير إداري وحذف 
     const changed = await me('customer');
     expect(changed.user.accountType).toBe('doctor');
     expect(changed.workspaces).toEqual([]);
+    await context.clearCookies();
+    await cookie(context, 'customer');
+    await page.goto('/account');
+    await page
+      .getByLabel('الاسم المهني أو اسم العيادة', { exact: true })
+      .fill('طبيب حديث النوع · اختبار');
+    await page
+      .getByRole('textbox', { name: /رقم الترخيص أو مرجع المستند/ })
+      .fill('LOCAL-TEST-ONLY');
+    await page
+      .getByRole('button', { name: 'إرسال طلب الاعتماد', exact: true })
+      .click();
+    await expect(
+      page.getByRole('heading', {
+        name: 'طبيب حديث النوع · اختبار',
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page.reload();
+    await expect(
+      page.getByRole('heading', {
+        name: 'طبيب حديث النوع · اختبار',
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'إرسال طلب الاعتماد', exact: true }),
+    ).toHaveCount(0);
     expect(
       (
         await post(
@@ -545,6 +573,26 @@ test.describe.serial('نوع حساب ثابت وتغيير إداري وحذف 
         await page.goto(route);
         await expect(page.locator('h1')).toBeVisible();
         await page.evaluate(() => document.fonts.ready);
+        if (name === 'account') {
+          await expect(
+            page.getByRole('heading', {
+              name: 'سائق · اختبار ثابت النوع',
+              exact: true,
+            }),
+          ).toBeVisible();
+          await expect(
+            page.getByRole('button', {
+              name: 'إرسال طلب الاعتماد',
+              exact: true,
+            }),
+          ).toHaveCount(0);
+          await page
+            .getByText('طلب تغيير نوع الحساب من الإدارة', { exact: true })
+            .click();
+          await expect(
+            page.getByRole('combobox', { name: 'النوع المطلوب', exact: true }),
+          ).toBeEnabled();
+        }
         if (name === 'security')
           await page.getByText('متابعة حذف حسابي', { exact: true }).click();
         const file = `${name}-${width}.png`;

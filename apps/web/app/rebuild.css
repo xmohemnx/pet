@@ -264,11 +264,15 @@
   background: var(--mint);
   border-color: var(--brand);
 }
-.account-type-options input {
+.account-type-options input[type='radio'] {
+  flex: 0 0 18px;
   width: 18px;
   height: 18px;
   margin: 0;
   accent-color: var(--brand);
+}
+.account-type-options svg {
+  flex: 0 0 21px;
 }
 .account-type-options label:focus-within {
   outline: 2px solid var(--brand);
