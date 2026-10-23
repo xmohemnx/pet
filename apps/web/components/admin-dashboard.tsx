@@ -432,43 +432,53 @@ export function AdminControl({
               <p>{v.reference}</p>
               <p>{statusLabels[v.status]}</p>
               {['pending', 'verified'].includes(v.status) && (
-                <CareForm
-                  label="حفظ قرار توثيق الهوية"
-                  submit={async (f) => {
-                    await api(`admin/verifications/${v.id}/decision`, {
-                      method: 'POST',
-                      body: JSON.stringify({
-                        decision: f.get('decision'),
-                        reason: f.get('reason'),
-                        version: v.version,
-                      }),
-                    });
-                    await refresh();
-                  }}
+                <details
+                  className="review-decision"
+                  open={v.status === 'pending'}
                 >
-                  <label>
-                    قرار توثيق الهوية
-                    <select name="decision" aria-label="قرار توثيق الهوية">
-                      {v.status === 'pending' ? (
-                        <>
-                          <option value="verified">توثيق الهوية</option>
-                          <option value="rejected">رفض الطلب</option>
-                        </>
-                      ) : (
-                        <option value="revoked">سحب التوثيق</option>
-                      )}
-                    </select>
-                  </label>
-                  <label>
-                    سبب قرار توثيق الهوية
-                    <textarea
-                      name="reason"
-                      minLength={10}
-                      maxLength={1000}
-                      required
-                    />
-                  </label>
-                </CareForm>
+                  <summary>
+                    {v.status === 'pending'
+                      ? 'مراجعة طلب الهوية'
+                      : 'سحب توثيق الهوية'}
+                  </summary>
+                  <CareForm
+                    label="حفظ قرار توثيق الهوية"
+                    submit={async (f) => {
+                      await api(`admin/verifications/${v.id}/decision`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          decision: f.get('decision'),
+                          reason: f.get('reason'),
+                          version: v.version,
+                        }),
+                      });
+                      await refresh();
+                    }}
+                  >
+                    <label>
+                      قرار توثيق الهوية
+                      <select name="decision" aria-label="قرار توثيق الهوية">
+                        {v.status === 'pending' ? (
+                          <>
+                            <option value="verified">توثيق الهوية</option>
+                            <option value="rejected">رفض الطلب</option>
+                          </>
+                        ) : (
+                          <option value="revoked">سحب التوثيق</option>
+                        )}
+                      </select>
+                    </label>
+                    <label>
+                      سبب قرار توثيق الهوية
+                      <textarea
+                        name="reason"
+                        minLength={10}
+                        maxLength={1000}
+                        required
+                      />
+                    </label>
+                  </CareForm>
+                </details>
               )}
             </article>
           ))}
@@ -495,43 +505,55 @@ export function AdminControl({
                 <p>{r.evidence_reference}</p>
               </details>
               {['pending', 'approved'].includes(r.status) && (
-                <CareForm
-                  label="حفظ قرار النتيجة المهنية"
-                  submit={async (f) => {
-                    await api(`admin/portfolio-reports/${r.id}/decision`, {
-                      method: 'POST',
-                      body: JSON.stringify({
-                        decision: f.get('decision'),
-                        reason: f.get('reason'),
-                        version: r.version,
-                      }),
-                    });
-                    await refresh();
-                  }}
+                <details
+                  className="review-decision"
+                  open={r.status === 'pending'}
                 >
-                  <label>
-                    قرار مراجعة النتيجة
-                    <select name="decision" aria-label="قرار مراجعة النتيجة">
-                      {r.status === 'pending' ? (
-                        <>
-                          <option value="approved">اعتماد النتيجة للنشر</option>
-                          <option value="rejected">رفض التقرير</option>
-                        </>
-                      ) : (
-                        <option value="revoked">سحب الاعتماد</option>
-                      )}
-                    </select>
-                  </label>
-                  <label>
-                    سبب قرار النتيجة
-                    <textarea
-                      name="reason"
-                      minLength={10}
-                      maxLength={1000}
-                      required
-                    />
-                  </label>
-                </CareForm>
+                  <summary>
+                    {r.status === 'pending'
+                      ? 'مراجعة النتيجة المهنية'
+                      : 'سحب اعتماد النتيجة'}
+                  </summary>
+                  <CareForm
+                    label="حفظ قرار النتيجة المهنية"
+                    submit={async (f) => {
+                      await api(`admin/portfolio-reports/${r.id}/decision`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          decision: f.get('decision'),
+                          reason: f.get('reason'),
+                          version: r.version,
+                        }),
+                      });
+                      await refresh();
+                    }}
+                  >
+                    <label>
+                      قرار مراجعة النتيجة
+                      <select name="decision" aria-label="قرار مراجعة النتيجة">
+                        {r.status === 'pending' ? (
+                          <>
+                            <option value="approved">
+                              اعتماد النتيجة للنشر
+                            </option>
+                            <option value="rejected">رفض التقرير</option>
+                          </>
+                        ) : (
+                          <option value="revoked">سحب الاعتماد</option>
+                        )}
+                      </select>
+                    </label>
+                    <label>
+                      سبب قرار النتيجة
+                      <textarea
+                        name="reason"
+                        minLength={10}
+                        maxLength={1000}
+                        required
+                      />
+                    </label>
+                  </CareForm>
+                </details>
               )}
             </article>
           ))}
@@ -544,34 +566,37 @@ export function AdminControl({
           <p>
             أحدث 100 حساب. تغيير النوع والاعتماد المهني لهما مراجعات مستقلة.
           </p>
-          {data.users.map((u) => (
-            <article key={u.id} className="admin-user-row">
-              <div>
-                <h3>{u.name}</h3>
-                <p>
-                  <bdi>{u.email}</bdi>
-                </p>
-              </div>
-              <span>
-                {
-                  (
-                    {
-                      customer: 'عميل',
-                      doctor: 'طبيب',
-                      clinic: 'عيادة',
-                      driver: 'سائق',
-                    } as Record<string, string>
-                  )[u.account_type]
-                }
-              </span>
-              {u.identity_verified && (
-                <span className="professional-badge">
-                  <BadgeCheck size={18} aria-hidden="true" />
-                  هوية موثقة
+          <details className="admin-users-list">
+            <summary>عرض أحدث {data.users.length} حساباً</summary>
+            {data.users.map((u) => (
+              <article key={u.id} className="admin-user-row">
+                <div>
+                  <h3>{u.name}</h3>
+                  <p>
+                    <bdi>{u.email}</bdi>
+                  </p>
+                </div>
+                <span>
+                  {
+                    (
+                      {
+                        customer: 'عميل',
+                        doctor: 'طبيب',
+                        clinic: 'عيادة',
+                        driver: 'سائق',
+                      } as Record<string, string>
+                    )[u.account_type]
+                  }
                 </span>
-              )}
-            </article>
-          ))}
+                {u.identity_verified && (
+                  <span className="professional-badge">
+                    <BadgeCheck size={18} aria-hidden="true" />
+                    هوية موثقة
+                  </span>
+                )}
+              </article>
+            ))}
+          </details>
         </section>
       </div>
     </IdentityShell>

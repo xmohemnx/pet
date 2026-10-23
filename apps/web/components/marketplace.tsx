@@ -264,7 +264,7 @@ export function Marketplace({
                     <Link href={`/marketplace/products/${p.id}`}>{p.name}</Link>
                   </h2>
                   {p.variant_label && <p>{p.variant_label}</p>}
-                  <p>{p.description}</p>
+                  {p.description && <p>{p.description}</p>}
                   <strong>{formatIqd(p.price_minor)}</strong>
                   <CareAction
                     action={async () => {

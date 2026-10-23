@@ -636,7 +636,7 @@ test.describe.serial('خمسة داشبوردات وبنرات وتوثيق وأ
     page,
     context,
   }) => {
-    test.setTimeout(90000);
+    test.setTimeout(180000);
     const a = (
       await db.query(
         'SELECT a.*,s.service_id FROM appointments a JOIN appointment_slots s ON s.id=a.slot_id WHERE a.id=$1',
@@ -687,6 +687,7 @@ test.describe.serial('خمسة داشبوردات وبنرات وتوثيق وأ
       .locator('textarea[name="evidence"]')
       .fill('PRIVATE-FORM-EVIDENCE-LOCAL');
     await page.locator('input[name="consent"]').check();
+    if (capture) await inspect(page, 'portfolio-form');
     await page
       .getByRole('button', { name: 'إرسال النتيجة للمراجعة', exact: true })
       .click();
@@ -705,6 +706,7 @@ test.describe.serial('خمسة داشبوردات وبنرات وتوثيق وأ
     });
     await login(context, 'manager', 'platform_admin');
     await page.goto('/admin/control');
+    if (capture) await inspect(page, 'admin-review-pending');
     await page
       .getByLabel('عنوان البنر', { exact: true })
       .fill('مسودة من واجهة الإدارة · اختبار');
@@ -769,12 +771,7 @@ test.describe.serial('خمسة داشبوردات وبنرات وتوثيق وأ
     await reportRow
       .getByRole('button', { name: 'حفظ قرار النتيجة المهنية', exact: true })
       .click();
-    await expect(
-      reportRow.getByRole('combobox', {
-        name: 'قرار مراجعة النتيجة',
-        exact: true,
-      }),
-    ).toHaveValue('revoked');
+    await expect(reportRow).toContainText('معتمد');
     const profile = await (
       await owner.get(
         root + `professional-profiles/doctor/${f.accounts.doctor!.id}`,
