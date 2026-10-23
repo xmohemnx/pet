@@ -1,9 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
-import { ArrowUpLeft } from 'lucide-react';
-import type { IdentityMe, Pet, AvailableSlot } from '@petra/contracts';
+import { ArrowUpLeft, Plus, X } from 'lucide-react';
+import type {
+  IdentityMe,
+  Pet,
+  AvailableSlot,
+  SiteBanner,
+} from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
+import { DashboardSummary, CustomerBanners } from './dashboard-summary';
 import { PetForm } from './pet-form';
 import { careDate, speciesLabels } from './care-shared';
 import {
@@ -15,10 +21,12 @@ export function CareHome({
   me,
   pets,
   slots,
+  banners = [],
 }: {
   me: IdentityMe;
   pets: Pet[];
   slots: AvailableSlot[];
+  banners?: SiteBanner[];
 }) {
   const [adding, setAdding] = useState(false);
   const formRef = useRef<HTMLElement>(null);
@@ -32,6 +40,7 @@ export function CareHome({
   return (
     <IdentityShell me={me}>
       <div className="role-desk customer-desk">
+        <CustomerBanners banners={banners} />
         <WorkspaceHeading
           title="رعاية رفاقك"
           description={`أهلًا، ${me.user.name}. ملفات حيواناتك وخطوتك التالية في مكان واحد.`}
@@ -42,10 +51,16 @@ export function CareHome({
               aria-expanded={adding}
               aria-controls="new-companion"
             >
+              {adding ? (
+                <X size={18} aria-hidden="true" />
+              ) : (
+                <Plus size={18} aria-hidden="true" />
+              )}
               {adding ? 'إغلاق النموذج' : 'إضافة حيوان'}
             </button>
           }
         />
+        <DashboardSummary kind="customer" />
         <nav className="desk-tabs" aria-label="أقسام رعاية العميل">
           <a href="#companions">
             حيواناتي <span>{activePets.length}</span>
@@ -83,6 +98,7 @@ export function CareHome({
                       className="button primary"
                       onClick={() => setAdding(true)}
                     >
+                      <Plus size={18} aria-hidden="true" />
                       إنشاء أول ملف
                     </button>
                   }

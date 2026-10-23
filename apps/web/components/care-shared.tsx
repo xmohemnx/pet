@@ -1,4 +1,5 @@
 'use client';
+import { Check, LoaderCircle } from 'lucide-react';
 import { useState, type ReactNode, type FormEvent } from 'react';
 export function CareForm({
   children,
@@ -36,6 +37,11 @@ export function CareForm({
       <fieldset disabled={busy}>
         {children}
         <button className={`button ${variant}`} type="submit">
+          {busy ? (
+            <LoaderCircle size={18} aria-hidden="true" className="busy-icon" />
+          ) : (
+            <Check size={18} aria-hidden="true" />
+          )}
           {busy ? 'جارٍ الحفظ…' : label}
         </button>
       </fieldset>

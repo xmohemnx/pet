@@ -602,7 +602,7 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
     await expect(
       review.getByRole('heading', { name: 'أهلًا، مراجع محلي.' }),
     ).toBeVisible();
-    await review.goto('/admin');
+    await review.goto('/admin/professionals');
     await expect(
       review.getByRole('heading', { name: 'مراجعة تستحق الثقة.' }),
     ).toBeVisible();

@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import { DashboardController } from './dashboard/controller.js';
+import { DashboardService } from './dashboard/service.js';
 import express from 'express';
 import {
   RescueLifecycleController,
@@ -186,6 +188,7 @@ class Errors implements ExceptionFilter {
 }
 @Module({
   controllers: [
+    DashboardController,
     HealthController,
     DemoController,
     IdentityController,
@@ -218,6 +221,7 @@ class Errors implements ExceptionFilter {
     OperationsController,
   ],
   providers: [
+    DashboardService,
     OrganizationService,
     AccountLifecycle,
     CareService,

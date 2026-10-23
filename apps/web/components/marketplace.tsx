@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { DeliveryAddressBook } from './delivery-address-book';
 import { CatalogSearch } from './catalog-taxonomy';
+import { StoreDepartments } from './store-departments';
 import type {
   IdentityMe,
   Product,
@@ -40,6 +41,15 @@ export function Marketplace({
 }) {
   const [products, setProducts] = useState(initialProducts),
     [catalogResults, setCatalogResults] = useState<Product[] | null>(null);
+  const [usingAdvanced, setUsingAdvanced] = useState(false),
+    [searchEpoch, setSearchEpoch] = useState(0);
+  function acceptCatalogResults(results: Product[] | null) {
+    setCatalogResults(results);
+    if (results)
+      setProducts((previous) => [
+        ...new Map([...previous, ...results].map((p) => [p.id, p])).values(),
+      ]);
+  }
   const [addresses, setAddresses] = useState(initialAddresses),
     [chosenAddress, setChosenAddress] = useState('');
   const [couponCodes, setCouponCodes] = useState<Record<string, string>>({}),
@@ -95,6 +105,23 @@ export function Marketplace({
       >
         منتجات تبيعها وتدير مخزونها عيادات Petra.
       </PlatformHeading>
+      <StoreDepartments
+        externalSearch={usingAdvanced}
+        onResults={(results) => {
+          acceptCatalogResults(results);
+          setUsingAdvanced(false);
+          setSearchEpoch((n) => n + 1);
+          setQ('');
+          setCategory('');
+          setSpecies('');
+          setClinic('');
+          setCity('');
+          setBrand('');
+          setMaxPrice('');
+          setFavoritesOnly(false);
+          setAvailableOnly(false);
+        }}
+      />
       <SandboxNotice />
       <div className="market-layout">
         <section>
@@ -108,17 +135,14 @@ export function Marketplace({
             />
           </label>
           <CatalogSearch
+            key={searchEpoch}
             query={q}
             onResults={(results) => {
-              setCatalogResults(results);
-              if (results)
-                setProducts((previous) => [
-                  ...new Map(
-                    [...previous, ...results].map((p) => [p.id, p]),
-                  ).values(),
-                ]);
+              acceptCatalogResults(results);
+              setUsingAdvanced(results !== null);
             }}
           />
+
           <div className="catalog-filters">
             <label>
               التصنيف

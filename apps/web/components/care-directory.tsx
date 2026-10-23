@@ -72,7 +72,17 @@ export function CareDirectory({
         {doctors.map((d) => (
           <section className="panel care-section" key={d.id + d.clinic_id}>
             <span className="small-chip">{d.specialty}</span>
-            <h2>{d.name}</h2>
+            <h2>
+              <Link href={`/professional-profiles/doctor/${d.id}`}>
+                {d.name}
+              </Link>
+            </h2>
+            <Link
+              className="text-link"
+              href={`/professional-profiles/clinic/${d.clinic_id}`}
+            >
+              الملف المهني للعيادة
+            </Link>
             <p>
               {d.clinic_name} · {d.branches.map((b) => b.city).join('، ')}
             </p>

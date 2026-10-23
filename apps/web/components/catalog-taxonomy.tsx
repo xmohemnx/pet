@@ -14,6 +14,7 @@ export interface Category {
   path: string[];
   active: boolean;
   version: number;
+  sort_order?: number;
   names?: string[];
 }
 export function CatalogTaxonomy({
@@ -119,6 +120,62 @@ export function CatalogTaxonomy({
                 >
                   {c.active ? 'إخفاء التصنيف' : 'إظهار التصنيف'}
                 </CareAction>
+                <details className="category-editor">
+                  <summary>تعديل القسم وترتيبه</summary>
+                  <CareForm
+                    label="حفظ القسم"
+                    submit={async (f) => {
+                      await api(`${base}/categories/${c.id}`, {
+                        method: 'PATCH',
+                        body: JSON.stringify({
+                          version: c.version,
+                          name: f.get('name'),
+                          sortOrder: Number(f.get('position')),
+                        }),
+                      });
+                      await refresh();
+                    }}
+                  >
+                    <label>
+                      اسم القسم
+                      <input
+                        name="name"
+                        defaultValue={c.name}
+                        required
+                        maxLength={80}
+                      />
+                    </label>
+                    <label>
+                      ترتيب العرض
+                      <input
+                        type="number"
+                        name="position"
+                        min={0}
+                        max={999}
+                        defaultValue={c.sort_order ?? 0}
+                        required
+                      />
+                    </label>
+                  </CareForm>
+                  <CareAction
+                    variant="outline"
+                    action={async () => {
+                      if (
+                        !window.confirm(
+                          'حذف هذا القسم الفارغ؟ لن تُحذف المنتجات أو المخزون.',
+                        )
+                      )
+                        throw new Error('أُلغي الحذف؛ لم يتغير القسم.');
+                      await api(`${base}/categories/${c.id}`, {
+                        method: 'DELETE',
+                        body: JSON.stringify({ version: c.version }),
+                      });
+                      await refresh();
+                    }}
+                  >
+                    حذف القسم
+                  </CareAction>
+                </details>
               </div>
             </article>
           ))}

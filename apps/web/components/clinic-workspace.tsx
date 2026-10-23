@@ -1,8 +1,10 @@
 'use client';
+import { DashboardSummary } from './dashboard-summary';
 import Link from 'next/link';
 import { useEffect, useState, useRef, type FormEvent } from 'react';
 import {
   Building2,
+  CalendarDays,
   Users,
   Mail,
   MapPin,
@@ -160,9 +162,15 @@ export function ClinicWorkspace({
               onClick={openAdministration}
               className="button outline"
             >
+              <Users size={18} aria-hidden="true" />
               الفريق والفروع
             </a>
           }
+        />
+        <DashboardSummary
+          kind="clinic"
+          clinicId={clinic.id}
+          revision={branches.length}
         />
         <div className="clinic-work-surface">
           <section className="desk-panel clinic-agenda">
@@ -220,6 +228,7 @@ export function ClinicWorkspace({
                       className="button primary"
                       href={`/clinic/${clinic.id}/calendar`}
                     >
+                      <CalendarDays size={18} aria-hidden="true" />
                       افتح تقويم العيادة
                     </Link>
                   }
@@ -288,6 +297,22 @@ export function ClinicWorkspace({
             className="clinic-department-list"
             aria-label="أقسام عمل العيادة"
           >
+            {clinic.capabilities.includes('clinic_admin') && (
+              <>
+                <WorkspaceLink
+                  href={`/clinic/${clinic.id}/store`}
+                  title="إدارة المتجر والأقسام"
+                >
+                  المنتجات والأقسام والمستودعات والطلبات.
+                </WorkspaceLink>
+                <WorkspaceLink
+                  href={`/professional-profiles/clinic/${clinic.id}`}
+                  title="الملف المهني للعيادة"
+                >
+                  النتائج والأعمال الخيرية المعتمدة.
+                </WorkspaceLink>
+              </>
+            )}
             {clinic.capabilities.some((c) =>
               ['clinic_admin', 'receptionist'].includes(c),
             ) && (
