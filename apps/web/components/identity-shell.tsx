@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   ArrowLeft,
@@ -19,8 +19,12 @@ import {
   BookOpen,
   Menu,
   X,
+  Search,
+  Settings,
 } from 'lucide-react';
 import { Brand } from './brand';
+import { MobileNavigation } from './mobile-navigation';
+import { ConnectionStatus } from './connection-status';
 import { authClient, api } from '../lib/auth-client';
 import type { IdentityMe } from '@petra/contracts';
 import { accountTypeNames } from '@petra/contracts';
@@ -33,6 +37,19 @@ export function IdentityShell({
 }) {
   const pathname = usePathname();
   const [menu, setMenu] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const [query, setQuery] = useState('');
+  const [signingOut, setSigningOut] = useState(false);
+  useEffect(() => {
+    const media = matchMedia('(max-width: 1000px)');
+    const update = () => {
+      setMobile(media.matches);
+      if (!media.matches) setMenu(false);
+    };
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const menuButton = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -62,13 +79,17 @@ export function IdentityShell({
     }
   }
   async function logout() {
-    const r = await authClient.signOut();
-    if (r.error) {
-      setError('تعذر تسجيل الخروج، أعد المحاولة');
-      return;
+    setSigningOut(true);
+    try {
+      const r = await authClient.signOut();
+      if (r.error) throw new Error('تعذر تسجيل الخروج');
+      window.location.assign('/login');
+    } catch {
+      setSigningOut(false);
+      setError('تعذر تسجيل الخروج، تحقق من اتصالك وأعد المحاولة.');
     }
-    window.location.assign('/login');
   }
+
   const clinicId = me.activeWorkspace.clinicId;
   const professionalLinks =
     me.activeWorkspace.id === 'account'
@@ -121,6 +142,150 @@ export function IdentityShell({
         pathname?.startsWith(href + '/'))
     );
   }
+  const normalizedQuery = query
+    .trim()
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي');
+  const matches = (label: string) =>
+    label.replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').includes(normalizedQuery);
+  const visibleProfessional = professionalLinks.filter(([, label]) =>
+    matches(label),
+  );
+  const visibleDestinations = destinations.filter(([, label]) =>
+    matches(label),
+  );
+  const navigation = (
+    <>
+      <div className="petra-navigation-heading">
+        <Brand />
+        {mobile && (
+          <button
+            type="button"
+            className="icon-button"
+            onClick={() => setMenu(false)}
+            aria-label="إغلاق قائمة التنقل"
+          >
+            <X size={21} aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      <label className="petra-navigation-search">
+        <span>ابحث في أقسام الموقع</span>
+        <div>
+          <Search size={18} aria-hidden="true" />
+          <input
+            type="search"
+            name="navigation-search"
+            autoComplete="off"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="الرعاية، المتجر…"
+          />
+        </div>
+      </label>
+      <div
+        className="petra-workspace-switch"
+        role="region"
+        aria-label="مساحة الحساب"
+      >
+        <span>حساب {accountTypeNames[me.user.accountType]}</span>
+        {me.workspaces.length > 1 ? (
+          <>
+            <label htmlFor="petra-workspace-select">مساحاتك المصرح بها</label>
+            <select
+              id="petra-workspace-select"
+              value={me.activeWorkspace.id}
+              onChange={(event) => change(event.target.value)}
+              disabled={busy}
+              aria-label="مساحة العمل"
+            >
+              {me.workspaces.map((workspace) => (
+                <option key={workspace.id} value={workspace.id}>
+                  {workspace.name}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <strong>{me.activeWorkspace.name}</strong>
+        )}
+        <Link href="/account">إعدادات الحساب وطلب تغيير النوع</Link>
+      </div>
+      {visibleProfessional.length > 0 && (
+        <nav className="petra-workspace-nav" aria-label="تنقل الحساب">
+          <p>العمل اليومي</p>
+          {visibleProfessional.map(([href, label, Icon]) => (
+            <Link
+              key={href}
+              href={href}
+              aria-current={active(href) ? 'page' : undefined}
+              onClick={() => setMenu(false)}
+            >
+              <Icon size={18} aria-hidden="true" />
+              {label}
+            </Link>
+          ))}
+        </nav>
+      )}
+      <nav className="petra-workspace-nav" aria-label="أقسام Petra">
+        <p>عالم Petra</p>
+        {visibleDestinations.map(([href, label, Icon]) => (
+          <Link
+            href={href}
+            key={href}
+            aria-current={active(href) ? 'page' : undefined}
+            onClick={() => setMenu(false)}
+          >
+            <Icon size={18} aria-hidden="true" />
+            {label}
+          </Link>
+        ))}
+      </nav>
+      {query.trim() &&
+        !visibleProfessional.length &&
+        !visibleDestinations.length && (
+          <div className="petra-navigation-empty" role="status">
+            <p>لا توجد أقسام بهذا الاسم.</p>
+            <button
+              type="button"
+              className="link-button"
+              onClick={() => setQuery('')}
+            >
+              عرض جميع الأقسام
+            </button>
+          </div>
+        )}
+      <div className="petra-workspace-utilities">
+        <Link
+          href="/account"
+          aria-current={active('/account') ? 'page' : undefined}
+          onClick={() => setMenu(false)}
+        >
+          <Settings size={18} aria-hidden="true" />
+          إعدادات الحساب
+        </Link>
+        <Link
+          href="/security"
+          onClick={() => setMenu(false)}
+          aria-current={active('/security') ? 'page' : undefined}
+        >
+          <ShieldCheck size={18} aria-hidden="true" />
+          أمان الحساب
+        </Link>
+        <Link href="/" onClick={() => setMenu(false)}>
+          <ArrowLeft size={18} aria-hidden="true" />
+          الصفحة الرئيسية
+        </Link>
+      </div>
+      <div className="petra-sidebar-account">
+        <span aria-hidden="true">{me.user.name.slice(0, 1)}</span>
+        <div>
+          <strong>{me.user.name}</strong>
+          <small>حساب Petra</small>
+        </div>
+      </div>
+    </>
+  );
   return (
     <div
       className="real-app petra-workspace"
@@ -136,7 +301,11 @@ export function IdentityShell({
           type="button"
           className="icon-button petra-menu-toggle"
           ref={menuButton}
-          onClick={() => setMenu(!menu)}
+          onClick={() => {
+            setQuery('');
+            setMenu(!menu);
+          }}
+          aria-haspopup="dialog"
           aria-expanded={menu}
           aria-controls="petra-workspace-navigation"
           aria-label={menu ? 'إغلاق قائمة التنقل' : 'فتح قائمة التنقل'}
@@ -163,104 +332,34 @@ export function IdentityShell({
           <button
             className="icon-button"
             onClick={logout}
-            aria-label="تسجيل الخروج"
+            disabled={signingOut}
+            aria-label={signingOut ? 'جارٍ تسجيل الخروج…' : 'تسجيل الخروج'}
           >
             <LogOut size={19} aria-hidden="true" />
           </button>
         </div>
       </header>
-      <aside
-        id="petra-workspace-navigation"
-        aria-label="شريط مساحات Petra"
-        className={`petra-workspace-sidebar ${menu ? 'is-open' : ''}`}
-      >
-        <Brand />
-        <div
-          className="petra-workspace-switch"
-          role="region"
-          aria-label="مساحة الحساب"
+      {mobile ? (
+        <MobileNavigation open={menu} onClose={() => setMenu(false)}>
+          {navigation}
+        </MobileNavigation>
+      ) : (
+        <aside
+          id="petra-workspace-navigation"
+          aria-label="شريط مساحات Petra"
+          className="petra-workspace-sidebar"
         >
-          <span>حساب {accountTypeNames[me.user.accountType]}</span>
-          {me.workspaces.length > 1 ? (
-            <>
-              <label htmlFor="petra-workspace-select">مساحاتك المصرح بها</label>
-              <select
-                id="petra-workspace-select"
-                value={me.activeWorkspace.id}
-                onChange={(event) => change(event.target.value)}
-                disabled={busy}
-                aria-label="مساحة العمل"
-              >
-                {me.workspaces.map((workspace) => (
-                  <option key={workspace.id} value={workspace.id}>
-                    {workspace.name}
-                  </option>
-                ))}
-              </select>
-            </>
-          ) : (
-            <strong>{me.activeWorkspace.name}</strong>
-          )}
-          <Link href="/account">إعدادات الحساب وطلب تغيير النوع</Link>
-        </div>
-        {professionalLinks.length > 0 && (
-          <nav className="petra-workspace-nav" aria-label="تنقل الحساب">
-            <p>العمل اليومي</p>
-            {professionalLinks.map(([href, label, Icon]) => (
-              <Link
-                key={href}
-                href={href}
-                aria-current={active(href) ? 'page' : undefined}
-                onClick={() => setMenu(false)}
-              >
-                <Icon size={18} aria-hidden="true" />
-                {label}
-              </Link>
-            ))}
-          </nav>
-        )}
-        <nav className="petra-workspace-nav" aria-label="أقسام Petra">
-          <p>عالم Petra</p>
-          {destinations.map(([href, label, Icon]) => (
-            <Link
-              href={href}
-              key={href}
-              aria-current={active(href) ? 'page' : undefined}
-              onClick={() => setMenu(false)}
-            >
-              <Icon size={18} aria-hidden="true" />
-              {label}
-            </Link>
-          ))}
-        </nav>
-        <div className="petra-workspace-utilities">
-          <Link
-            href="/security"
-            aria-current={active('/security') ? 'page' : undefined}
-          >
-            <ShieldCheck size={18} aria-hidden="true" />
-            أمان الحساب
-          </Link>
-          <Link href="/">
-            <ArrowLeft size={18} aria-hidden="true" />
-            الصفحة الرئيسية
-          </Link>
-        </div>
-        <div className="petra-sidebar-account">
-          <span aria-hidden="true">{me.user.name.slice(0, 1)}</span>
-          <div>
-            <strong>{me.user.name}</strong>
-            <small>حساب Petra</small>
-          </div>
-        </div>
-      </aside>
+          {navigation}
+        </aside>
+      )}
       <div className="petra-workspace-canvas">
+        <ConnectionStatus />
         {error && (
           <div className="form-error" role="alert">
             {error}
           </div>
         )}
-        <main id="main" className="real-main">
+        <main id="main" tabIndex={-1} className="real-main">
           {children}
         </main>
         <footer className="real-footer">
@@ -270,6 +369,28 @@ export function IdentityShell({
           </Link>
         </footer>
       </div>
+      <nav
+        className="petra-workspace-bottom"
+        aria-label="الوصول السريع على الهاتف"
+      >
+        {(
+          [
+            [professionalLinks[0]?.[0] ?? '/app', 'مساحتي', LayoutDashboard],
+            ['/care', 'الرعاية', PawPrint],
+            ['/social', 'المجتمع', Users],
+            ['/account', 'حسابي', Settings],
+          ] as const
+        ).map(([href, label, Icon]) => (
+          <Link
+            key={href}
+            href={href}
+            aria-current={active(href) ? 'page' : undefined}
+          >
+            <Icon size={21} aria-hidden="true" />
+            <span>{label}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

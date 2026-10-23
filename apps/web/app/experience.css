@@ -1,0 +1,401 @@
+/* Shared task surfaces keep Petra's photo-journal identity and native controls. */
+:root {
+  --field-edge: #a9c1b9;
+  --error-ink: #8c3028;
+  --error-ground: #fff1ec;
+}
+html {
+  scrollbar-color: var(--field-edge) var(--paper);
+}
+::selection {
+  background: var(--mint);
+  color: var(--ink);
+}
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 4px;
+}
+input,
+textarea {
+  caret-color: var(--brand);
+}
+button,
+summary,
+select,
+.button,
+.icon-button {
+  touch-action: manipulation;
+}
+.petra-workspace {
+  --petra-control: var(--field-edge);
+  --petra-dark: var(--brand);
+}
+.petra-workspace-sidebar {
+  background: var(--surface);
+  gap: 20px;
+}
+.petra-navigation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.petra-navigation-heading .brand {
+  font-size: 30px;
+}
+.petra-navigation-search {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.petra-navigation-search > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-inline: 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.petra-navigation-search input {
+  width: 100%;
+  min-width: 0;
+  color: var(--ink);
+  font-size: 13px;
+  border: 0;
+  background: transparent;
+  min-height: 40px;
+}
+.petra-navigation-search svg {
+  flex-shrink: 0;
+}
+.petra-navigation-search:focus-within > div {
+  border-color: var(--brand);
+}
+.petra-navigation-empty {
+  font-size: 13px;
+  line-height: 1.9;
+}
+.petra-workspace-switch > a {
+  padding-block: 8px;
+  text-decoration: underline;
+}
+.petra-workspace-nav a,
+.petra-workspace-utilities a {
+  min-height: 44px;
+  font-size: 14px;
+}
+.petra-workspace-nav a:hover,
+.petra-workspace-utilities a:hover {
+  color: var(--brand-dark);
+  background: var(--paper);
+}
+.petra-workspace-nav a[aria-current='page'],
+.petra-workspace-utilities a[aria-current='page'] {
+  color: var(--brand-dark);
+  background: var(--mint);
+  font-weight: 600;
+}
+.petra-sidebar-account > span {
+  color: var(--brand-dark);
+  background: var(--mint);
+}
+.petra-workspace-top .icon-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.petra-workspace-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.petra-workspace .real-main {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 36px clamp(24px, 3vw, 48px);
+}
+.real-main .panel > h2 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.7;
+  margin-block-end: 12px;
+}
+.real-main .panel > p {
+  font-size: 15px;
+  line-height: 1.95;
+  max-width: 70ch;
+}
+.real-app .button.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--surface);
+}
+.real-app .button.primary:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+.real-app .button.outline {
+  border-color: var(--field-edge);
+}
+.real-app .button.outline:hover {
+  background: var(--mint);
+  color: var(--brand-dark);
+}
+:is(.real-app, .auth-page) .button {
+  min-height: 46px;
+}
+.real-app
+  :is(.identity-form, .care-form)
+  :is(input:not([type='radio']):not([type='checkbox']), select, textarea) {
+  border-color: var(--field-edge);
+  font-size: 15px;
+  min-height: 46px;
+}
+.real-app .account-security-card {
+  background: var(--mint);
+  border-color: var(--line);
+}
+.real-app .account-security-card > svg {
+  color: var(--brand);
+}
+.panel details {
+  margin-block-start: 20px;
+}
+.panel summary {
+  cursor: pointer;
+  padding-block: 10px;
+  color: var(--brand-dark);
+  line-height: 1.9;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 44px;
+}
+.panel details[open] > summary {
+  margin-block-end: 16px;
+}
+.account-request-history:empty {
+  display: none;
+}
+.password-field {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+.password-control {
+  position: relative;
+  min-width: 0;
+}
+.password-control input {
+  display: block;
+  width: 100%;
+  padding-left: 52px;
+}
+.password-toggle {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 40px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+}
+.password-toggle:hover {
+  background: var(--mint);
+  color: var(--brand-dark);
+}
+.password-field small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.auth-page {
+  --petra-control: var(--field-edge);
+  --petra-blue-wash: var(--mint);
+  --petra-blue-field: var(--mint);
+}
+.auth-story p,
+.auth-story > small {
+  color: var(--brand-dark);
+}
+.auth-card {
+  max-width: 450px;
+}
+.auth-card > p {
+  font-size: 15px;
+  line-height: 1.95;
+}
+.auth-card .identity-form :where(input, select) {
+  min-height: 48px;
+}
+.auth-card .account-type-options input[type='radio'] {
+  min-height: 18px;
+}
+.auth-links :is(a, button) {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.connection-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 24px;
+  color: var(--warning);
+  background: #fff4df;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.connection-status svg {
+  flex-shrink: 0;
+  margin-block-start: 4px;
+}
+.auth-main > .connection-status {
+  margin-block-end: 20px;
+}
+.petra-workspace-bottom {
+  display: none;
+}
+.recovery-brand {
+  font-family: Manrope, sans-serif;
+  font-size: 28px;
+  color: var(--brand);
+}
+.error-page > a:not(.button):hover {
+  text-decoration: underline;
+}
+@media (max-width: 1000px) {
+  .petra-navigation-drawer {
+    inset: 0 0 0 auto;
+    margin: 0;
+    width: min(360px, calc(100vw - 28px));
+    max-width: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-inline-end: 1px solid var(--line);
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    background: var(--surface);
+    color: var(--ink);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .petra-navigation-drawer[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .petra-navigation-drawer::backdrop {
+    background: #12323866;
+  }
+  .petra-workspace .real-main {
+    padding: 28px 24px;
+  }
+  .petra-navigation-drawer .petra-workspace-nav {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  html {
+    scroll-padding-block-end: 96px;
+  }
+  :is(input, textarea, select, button, a):focus-visible {
+    scroll-margin-block: 90px;
+  }
+  .petra-workspace {
+    padding-block-end: calc(72px + env(safe-area-inset-bottom));
+  }
+  .petra-workspace .real-main {
+    padding: 26px 18px;
+  }
+  .petra-workspace-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 25;
+    padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+    border-block-start: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .petra-workspace-bottom a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 50px;
+    font-size: 11px;
+    color: var(--muted);
+    border-radius: 7px;
+  }
+  .petra-workspace-bottom a[aria-current='page'] {
+    background: var(--mint);
+    color: var(--brand-dark);
+    font-weight: 600;
+  }
+  .petra-workspace-top {
+    min-height: 68px;
+  }
+  .real-main .panel > h2 {
+    font-size: 20px;
+  }
+  :is(.real-app, .auth-page)
+    .identity-form
+    :is(input:not([type='radio']):not([type='checkbox']), select, textarea),
+  .real-app
+    .care-form
+    :is(input:not([type='radio']):not([type='checkbox']), select, textarea),
+  .petra-navigation-search input {
+    font-size: 16px;
+  }
+  .password-toggle {
+    min-height: 44px;
+  }
+}
+@media print {
+  .petra-workspace-bottom,
+  .petra-navigation-drawer,
+  .connection-status {
+    display: none;
+  }
+  .petra-workspace {
+    padding: 0;
+  }
+}
+
+.workspace-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-end: 24px;
+}
+.auth-page
+  .auth-card
+  .identity-form
+  :is(input:not([type='radio']):not([type='checkbox']), select) {
+  background: var(--surface);
+  border-color: var(--field-edge);
+}
+.form-error {
+  color: var(--error-ink);
+  background: var(--error-ground);
+}
+@media (max-width: 760px) {
+  .workspace-actions > a {
+    width: 100%;
+  }
+}
+@media print {
+  .petra-workspace .real-main {
+    padding: 0;
+    max-width: none;
+  }
+}
