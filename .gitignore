@@ -18,6 +18,11 @@ work/render-static/
 *.bak
 *.sqlite
 
+# Authoring tools and generated screenshots are not required for Bolt import.
+.agents/skills/
+.taste-skill/
+docs/evidence/*.png
+
 # Local design-tool state and browser captures; reviewed evidence lives in docs/.
 .impeccable/questions/
 .impeccable/review/

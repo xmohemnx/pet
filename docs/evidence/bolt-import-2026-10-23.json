@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-23",
+  "requested_scope": "reduce_current_source_for_bolt_import",
+  "original_source_bytes": 44491234,
+  "original_source_files": 1001,
+  "removed_generated_screenshots": 79,
+  "removed_vendored_authoring_files": 441,
+  "removed_authoring_direction_files": 2,
+  "application_source_and_dependency_files_unchanged": true,
+  "database_migrations_preserved": 44,
+  "site_png_images_preserved": 4,
+  "git_history_rewritten": false,
+  "recommended_import": "GitHub repository default branch via Bolt Import from URL",
+  "zip_chat_attachment_supported": "not listed in current official attachment formats",
+  "validation": {
+    "quality_check": "passed",
+    "unit_tests_passed": 48,
+    "api_build": "passed",
+    "next_build": "passed",
+    "built_browser_secret_check": "passed",
+    "redesign_browser_tests_passed": 5,
+    "redesign_browser_duration_seconds": 46.3,
+    "zip_crc_and_required_file_check": "passed",
+    "tested_inside_bolt": false,
+    "full_e2e_suite_rerun": false
+  },
+  "official_references": [
+    "https://support.bolt.new/integrations/git",
+    "https://support.bolt.new/building/upload-files",
+    "https://support.bolt.new/reference/supported-technologies"
+  ]
+}
