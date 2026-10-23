@@ -234,10 +234,16 @@ test('الاتصال المفقود واضح في الحساب والمجتمع 
   context,
 }) => {
   await login(context);
+  const profile = await context.request.get(origin + '/api/v1/social/profile');
+  expect(profile.status()).toBe(200);
+  expect(await profile.json()).toBeNull();
   for (const route of ['/account', '/social']) {
     await page.goto(route);
     await expect(page.locator('h1')).toBeVisible();
     await page.waitForLoadState('networkidle');
+    await expect(
+      page.locator(route === '/social' ? '.social-stage' : '.petra-workspace'),
+    ).toBeVisible();
     await context.setOffline(true);
     await expect(
       page.getByRole('status').filter({ hasText: 'أنت غير متصل' }),
@@ -246,6 +252,14 @@ test('الاتصال المفقود واضح في الحساب والمجتمع 
     await expect(
       page.getByRole('status').filter({ hasText: 'أنت غير متصل' }),
     ).toHaveCount(0);
+    const retry = page.getByRole('button', {
+      name: 'إعادة المحاولة',
+      exact: true,
+    });
+    if (await retry.count()) await retry.click();
+    await expect(
+      page.locator(route === '/social' ? '.social-stage' : '.petra-workspace'),
+    ).toBeVisible();
   }
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto('/security');
@@ -279,11 +293,23 @@ test('التنقل باللمس والتمرير داخل القائمة يحا�
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
     const client = await context.newCDPSession(page);
-    await client.send('Input.synthesizeScrollGesture', {
-      x: 240,
-      y: 650,
-      yDistance: -460,
-      gestureSourceType: 'touch',
+    expect(
+      await dialog.evaluate((el) => el.scrollHeight > el.clientHeight),
+    ).toBe(true);
+    await client.send('Input.dispatchTouchEvent', {
+      type: 'touchStart',
+      touchPoints: [{ x: 240, y: 650 }],
+    });
+    for (const y of [610, 570, 530, 490, 450, 410, 370, 330, 290]) {
+      await client.send('Input.dispatchTouchEvent', {
+        type: 'touchMove',
+        touchPoints: [{ x: 240, y }],
+      });
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+    }
+    await client.send('Input.dispatchTouchEvent', {
+      type: 'touchEnd',
+      touchPoints: [],
     });
     await expect
       .poll(() => dialog.evaluate((el) => el.scrollTop))
@@ -349,6 +375,8 @@ test('صور حقيقية لمسارات التصفح المشتركة واله�
       await page.goto(route!);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       await page.evaluate(() => document.fonts.ready);
+      if (name === 'social')
+        await expect(page.locator('.social-stage')).toBeVisible();
       if (name === 'security')
         await page.getByText('متابعة حذف حسابي', { exact: true }).click();
       await page.evaluate(() => scrollTo(0, 0));
