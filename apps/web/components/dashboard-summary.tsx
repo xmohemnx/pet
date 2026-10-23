@@ -102,9 +102,9 @@ export function CustomerBanners({ banners }: { banners: SiteBanner[] }) {
               />
             )}
             <div className="banner-copy">
-              <p className="banner-attribution">إعلان من إدارة Petra</p>
               <h2>{b.title}</h2>
               <p>{b.body}</p>
+              <p className="banner-attribution">إعلان من إدارة Petra</p>
               <Link className="button glass-action" href={b.href}>
                 اكتشف المزيد <ArrowUpLeft size={18} aria-hidden="true" />
               </Link>

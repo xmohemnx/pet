@@ -12,7 +12,7 @@ STORY: Customer finds care and store departments; clinic owner manages departmen
 
 FIRST VIEWPORT: Task heading, compact real summary and working links on desktop. Driver retains current-ride transition above the mobile navigation; summary remains after the ledger. Admin uses grouped management rows, clinic store pairs management tools with actual warehouses. Mobile is one column with 44px controls.
 
-FORM: Task desk with scope-specific rows and a secondary record column; explicit user-selected five-dashboard structure. seed: none (unavailable).
+FORM: Task desk with scope-specific rows and a secondary record column; explicit user-selected five-dashboard structure. seed:ffd74c87b52a507b. The reference was generated after the first finish review to correct provenance; the existing task-desk extension is retained, not represented as a user-approved roll. Remote service remained unavailable on retry; there were no challengers or quality-board results.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
