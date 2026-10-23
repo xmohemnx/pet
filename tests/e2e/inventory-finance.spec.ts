@@ -23,6 +23,7 @@ let manager: APIRequestContext,
   other: APIRequestContext,
   owner: APIRequestContext,
   doctor: APIRequestContext,
+  accountant: APIRequestContext,
   cashier: APIRequestContext;
 let product: string,
   po: string,
@@ -77,14 +78,15 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
     } finally {
       rmSync(file, { force: true });
     }
-    [manager, other, owner, doctor, cashier] = await Promise.all(
-      ['manager', 'other', 'owner', 'doctor', 'stranger'].map((role) =>
-        factory.newContext({
-          extraHTTPHeaders: {
-            Origin: origin,
-            Cookie: fixture.accounts[role]!.cookie,
-          },
-        }),
+    [manager, other, owner, doctor, cashier, accountant] = await Promise.all(
+      ['manager', 'other', 'owner', 'doctor', 'cashier', 'accountant'].map(
+        (role) =>
+          factory.newContext({
+            extraHTTPHeaders: {
+              Origin: origin,
+              Cookie: fixture.accounts[role]!.cookie,
+            },
+          }),
       ),
     );
     product = (
@@ -119,6 +121,7 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
       other?.dispose(),
       owner?.dispose(),
       doctor?.dispose(),
+      accountant?.dispose(),
       cashier?.dispose(),
     ]);
     await db.end();
@@ -329,20 +332,20 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
     );
     const path = base() + '/finance/statements?asOf=' + day();
     expect((await other.get(root + path)).status()).toBe(403);
-    const first = await create(doctor, base() + '/finance/approvals', {
+    const first = await create(accountant, base() + '/finance/approvals', {
       kind: 'vendor_payment',
       sourceId: po,
       reason: 'دفعة جزئية تجريبية موثقة',
       amountMinor: '7000',
     });
     await create(cashier, base() + `/finance/approvals/${first.id}/approve`);
-    const report = await (await doctor.get(root + path)).json();
+    const report = await (await accountant.get(root + path)).json();
     expect(report.aging.days31to60).toBe('13000');
     expect(report.statements.difference).toBe('0');
     expect(report.statements.expenses).toBe('4000');
     expect(
       (
-        await doctor.post(root + base() + '/finance/approvals', {
+        await accountant.post(root + base() + '/finance/approvals', {
           data: {
             kind: 'vendor_payment',
             sourceId: po,
@@ -358,8 +361,8 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
       reason: 'تسديد ما تبقى من المستحق',
     };
     const attempts = await Promise.all([
-      doctor.post(root + base() + '/finance/approvals', { data: input }),
-      doctor.post(root + base() + '/finance/approvals', { data: input }),
+      accountant.post(root + base() + '/finance/approvals', { data: input }),
+      accountant.post(root + base() + '/finance/approvals', { data: input }),
     ]);
     expect(attempts.map((r) => r.status()).sort()).toEqual([201, 409]);
     const approval = await attempts.find((r) => r.status() === 201)!.json();
@@ -373,7 +376,7 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
       ).status(),
     ).toBe(409);
     const replacement = await create(
-      doctor,
+      accountant,
       base() + '/finance/approvals',
       input,
     );
@@ -398,7 +401,9 @@ test.describe.serial('مستودعات ودفعات واستلام جزئي وا
       ).rows[0],
     ).toMatchObject({ total: '20000', n: 2 });
     const historic = await (
-      await doctor.get(root + base() + '/finance/statements?asOf=' + day(-1))
+      await accountant.get(
+        root + base() + '/finance/statements?asOf=' + day(-1),
+      )
     ).json();
     expect(historic.statements.assets).toBe('0');
     expect(historic.payables).toEqual([]);

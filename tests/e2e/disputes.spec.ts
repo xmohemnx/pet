@@ -66,7 +66,7 @@ test.describe
       rmSync(path, { force: true });
     }
     [owner, driver, maker, checker, other] = await Promise.all(
-      ['owner', 'doctor', 'manager', 'other', 'stranger'].map((role) =>
+      ['owner', 'driver', 'manager', 'other', 'driverOther'].map((role) =>
         factory.newContext({
           extraHTTPHeaders: {
             Origin: origin,
@@ -281,7 +281,7 @@ test.describe
     });
     const payout = await post(maker, 'admin/sandbox/payouts', {
       kind: 'driver',
-      partyId: f.accounts.doctor!.id,
+      partyId: f.accounts.driver!.id,
       amountMinor: r.driver_share,
     });
     await post(checker, `admin/sandbox/payouts/${payout.id}/pay`);

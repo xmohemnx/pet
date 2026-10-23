@@ -140,16 +140,40 @@ test.describe.serial('مكتبة بمراجعة بيطرية مستقلة وتص
     expect(published).toMatchObject({ title: draft.title, revision: 1 });
     expect(published.author_id).toBeUndefined();
     expect(published.review_note).toBeUndefined();
-    await db.query(
-      "UPDATE clinic_memberships SET capabilities=capabilities||ARRAY['clinic_admin'] WHERE user_id=$1 AND clinic_id=$2",
-      [f.accounts.doctor!.id, f.clinicId],
+    // A doctor cannot acquire clinic administration by changing a workspace.
+    expect((await doctor.post(root + base, { data: draft })).status()).toBe(
+      403,
     );
-    const self = (
-      await post(doctor, base, {
-        ...draft,
-        title: 'مسودة الطبيب نفسه للاختبار',
-      })
-    ).id;
+    // Historical authorship fixture exercises self-review independently of current role grants.
+    const fixtureDb = await db.connect();
+    let self: string;
+    try {
+      await fixtureDb.query('BEGIN');
+      self = (
+        await fixtureDb.query(
+          'INSERT INTO care_articles(clinic_id) VALUES($1) RETURNING id',
+          [f.clinicId],
+        )
+      ).rows[0].id;
+      await fixtureDb.query(
+        'INSERT INTO care_article_revisions(article_id,revision,author_id,title,body,species,age_group,sources) VALUES($1,1,$2,$3,$4,$5,$6,$7)',
+        [
+          self,
+          f.accounts.doctor!.id,
+          'مسودة تاريخية للطبيب · اختبار',
+          draft.body,
+          draft.species,
+          draft.ageGroup,
+          draft.sources,
+        ],
+      );
+      await fixtureDb.query('COMMIT');
+    } catch (error) {
+      await fixtureDb.query('ROLLBACK');
+      throw error;
+    } finally {
+      fixtureDb.release();
+    }
     expect(
       (
         await doctor.post(root + `${base}/${self}/review`, {

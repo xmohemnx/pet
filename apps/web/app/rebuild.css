@@ -218,3 +218,89 @@
     flex-direction: column;
   }
 }
+
+/* Account type is identity, separate from professional verification. */
+.petra-workspace-switch > :is(span, strong, a) {
+  display: block;
+}
+.petra-workspace-switch > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.petra-workspace-switch > strong {
+  margin-block: 8px;
+  font-size: 14px;
+}
+.petra-workspace-switch > a {
+  color: var(--brand);
+  font-size: 12px;
+  line-height: 1.9;
+  text-underline-offset: 4px;
+}
+.account-type-options {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.account-type-options legend {
+  margin-block-end: 12px;
+  font-weight: 600;
+}
+.account-type-options label {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 9px;
+  padding: 14px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.account-type-options label:has(input:checked) {
+  background: var(--mint);
+  border-color: var(--brand);
+}
+.account-type-options input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--brand);
+}
+.account-type-options label:focus-within {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+.account-request-history article {
+  padding-block: 14px;
+  border-block-end: 1px solid var(--line);
+}
+.account-delete {
+  scroll-margin-block-start: 100px;
+}
+.confirmation-choice {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 10px;
+}
+.confirmation-choice input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.account-delete .danger {
+  background: #8c3028;
+  color: white;
+}
+.account-delete .danger:hover {
+  background: #71261f;
+}
+@media (max-width: 350px) {
+  .account-type-options {
+    grid-template-columns: 1fr;
+  }
+}

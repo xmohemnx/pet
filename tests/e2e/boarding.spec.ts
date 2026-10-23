@@ -23,6 +23,7 @@ let f: {
   manager: APIRequestContext,
   doctor: APIRequestContext,
   stranger: APIRequestContext,
+  accountant: APIRequestContext,
   today: string,
   uiPet: string,
   uiBooking: string;
@@ -123,14 +124,15 @@ test.describe.serial('الإقامة: قبول طبي وسعة وحوادث وخ
     } finally {
       rmSync(file, { force: true });
     }
-    [owner, other, manager, doctor, stranger] = await Promise.all(
-      ['owner', 'other', 'manager', 'doctor', 'stranger'].map((role) =>
-        factory.newContext({
-          extraHTTPHeaders: {
-            Origin: origin,
-            Cookie: f.accounts[role]!.cookie,
-          },
-        }),
+    [owner, other, manager, doctor, stranger, accountant] = await Promise.all(
+      ['owner', 'other', 'manager', 'doctor', 'stranger', 'accountant'].map(
+        (role) =>
+          factory.newContext({
+            extraHTTPHeaders: {
+              Origin: origin,
+              Cookie: f.accounts[role]!.cookie,
+            },
+          }),
       ),
     );
     today = (
@@ -146,6 +148,7 @@ test.describe.serial('الإقامة: قبول طبي وسعة وحوادث وخ
       manager?.dispose(),
       doctor?.dispose(),
       stranger?.dispose(),
+      accountant?.dispose(),
     ]);
     await db.end();
   });
@@ -486,38 +489,17 @@ test.describe.serial('الإقامة: قبول طبي وسعة وحوادث وخ
         [f.accounts.doctor!.id],
       );
     }
-    const caps = (
-      await db.query(
-        'SELECT capabilities FROM clinic_memberships WHERE user_id=$1 AND clinic_id=$2',
-        [f.accounts.stranger!.id, f.clinicId],
-      )
-    ).rows[0].capabilities;
-    await db.query(
-      "UPDATE clinic_memberships SET capabilities=ARRAY['clinic_accountant'] WHERE user_id=$1 AND clinic_id=$2",
-      [f.accounts.stranger!.id, f.clinicId],
+    expect((await accountant.get(root + `boarding/${b.id}`)).status()).toBe(
+      403,
     );
-    try {
-      expect((await stranger.get(root + `boarding/${b.id}`)).status()).toBe(
-        403,
-      );
-      expect(
-        (await stranger.get(root + `clinics/${f.clinicId}/boarding`)).status(),
-      ).toBe(403);
-      expect(
-        (
-          await (
-            await stranger.get(
-              root + `clinics/${f.clinicId}/services/management`,
-            )
-          ).json()
-        ).boarding,
-      ).toEqual([]);
-    } finally {
-      await db.query(
-        'UPDATE clinic_memberships SET capabilities=$3 WHERE user_id=$1 AND clinic_id=$2',
-        [f.accounts.stranger!.id, f.clinicId, caps],
-      );
-    }
+    expect(
+      (await accountant.get(root + `clinics/${f.clinicId}/boarding`)).status(),
+    ).toBe(403);
+    const management = await accountant.get(
+      root + `clinics/${f.clinicId}/services/management`,
+    );
+    expect(management.status()).toBe(200);
+    expect((await management.json()).boarding).toEqual([]);
     await transition(b.id, 'checked_in');
   });
   test('واجهة العيادة تنشئ وحدة إقامة بشروط من الهاتف', async ({ browser }) => {

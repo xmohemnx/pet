@@ -11,6 +11,7 @@ import { transaction } from '../database.js';
 import { availableTime, lockScheduling } from './calendar.js';
 import { homeExecution, completeHomeVisit } from './home-execution.js';
 import { OrganizationService, audit, emit } from '../organizations/service.js';
+import { requireAccountType } from '../identity/account-policy.js';
 import type {
   PetInput,
   VisitContent,
@@ -47,6 +48,7 @@ export class CareService {
     return { ...p, scopes: g.scopes as string[] };
   }
   async doctor(db: PoolClient, actor: string, clinicId: string) {
+    await requireAccountType(actor, ['doctor'], db);
     const profile = await db.query(
       "SELECT 1 FROM professional_profiles WHERE user_id=$1 AND kind='doctor' AND status='verified' FOR SHARE",
       [actor],

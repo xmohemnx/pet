@@ -2,16 +2,28 @@
 import { useContext, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ShieldCheck, Mail, KeyRound } from 'lucide-react';
+import {
+  ArrowLeft,
+  ShieldCheck,
+  Mail,
+  KeyRound,
+  CarFront,
+  PawPrint,
+  Stethoscope,
+  Building2,
+} from 'lucide-react';
 import { Brand } from './brand';
 import { authClient, authError } from '../lib/auth-client';
+import { accountTypeNames, type AccountType } from '@petra/contracts';
 import { WebPreviewContext } from './web-preview';
 export function AuthForm({
   mode,
   token,
+  closed = false,
 }: {
   mode: 'login' | 'register' | 'recover' | 'reset';
   token?: string;
+  closed?: boolean;
 }) {
   const preview = useContext(WebPreviewContext);
   const [error, setError] = useState('');
@@ -55,6 +67,7 @@ export function AuthForm({
           email,
           password,
           callbackURL: '/login?verified=1',
+          accountType: String(form.get('accountType')),
         });
         if (r.error) throw new Error(authError(r.error.code));
         setMessage(
@@ -167,6 +180,12 @@ export function AuthForm({
             {mfa ? 'خطوة أخيرة لحماية حسابك' : 'مساحتك في Petra'}
           </span>
           <h1>{mfa ? 'تحقق من هويتك.' : titles[mode]}</h1>
+          {closed && (
+            <p className="form-success" role="status">
+              حُذف حسابك وأُغلق الدخول وأُلغيت جميع الجلسات. تبقى السجلات
+              اللازمة محفوظة بصورة مقيدة وفق السياسة الموضحة.
+            </p>
+          )}
           {preview && (
             <p className="preview-form-note">
               النموذج للمعاينة فقط؛ لا تدخل بيانات حقيقية. الإرسال غير مفعّل.
@@ -176,12 +195,42 @@ export function AuthForm({
             {mfa
               ? 'أدخل الرمز الحالي من تطبيق المصادقة أو استخدم رمز استرداد.'
               : mode === 'register'
-                ? 'أنشئ حساب عميل. الانضمام المهني يتم بطلب اعتماد منفصل.'
+                ? 'اختر نوع حسابك مرة واحدة. تغييره لاحقاً يتطلب طلباً وموافقة الإدارة. الحسابات المهنية تحتاج اعتماداً قبل ممارسة العمل.'
                 : mode === 'recover'
                   ? 'أدخل بريدك وسنرسل لك تعليمات الاستعادة.'
                   : 'بياناتك تبقى ضمن حسابك، بصلاحيات واضحة.'}
           </p>
           <form onSubmit={submit} className="identity-form">
+            {!mfa && mode === 'register' && (
+              <fieldset
+                className="account-type-options"
+                disabled={busy || preview}
+              >
+                <legend>نوع الحساب</legend>
+                {(
+                  ['customer', 'doctor', 'clinic', 'driver'] as AccountType[]
+                ).map((type) => {
+                  const Icon = {
+                    customer: PawPrint,
+                    doctor: Stethoscope,
+                    clinic: Building2,
+                    driver: CarFront,
+                  }[type];
+                  return (
+                    <label key={type}>
+                      <input
+                        type="radio"
+                        name="accountType"
+                        value={type}
+                        required
+                      />
+                      <Icon size={21} aria-hidden="true" />
+                      <span>{accountTypeNames[type]}</span>
+                    </label>
+                  );
+                })}
+              </fieldset>
+            )}
             {!mfa && mode === 'register' && (
               <label>
                 الاسم الكامل

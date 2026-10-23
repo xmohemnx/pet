@@ -192,6 +192,8 @@ try {
     'media_gc_guard',
     'social_album_scope_guard',
     'social_avatar_scope_guard',
+    'account_type_approval_guard',
+    'closed_account_session_guard',
   ];
   const triggerCount = (
     await clone.query(

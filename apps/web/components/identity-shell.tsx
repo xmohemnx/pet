@@ -23,6 +23,7 @@ import {
 import { Brand } from './brand';
 import { authClient, api } from '../lib/auth-client';
 import type { IdentityMe } from '@petra/contracts';
+import { accountTypeNames } from '@petra/contracts';
 export function IdentityShell({
   me,
   children,
@@ -70,30 +71,33 @@ export function IdentityShell({
   }
   const clinicId = me.activeWorkspace.clinicId;
   const professionalLinks =
-    me.activeWorkspace.persona === 'clinic_member' && clinicId
-      ? ([
-          [`/clinic/${clinicId}`, 'نظرة عامة', LayoutDashboard],
-          [`/clinic/${clinicId}/calendar`, 'تقويم العيادة', CalendarDays],
-          [`/clinic/${clinicId}/commerce`, 'متجر العيادة', ShoppingBag],
-          [`/clinic/${clinicId}/inventory`, 'المخزون', Building2],
-          [`/clinic/${clinicId}/finance`, 'مالية العيادة', BookOpen],
-          [`/clinic/${clinicId}/services`, 'الخدمات والباقات', PawPrint],
-        ] as const)
-      : me.activeWorkspace.persona === 'doctor'
+    me.activeWorkspace.id === 'account'
+      ? []
+      : me.activeWorkspace.persona === 'clinic_member' && clinicId
         ? ([
-            ['/doctor', 'مساحة الطبيب', Stethoscope],
-            ['/doctor/planning', 'تخطيط المواعيد', CalendarDays],
+            [`/clinic/${clinicId}`, 'نظرة عامة', LayoutDashboard],
+            [`/clinic/${clinicId}/calendar`, 'تقويم العيادة', CalendarDays],
+            [`/clinic/${clinicId}/commerce`, 'متجر العيادة', ShoppingBag],
+            [`/clinic/${clinicId}/inventory`, 'المخزون', Building2],
+            [`/clinic/${clinicId}/finance`, 'مالية العيادة', BookOpen],
+            [`/clinic/${clinicId}/services`, 'الخدمات والباقات', PawPrint],
           ] as const)
-        : me.activeWorkspace.persona === 'driver'
-          ? ([['/driver', 'مساحة السائق', CarFront]] as const)
-          : me.activeWorkspace.persona === 'platform_admin'
-            ? ([
-                ['/admin', 'مراجعات الاعتماد', ShieldCheck],
-                ['/admin/operations', 'التشغيل والرقابة', LayoutDashboard],
-                ['/admin/finance', 'مالية المنصة', BookOpen],
-                ['/admin/transport', 'نزاعات النقل', CarFront],
-              ] as const)
-            : [];
+        : me.activeWorkspace.persona === 'doctor'
+          ? ([
+              ['/doctor', 'مساحة الطبيب', Stethoscope],
+              ['/doctor/planning', 'تخطيط المواعيد', CalendarDays],
+            ] as const)
+          : me.activeWorkspace.persona === 'driver'
+            ? ([['/driver', 'مساحة السائق', CarFront]] as const)
+            : me.activeWorkspace.persona === 'platform_admin'
+              ? ([
+                  ['/admin', 'مراجعات الاعتماد', ShieldCheck],
+                  ['/admin/account-types', 'تغيير نوع الحساب', Users],
+                  ['/admin/operations', 'التشغيل والرقابة', LayoutDashboard],
+                  ['/admin/finance', 'مالية المنصة', BookOpen],
+                  ['/admin/transport', 'نزاعات النقل', CarFront],
+                ] as const)
+              : [];
   const destinations = [
     ['/app', 'مساحتي', LayoutDashboard],
     ['/care', 'مركز الرعاية', PawPrint],
@@ -176,20 +180,28 @@ export function IdentityShell({
           role="region"
           aria-label="مساحة الحساب"
         >
-          <label htmlFor="petra-workspace-select">مساحة العمل</label>
-          <select
-            id="petra-workspace-select"
-            value={me.activeWorkspace.id}
-            onChange={(event) => change(event.target.value)}
-            disabled={busy}
-            aria-label="مساحة العمل"
-          >
-            {me.workspaces.map((workspace) => (
-              <option key={workspace.id} value={workspace.id}>
-                {workspace.name}
-              </option>
-            ))}
-          </select>
+          <span>حساب {accountTypeNames[me.user.accountType]}</span>
+          {me.workspaces.length > 1 ? (
+            <>
+              <label htmlFor="petra-workspace-select">مساحاتك المصرح بها</label>
+              <select
+                id="petra-workspace-select"
+                value={me.activeWorkspace.id}
+                onChange={(event) => change(event.target.value)}
+                disabled={busy}
+                aria-label="مساحة العمل"
+              >
+                {me.workspaces.map((workspace) => (
+                  <option key={workspace.id} value={workspace.id}>
+                    {workspace.name}
+                  </option>
+                ))}
+              </select>
+            </>
+          ) : (
+            <strong>{me.activeWorkspace.name}</strong>
+          )}
+          <Link href="/account">إعدادات الحساب وطلب تغيير النوع</Link>
         </div>
         {professionalLinks.length > 0 && (
           <nav className="petra-workspace-nav" aria-label="تنقل الحساب">

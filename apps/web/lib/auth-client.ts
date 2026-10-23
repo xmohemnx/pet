@@ -1,9 +1,17 @@
 'use client';
 import { createAuthClient } from 'better-auth/react';
-import { twoFactorClient } from 'better-auth/client/plugins';
+import {
+  twoFactorClient,
+  inferAdditionalFields,
+} from 'better-auth/client/plugins';
 export const authClient = createAuthClient({
   basePath: '/api/v1/auth',
-  plugins: [twoFactorClient()],
+  plugins: [
+    twoFactorClient(),
+    inferAdditionalFields({
+      user: { accountType: { type: 'string', required: true } },
+    }),
+  ],
 });
 export async function api<T>(
   path: string,

@@ -10,6 +10,11 @@ import type { Request } from 'express';
 import { database, transaction } from '../database.js';
 import { requireSession, requireAdmin } from '../identity/session.js';
 import { sendMail, origin } from '../identity/auth.js';
+import {
+  accountPolicy,
+  requireAccountType,
+  lockAccount,
+} from '../identity/account-policy.js';
 export const capabilities = [
   'clinic_admin',
   'receptionist',
@@ -53,55 +58,70 @@ export class OrganizationService {
     capability?: string,
     db: PoolClient | typeof database = database,
   ) {
+    const type = await requireAccountType(userId, ['clinic', 'doctor'], db);
     const result = await db.query(
       "SELECT m.capabilities,c.name,c.verification_status FROM clinic_memberships m JOIN clinics c ON c.id=m.clinic_id WHERE m.user_id=$1 AND m.clinic_id=$2 AND m.revoked_at IS NULL AND c.verification_status='verified'",
       [userId, clinicId],
     );
     const row = result.rows[0];
-    if (!row || (capability && !row.capabilities.includes(capability)))
+    if (type === 'doctor' && row)
+      row.capabilities = row.capabilities.filter((c: string) =>
+        ['doctor_member', 'service_staff'].includes(c),
+      );
+    if (
+      !row ||
+      !row.capabilities.length ||
+      (capability && !row.capabilities.includes(capability))
+    )
       throw new ForbiddenException('لا تملك صلاحية الوصول إلى هذه العيادة');
     return row;
   }
   async workspaces(userId: string) {
+    const type = await accountPolicy(userId);
     const list: {
       id: string;
       persona: string;
       name: string;
       clinicId: string | null;
       capabilities: string[];
-    }[] = [
-      {
-        id: 'customer',
-        persona: 'customer',
-        name: 'مساحتي الشخصية',
-        clinicId: null,
-        capabilities: [],
-      },
-    ];
+    }[] =
+      type === 'customer'
+        ? [
+            {
+              id: 'customer',
+              persona: 'customer',
+              name: 'مساحتي الشخصية',
+              clinicId: null,
+              capabilities: [],
+            },
+          ]
+        : [];
     const clinics = await database.query(
       "SELECT c.id,c.name,m.capabilities FROM clinics c JOIN clinic_memberships m ON m.clinic_id=c.id WHERE m.user_id=$1 AND m.revoked_at IS NULL AND c.verification_status='verified' ORDER BY c.name",
       [userId],
     );
     for (const c of clinics.rows)
-      list.push({
-        id: `clinic:${c.id}`,
-        persona: 'clinic_member',
-        name: c.name,
-        clinicId: c.id,
-        capabilities: c.capabilities,
-      });
+      if (type === 'clinic')
+        list.push({
+          id: `clinic:${c.id}`,
+          persona: 'clinic_member',
+          name: c.name,
+          clinicId: c.id,
+          capabilities: c.capabilities,
+        });
     const profiles = await database.query(
       "SELECT kind FROM professional_profiles WHERE user_id=$1 AND status='verified'",
       [userId],
     );
     for (const p of profiles.rows)
-      list.push({
-        id: p.kind,
-        persona: p.kind,
-        name: p.kind === 'doctor' ? 'مساحة الطبيب' : 'مساحة السائق',
-        clinicId: null,
-        capabilities: [],
-      });
+      if (p.kind === type)
+        list.push({
+          id: p.kind,
+          persona: p.kind,
+          name: p.kind === 'doctor' ? 'مساحة الطبيب' : 'مساحة السائق',
+          clinicId: null,
+          capabilities: [],
+        });
     const admin = await database.query(
       'SELECT capabilities FROM admin_grants WHERE user_id=$1 AND revoked_at IS NULL',
       [userId],
@@ -123,9 +143,25 @@ export class OrganizationService {
       'SELECT workspace_id FROM active_workspaces WHERE session_id=$1',
       [s.session.id],
     );
-    const activeWorkspace =
-      workspaces.find((w) => w.id === active.rows[0]?.workspace_id) ||
-      workspaces[0]!;
+    const type = await accountPolicy(s.user.id);
+    const activeWorkspace = (workspaces.find(
+      (w) => w.id === active.rows[0]?.workspace_id,
+    ) ||
+      workspaces[0]) ?? {
+      id: 'account',
+      persona: type === 'clinic' ? 'clinic_member' : type,
+      name:
+        'حساب ' +
+        {
+          clinic: 'العيادة',
+          doctor: 'الطبيب',
+          driver: 'السائق',
+          customer: 'العميل',
+        }[type] +
+        ' · بانتظار الاعتماد',
+      clinicId: null,
+      capabilities: [],
+    };
     return {
       user: {
         id: s.user.id,
@@ -133,6 +169,7 @@ export class OrganizationService {
         email: s.user.email,
         emailVerified: s.user.emailVerified,
         twoFactorEnabled: !!s.user.twoFactorEnabled,
+        accountType: await accountPolicy(s.user.id),
       },
       sessionId: s.session.id,
       workspaces,
@@ -171,6 +208,8 @@ export class OrganizationService {
   ) {
     const s = await requireSession(req);
     return transaction(async (db) => {
+      await lockAccount(db, s.user.id);
+      await requireAccountType(s.user.id, [input.kind], db);
       await db.query('SELECT id FROM users WHERE id=$1 FOR UPDATE', [
         s.user.id,
       ]);
@@ -214,6 +253,14 @@ export class OrganizationService {
   ) {
     const s = await requireAdmin(req);
     return transaction(async (db) => {
+      const locator = (
+        await db.query(
+          'SELECT user_id FROM professional_applications WHERE id=$1',
+          [id],
+        )
+      ).rows[0];
+      if (!locator) throw new NotFoundException('الطلب غير موجود');
+      await lockAccount(db, locator.user_id);
       const application = (
         await db.query(
           'SELECT * FROM professional_applications WHERE id=$1 FOR UPDATE',
@@ -234,6 +281,7 @@ export class OrganizationService {
         throw new ConflictException('تغير الطلب أو أن هذا الانتقال غير مسموح');
       let clinicId = application.clinic_id;
       if (input.decision === 'approved') {
+        await requireAccountType(application.user_id, [application.kind], db);
         if (application.kind === 'clinic') {
           clinicId = randomUUID();
           await db.query(
@@ -354,6 +402,12 @@ export class OrganizationService {
   async acceptInvitation(req: Request, id: string) {
     const s = await requireSession(req);
     return transaction(async (db) => {
+      await lockAccount(db, s.user.id);
+      const accountType = await requireAccountType(
+        s.user.id,
+        ['clinic', 'doctor'],
+        db,
+      );
       const locator = (
         await db.query('SELECT clinic_id FROM clinic_invitations WHERE id=$1', [
           id,
@@ -371,6 +425,33 @@ export class OrganizationService {
       ).rows[0];
       if (!inv || inv.email !== s.user.email.toLowerCase())
         throw new NotFoundException('الدعوة غير متاحة لهذا الحساب');
+      if (
+        accountType === 'doctor' &&
+        (!inv.capabilities.includes('doctor_member') ||
+          inv.capabilities.some(
+            (c: string) => !['doctor_member', 'service_staff'].includes(c),
+          ))
+      )
+        throw new ForbiddenException(
+          'حساب الطبيب يقبل دعوة العمل الطبي فقط؛ صلاحيات موظفي العيادة تتطلب حساب عيادة.',
+        );
+      if (
+        accountType === 'clinic' &&
+        inv.capabilities.includes('doctor_member')
+      )
+        throw new ForbiddenException('العضوية الطبية تتطلب حساب طبيب معتمداً.');
+      if (
+        accountType === 'doctor' &&
+        !(
+          await db.query(
+            "SELECT 1 FROM professional_profiles WHERE user_id=$1 AND kind='doctor' AND status='verified'",
+            [s.user.id],
+          )
+        ).rowCount
+      )
+        throw new ForbiddenException(
+          'أكمل اعتماد الطبيب قبل قبول العضوية الطبية.',
+        );
       if (
         inv.status !== 'pending' ||
         new Date(inv.expires_at) <= new Date() ||
@@ -425,6 +506,25 @@ export class OrganizationService {
         )
       ).rows[0];
       if (!member) throw new NotFoundException('العضو غير موجود');
+      if (!input.revoke) {
+        const targetType = await requireAccountType(
+          userId,
+          ['doctor', 'clinic'],
+          db,
+        );
+        if (
+          (targetType === 'doctor' &&
+            (!input.capabilities.includes('doctor_member') ||
+              input.capabilities.some(
+                (c) => !['doctor_member', 'service_staff'].includes(c),
+              ))) ||
+          (targetType === 'clinic' &&
+            input.capabilities.includes('doctor_member'))
+        )
+          throw new ForbiddenException(
+            'الصلاحيات المطلوبة لا تطابق نوع حساب العضو.',
+          );
+      }
       if (
         member.capabilities.includes('clinic_admin') &&
         (input.revoke || !input.capabilities.includes('clinic_admin'))

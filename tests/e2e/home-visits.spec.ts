@@ -24,7 +24,8 @@ let f: {
   other: APIRequestContext,
   manager: APIRequestContext,
   doctor: APIRequestContext,
-  stranger: APIRequestContext;
+  stranger: APIRequestContext,
+  accountant: APIRequestContext;
 let pet: string,
   pet2: string,
   foreignPet: string,
@@ -123,14 +124,15 @@ test.describe
     } finally {
       rmSync(file, { force: true });
     }
-    [owner, other, manager, doctor, stranger] = await Promise.all(
-      ['owner', 'other', 'manager', 'doctor', 'stranger'].map((role) =>
-        factory.newContext({
-          extraHTTPHeaders: {
-            Origin: origin,
-            Cookie: f.accounts[role]!.cookie,
-          },
-        }),
+    [owner, other, manager, doctor, stranger, accountant] = await Promise.all(
+      ['owner', 'other', 'manager', 'doctor', 'stranger', 'accountant'].map(
+        (role) =>
+          factory.newContext({
+            extraHTTPHeaders: {
+              Origin: origin,
+              Cookie: f.accounts[role]!.cookie,
+            },
+          }),
       ),
     );
     const pets: string[] = [];
@@ -157,6 +159,7 @@ test.describe
       manager?.dispose(),
       doctor?.dispose(),
       stranger?.dispose(),
+      accountant?.dispose(),
     ]);
     await db.end();
   });
@@ -549,12 +552,10 @@ test.describe
       "UPDATE professional_profiles SET status='verified' WHERE user_id=$1 AND kind='doctor'",
       [f.accounts.doctor!.id],
     );
-    await db.query(
-      "UPDATE clinic_memberships SET capabilities=ARRAY['clinic_accountant'] WHERE user_id=$1 AND clinic_id=$2",
-      [f.accounts.stranger!.id, f.clinicId],
-    );
     expect(
-      (await stranger.get(root + `clinics/${f.clinicId}/home-visits`)).status(),
+      (
+        await accountant.get(root + `clinics/${f.clinicId}/home-visits`)
+      ).status(),
     ).toBe(403);
   });
   test('العيادة تنشر والمالك يحجز ويطبع إيصالاً خاصاً من الهاتف', async ({

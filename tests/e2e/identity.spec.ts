@@ -63,9 +63,16 @@ async function register(
   email: string,
   name: string,
   verify = true,
+  accountType = 'customer',
 ) {
   const r = await context.post(`${backend}auth/sign-up/email`, {
-    data: { name, email, password, callbackURL: '/login?verified=1' },
+    data: {
+      name,
+      email,
+      password,
+      accountType,
+      callbackURL: '/login?verified=1',
+    },
   });
   expect(r.status()).toBe(200);
   if (verify) {
@@ -83,6 +90,32 @@ async function signIn(context: APIRequestContext, email: string) {
   });
 }
 async function submit(context: APIRequestContext, kind: string, name: string) {
+  const current = await (await context.get(`${backend}me`)).json();
+  if (current.user.accountType !== kind) {
+    const request = await context.post(`${backend}me/account-type-requests`, {
+      data: {
+        targetType: kind,
+        reason: 'تغيير إداري لنوع حساب fixture لا جمع صلاحيات',
+      },
+    });
+    expect(request.status()).toBe(201);
+    const id = (await request.json()).id;
+    expect(
+      (
+        await admin.post(
+          `${backend}admin/account-type-requests/${id}/decision`,
+          {
+            data: {
+              decision: 'approved',
+              reason: 'موافقة اختبار محلية مع إلغاء الصلاحيات السابقة',
+              version: 1,
+            },
+          },
+        )
+      ).status(),
+    ).toBe(201);
+    expect((await signIn(context, current.user.email)).status()).toBe(200);
+  }
   const r = await context.post(`${backend}applications`, {
     data: {
       kind,
@@ -108,6 +141,9 @@ async function approve(id: string) {
 
 test.describe.serial('هوية حقيقية وعضويات معزولة', () => {
   test.beforeAll(async () => {
+    if (!/^\/petra_e2e_\d+$/.test(new URL(process.env.DATABASE_URL!).pathname))
+      throw new Error('Isolated test DB required');
+    await db.query('DELETE FROM auth_rate_limits');
     const options = { extraHTTPHeaders: { Origin: origin } };
     [a, b, admin, pending] = await Promise.all([
       playwrightRequest.newContext(options),
@@ -115,9 +151,9 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
       playwrightRequest.newContext(options),
       playwrightRequest.newContext(options),
     ]);
-    await register(a, emails.a, 'سارة الاختبار');
-    await register(b, emails.b, 'علي الاختبار');
-    await register(admin, emails.admin, 'مراجع محلي');
+    await register(a, emails.a, 'سارة الاختبار', true, 'clinic');
+    await register(b, emails.b, 'علي الاختبار', true, 'clinic');
+    await register(admin, emails.admin, 'مراجع محلي', true, 'doctor');
     await register(pending, emails.pending, 'بانتظار التحقق', false);
     expect((await signIn(a, emails.a)).status()).toBe(200);
     expect((await signIn(b, emails.b)).status()).toBe(200);
@@ -133,11 +169,10 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
     ]);
     await db.end();
   });
-  test('التسجيل عميل فقط، والبريد غير الموثق لا يدخل، وحقول الامتياز مرفوضة', async () => {
+  test('اختيار النوع لا يمنح اعتماداً، والبريد غير الموثق وحقول الامتياز مرفوضة', async () => {
     const me = await (await a.get(`${backend}me`)).json();
-    expect(me.workspaces.map((w: { persona: string }) => w.persona)).toEqual([
-      'customer',
-    ]);
+    expect(me.user.accountType).toBe('clinic');
+    expect(me.workspaces).toEqual([]);
     const denied = await a.post(`${backend}auth/sign-up/email`, {
       data: {
         name: 'حساب امتياز',
@@ -342,6 +377,19 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
     ).toBe(409);
   });
   test('انتساب طبيب لعيادة لا يعيد صلاحيات ملغاة، وتعليق الاعتماد يوقفه', async () => {
+    // Transfer the clinic before the account leaves its sole administrator role.
+    const transfer = await b.post(`${backend}clinics/${clinicB}/invitations`, {
+      data: { email: emails.a, capabilities: ['clinic_admin'] },
+    });
+    expect(transfer.status()).toBe(201);
+    expect(
+      (
+        await a.post(
+          `${backend}invitations/${(await transfer.json()).id}/accept`,
+          { data: {} },
+        )
+      ).status(),
+    ).toBe(201);
     const doctor = await submit(b, 'doctor', 'طبيب الاختبار');
     await approve(doctor);
     const r = await b.post(`${backend}me/affiliations`, {
@@ -410,6 +458,7 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
     page,
   }) => {
     await page.goto('/register');
+    await page.getByRole('radio', { name: 'عميل', exact: true }).check();
     await page.getByLabel('الاسم الكامل').fill('مستخدم الواجهة');
     await page.getByLabel('البريد الإلكتروني', { exact: true }).fill(emails.ui);
     await page.getByLabel('كلمة المرور', { exact: true }).fill(password);
@@ -501,7 +550,26 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
       fullPage: true,
     });
     await browserA.close();
-    const reviewApplication = await submit(a, 'driver', 'سائق مراجعة الواجهة');
+    // Independent registration fixture; keep the production signup quota unchanged.
+    await db.query('DELETE FROM auth_rate_limits');
+    const reviewDriver = await playwrightRequest.newContext({
+      extraHTTPHeaders: { Origin: origin },
+    });
+    const reviewEmail = `review-driver-${suffix}@petra.test`;
+    await register(
+      reviewDriver,
+      reviewEmail,
+      'سائق مراجعة الواجهة',
+      true,
+      'driver',
+    );
+    expect((await signIn(reviewDriver, reviewEmail)).status()).toBe(200);
+    const reviewApplication = await submit(
+      reviewDriver,
+      'driver',
+      'سائق مراجعة الواجهة',
+    );
+    await reviewDriver.dispose();
     const browserAdmin = await browser.newContext();
     const review = await browserAdmin.newPage();
     await review.goto('/login');

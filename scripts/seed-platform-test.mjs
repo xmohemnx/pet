@@ -18,26 +18,53 @@ const { auth } = await import('../apps/api/dist/apps/api/src/identity/auth.js');
 const { database: db } =
   await import('../apps/api/dist/apps/api/src/database.js');
 try {
-  for (const role of ['doctor', 'stranger']) {
-    const id = fixture.accounts[role].id;
-    const app = (
+  for (const role of ['driver', 'driverOther', 'accountant', 'cashier']) {
+    const accountType = role.startsWith('driver') ? 'driver' : 'clinic';
+    const email = `platform-${role}-${randomUUID()}@petra.test`;
+    const r = await auth.api.signUpEmail({
+      body: {
+        email,
+        password: fixture.fixturePassword,
+        name: role + ' · حساب اختبار مستقل',
+        accountType,
+      },
+    });
+    await db.query('UPDATE auth_users SET "emailVerified"=true WHERE id=$1', [
+      r.user.id,
+    ]);
+    const login = await auth.api.signInEmail({
+      body: { email, password: fixture.fixturePassword },
+      asResponse: true,
+    });
+    if (!login.ok) throw new Error('Independent role fixture sign-in failed');
+    fixture.accounts[role] = {
+      id: r.user.id,
+      email,
+      cookie: login.headers
+        .getSetCookie()
+        .map((c) => c.split(';')[0])
+        .join('; '),
+    };
+    if (accountType === 'driver') {
+      const app = (
+        await db.query(
+          "INSERT INTO professional_applications(user_id,kind,display_name,registration_number,status) VALUES($1,'driver','سائق fixture مستقل','LOCAL-ONLY','approved') RETURNING id",
+          [r.user.id],
+        )
+      ).rows[0];
       await db.query(
-        "INSERT INTO professional_applications(user_id,kind,display_name,registration_number,status) VALUES($1,'driver','سائق fixture','LOCAL-ONLY','approved') RETURNING id",
-        [id],
-      )
-    ).rows[0];
-    await db.query(
-      "INSERT INTO professional_profiles(user_id,kind,application_id,status) VALUES($1,'driver',$2,'verified')",
-      [id, app.id],
-    );
-    await db.query(
-      'UPDATE clinic_memberships SET capabilities=capabilities||$2::text[] WHERE user_id=$1 AND clinic_id=$3',
-      [
-        id,
-        [role === 'doctor' ? 'clinic_accountant' : 'cashier'],
-        fixture.clinicId,
-      ],
-    );
+        "INSERT INTO professional_profiles(user_id,kind,application_id,status) VALUES($1,'driver',$2,'verified')",
+        [r.user.id, app.id],
+      );
+    } else
+      await db.query(
+        'INSERT INTO clinic_memberships(user_id,clinic_id,capabilities) VALUES($1,$2,$3)',
+        [
+          r.user.id,
+          fixture.clinicId,
+          [role === 'accountant' ? 'clinic_accountant' : 'cashier'],
+        ],
+      );
   }
   const clinicB = randomUUID(),
     branchB = randomUUID();
@@ -55,7 +82,13 @@ try {
   );
   fixture.clinicB = clinicB;
   fixture.branchB = branchB;
-  for (const role of ['manager', 'other', 'stranger']) {
+  for (const role of [
+    'manager',
+    'other',
+    'stranger',
+    'accountant',
+    'cashier',
+  ]) {
     const a = fixture.accounts[role],
       headers = { cookie: a.cookie };
     const setup = await auth.api.enableTwoFactor({
@@ -67,7 +100,7 @@ try {
       headers,
       body: { code: otp.generate(), trustDevice: false },
     });
-    if (role !== 'stranger')
+    if (['manager', 'other'].includes(role))
       await db.query(
         'INSERT INTO admin_grants(user_id,session_after) VALUES($1,clock_timestamp())',
         [a.id],
@@ -92,13 +125,14 @@ try {
       .map((c) => c.split(';')[0])
       .filter((c) => !c.endsWith('='))
       .join('; ');
-    if (role !== 'stranger')
+    if (['manager', 'other'].includes(role))
       await db.query(
         'INSERT INTO platform_finance_grants(user_id,scopes) VALUES($1,$2)',
         [a.id, [role === 'manager' ? 'maker' : 'checker']],
       );
   }
-  delete fixture.fixturePassword;
+  if (process.env.PETRA_FIXTURE_KEEP_PASSWORD !== 'true')
+    delete fixture.fixturePassword;
   writeFileSync(process.argv[2], JSON.stringify(fixture), { mode: 0o600 });
 } finally {
   await db.end();

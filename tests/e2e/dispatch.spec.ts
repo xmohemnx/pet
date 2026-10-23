@@ -66,7 +66,7 @@ function tick() {
   );
 }
 const actor = (id: string) =>
-  id === f.accounts.doctor!.id ? driverA : driverB;
+  id === f.accounts.driver!.id ? driverA : driverB;
 async function pending(id: string) {
   return (
     await db.query(
@@ -89,7 +89,7 @@ test.describe
       rmSync(path, { force: true });
     }
     [owner, driverA, driverB, other] = await Promise.all(
-      ['owner', 'doctor', 'stranger', 'other'].map((role) =>
+      ['owner', 'driver', 'driverOther', 'other'].map((role) =>
         factory.newContext({
           extraHTTPHeaders: {
             Origin: origin,
@@ -171,6 +171,14 @@ test.describe
         await other.post(root + `driver/dispatch-offers/${offer.id}/decline`, {
           data: {},
         })
+      ).status(),
+    ).toBe(403);
+    expect(
+      (
+        await excluded.post(
+          root + `driver/dispatch-offers/${offer.id}/decline`,
+          { data: {} },
+        )
       ).status(),
     ).toBe(404);
     const notification = await db.query(
@@ -256,7 +264,7 @@ test.describe
       elapsed = (
         await connection.query(
           "INSERT INTO ride_dispatch_offers(ride_id,driver_id,created_at,expires_at) VALUES($1,$2,now()-interval '1 minute',now()-interval '15 seconds') RETURNING id",
-          [snapshot, f.accounts.doctor!.id],
+          [snapshot, f.accounts.driver!.id],
         )
       ).rows[0].id;
       await connection.query('COMMIT');
@@ -312,7 +320,7 @@ test.describe
     await post(driverA, 'driver/vehicle', vehicle);
     await post(driverB, 'driver/vehicle', { ...vehicle, autoDispatch: false });
     await context.addCookies(
-      f.accounts.doctor!.cookie.split('; ').map((c) => {
+      f.accounts.driver!.cookie.split('; ').map((c) => {
         const i = c.indexOf('=');
         return {
           name: c.slice(0, i),
@@ -360,7 +368,7 @@ test.describe
     await post(owner, `rides/${r.id}/cancel`);
     await db.query(
       "UPDATE professional_profiles SET status='suspended' WHERE user_id=$1 AND kind='driver'",
-      [f.accounts.doctor!.id],
+      [f.accounts.driver!.id],
     );
     await page.clock.resume();
     await context.setOffline(false);
