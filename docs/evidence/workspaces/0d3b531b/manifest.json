@@ -1,0 +1,31 @@
+{
+  "sourceTree": "b73c4f8c08901b2332322ad1f65ba6885bbba627",
+  "fixtures": "Synthetic local E2E test accounts, not production records",
+  "artifacts": [
+    "docs/evidence/workspaces/0d3b531b/customer-empty-1440.png",
+    "docs/evidence/workspaces/0d3b531b/customer-empty-390.png",
+    "docs/evidence/workspaces/0d3b531b/customer-1440.png",
+    "docs/evidence/workspaces/0d3b531b/customer-390.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-empty-1440.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-empty-390.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-publisher-1440.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-publisher-390.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-empty-1440.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-empty-390.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-administration-1440.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-administration-390.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-1440.png",
+    "docs/evidence/workspaces/0d3b531b/doctor-390.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-1440.png",
+    "docs/evidence/workspaces/0d3b531b/clinic-390.png",
+    "docs/evidence/workspaces/0d3b531b/driver-empty-1440.png",
+    "docs/evidence/workspaces/0d3b531b/driver-empty-390.png",
+    "docs/evidence/workspaces/0d3b531b/driver-configuration-1440.png",
+    "docs/evidence/workspaces/0d3b531b/driver-configuration-390.png",
+    "docs/evidence/workspaces/0d3b531b/driver-1440.png",
+    "docs/evidence/workspaces/0d3b531b/driver-390.png"
+  ],
+  "uiSourceCommit": "0d3b531b4eaa0e7270cf633c1bd022d2a6fa2c72",
+  "captureTests": "tests/e2e/workspaces.spec.ts with semantic combobox locator correction; committed with this evidence",
+  "review": "All 22 files opened by build thread; full-page captures from document top with reduced motion"
+}

@@ -1,5 +1,7 @@
 import { loadIdentity } from '../../lib/server-identity';
-import { AccountHome } from '../../components/account-home';
+import { CareHome } from '../../components/care-home';
+import { loadApi } from '../../lib/platform-server';
+import type { Pet, AvailableSlot } from '@petra/contracts';
 import { redirect } from 'next/navigation';
 import { accountDestination } from '../../lib/account-destination';
 export const dynamic = 'force-dynamic';
@@ -11,5 +13,9 @@ export default async function Page() {
   const me = await loadIdentity(),
     destination = accountDestination(me);
   if (destination !== '/app') redirect(destination);
-  return <AccountHome me={me} />;
+  const [pets, slots] = await Promise.all([
+    loadApi<Pet[]>('pets'),
+    loadApi<AvailableSlot[]>('care/slots'),
+  ]);
+  return <CareHome me={me} pets={pets} slots={slots} />;
 }
