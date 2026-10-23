@@ -6,6 +6,7 @@ dist/
 playwright-report/
 test-results/
 coverage/
+.vercel/
 *.tsbuildinfo
 *.log
 

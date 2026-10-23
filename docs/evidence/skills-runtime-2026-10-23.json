@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-23",
+  "scope": "repair_and_verify_local_skill_tooling",
+  "skills": 21,
+  "vendored_files": 441,
+  "restored_files_deleted": 0,
+  "script_syntax_checks": 105,
+  "missing_local_references": 0,
+  "impeccable": {
+    "version": "0.1.16",
+    "launcher_git_mode": "100755",
+    "engine_probe": "passed",
+    "download_verification": "official launcher enforces release SHA-256 sidecar",
+    "binary_committed_to_git": false
+  },
+  "vercel": {
+    "version": "65.2.0",
+    "cli_version_probe": "passed",
+    "entrypoint": "dist/vc.js",
+    "account": "owner_has_no_account",
+    "authentication_check": "blocked_expected_account_access_required",
+    "deployment_attempted": false
+  },
+  "validation": {
+    "skills_setup": "passed; repeat uses installed pinned tools",
+    "skills_check": "passed",
+    "path_tool_wrappers": "passed",
+    "taste_direction_list": "passed",
+    "taste_browser_cdp_loopback_smoke": "passed",
+    "taste_inspector_report_and_screenshot": "produced on a local fixture",
+    "taste_plain_fixture_design_findings": 4,
+    "taste_plain_fixture_exit_code": 1,
+    "taste_plain_fixture_design_approved": false,
+    "first_data_url_smoke": "blocked by browser policy; loopback HTTP fixture used successfully",
+    "gsap_animation_and_react_lenis_import_smoke": "passed",
+    "upstream_security_validator_tests_passed": 65,
+    "project_unit_tests_passed": 48,
+    "project_quality_check": "passed",
+    "application_e2e_rerun": false
+  },
+  "runtime_cache": ".data/skill-runtime",
+  "application_behavior_changed": false,
+  "bolt_workflow": "cancelled_by_owner",
+  "paid_services_created": false
+}

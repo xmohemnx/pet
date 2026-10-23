@@ -1,5 +1,7 @@
 # Design sources and installed skills
 
+Runtime setup was repaired on 2026-10-23: the Impeccable launcher is executable and engine 0.1.16 passes its probe; Vercel CLI 65.2.0 is installed in a private ignored cache. Reproducible commands and account requirements are in `docs/SKILLS_SETUP.md`. The owner cancelled the Bolt workflow and has no Vercel account; no Vercel deployment or account analysis is claimed. All restored authoring files remain present.
+
 Current source packaging (2026-10-23): following the smaller Bolt snapshot, the owner requested restoration of all 522 removed files. The original vendored authoring tools under `.agents/skills`, generated browser screenshots and `.taste-skill` direction files are restored and tracked again. Runtime libraries, image originals/prompts, shared components and the MIT notice below remain unchanged.
 
 Owner supplied all three archives and approved a complete redesign in the proposed blue/white editorial direction. Skills are vendored under `.agents/skills/`; archive hashes are in `INSTALLATION.json`, licenses in `licenses/`. Only actual skill directories and their supporting references/scripts are installed. Duplicate ZIP bundles, repository harness configuration, symlinks and unrelated sites/tests are omitted. No uploaded package installer or deployment script was executed. ESLint/Prettier leave vendored skill sources unchanged; project source, type, secret and security checks still run normally.
