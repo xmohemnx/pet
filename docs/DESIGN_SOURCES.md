@@ -1,5 +1,13 @@
 # Design sources and installed skills
 
+## 2026-10-23 Social rebuild proof — current scope
+
+The owner accepted the attached Arabic rebuild execution brief and selected community photographs/posts first, with quick access to Stories and Reels. The new teal/warm palette is a proposed implementation under that redesign authorization, awaiting owner visual review; the earlier blue/white approval below is historical. The first working slice is code-led at `f4429f36e48458cbef9884ec028b987f7f568f7d`, with seed `seed:9dba20ecac09d120`. The remote direction roll was degraded, so no external challenger or quality board was inspected. Three labeled in-app layout sketches provide the requested comparison; they are not persisted community records.
+
+No new generated raster asset was made for this batch. Existing conceptual photography retains its prompts and embedded provenance; the browser proof uses isolated synthetic records and a test video encoded from an existing image. See [asset credits](ASSET_CREDITS.md), [new captures](evidence/social-rebuild/f4429f36/README.md) and [release evidence](audits/RELEASE_EVIDENCE.md). A fresh Impeccable finish reviewer inspected all 27 captures and returned `ship` for presenting this first-task POC to the owner, without certifying production readiness or full social completion. Security guidance was applied as focused source review only; there was no comprehensive independent security audit.
+
+The runtime/skill installation notes below describe earlier work; no Vercel account or Bolt workflow was introduced by this batch.
+
 Runtime setup was repaired on 2026-10-23: the Impeccable launcher is executable and engine 0.1.16 passes its probe; Vercel CLI 65.2.0 is installed in a private ignored cache. Reproducible commands and account requirements are in `docs/SKILLS_SETUP.md`. The owner cancelled the Bolt workflow and has no Vercel account; no Vercel deployment or account analysis is claimed. All restored authoring files remain present.
 
 Current source packaging (2026-10-23): following the smaller Bolt snapshot, the owner requested restoration of all 522 removed files. The original vendored authoring tools under `.agents/skills`, generated browser screenshots and `.taste-skill` direction files are restored and tracked again. Runtime libraries, image originals/prompts, shared components and the MIT notice below remain unchanged.

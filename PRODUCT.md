@@ -16,7 +16,7 @@ Existing Next.js App Router and React web application, NestJS API, PostgreSQL an
 
 ## Confirmed owner decisions
 
-The launch market is Iraq and the name is Petra. The owner requests a complete visual redesign, accepts the proposed calm blue/white editorial direction and delegates design decisions. Use the three supplied skill collections and consult 21st.dev where network policy permits. Begin with free, upgradeable infrastructure; no domain, hosting or paid provider accounts have been supplied.
+The launch market is Iraq and the name is Petra. The owner requests a complete visual redesign and delegates design decisions. The accepted Arabic execution brief authorizes a working first-task POC for owner visual review; the latest confirmed priority is “صور ومنشورات المجتمع أولاً، مع وصول سريع للقصص والريلز” (photos and community posts first, with quick access to stories and Reels). This supersedes the earlier blue/white direction for the rebuilt public entry and social proof. The implemented light teal/warm visual system is a proposal under that authority, not an exact palette explicitly selected by the owner. No approved visual comp exists. Use the three supplied skill collections and consult 21st.dev where network policy permits. The owner requires free, upgradeable infrastructure; production domain, deployment configuration and paid-provider authorization remain unconfirmed for this batch.
 
 ## Truth and constraints
 
@@ -25,6 +25,8 @@ Use real API data in account workspaces. Only /demo may show explicitly labelled
 ## Success
 
 Visitors understand the service and can reach care, shopping, community and transport. Professionals can find their existing tasks with clear hierarchy, readable Arabic, keyboard access and useful empty/error/loading states. Maintain contrast, reduced motion support and all working forms and routes.
+
+The current visual proof covers Home, the photo-led social flow and a clinic quick-task strip retaining existing forms. The finish verdict is limited to the first-task POC ready for owner review; advanced social phases and the wider professional redesign remain incomplete as recorded in `docs/audits/RELEASE_EVIDENCE.md`. It is not full-platform or production certification.
 
 ## Open decisions
 

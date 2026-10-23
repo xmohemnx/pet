@@ -1,32 +1,43 @@
 ---
 name: Petra
-description: Arabic companion editorial for public discovery and calm professional workspaces.
+description: Arabic companion photo journal with a light teal field and restrained warm story accents; implemented owner-review POC.
 colors:
-  brand: '#2358ce'
-  brand-dark: '#1b3665'
-  brand-deep: '#142442'
-  ink: '#202733'
-  muted: '#566171'
-  paper: '#f7f9fc'
+  brand: '#0e6873'
+  brand-hover: '#08515b'
+  brand-dark: '#124b53'
+  brand-deep: '#123238'
+  accent: '#fe7e3c'
+  ink: '#1a2c30'
+  muted: '#5d6f72'
+  paper: '#f6f9f8'
   surface: '#ffffff'
-  mint: '#edf3fa'
-  line: '#e3e8ef'
+  mint: '#e8f2ef'
+  line: '#dce6e3'
   success: '#246147'
   warning: '#88520d'
-  petra-blue-wash: '#edf3fc'
-  petra-blue-field: '#dcebf8'
-  petra-control: '#b7c2d1'
-  petra-neutral: '#f0f3f7'
-  public-button-hover: '#1946b2'
-  operating-button-hover: '#394558'
-  navigation-current: '#e5eaf1'
-  legacy-focus: '#b45b1f'
+  public-wash: '#edf5f1'
+  public-field: '#e6f0e9'
+  public-control: '#a9c1b9'
+  public-neutral: '#edf3ef'
+  finder-ground: '#edf4ef'
+  field-edge: '#b6cac3'
+  disabled-ground: '#dfe8e5'
+  disabled-ink: '#4f6564'
+  error-ground: '#fff0ee'
+  error-ink: '#8c3028'
+  offline-ground: '#fff2d7'
+  offline-ink: '#6b4b11'
+  operating-ink: '#202733'
+  operating-hover: '#394558'
+  operating-control: '#b7c2d1'
+  operating-selected: '#e5eaf1'
+  operating-neutral: '#f0f3f7'
 typography:
   display:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
-    fontSize: 'clamp(52px, 7.5vw, 100px)'
+    fontSize: 'clamp(52px, 6.1vw, 84px)'
     fontWeight: 500
-    lineHeight: 1.45
+    lineHeight: 1.5
     letterSpacing: '-0.025em'
   headline:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
@@ -34,6 +45,11 @@ typography:
     fontWeight: 500
     lineHeight: 1.5
     letterSpacing: '-0.02em'
+  feed-title:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '27px'
+    fontWeight: 600
+    lineHeight: 1.5
   title:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
     fontSize: '28px'
@@ -50,6 +66,11 @@ typography:
     fontSize: '16px'
     fontWeight: 400
     lineHeight: 1.8
+  post-body:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '13px'
+    fontWeight: 400
+    lineHeight: 1.95
   operating-body:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
     fontSize: '14px'
@@ -58,12 +79,10 @@ typography:
   label:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
     fontSize: '13px'
-    lineHeight: 1.7
-  button:
+  button-link:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
     fontSize: '14px'
     fontWeight: 500
-    lineHeight: 1.7
   brand:
     fontFamily: 'Manrope, sans-serif'
     fontSize: '35px'
@@ -71,70 +90,77 @@ typography:
     lineHeight: 1
     letterSpacing: '-1.4px'
 rounded:
-  chip: '6px'
+  tab: '6px'
   field: '7px'
   control: '8px'
-  operating-panel: '12px'
+  search: '9px'
+  panel: '12px'
+  social-panel: '14px'
   photo: '16px'
+  hero-photo: '18px'
+  circle: '50%'
 spacing:
   tight: '8px'
+  action-gap: '10px'
   control-gap: '12px'
   small: '16px'
-  panel-mobile: '18px'
+  post-inline: '18px'
   medium: '20px'
   panel-base: '22px'
   grid: '24px'
   heading: '28px'
   gutter: '32px'
-  public-gutter: '48px'
 components:
   button-primary:
     backgroundColor: '{colors.brand}'
     textColor: '{colors.surface}'
-    typography: '{typography.button}'
+    typography: '{typography.button-link}'
     rounded: '{rounded.control}'
     padding: '10px 20px'
   button-primary-hover:
-    backgroundColor: '{colors.public-button-hover}'
-  button-operating:
-    backgroundColor: '{colors.ink}'
-    textColor: '{colors.surface}'
-    typography: '{typography.button}'
+    backgroundColor: '{colors.brand-hover}'
+  button-secondary:
+    backgroundColor: '{colors.mint}'
+    textColor: '{colors.brand}'
+    typography: '{typography.button-link}'
     rounded: '{rounded.control}'
     padding: '10px 20px'
-  button-operating-hover:
-    backgroundColor: '{colors.operating-button-hover}'
-  button-outline:
-    backgroundColor: '{colors.surface}'
-    textColor: '{colors.ink}'
-    typography: '{typography.button}'
-    rounded: '{rounded.control}'
-    padding: '10px 20px'
-  field-identity:
+  button-disabled:
+    backgroundColor: '{colors.disabled-ground}'
+    textColor: '{colors.disabled-ink}'
+  studio-field:
     backgroundColor: '{colors.surface}'
     textColor: '{colors.ink}'
     rounded: '{rounded.field}'
-    padding: '11px 13px'
-  panel:
-    backgroundColor: '{colors.surface}'
-    rounded: '{rounded.operating-panel}'
-    padding: '{spacing.panel-base}'
-  care-panel:
-    backgroundColor: '{colors.surface}'
-    rounded: '{rounded.operating-panel}'
-    padding: '{spacing.grid}'
+    padding: '12px'
   navigation-item:
-    textColor: '{colors.muted}'
-    typography: '{typography.label}'
-    rounded: '{rounded.field}'
-    padding: '8px 12px'
-  navigation-item-current:
-    backgroundColor: '{colors.navigation-current}'
     textColor: '{colors.ink}'
-  chip:
-    backgroundColor: '{colors.petra-neutral}'
-    rounded: '{rounded.chip}'
-    padding: '3px 8px'
+    rounded: '{rounded.search}'
+    padding: '10px 12px'
+  navigation-item-current:
+    backgroundColor: '{colors.mint}'
+    textColor: '{colors.brand}'
+  kind-tab:
+    textColor: '{colors.muted}'
+    rounded: '{rounded.tab}'
+    padding: '8px'
+  kind-tab-current:
+    backgroundColor: '{colors.surface}'
+    textColor: '{colors.brand}'
+  social-post:
+    backgroundColor: '{colors.surface}'
+    rounded: '{rounded.social-panel}'
+  operating-button:
+    backgroundColor: '{colors.operating-ink}'
+    textColor: '{colors.surface}'
+    rounded: '{rounded.control}'
+    padding: '10px 20px'
+  operating-button-hover:
+    backgroundColor: '{colors.operating-hover}'
+  operating-panel:
+    backgroundColor: '{colors.surface}'
+    rounded: '{rounded.panel}'
+    padding: '{spacing.grid}'
   faq-disclosure:
     backgroundColor: '{colors.paper}'
     rounded: '{rounded.control}'
@@ -145,135 +171,147 @@ components:
 
 ## Overview
 
-**Creative North Star: "Companion editorial journal"**
+**Creative North Star: "Companion photo journal"**
 
-Petra is calm, open and personal: clear Arabic typography, blue accents, white and pale blue fields, and photographs that give animals room in the composition. The owner approved this identity and delegated its application. This is a scan of the implemented web system, not a claim of fidelity to an approved image comp.
+Petra brings everyday animal companionship into a light Arabic reading space. Photographs and their authors carry the visual weight; teal identifies actions and warm orange marks story rings. Broad public sentences and compact social controls share locally bundled type, clear borders and quiet surfaces.
 
-Public discovery uses generous space and large sentences; operating screens use compact headings, neutral navigation, tabular figures and flat panels. They share an identity without sharing density. Conceptual brand photographs are authored imagery, not evidence of actual patients, premises or endorsements.
+This is the implemented replacement proposed for owner visual review under the accepted Arabic execution brief. The owner authorized a full redesign and confirmed “صور ومنشورات المجتمع أولاً، مع وصول سريع للقصص والريلز”; the exact teal/warm palette is an implementation proposal, not an explicit owner color selection. The build is code-led, with no approved image comp or external quality board. It supersedes the earlier blue/white direction for the rebuilt public entry and social proof.
 
 **Key Characteristics:**
 
 - Arabic first, RTL, with locally bundled fonts.
-- One blue brand accent, supported by cool neutrals and semantic status colors.
-- Photographic public storytelling and compact, task-led workspaces.
-- Readable content before motion, with native touch scrolling and reduced motion support.
+- Photograph-and-author priority on light teal-neutral surfaces.
+- Restrained warm story emphasis and visible interaction states.
+- Separate public, social and operational densities.
+- Responsive native forms, explicit privacy boundaries and reduced motion support.
 
-This file is scoped to `apps/web`. Token sources are `../../packages/ui/src/tokens.css`, `app/globals.css` and the later-loaded `app/redesign.css`; typography imports and RTL are in `app/layout.tsx`. The frontmatter records selected reusable values actually present in those sources. Rounded and spacing names describe extracted dimensions, not additional CSS variables. The sidecar records motion, breakpoints and representative component snippets. Its tonal ramps are synthesized OKLCH preview metadata, not implemented palette tokens or exact conversions of the canonical colors. This documentation pass inspected source; it did not run browser or test verification. Source provenance is recorded in `../../docs/DESIGN_SOURCES.md`, including the distinction between the blocked live 21st.dev gallery and accessible public GitHub sources.
+Scope: `apps/web`, extracted from implementation source `f4429f36e48458cbef9884ec028b987f7f568f7d`. Sources load in this order: `../../packages/ui/src/tokens.css`, `app/globals.css`, `app/redesign.css`, `app/social.css`, `app/rebuild.css`; font imports and RTL live in `app/layout.tsx`. The frontmatter is normative for selected implemented values. Rounded/spacing names describe observed dimensions rather than new CSS variables. Shared brand and social-prefixed CSS tokens have matching values; public overrides have their own scope. Sidecar metadata extends these primitives without inventing palette ramps.
+
+The finish review in `../../docs/audits/DESIGN_FINISH_REVIEW.md` returns `ship` for the first-task POC ready for owner review. It does not certify a complete platform, full clinic redesign, advanced social phases or production readiness. Browser evidence and provenance are in `../../docs/evidence/social-rebuild/f4429f36/`; unfinished capabilities remain disclosed in `../../docs/audits/RELEASE_EVIDENCE.md`. Conceptual brand photographs and encoded test media are illustration, never evidence of actual patients, users, premises or endorsements; see `../../docs/ASSET_CREDITS.md` and the evidence manifest.
 
 ## Colors
 
-The palette combines a clear care blue with cool paper, restrained dark text and softly colored photographic fields.
+The proposed palette pairs deep readable teal with white, lightly green-tinted fields and small warm story accents.
 
 ### Primary
 
-- **Care blue** (`brand`) marks public actions, the brand symbol, caret and selected interactive emphasis. The CSS `accent` aliases the same literal value; it is not a second accent.
-- **Deep blue** (`brand-dark`) and **night blue** (`brand-deep`) support darker brand areas; the footer uses night blue.
-- Public primary hover and operating primary hover are distinct recorded variants. Operating primary actions use ink through the CSS `petra-dark` alias, whose literal matches `ink`.
+- **Companion teal** (`brand`) identifies links, primary social actions, current navigation and selected tabs; its deeper hover is `brand-hover`.
+- **Deep teal** (`brand-dark`) and **night teal** (`brand-deep`) retain shared brand support and the public footer.
+
+### Secondary
+
+- **Story orange** (`accent`) outlines story avatars. It is an emphasis color, not a replacement for the primary text/action role.
 
 ### Neutral
 
-- **Reading ink** (`ink`) is the default text and operating action color. **Quiet slate** (`muted`) supports navigation, metadata and secondary copy.
-- **Cool paper** (`paper`) is the application canvas; **white** (`surface`) is the public background, top bar, panel and field surface.
-- **Blue wash** (`petra-blue-wash`), **photographic blue** (`petra-blue-field`) and **cool neutral** (`petra-neutral`) distinguish quiet sections, image placeholders and compact supporting surfaces. The older token named `mint` is pale blue in the current implementation; its name is historical.
-- **Divider** (`line`) defines panel and table boundaries. **Control edge** (`petra-control`) gives form controls stronger outlines. Neutral selected navigation uses `navigation-current`.
+- **Reading ink** (`ink`) supports headings and body copy; **quiet slate** (`muted`) supports secondary text and metadata.
+- **Light ground** (`paper`), **white surface** (`surface`) and **soft teal tint** (`mint`) distinguish the app canvas, cards and selected/secondary controls. **Divider** (`line`) gives cards, rails and feed tabs a fine edge.
+- **Public wash**, **public field**, **public neutral** and **finder ground** belong to the rebuilt public surface. Historical CSS names containing “blue” survive as scoped variable names; their public values are now green-tinted. Do not infer hue from an identifier.
+- **Public control** and **field edge** strengthen input boundaries. **Disabled ground/ink**, **error ground/ink** and **offline ground/ink** communicate actual states. Success and warning retain their semantic roles.
+- The `operating-*` primitives document existing workspace compatibility values. They do not imply those workspaces received the social redesign. Other cool-blue hover, selection, notice and authentication values remain in `redesign.css` and are not promoted into the new world.
 
-Success and warning are semantic colors, not competing identity accents. Existing alert components retain additional warm error/success palettes from `globals.css`; do not assume every domain status has been normalized to the root semantic tokens.
-
-**The Contextual Accent Rule.** Use blue for public emphasis and neutral ink for operating primary actions; do not turn the working rail into a saturated marketing surface.
+**The Story Accent Rule.** Keep warm orange attached to story emphasis; use teal for the social action and selection hierarchy.
 
 ## Typography
 
 **Display Font:** IBM Plex Sans Arabic, with sans-serif fallback.  
 **Body Font:** IBM Plex Sans Arabic, with sans-serif fallback.  
-**Brand Font:** Manrope, with sans-serif fallback, for the Latin Petra wordmark and large footer lettering.
+**Brand Font:** Manrope, with sans-serif fallback, for the Latin wordmark and footer lettering.
 
-Arabic weights (400, 500, 600, 700) and Manrope (700) are bundled through `@fontsource`. The design leaves Arabic generous line height. Public headings balance their text and paragraphs use pretty wrapping where supported. Tables, numeric classes, finance summaries and stat values use tabular figures; a separate monospaced font is not established.
+Arabic weights (400, 500, 600, 700) and Manrope (700) are bundled with `@fontsource`. Arabic display lines have generous vertical room; compact reading and forms keep their own density. Tables and numeric summaries retain tabular figures. No separate monospaced face is established.
 
 ### Hierarchy
 
-- **Display:** the frontmatter role is the desktop public introduction. It changes to `clamp(48px, 7.3vw, 80px)` below (1000px), `clamp(40px, 9.5vw, 70px)` below (760px), then (41px) below (420px). Mobile line height is (1.5), and desktop nowrap is released.
-- **Headline:** public section headings use the fluid role; below (760px) they become (36px), then (32px) below (420px).
-- **Title:** operating page headings use the compact role, falling to (24px) below (760px). The demo heading is a separate (500) weight, not the real workspace title weight.
-- **Section title:** operating panel headings use the smaller role; care-section headings become (18px) below (760px).
-- **Body:** global body uses the frontmatter role. Operating descriptions use the denser operating role; public introductory and section copy commonly uses (18px), with selected section descriptions reducing to (16px) on mobile. The final public override gives paragraphs ink color and a (65ch) maximum.
-- **Label:** rail links and compact labels use the smaller role. Table headers and metadata can be (12px); do not enlarge every task label to public body size.
+- **Display:** the frontmatter role is the rebuilt Home greeting. At or below (1100px) it becomes (60px); at or below (760px), (52px) with line height (1.45); at or below (350px), (45px). Its explicit line break remains part of this surface's composition.
+- **Headline:** public section headings use the fluid role, changing to (36px) at the mobile breakpoint and (32px) at or below (420px).
+- **Feed title:** a compact social introduction, changing to (26px) on mobile. Studio/profile/viewer titles have their own observed local sizes; they are not a fabricated global type ramp.
+- **Title / section title:** existing operational headings use these roles; workspace title becomes (24px) on mobile. The clinic task-strip title is (22px), weight (500).
+- **Body:** final global body size is the frontmatter value. Home introductory copy is (17px) with line height (2.05) and maximum (39ch), becoming (15px) and (40ch) on mobile. Social post captions use `post-body` and maximum (65ch), preserving line breaks and wrapping long content.
+- **Operating body / label:** real workspaces and form labels retain their compact roles. Social account names use (14px), weight (600); metadata and story labels commonly use (11px). These small metadata sizes are observed, not a recommendation for long-form reading.
+- **Button link:** primary social links use the explicit frontmatter role. Native social buttons also inherit the container font via a button reset; do not assume every button computes to the link's size.
 
-**The Arabic Breathing Rule.** Preserve the established line heights and wrapping when changing copy; do not compress Arabic to imitate Latin display density.
+**The Arabic Room Rule.** Preserve the observed line heights and wrapping behavior when adapting Arabic headings; do not clip them to a Latin display baseline.
 
 ## Layout
 
-The document is `ar-IQ` and RTL. Use logical inline/block properties and retain `bdi` or explicit LTR treatment for identifiers and appropriate fields.
+Layout follows the content's task. Public discovery is spacious, the community concentrates on a readable photo feed, and preserved professional workspaces remain dense and form-led. These are related surface grammars rather than one grid imposed everywhere.
 
-Public containers are `min(1344px, calc(100% - 96px))`, changing to `calc(100% - 48px)` below (1000px) and `calc(100% - 36px)` below (420px). Desktop editorial pairs use a (1.5fr / 1fr) split and (28px) gap. Public sections have deliberately varied, generous vertical padding rather than one repeated card stack. Below (760px), editorial pairs, steps, community and FAQ become single columns. The ordinary public navigation is hidden at that breakpoint; the workspace menu is a separate interaction.
+Home uses a maximum container of (1344px) with desktop width `calc(100% - 96px)`. Its rebuilt introduction uses `minmax(0, 0.9fr) minmax(0, 1.1fr)` and gap (32px 60px): greeting on the right and photograph on the left in RTL. The finder occupies a complete row below. The cover is `min(42vw, 590px)` high, minimum (430px). At or below (760px), copy and actions precede the (320px) photograph; the finder follows. The inherited public container narrows to `calc(100% - 48px)` at or below (1000px), then `calc(100% - 36px)` at or below (420px).
 
-The desktop operating shell uses a (232px) right rail and `minmax(0, 1fr)` canvas, with a (76px) top row. Main content has (32px) padding, a (1520px) maximum, and recurring (24px) internal gaps. At (1200px) padding becomes (28px) and major care/account columns collapse. At (1000px) the rail becomes a toggleable in-flow panel and content padding is (28px 24px); care columns can return to (1.65fr / 1fr) because the rail has gone. At (760px) they collapse again. Below (420px), content uses (24px 16px) padding and mobile rail navigation becomes one column. Above (1800px) the constrained canvas is centered.
+Social has a fixed right rail (226px), an (82px) top bar and a centered main container of maximum (1140px), padded `34px clamp(24px, 4vw, 64px) 48px`. The feed grid is `minmax(0, 620px) minmax(220px, 280px)` with gap `clamp(28px, 4vw, 58px)`; discovery sits to the left. At or below (1250px), the rail becomes (194px) and the discovery column (230px). At or below (1080px), the rail becomes (176px), discovery hides and the feed stays at maximum (620px). At or below (760px), the rail hides, top bar becomes (66px), main padding becomes (24px 18px 28px), and bottom navigation reserves (72px) of stage padding plus its safe-area inset. Posts extend to the viewport edges with side borders and rounding removed. Stories use native horizontal overflow.
 
-Standard panels inherit (22px) padding; care panels use (24px), then (20px) below (760px), and (18px) below (420px). The care overview has a specific two-column layout with (24px) gap, unpadded inner sections and single-column cards; below (760px) it becomes one column with a (32px) gap. Its action row becomes a two-column grid with (44px) minimum button heights. Preserve domain grids and horizontal table scrollers rather than forcing all screens into the marketing layout. Authentication uses a photographic half and form half, with a (410px) form maximum; below (760px), the photograph and story copy are removed and the form becomes the focus.
+Studio separates preview and publication fields with a `1.2fr / 1fr` grid and (36px) gap, stacking on mobile with (20px) padding. Profile and inbox reflow locally; inbox switches between thread list and chosen conversation on mobile. Reels and stories use bounded portrait viewers, not an autoplay feed. The preserved workspace shell uses a (232px) rail and (32px) desktop content padding. Clinic adds a wrapping quick-task strip while keeping operational forms.
 
-The responsive requirement is (320–1440px) and beyond. These are source breakpoints, not a claim that this documentation pass independently verified each viewport. Printing removes workspace chrome and expands the main content.
+Spacing is extracted from repeated control, post, panel and grid values in the frontmatter; there is no claimed mathematical scale. Preserve min-width constraints and long-text wrapping alongside those dimensions.
 
 ## Elevation & Depth
 
-The redesigned public and operating surfaces are primarily flat: white panels, pale fields, thin dividers and photographs establish depth. Operating panels and stat containers explicitly remove shadows. Some legacy domain and demo selectors still define shadows in `globals.css`; the code does not establish a reusable shadow token, so do not promote an isolated shadow into the identity.
+The system is flat by default. White surfaces, light tonal grounds, fine borders and image crops provide structure. No ambient shadow belongs under every post or operational panel. Small local shadows separate carousel controls and dots from photos; the selected studio kind tab has a shallow shadow.
 
-**The Flat Working Surface Rule.** Give operating panels hierarchy with spacing, borders and headings; do not add ornamental elevation to routine tasks.
+### Shadow Vocabulary
+
+- **Carousel control:** `0 3px 12px #142b2c29`, to lift a white control off the photograph.
+- **Carousel position dot:** `0 1px 4px #1a2c3060`, to preserve visibility on variable images.
+- **Selected kind tab:** `0 2px 5px #174c5012`, within the studio's segmented control.
+
+**The Flat Surface Rule.** Use borders and tonal changes for ordinary cards; reserve the observed small shadows for controls over imagery and selected studio tabs.
+
+Micro interaction uses the shared (160ms) duration; page/reveal values are (280ms)/(600ms), with `cubic-bezier(0.2, 0.65, 0.3, 1)`. The social reaction press scales to (0.9) over (160ms ease-out). Public editorial image hover scales to (1.035) over (600ms); the public button hover lifts (2px). Reduced motion disables animations/transitions and restores automatic scrolling. These are recorded source behaviors, not claims that every state was visually reviewed.
 
 ## Shapes
 
-Controls are gently curved, fields slightly tighter, and panels and photographs softer, using the distinct frontmatter radii. The shared root CSS `radius` retains the photo-scale value; it is not the universal radius after redesign. Public image windows clip their contents; the small inline image uses an ellipse-like (`0.5em`) corner. The brand symbol has an asymmetric corner shape (`13px 13px 13px 4px`), with smaller variants in the rail. Keep ordinary task containers rectangular rather than copying the symbol's silhouette.
+Controls are gently curved, fields slightly tighter and photographic surfaces broader. Social primary/secondary actions use `control`; studio/profile fields use `field`; search and rail links use `search`; feed posts and studio use `social-panel`. Home hero photography uses `hero-photo`, while supporting public photos retain `photo`. Operational panels use `panel`. Avatars, story rings and image navigation buttons are circular.
+
+The brand symbol retains its asymmetric (13px 13px 13px 4px) corner treatment, reduced locally for smaller shells. Story rings have a (2px) orange stroke with (3px) internal padding. Feed cards have a (1px) divider border. Mobile edge-to-edge posts are intentionally square, without becoming the shape of all controls. Message bubbles retain directional corners tied to sender state.
 
 ## Components
 
 ### Buttons
 
-Clear and measured. Shared buttons are inline flex with (18px) gaps and a minimum height of (46px); small buttons use (40px), (8px 14px) padding and (13px) text. Identity-form buttons have a separate (47px) minimum and fill available width unless a more specific action-row rule restores auto width. Public primary, operating primary and outline variants are recorded in the frontmatter. Outline uses the control-edge border; hover shifts to blue text/border on (`#f5f8ff`). Buttons lift (`translateY(-2px)`) on hover and press (`translateY(1px)`) on active, except disabled state.
+Clear, compact actions with text and a consistent Lucide icon family. Social primary links use teal/white, minimum height (44px), `10px 20px` padding and an (8px) corner. Hover deepens teal; secondary actions use tint/teal. Disabled controls use the recorded disabled colors and a blocked cursor. Native buttons inherit the surrounding font; the explicit link typography token is scoped accordingly.
 
-State transitions use the shared micro duration. Disabled operating buttons receive (`#e9edf2`) background, (`#d1d8e2`) border and (`#586273`) text. The more specific legacy form disabled rule can retain opacity (0.6) and a wait cursor; the redesign's opacity (1) declaration does not universally win.
+Home's main care action is minimum (52px) high with inline padding (24px), becoming (48px) and (16px) on mobile. Existing professional primary buttons retain operational ink and their separate hover. These compatibility states are not the social primary variant.
 
-### Inputs / Fields
+Social focus is a (3px) teal outline offset (4px), covering links, buttons, fields and summaries. Outside social, older explicit global focus selectors may still win with a warm outline; that cascade is retained drift, not a new public focus rule.
 
-White, outlined and readable. Operating identity fields use the frontmatter padding; care fields use (11px 12px). Textareas resize vertically, with separate existing minimum heights. Field labels stay close to the control and retain actual native select, checkbox and radio semantics. Public service selection has a (48px) height and (178px) desktop minimum width, released on mobile. It updates explanatory copy through a polite live region and changes a real destination link.
+### Chips / Tabs
+
+Social feed filters are text tabs over a divider; the selected tab uses teal, weight (600) and a (2px) underline. Studio content kinds form a segmented control with (5px) outer padding, (8px) gap, and (6px) tab corners. Selection is white with teal text and the shallow tab shadow. Existing workspace chips retain their compact neutral styling.
 
 ### Cards / Containers
 
-White operating panels have a thin divider border and no shadow. Care panels follow the responsive padding described in Layout. Empty states are content states within this system; do not fill them with fabricated metrics or testimonials. Security and finance notices may use the blue wash; sandbox notices keep a warm warning treatment. Current alert blocks retain their explicit existing status colors.
+A post is a white, bordered photograph frame with its author above and caption/reactions below. Header padding is (16px 18px); content padding is (12px 18px 18px). Desktop photos use aspect ratio (1.13), changing to (1) on mobile, with `object-fit: cover`. Changing carousel position keeps that frame stable; position text, buttons and dots remain visible.
 
-### Chips
+Empty states use white surfaces, centered copy and a real destination when available. Loading placeholders use quiet tinted blocks rather than fabricated populated content. Errors and offline notices use their explicit warm state palettes and useful text. Retained operational panels are flat with (1px) borders and no shadow.
 
-Compact informational tags. Operating small chips use cool-neutral fill, (`#4c596b`) text, (12px) type and the chip shape/padding. The redesign sets a border color but the base chip does not establish a border style, so do not infer a visible outline. Permission tags are a separate white/blue-edged pattern.
+### Inputs / Fields
+
+Studio/profile fields are native controls with white ground, reading ink, (1px) field-edge border, (7px) corners and (12px) padding. Studio textarea is at least (180px) high and vertically resizable. Labels remain visible, with (9px) gaps in the social form. Search is a separate bordered white row with (7px 12px) padding and (9px) corners. Preserve the inherited keyboard outline and explicit validation/error text.
 
 ### Navigation
 
-Public navigation is a plain horizontal text bar. Operating navigation uses muted text, (40px) desktop minimum height, (7px) corners and neutral hover (`#e9edf3`); the current page uses the recorded selected background and ink with (500) weight. `aria-current="page"` carries the state. At the mobile shell breakpoint, links grow to (44px) minimum height. The actual menu uses `aria-expanded` / `aria-controls`; Escape closes it and restores toggle focus. It is an in-flow disclosure, not a modal drawer.
+Desktop social navigation is a labelled right rail: links are at least (50px) high with (10px 12px) padding and (15px) icon gap. Hover uses the light canvas; `aria-current` adds tint, teal and weight (600). Mobile navigation uses labelled links with minimum (42px) width and (44px) height; create, Reels and inbox remain reachable. The shared wordmark has local rail/mobile size variants. No unauthenticated professional route becomes authorized through a navigation change.
 
-Professional overview headings have no redundant persona kicker. Keep clinically or operationally meaningful verification/session context in supporting copy below the heading, as on the clinic and admin overview. Do not turn verification language into decorative proof badges.
+### Story / Reel / Private Media
 
-### Disclosures and public motion
-
-FAQ uses native `details` / `summary`, with paper fill and a plus icon rotating (45deg) when open. The desktop disclosure padding is in the frontmatter; mobile uses (18px). Preserve native keyboard semantics.
-
-Public motion is deferred, scoped and supplementary. `PublicExperience` omits the GSAP/Lenis module for reduced motion and Save-Data. With no preference, the opening translates the heading (18px), supporting content (12px), and settles the cover from scale (1.035); section entries translate (18px) once. Nothing starts hidden. Lenis runs only on fine pointers, sharing the GSAP ticker; touch retains native scrolling (`syncTouch: false`). Forms, details, dialogs and native scroll regions are excluded. In-page links keep URL hash and focus behavior, and enhancement cleans up on removal. Workspaces use native scrolling.
-
-### Focus and reduced motion
-
-Source-cascade detail: the redesign declares a blue (3px) outline with (4px) offset using a low-specificity `:where(...)` selector. The older element-specific `button`, `a`, `input` and `select` focus-visible rules still win, yielding the frontmatter legacy-focus color, (3px) width and (5px) offset. Textareas and summaries use the newer blue treatment; `[tabindex]` targets can retain the older rule. This is existing drift, documented rather than silently normalized. The representative sidecar snippets reproduce the applicable source states.
-
-Reduced motion disables transitions and animations globally and restores automatic scrolling. Do not introduce opacity-hidden entrance states or smooth touch scrolling.
+The story row presents avatars, names and orange rings, plus an outlined add-story circle. Story and Reel destinations are manual, bounded viewer proofs with explicit controls, unavailable states and privacy guidance. Stories use an overlaid header, progress strips and a caption gradient native to photography; do not turn those gradients into general page backgrounds. Reel video uses `object-fit: contain` and user playback controls. Message and medical attachments remain access controlled; a public post never confers access to private originals.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** share the blue/white identity while keeping public discovery generous and operating work compact.
-- **Do** keep Arabic RTL, logical spacing, local fonts, visible focus and semantic controls.
-- **Do** use real content and honest loading, empty, error and unavailable states in account workspaces.
-- **Do** keep photographs conceptual when their provenance is conceptual; preserve their provenance records.
-- **Do** preserve native touch and workspace scrolling and respect reduced motion and Save-Data.
+- **Do** lead social posts with the actual authorized photograph and author.
+- **Do** use teal for social actions and orange for story emphasis.
+- **Do** preserve Arabic line height, RTL logical spacing and long-text wrapping.
+- **Do** retain keyboard focus, native forms, reduced motion and honest loading/error/empty states.
+- **Do** keep conceptual imagery, test data and incomplete capabilities explicitly disclosed.
+- **Do** preserve real routes, permissions and financial/medical privacy boundaries when applying this visual language.
 
 ### Don't:
 
-- **Don't** invent metrics, testimonials, endorsements or verification claims to fill visual space.
-- **Don't** replace task panels with ornamental gradients, floating badges or decorative charts.
-- **Don't** repeat a persona kicker above professional overview headings.
-- **Don't** infer universal styling from a legacy selector or claim the current focus cascade has been normalized.
-- **Don't** add external font, image or animation runtime requests to reproduce the identity.
+- **Don't** describe the proposed palette as an exact color choice explicitly approved by the owner.
+- **Don't** claim comp fidelity, external quality-board approval or production certification for this code-led POC.
+- **Don't** fill community or professional screens with invented counts, endorsements or verification badges.
+- **Don't** promote retained cool-blue overrides or legacy global focus colors into the replacement world's rules.
+- **Don't** add ambient shadows to ordinary posts or use story-viewer gradients as general page decoration.
+- **Don't** treat the clinic quick-task strip as proof of a completed professional-platform redesign.

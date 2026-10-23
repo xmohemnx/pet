@@ -4,6 +4,9 @@
 - IBM Plex Sans Arabic: IBM، خط من حزمة `@fontsource/ibm-plex-sans-arabic`، ترخيص SIL Open Font License 1.1.
 - Manrope: Mikhail Sharanda ومساهمون، حزمة `@fontsource/manrope`، ترخيص SIL Open Font License 1.1.
 - Lucide: أيقونات من `lucide-react`، ترخيص ISC.
+- الصور الأربع `companions.png` و`care.png` و`essentials.png` و`companion.png` في `apps/web/public/images/` أُنشئت للمشروع باستخدام OpenAI image generation في إعادة التصميم السابقة. نصوص التوليد الأصلية محفوظة في ملفات `.prompt.txt` المرافقة وفي metadata الصور. هي صور هوية مفهومية، لا عملاء أو عيادة أو نتائج علاج أو منتجات للبيع.
+- أعادت دفعة السوشل 2026-10-23 استخدام هذه الأصول دون تعديلها. فيديو قبول الريلز مُشفّر بواسطة FFmpeg من `companion.png`، وموسوم اختباراً؛ ليس تصويراً لعميل.
+- لقطات `docs/evidence/social-rebuild/f4429f36/` صور متصفح فعلية من commit المسمى في [manifest](evidence/social-rebuild/f4429f36/manifest.json)، مع بيانات اختبار محلية معزولة. بدائل التصميم الثلاثة وحدها مخططات موسومة. لا تُنسب الصور أو الحسابات إلى مستخدمين حقيقيين، ولا تثبت نشراً عاماً أو اكتمال المنصة.
 - لا اتصالات صور أو خطوط خارجية أثناء استخدام الصفحة. ألوان المرجع الأصلي كانت مصدر إلهام، ولم ينقل كوده أو SQL أو مفاتيحه.
 
 راجع تراخيص الحزم الفعلية في node_modules عند إعداد حزمة توزيع؛ لا يستبدل هذا الملف الاحتفاظ بإشعارات الترخيص المطلوبة.
