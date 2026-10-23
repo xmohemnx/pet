@@ -10,6 +10,7 @@ coverage/
 *.log
 
 .data/
+work/render-static/
 *.pem
 *.key
 *.dump

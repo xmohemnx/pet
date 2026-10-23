@@ -9,6 +9,7 @@ test-results
 **/next-env.d.ts
 
 .data/**
+work/render-static/**
 .agents/skills/**
 .taste-skill/**
 .impeccable/**

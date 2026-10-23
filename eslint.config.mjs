@@ -6,6 +6,7 @@ export default ts.config(
       '**/dist/**',
       '**/.next/**',
       '**/node_modules/**',
+      'work/render-static/**',
       'docs/specification/**',
       'playwright-report/**',
       'test-results/**',
