@@ -596,11 +596,14 @@ test.describe.serial('نوع حساب ثابت وتغيير إداري وحذف 
         if (name === 'security')
           await page.getByText('متابعة حذف حسابي', { exact: true }).click();
         const file = `${name}-${width}.png`;
+        const scroll = await page.evaluate(() => scrollY);
+        await page.evaluate(() => scrollTo(0, 0));
         await page.screenshot({
           path: `${dir}/${file}`,
           fullPage: true,
           animations: 'disabled',
         });
+        await page.evaluate((y) => scrollTo(0, y), scroll);
         await page.screenshot({
           path: `${dir}/${name}-${width}-viewport.png`,
           fullPage: false,
