@@ -295,7 +295,7 @@ test.describe.serial('WebSocket فعلي وحضور اختياري وصلاحي�
       }),
     );
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/social');
+    await page.goto('/social/settings');
     const row = page.locator('.care-list-row').filter({
       has: page.getByRole('heading', {
         name: 'حساب فوري other',

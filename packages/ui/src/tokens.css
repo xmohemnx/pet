@@ -1,14 +1,14 @@
 :root {
-  --brand: #2358ce;
-  --brand-dark: #1b3665;
-  --brand-deep: #142442;
-  --accent: #2358ce;
-  --ink: #202733;
-  --muted: #566171;
-  --paper: #f7f9fc;
+  --brand: #0e6873;
+  --brand-dark: #124b53;
+  --brand-deep: #123238;
+  --accent: #fe7e3c;
+  --ink: #1a2c30;
+  --muted: #5d6f72;
+  --paper: #f6f9f8;
   --surface: #ffffff;
-  --mint: #edf3fa;
-  --line: #e3e8ef;
+  --mint: #e8f2ef;
+  --line: #dce6e3;
   --success: #246147;
   --warning: #88520d;
   --radius: 16px;

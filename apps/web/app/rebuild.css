@@ -1,0 +1,220 @@
+.petra-public {
+  --petra-blue-wash: #edf5f1;
+  --petra-blue-field: #e6f0e9;
+  --petra-control: #a9c1b9;
+  --petra-neutral: #edf3ef;
+  --petra-dark: #1a2c30;
+}
+.petra-public .petra-intro-rebuild {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 32px 60px;
+  padding-block-start: 34px;
+  align-items: center;
+}
+.petra-intro-rebuild .petra-hero-copy {
+  padding-block: 26px;
+}
+.petra-public .petra-intro-rebuild h1 {
+  font-size: clamp(52px, 6.1vw, 84px);
+  white-space: normal;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+.petra-intro-rebuild h1 > span {
+  color: var(--brand);
+}
+.petra-public .petra-intro-rebuild .petra-intro-bottom {
+  display: block;
+  margin: 24px 0;
+}
+.petra-public .petra-intro-rebuild .petra-intro-bottom p {
+  font-size: 17px;
+  line-height: 2.05;
+  max-width: 39ch;
+}
+.petra-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-block-start: 28px;
+}
+.petra-hero-actions .button.primary {
+  min-height: 52px;
+  background: var(--brand);
+  padding-inline: 24px;
+}
+.petra-hero-actions .button.primary:hover {
+  background: #08515b;
+}
+.petra-hero-social {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--brand);
+}
+.petra-hero-footnote {
+  padding-block-start: 26px;
+  margin-block-start: 30px;
+  border-block-start: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+.petra-public .petra-intro-rebuild .petra-cover {
+  height: min(42vw, 590px);
+  min-height: 430px;
+  border-radius: 18px;
+}
+.petra-intro-rebuild .petra-cover > img {
+  object-position: 50% 55%;
+}
+.petra-intro-rebuild .petra-cover-caption {
+  inset-inline: 22px;
+  font-size: 12px;
+}
+.petra-intro-rebuild .petra-cover-caption > span:last-child {
+  display: none;
+}
+.petra-intro-rebuild .petra-finder {
+  grid-column: 1/-1;
+  margin-top: 12px;
+  padding: 22px 26px;
+  border-radius: 12px;
+  background: #edf4ef;
+}
+.petra-public .petra-world {
+  padding-block-start: 90px;
+}
+.petra-public .petra-journey {
+  background: #edf5f1;
+}
+.petra-public .petra-closing {
+  background: #dfefe7;
+}
+.petra-public .petra-footer {
+  background: #123238;
+}
+.petra-public .petra-login {
+  color: var(--brand);
+}
+.petra-public .petra-login:hover {
+  color: #08515b;
+}
+.clinic-daily {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px 28px;
+  margin-block: 20px 28px;
+  background: #e5f0eb;
+  border-radius: 12px;
+}
+.clinic-daily h2 {
+  color: #154e52;
+  font-size: 22px;
+  font-weight: 500;
+  margin-block-end: 6px;
+}
+.clinic-daily p {
+  color: #365e5d;
+  font-size: 13px;
+}
+.clinic-daily nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.clinic-daily nav a {
+  padding: 8px 14px;
+  color: #174d50;
+  font-size: 13px;
+  background: white;
+  border-radius: 6px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+}
+@media (max-width: 1100px) {
+  .petra-public .petra-intro-rebuild {
+    gap: 28px;
+  }
+  .petra-hero-actions {
+    gap: 16px;
+  }
+  .petra-public .petra-intro-rebuild h1 {
+    font-size: 60px;
+  }
+}
+@media (max-width: 760px) {
+  .petra-public .petra-intro-rebuild {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-block-start: 4px;
+    align-items: stretch;
+  }
+  .petra-intro-rebuild .petra-hero-copy {
+    padding-block: 14px 0;
+  }
+  .petra-public .petra-intro-rebuild h1 {
+    font-size: 52px;
+    line-height: 1.45;
+  }
+  .petra-public .petra-intro-rebuild .petra-intro-bottom {
+    margin-block: 16px 0;
+  }
+  .petra-public .petra-intro-rebuild .petra-intro-bottom p {
+    font-size: 15px;
+    max-width: 40ch;
+  }
+  .petra-hero-actions {
+    gap: 14px;
+    margin-block-start: 22px;
+  }
+  .petra-hero-actions .button.primary {
+    font-size: 13px;
+    min-height: 48px;
+    padding-inline: 16px;
+  }
+  .petra-hero-social {
+    font-size: 12px;
+    gap: 6px;
+  }
+  .petra-hero-footnote {
+    display: none;
+  }
+  .petra-public .petra-intro-rebuild .petra-cover {
+    height: 320px;
+    min-height: 0;
+  }
+  .petra-intro-rebuild .petra-cover > img {
+    object-position: 50% 52%;
+  }
+  .petra-intro-rebuild .petra-cover-caption {
+    bottom: 16px;
+    font-size: 12px;
+  }
+  .petra-intro-rebuild .petra-finder {
+    padding: 20px;
+    margin-block-start: 0;
+  }
+  .petra-public .petra-world {
+    padding-block-start: 65px;
+  }
+  .clinic-daily {
+    padding: 22px 20px;
+  }
+}
+@media (max-width: 350px) {
+  .petra-public .petra-intro-rebuild h1 {
+    font-size: 45px;
+  }
+  .petra-hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

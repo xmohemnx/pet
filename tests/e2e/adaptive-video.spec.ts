@@ -305,8 +305,8 @@ test.describe
       }).toString(),
     );
     expect(result.status).toBe('verified');
-    expect(result.tables).toBe(141);
-    expect(result.protectionTriggers).toBe(73);
+    expect(result.tables).toBe(142);
+    expect(result.protectionTriggers).toBe(75);
     const expected = (
       await db.query(
         "SELECT (SELECT count(*) FROM media_assets WHERE status='ready')+(SELECT count(*) FROM media_streams s JOIN media_assets a ON a.id=s.asset_id WHERE a.status='ready') n",

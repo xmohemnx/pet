@@ -99,8 +99,16 @@ export function SocialCenter({
   }
   return (
     <IdentityShell me={me}>
-      <PlatformHeading eyebrow="مجتمع Petra" title="حكايات تجمعنا">
-        شارك لحظات رفيقك، واختر خصوصية ملفك ومنشوراتك.
+      <Link className="button outline" href="/social">
+        العودة إلى موجز المجتمع
+      </Link>
+      {profile?.handle && (
+        <Link className="button outline" href={`/social/u/${profile.handle}`}>
+          فتح ملفي الشخصي
+        </Link>
+      )}
+      <PlatformHeading title="إدارة المجتمع والخصوصية">
+        حدّد خصوصيتك، وأدر المتابعات والحظر ومحتواك من مكان واحد.
       </PlatformHeading>
       <StoryHighlights userId={me.user.id} own />
       <div className="social-layout">

@@ -432,8 +432,8 @@ async function verifyPipeline() {
       }).toString(),
     );
     assert.equal(backup.status, 'verified');
-    assert.equal(backup.tables, 141);
-    assert.equal(backup.protectionTriggers, 73);
+    assert.equal(backup.tables, 142);
+    assert.equal(backup.protectionTriggers, 75);
     assert.ok(backup.mediaFiles > backup.readyMedia);
     checks.push('encrypted-ready-and-pending-backup-restored');
     await db.query(

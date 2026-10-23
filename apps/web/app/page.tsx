@@ -40,31 +40,33 @@ export default function Home() {
       </header>
       <main id="main" tabIndex={-1}>
         <section
-          className="petra-intro petra-container"
+          className="petra-intro petra-container petra-intro-rebuild"
           aria-labelledby="petra-title"
         >
-          <h1 id="petra-title">
-            عالمهم،{' '}
-            <span className="petra-inline-photo" aria-hidden="true">
-              <Image
-                src="/images/companions.png"
-                alt=""
-                width={240}
-                height={130}
-                priority
-                sizes="(max-width: 600px) 90px, 180px"
-              />
-            </span>{' '}
-            أقرب إليك.
-          </h1>
-          <div className="petra-intro-bottom">
-            <p>
-              من أول موعد إلى تفاصيل كل يوم. رعاية، مستلزمات، ورفقة تجمع كل ما
-              يخص حيوانك في مكان واحد.
+          <div className="petra-hero-copy">
+            <h1 id="petra-title">
+              كلّ يوم،
+              <br />
+              <span>أقرب إليهم.</span>
+            </h1>
+            <div className="petra-intro-bottom">
+              <p>
+                من أول موعد إلى تفاصيل كل يوم. رعاية، مستلزمات، ورفقة تجمع كل ما
+                يخص حيوانك في مكان واحد.
+              </p>
+              <div className="petra-hero-actions">
+                <Link href="/care" className="button primary">
+                  ابدأ رحلة الرعاية <ArrowUpLeft size={20} aria-hidden="true" />
+                </Link>
+                <Link href="/social" className="petra-hero-social">
+                  اكتشف حكايات الرفاق{' '}
+                  <ArrowUpLeft size={18} aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+            <p className="petra-hero-footnote">
+              لهم مساحة في حياتك. ولهم عالم في Petra.
             </p>
-            <Link href="/care" className="button primary">
-              ابدأ رحلة الرعاية <ArrowUpLeft size={20} aria-hidden="true" />
-            </Link>
           </div>
           <div className="petra-cover">
             <Image
@@ -73,7 +75,7 @@ export default function Home() {
               width={1536}
               height={1024}
               priority
-              sizes="(max-width: 1440px) 95vw, 1344px"
+              sizes="(max-width: 760px) 94vw, 52vw"
             />
             <div className="petra-cover-caption">
               <span>لأنهم جزء من العائلة.</span>

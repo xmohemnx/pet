@@ -43,7 +43,8 @@
     "test:preview": "node scripts/verify-web-preview.mjs",
     "preview:static:build": "node scripts/build-static-preview.mjs",
     "test:static-preview": "node scripts/verify-static-preview.mjs",
-    "test:providers": "pnpm --filter @petra/api build && pnpm private:services && node scripts/verify-private-providers.mjs"
+    "test:providers": "pnpm --filter @petra/api build && pnpm private:services && node scripts/verify-private-providers.mjs",
+    "test:social-proof": "node scripts/run-social-proof.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

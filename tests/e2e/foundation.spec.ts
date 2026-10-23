@@ -10,7 +10,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await page.goto(route);
       const title =
         route === '/'
-          ? 'عالمهم، أقرب إليك.'
+          ? /كلّ يوم،\s*أقرب إليهم\./
           : route.includes('customer')
             ? 'أهلًا بك في عالمهم'
             : 'صورة أوضح، لكل التفاصيل.';

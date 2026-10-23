@@ -1,11 +1,11 @@
 import { loadIdentity } from '../../lib/server-identity';
 import { loadApi } from '../../lib/platform-server';
-import { SocialCenter } from '../../components/social-center';
+import { SocialFeed } from '../../components/social/social-feed';
 import type {
   SocialProfile,
+  SocialTimeline,
   SocialPost,
   SocialPerson,
-  MediaAsset,
 } from '@petra/contracts';
 export const dynamic = 'force-dynamic';
 export const metadata = {
@@ -14,31 +14,19 @@ export const metadata = {
 };
 export default async function Page() {
   const me = await loadIdentity();
-  const [profile, posts, people, assets] = await Promise.all([
+  const [profile, initial, stories, people] = await Promise.all([
     loadApi<SocialProfile | null>('social/profile'),
-    loadApi<SocialPost[]>('social/feed'),
+    loadApi<SocialTimeline>('social/timeline'),
+    loadApi<SocialPost[]>('social/feed?kind=story'),
     loadApi<SocialPerson[]>('social/people'),
-    loadApi<MediaAsset[]>('media'),
-  ]);
-  const [requests, followers, blocks] = await Promise.all([
-    loadApi<{ follower_id: string; display_name: string }[]>(
-      'social/follow-requests',
-    ),
-    loadApi<{ follower_id: string; display_name: string }[]>(
-      'social/followers',
-    ),
-    loadApi<{ blocked_id: string; display_name: string | null }[]>(
-      'social/blocks',
-    ),
   ]);
   return (
-    <SocialCenter
+    <SocialFeed
       me={me}
-      initialProfile={profile}
-      initialPosts={posts}
-      initialPeople={people}
-      initialAssets={assets}
-      initialRelationships={{ requests, followers, blocks }}
+      profile={profile}
+      initial={initial}
+      stories={stories}
+      people={people}
     />
   );
 }

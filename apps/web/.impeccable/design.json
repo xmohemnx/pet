@@ -1,475 +1,351 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22T00:13:32Z",
+  "generatedAt": "2026-10-23T08:57:34Z",
   "title": "Design System: Petra",
   "extensions": {
     "colorMeta": {
       "brand": {
         "role": "primary",
-        "displayName": "Care blue",
-        "tonalRamp": [
-          "oklch(15% 0.1 264)",
-          "oklch(27% 0.1 264)",
-          "oklch(39% 0.1 264)",
-          "oklch(51% 0.1 264)",
-          "oklch(63% 0.1 264)",
-          "oklch(75% 0.1 264)",
-          "oklch(87% 0.1 264)",
-          "oklch(95% 0.1 264)"
-        ]
+        "displayName": "Companion teal"
+      },
+      "brand-hover": {
+        "role": "primary",
+        "displayName": "Deep action teal"
       },
       "brand-dark": {
         "role": "primary",
-        "displayName": "Deep blue",
-        "tonalRamp": [
-          "oklch(15% 0.06 260)",
-          "oklch(27% 0.06 260)",
-          "oklch(39% 0.06 260)",
-          "oklch(51% 0.06 260)",
-          "oklch(63% 0.06 260)",
-          "oklch(75% 0.06 260)",
-          "oklch(87% 0.06 260)",
-          "oklch(95% 0.06 260)"
-        ]
+        "displayName": "Deep teal"
       },
       "brand-deep": {
         "role": "primary",
-        "displayName": "Night blue",
-        "tonalRamp": [
-          "oklch(15% 0.04 260)",
-          "oklch(27% 0.04 260)",
-          "oklch(39% 0.04 260)",
-          "oklch(51% 0.04 260)",
-          "oklch(63% 0.04 260)",
-          "oklch(75% 0.04 260)",
-          "oklch(87% 0.04 260)",
-          "oklch(95% 0.04 260)"
-        ]
+        "displayName": "Night teal"
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Story orange"
       },
       "ink": {
         "role": "neutral",
-        "displayName": "Reading ink",
-        "tonalRamp": [
-          "oklch(15% 0.015 260)",
-          "oklch(27% 0.015 260)",
-          "oklch(39% 0.015 260)",
-          "oklch(51% 0.015 260)",
-          "oklch(63% 0.015 260)",
-          "oklch(75% 0.015 260)",
-          "oklch(87% 0.015 260)",
-          "oklch(95% 0.015 260)"
-        ]
+        "displayName": "Reading ink"
       },
       "muted": {
         "role": "neutral",
-        "displayName": "Quiet slate",
-        "tonalRamp": [
-          "oklch(15% 0.02 255)",
-          "oklch(27% 0.02 255)",
-          "oklch(39% 0.02 255)",
-          "oklch(51% 0.02 255)",
-          "oklch(63% 0.02 255)",
-          "oklch(75% 0.02 255)",
-          "oklch(87% 0.02 255)",
-          "oklch(95% 0.02 255)"
-        ]
+        "displayName": "Quiet slate"
       },
       "paper": {
         "role": "neutral",
-        "displayName": "Cool paper",
-        "tonalRamp": [
-          "oklch(15% 0.007 260)",
-          "oklch(27% 0.007 260)",
-          "oklch(39% 0.007 260)",
-          "oklch(51% 0.007 260)",
-          "oklch(63% 0.007 260)",
-          "oklch(75% 0.007 260)",
-          "oklch(87% 0.007 260)",
-          "oklch(95% 0.007 260)"
-        ]
+        "displayName": "Light ground"
       },
       "surface": {
         "role": "neutral",
-        "displayName": "White",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(27% 0 0)",
-          "oklch(39% 0 0)",
-          "oklch(51% 0 0)",
-          "oklch(63% 0 0)",
-          "oklch(75% 0 0)",
-          "oklch(87% 0 0)",
-          "oklch(95% 0 0)"
-        ]
+        "displayName": "White surface"
       },
       "mint": {
         "role": "neutral",
-        "displayName": "Legacy pale blue",
-        "tonalRamp": [
-          "oklch(15% 0.012 250)",
-          "oklch(27% 0.012 250)",
-          "oklch(39% 0.012 250)",
-          "oklch(51% 0.012 250)",
-          "oklch(63% 0.012 250)",
-          "oklch(75% 0.012 250)",
-          "oklch(87% 0.012 250)",
-          "oklch(95% 0.012 250)"
-        ]
+        "displayName": "Soft teal tint"
       },
       "line": {
         "role": "neutral",
-        "displayName": "Divider",
-        "tonalRamp": [
-          "oklch(15% 0.01 255)",
-          "oklch(27% 0.01 255)",
-          "oklch(39% 0.01 255)",
-          "oklch(51% 0.01 255)",
-          "oklch(63% 0.01 255)",
-          "oklch(75% 0.01 255)",
-          "oklch(87% 0.01 255)",
-          "oklch(95% 0.01 255)"
-        ]
+        "displayName": "Divider"
       },
       "success": {
         "role": "semantic",
-        "displayName": "Success green",
-        "tonalRamp": [
-          "oklch(15% 0.06 160)",
-          "oklch(27% 0.06 160)",
-          "oklch(39% 0.06 160)",
-          "oklch(51% 0.06 160)",
-          "oklch(63% 0.06 160)",
-          "oklch(75% 0.06 160)",
-          "oklch(87% 0.06 160)",
-          "oklch(95% 0.06 160)"
-        ]
+        "displayName": "Success"
       },
       "warning": {
         "role": "semantic",
-        "displayName": "Warning amber",
-        "tonalRamp": [
-          "oklch(15% 0.07 65)",
-          "oklch(27% 0.07 65)",
-          "oklch(39% 0.07 65)",
-          "oklch(51% 0.07 65)",
-          "oklch(63% 0.07 65)",
-          "oklch(75% 0.07 65)",
-          "oklch(87% 0.07 65)",
-          "oklch(95% 0.07 65)"
-        ]
+        "displayName": "Warning"
       },
-      "petra-blue-wash": {
+      "public-wash": {
         "role": "neutral",
-        "displayName": "Blue wash",
-        "tonalRamp": [
-          "oklch(15% 0.015 260)",
-          "oklch(27% 0.015 260)",
-          "oklch(39% 0.015 260)",
-          "oklch(51% 0.015 260)",
-          "oklch(63% 0.015 260)",
-          "oklch(75% 0.015 260)",
-          "oklch(87% 0.015 260)",
-          "oklch(95% 0.015 260)"
-        ]
+        "displayName": "Public wash"
       },
-      "petra-blue-field": {
+      "public-field": {
         "role": "neutral",
-        "displayName": "Photographic blue",
-        "tonalRamp": [
-          "oklch(15% 0.025 240)",
-          "oklch(27% 0.025 240)",
-          "oklch(39% 0.025 240)",
-          "oklch(51% 0.025 240)",
-          "oklch(63% 0.025 240)",
-          "oklch(75% 0.025 240)",
-          "oklch(87% 0.025 240)",
-          "oklch(95% 0.025 240)"
-        ]
+        "displayName": "Public field"
       },
-      "petra-control": {
+      "public-control": {
         "role": "neutral",
-        "displayName": "Control edge",
-        "tonalRamp": [
-          "oklch(15% 0.025 255)",
-          "oklch(27% 0.025 255)",
-          "oklch(39% 0.025 255)",
-          "oklch(51% 0.025 255)",
-          "oklch(63% 0.025 255)",
-          "oklch(75% 0.025 255)",
-          "oklch(87% 0.025 255)",
-          "oklch(95% 0.025 255)"
-        ]
+        "displayName": "Public control"
       },
-      "petra-neutral": {
+      "public-neutral": {
         "role": "neutral",
-        "displayName": "Cool neutral",
-        "tonalRamp": [
-          "oklch(15% 0.008 255)",
-          "oklch(27% 0.008 255)",
-          "oklch(39% 0.008 255)",
-          "oklch(51% 0.008 255)",
-          "oklch(63% 0.008 255)",
-          "oklch(75% 0.008 255)",
-          "oklch(87% 0.008 255)",
-          "oklch(95% 0.008 255)"
-        ]
+        "displayName": "Public neutral"
       },
-      "public-button-hover": {
-        "role": "primary",
-        "displayName": "Public action hover",
-        "tonalRamp": [
-          "oklch(15% 0.1 264)",
-          "oklch(27% 0.1 264)",
-          "oklch(39% 0.1 264)",
-          "oklch(51% 0.1 264)",
-          "oklch(63% 0.1 264)",
-          "oklch(75% 0.1 264)",
-          "oklch(87% 0.1 264)",
-          "oklch(95% 0.1 264)"
-        ]
-      },
-      "operating-button-hover": {
+      "finder-ground": {
         "role": "neutral",
-        "displayName": "Operating action hover",
-        "tonalRamp": [
-          "oklch(15% 0.025 260)",
-          "oklch(27% 0.025 260)",
-          "oklch(39% 0.025 260)",
-          "oklch(51% 0.025 260)",
-          "oklch(63% 0.025 260)",
-          "oklch(75% 0.025 260)",
-          "oklch(87% 0.025 260)",
-          "oklch(95% 0.025 260)"
-        ]
+        "displayName": "Finder ground"
       },
-      "navigation-current": {
+      "field-edge": {
         "role": "neutral",
-        "displayName": "Selected navigation",
-        "tonalRamp": [
-          "oklch(15% 0.012 255)",
-          "oklch(27% 0.012 255)",
-          "oklch(39% 0.012 255)",
-          "oklch(51% 0.012 255)",
-          "oklch(63% 0.012 255)",
-          "oklch(75% 0.012 255)",
-          "oklch(87% 0.012 255)",
-          "oklch(95% 0.012 255)"
-        ]
+        "displayName": "Field edge"
       },
-      "legacy-focus": {
+      "disabled-ground": {
+        "role": "neutral",
+        "displayName": "Disabled ground"
+      },
+      "disabled-ink": {
+        "role": "neutral",
+        "displayName": "Disabled ink"
+      },
+      "error-ground": {
         "role": "semantic",
-        "displayName": "Incumbent warm focus",
-        "tonalRamp": [
-          "oklch(15% 0.08 50)",
-          "oklch(27% 0.08 50)",
-          "oklch(39% 0.08 50)",
-          "oklch(51% 0.08 50)",
-          "oklch(63% 0.08 50)",
-          "oklch(75% 0.08 50)",
-          "oklch(87% 0.08 50)",
-          "oklch(95% 0.08 50)"
-        ]
+        "displayName": "Error ground"
+      },
+      "error-ink": {
+        "role": "semantic",
+        "displayName": "Error ink"
+      },
+      "offline-ground": {
+        "role": "semantic",
+        "displayName": "Offline ground"
+      },
+      "offline-ink": {
+        "role": "semantic",
+        "displayName": "Offline ink"
+      },
+      "operating-ink": {
+        "role": "neutral",
+        "displayName": "Retained operating ink"
+      },
+      "operating-hover": {
+        "role": "neutral",
+        "displayName": "Retained operating hover"
+      },
+      "operating-control": {
+        "role": "neutral",
+        "displayName": "Retained operating control"
+      },
+      "operating-selected": {
+        "role": "neutral",
+        "displayName": "Retained operating selection"
+      },
+      "operating-neutral": {
+        "role": "neutral",
+        "displayName": "Retained operating neutral"
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Arabic public display",
-        "purpose": "Desktop introduction; responsive overrides are recorded in DESIGN.md."
+        "displayName": "Home greeting",
+        "purpose": "Rebuilt public introduction; responsive overrides are documented in DESIGN.md."
       },
       "headline": {
-        "displayName": "Editorial headline",
-        "purpose": "Public section headings."
+        "displayName": "Public section heading",
+        "purpose": "Spacious public sections."
+      },
+      "feed-title": {
+        "displayName": "Feed title",
+        "purpose": "Compact social introduction."
       },
       "title": {
-        "displayName": "Working title",
-        "purpose": "Real account and professional workspace headings."
+        "displayName": "Operating title",
+        "purpose": "Preserved professional workspace heading."
       },
       "section-title": {
-        "displayName": "Panel heading",
-        "purpose": "Compact operating sections."
+        "displayName": "Operating section",
+        "purpose": "Preserved panel heading."
       },
       "body": {
-        "displayName": "Base Arabic body",
-        "purpose": "Global body; public and domain copy can override size and line height."
+        "displayName": "Global body",
+        "purpose": "Final global body after stylesheet cascade."
+      },
+      "post-body": {
+        "displayName": "Post caption",
+        "purpose": "Wrapped social post text, maximum 65ch."
       },
       "operating-body": {
-        "displayName": "Operating copy",
-        "purpose": "Descriptions, section paragraphs and definition-list content."
+        "displayName": "Operating body",
+        "purpose": "Dense professional forms and descriptions."
       },
       "label": {
-        "displayName": "Compact navigation",
-        "purpose": "Rail links; form label line-height varies by context."
+        "displayName": "Compact label",
+        "purpose": "Form labels and compact links."
       },
-      "button": {
-        "displayName": "Action label",
-        "purpose": "Standard shared buttons; small and identity form variants differ."
+      "button-link": {
+        "displayName": "Social action link",
+        "purpose": "Explicit link size; native buttons inherit container font."
       },
       "brand": {
-        "displayName": "Latin brand",
-        "purpose": "Manrope wordmark; separate rail and footer sizes."
+        "displayName": "Latin wordmark",
+        "purpose": "Manrope wordmark with local shell sizes."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "carousel-control",
+        "value": "0 3px 12px #142b2c29",
+        "purpose": "Separate image navigation buttons from photographs."
+      },
+      {
+        "name": "carousel-dot",
+        "value": "0 1px 4px #1a2c3060",
+        "purpose": "Legible position dots over photographs."
+      },
+      {
+        "name": "selected-kind-tab",
+        "value": "0 2px 5px #174c5012",
+        "purpose": "Selected studio content kind."
+      }
+    ],
     "motion": [
       {
         "name": "duration-micro",
         "value": "160ms",
-        "purpose": "Root token; button transform and background transitions."
+        "purpose": "Shared control transitions."
       },
       {
         "name": "duration-page",
         "value": "280ms",
-        "purpose": "Existing shared root duration token; not the public GSAP timeline duration."
+        "purpose": "Shared page transition token."
       },
       {
         "name": "duration-reveal",
         "value": "600ms",
-        "purpose": "Existing root reveal duration; editorial image hover also uses a literal 600ms."
+        "purpose": "Shared reveal token."
       },
       {
         "name": "ease",
         "value": "cubic-bezier(0.2, 0.65, 0.3, 1)",
-        "purpose": "Shared ease token for photographic hover and supporting transitions."
+        "purpose": "Shared public motion easing."
       },
       {
-        "name": "public-opening",
-        "value": "0.7s power3.out; y:18px heading; y:12px supporting content; stagger:0.07s",
-        "purpose": "Deferred GSAP intro, only near document top, never opacity-hidden."
-      },
-      {
-        "name": "public-cover",
-        "value": "1s power3.out; scale:1.035; start:0.04s",
-        "purpose": "One photographic settle in the opening timeline."
-      },
-      {
-        "name": "public-section",
-        "value": "0.55s power3.out; y:18px; stagger:0.06s; start:top 92%; once:true",
-        "purpose": "Scoped section entrance; transforms clear after completion."
-      },
-      {
-        "name": "fine-pointer-scroll",
-        "value": "lerp:0.14; smoothWheel:true; syncTouch:false; anchor duration:0.75s",
-        "purpose": "Lenis enhancement shares the GSAP ticker. Touch and workspace scrolling stay native."
-      },
-      {
-        "name": "reduced-motion",
-        "value": "animation:none!important; transition:none!important; scroll-behavior:auto!important",
-        "purpose": "Global CSS fallback; public motion module also omitted for reduced motion and Save-Data."
+        "name": "reaction-press",
+        "value": "transform 160ms ease-out",
+        "purpose": "Social reaction active feedback scales to 0.9; transitions disabled under reduced motion."
       }
     ],
     "breakpoints": [
-      { "name": "wide-canvas-min", "value": "1800px" },
-      { "name": "operating-collapse-max", "value": "1200px" },
-      { "name": "mobile-shell-max", "value": "1000px" },
-      { "name": "single-column-max", "value": "760px" },
-      { "name": "compact-mobile-max", "value": "420px" }
+      {
+        "name": "social-discovery-compact",
+        "value": "1250px"
+      },
+      {
+        "name": "home-gap-compact",
+        "value": "1100px"
+      },
+      {
+        "name": "social-discovery-hidden",
+        "value": "1080px"
+      },
+      {
+        "name": "public-container-compact",
+        "value": "1000px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      },
+      {
+        "name": "public-small",
+        "value": "420px"
+      },
+      {
+        "name": "home-small",
+        "value": "350px"
+      }
     ]
   },
   "components": [
     {
-      "name": "Public Primary Button",
+      "name": "Primary social action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Blue action on public discovery surfaces. Focus reproduces the existing cascade.",
-      "html": "<button class=\"ds-public-primary\" dir=\"rtl\" type=\"button\">استكشف الخدمة<svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M7 17V7h10M7 7l10 10\"/></svg></button>",
-      "css": ".ds-public-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--brand,#2358ce);border-radius:8px;background:var(--brand,#2358ce);color:var(--surface,#ffffff);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-public-primary svg{flex-shrink:0;pointer-events:none}.ds-public-primary:hover{background:#1946b2;transform:translateY(-2px)}.ds-public-primary:active{transform:translateY(1px)}.ds-public-primary:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-public-primary{transition:none}}"
+      "description": "Text-link primary action; native buttons inherit the container font in the application.",
+      "html": "<a class=\"ds-primary\" href=\"#create\" dir=\"rtl\">شارك لحظة</a>",
+      "css": ".ds-primary{display:inline-flex;gap:10px;align-items:center;justify-content:center;min-height:44px;border:0;padding:10px 20px;border-radius:8px;background:var(--social-brand,#0e6873);color:#fff;font-size:14px;font-weight:500;line-height:1.8;text-decoration:none;font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-primary:hover{background:var(--social-brand-hover,#08515b)}.ds-primary:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Operating Primary Button",
+      "name": "Secondary social action",
       "kind": "button",
-      "refersTo": "button-operating",
-      "description": "Neutral action used inside real workspaces; an isolated standard button, outside identity-form sizing.",
-      "html": "<button class=\"ds-operating-primary\" dir=\"rtl\" type=\"button\">حفظ التغييرات</button>",
-      "css": ".ds-operating-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-dark,#202733);border-radius:8px;background:var(--petra-dark,#202733);color:var(--surface,#ffffff);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-operating-primary:hover{background:#394558;border-color:#394558;transform:translateY(-2px)}.ds-operating-primary:active{transform:translateY(1px)}.ds-operating-primary:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}.ds-operating-primary:disabled{background:#e9edf2;border-color:#d1d8e2;color:#586273;opacity:.6;cursor:wait;transform:none}@media(prefers-reduced-motion:reduce){.ds-operating-primary{transition:none}}"
+      "refersTo": "button-secondary",
+      "description": "A quieter secondary link with the same action geometry.",
+      "html": "<a class=\"ds-secondary\" href=\"#edit\" dir=\"rtl\">تعديل الملف</a>",
+      "css": ".ds-secondary{display:inline-flex;gap:10px;align-items:center;justify-content:center;min-height:44px;border:0;padding:10px 20px;border-radius:8px;background:var(--social-tint,#e8f2ef);color:var(--social-brand,#0e6873);font-size:14px;font-weight:500;line-height:1.8;text-decoration:none;font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-secondary:hover{background:var(--social-tint,#e8f2ef)}.ds-secondary:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Outline Button",
-      "kind": "button",
-      "refersTo": "button-outline",
-      "description": "Secondary navigation or action with a stronger control edge.",
-      "html": "<button class=\"ds-outline\" dir=\"rtl\" type=\"button\">إدارة المواعيد</button>",
-      "css": ".ds-outline{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-control,#b7c2d1);border-radius:8px;background:var(--surface,#ffffff);color:var(--ink,#202733);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;cursor:pointer;touch-action:manipulation;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms)}.ds-outline:hover{background:#f5f8ff;border-color:var(--brand,#2358ce);color:var(--brand,#2358ce);transform:translateY(-2px)}.ds-outline:active{transform:translateY(1px)}.ds-outline:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none}}"
-    },
-    {
-      "name": "Operating Identity Field",
+      "name": "Studio field",
       "kind": "input",
-      "refersTo": "field-identity",
-      "description": "Native identity-form input. The later operating border declaration wins over the older focus border shift.",
-      "html": "<label class=\"ds-field-label\" dir=\"rtl\">اسم الحيوان<input class=\"ds-field\" type=\"text\" placeholder=\"الاسم\" /></label>",
-      "css": ".ds-field-label{display:grid;gap:8px;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:13px;font-weight:500;line-height:1.8;color:var(--ink,#202733)}.ds-field{display:block;width:100%;max-width:100%;min-width:0;padding:11px 13px;border:1px solid var(--petra-control,#b7c2d1);border-radius:7px;background:var(--surface,#ffffff);color:var(--ink,#202733);caret-color:var(--brand,#2358ce);font-family:inherit;font-size:14px;font-weight:400;line-height:1.7}.ds-field::placeholder{color:#626e7e;opacity:1}.ds-field:focus{border-color:var(--petra-control,#b7c2d1)}.ds-field:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}"
+      "refersTo": "studio-field",
+      "description": "Native publication textarea with visible label; sample is a component specimen, not a persisted post.",
+      "html": "<label class=\"ds-field\" dir=\"rtl\">حكايتك<textarea placeholder=\"اكتب عن لحظتك...\"></textarea></label>",
+      "css": ".ds-field{display:grid;gap:9px;color:var(--social-ink,#1a2c30);font-size:13px;font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-field textarea{width:100%;min-height:180px;resize:vertical;border:1px solid #b6cac3;border-radius:7px;background:#fff;padding:12px;font-size:14px;font-family:inherit;color:var(--social-ink,#1a2c30);accent-color:var(--social-brand,#0e6873)}.ds-field textarea:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Workspace Navigation",
+      "name": "Social rail navigation",
       "kind": "nav",
       "refersTo": "navigation-item",
-      "description": "Quiet task navigation with a neutral current-page state and mobile touch sizing.",
-      "html": "<nav class=\"ds-nav\" dir=\"rtl\" aria-label=\"مساحة العمل\"><a class=\"ds-nav-link\" href=\"/care\" aria-current=\"page\">مركز الرعاية</a><a class=\"ds-nav-link\" href=\"/marketplace\">المتجر</a></nav>",
-      "css": ".ds-nav{display:grid;gap:4px;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-nav-link{display:flex;align-items:center;gap:12px;padding:8px 12px;min-height:40px;border-radius:7px;color:var(--muted,#566171);font-size:13px;font-weight:400;line-height:1.7;text-decoration:none;touch-action:manipulation}.ds-nav-link:hover{color:var(--ink,#202733);background:#e9edf3}.ds-nav-link[aria-current='page']{background:#e5eaf1;color:var(--ink,#202733);font-weight:500}.ds-nav-link:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(max-width:1000px){.ds-nav-link{min-height:44px}}"
+      "description": "Labelled navigation with explicit current-page state.",
+      "html": "<nav class=\"ds-nav\" dir=\"rtl\" aria-label=\"أقسام المجتمع\"><a href=\"#home\" aria-current=\"page\">الرئيسية</a><a href=\"#explore\">اكتشف</a></nav>",
+      "css": ".ds-nav{display:grid;gap:8px;font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-nav a{display:flex;gap:15px;align-items:center;min-height:50px;padding:10px 12px;border-radius:9px;font-size:15px;color:var(--social-ink,#1a2c30);text-decoration:none}.ds-nav a:hover{background:var(--social-ground,#f6f9f8)}.ds-nav a[aria-current=\"page\"]{background:var(--social-tint,#e8f2ef);color:var(--social-brand,#0e6873);font-weight:600}.ds-nav a:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Operating Informational Chip",
+      "name": "Studio content-kind tab",
       "kind": "chip",
-      "refersTo": "chip",
-      "description": "Small noninteractive status/context tag. Border color alone does not create an outline.",
-      "html": "<span class=\"ds-chip\" dir=\"rtl\">معلومات الحساب</span>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;background:var(--petra-neutral,#f0f3f7);color:#4c596b;border-color:var(--line,#e3e8ef);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:12px;font-weight:400;line-height:1.8;white-space:nowrap}"
+      "refersTo": "kind-tab",
+      "description": "The selected segment uses the recorded shallow shadow.",
+      "html": "<div class=\"ds-kinds\" dir=\"rtl\"><button aria-pressed=\"true\">منشور</button><button aria-pressed=\"false\">قصة</button></div>",
+      "css": ".ds-kinds{display:flex;gap:8px;padding:5px;background:var(--social-ground,#f6f9f8);border-radius:8px;font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-kinds button{flex:1;border:0;padding:8px;background:transparent;border-radius:6px;color:var(--social-muted,#5d6f72);font:inherit;font-size:13px;cursor:pointer}.ds-kinds button[aria-pressed=\"true\"]{background:#fff;color:var(--social-brand,#0e6873);box-shadow:0 2px 5px #174c5012}.ds-kinds button:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Care Panel",
+      "name": "Post frame",
       "kind": "card",
-      "refersTo": "care-panel",
-      "description": "Flat operating section with compact Arabic hierarchy and responsive padding.",
-      "html": "<section class=\"ds-panel\" dir=\"rtl\"><h2 class=\"ds-panel-heading\">الزيارات المسندة إليك</h2><p class=\"ds-panel-copy\">لا توجد زيارات لعرضها حاليًا.</p></section>",
-      "css": ".ds-panel{min-width:0;margin-block:24px;padding:24px;background:var(--surface,#ffffff);color:var(--ink,#202733);border:1px solid var(--line,#e3e8ef);border-radius:12px;box-shadow:none;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-panel-heading{display:flex;align-items:center;gap:10px;margin:0 0 20px;font-size:19px;font-weight:500;line-height:1.7}.ds-panel-copy{margin:0;color:var(--muted,#566171);font-size:14px;font-weight:400;line-height:1.9;overflow-wrap:anywhere}@media(max-width:760px){.ds-panel{padding:20px}.ds-panel-heading{font-size:18px}}@media(max-width:420px){.ds-panel{padding:18px}}"
+      "refersTo": "social-post",
+      "description": "Author/header and caption container; photography is deliberately omitted from this asset-free specimen.",
+      "html": "<article class=\"ds-post\" dir=\"rtl\"><header>اسم الكاتب</header><div class=\"ds-post-content\"><p>حكاية الرفيق تظهر هنا.</p><a href=\"#post\">عرض المنشور</a></div></article>",
+      "css": ".ds-post{background:#fff;border:1px solid var(--social-line,#dce6e3);border-radius:var(--social-radius,14px);overflow:clip;color:var(--social-ink,#1a2c30);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-post header{padding:16px 18px;font-size:14px;font-weight:600}.ds-post-content{padding:12px 18px 18px}.ds-post-content p{font-size:13px;line-height:1.95;max-width:65ch;overflow-wrap:anywhere;white-space:pre-wrap;margin:7px 0 5px}.ds-post a{text-decoration:none;font-size:12px;color:var(--social-muted,#5d6f72)}.ds-post a:focus-visible{outline:3px solid var(--social-brand,#0e6873);outline-offset:4px;}"
     },
     {
-      "name": "Native FAQ Disclosure",
-      "kind": "custom",
-      "refersTo": "faq-disclosure",
-      "description": "Native details/summary with a rotating plus; opening remains keyboard and browser controlled.",
-      "html": "<details class=\"ds-faq\" dir=\"rtl\"><summary class=\"ds-faq-summary\">كيف أبدأ؟<svg class=\"ds-faq-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p class=\"ds-faq-copy\">أنشئ حسابًا وأضف رفيقك إلى ملفه الخاص.</p></details>",
-      "css": ".ds-faq{padding:20px 24px;margin-bottom:12px;background:var(--paper,#f7f9fc);color:var(--ink,#202733);border-radius:8px;font-family:'IBM Plex Sans Arabic',sans-serif}.ds-faq-summary{display:flex;align-items:center;justify-content:space-between;gap:24px;list-style:none;cursor:pointer;font-size:18px;font-weight:500;line-height:1.8}.ds-faq-summary::-webkit-details-marker{display:none}.ds-faq-icon{flex-shrink:0;transition:transform 180ms}.ds-faq[open] .ds-faq-icon{transform:rotate(45deg)}.ds-faq-summary:focus-visible{outline:3px solid var(--brand,#2358ce);outline-offset:4px}.ds-faq-copy{padding-top:16px;margin:0;max-width:65ch;color:var(--ink,#202733);font-size:16px;font-weight:400;line-height:2}@media(max-width:1000px){.ds-faq-summary{font-size:16px}}@media(max-width:760px){.ds-faq{padding:18px}.ds-faq-copy{font-size:15px}}@media(prefers-reduced-motion:reduce){.ds-faq-icon{transition:none}}"
+      "name": "Retained operating action",
+      "kind": "button",
+      "refersTo": "operating-button",
+      "description": "Compatibility specimen from preserved professional forms; not the social primary.",
+      "html": "<a class=\"ds-operating\" href=\"#task\" dir=\"rtl\">فتح المهمة</a>",
+      "css": ".ds-operating{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--petra-dark,#202733);border-radius:8px;background:var(--petra-dark,#202733);color:#fff;font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-operating:hover{background:#394558;border-color:#394558;transform:translateY(-2px)}.ds-operating:active{transform:translateY(1px)}.ds-operating:focus-visible{outline:3px solid #b45b1f;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-operating{transition:none!important}}"
     }
   ],
   "narrative": {
-    "northStar": "Companion editorial journal",
-    "overview": "Petra is calm, open and personal: clear Arabic typography, blue accents, white and pale blue fields, and photographs that give animals room in the composition. The owner approved this identity and delegated its application. This is a scan of the implemented web system, not a claim of fidelity to an approved image comp.\n\nPublic discovery uses generous space and large sentences; operating screens use compact headings, neutral navigation, tabular figures and flat panels. They share an identity without sharing density. Conceptual brand photographs are authored imagery, not evidence of actual patients, premises or endorsements.",
+    "northStar": "Companion photo journal",
+    "overview": "Petra brings everyday animal companionship into a light Arabic reading space. Photographs and their authors carry the visual weight; teal identifies actions and warm orange marks story rings. Broad public sentences and compact social controls share locally bundled type, clear borders and quiet surfaces.\n\nThis is the implemented replacement proposed for owner visual review under the accepted Arabic execution brief. The owner authorized a full redesign and confirmed “صور ومنشورات المجتمع أولاً، مع وصول سريع للقصص والريلز”; the exact teal/warm palette is an implementation proposal, not an explicit owner color selection. The build is code-led, with no approved image comp or external quality board. It supersedes the earlier blue/white direction for the rebuilt public entry and social proof.",
     "keyCharacteristics": [
       "Arabic first, RTL, with locally bundled fonts.",
-      "One blue brand accent, supported by cool neutrals and semantic status colors.",
-      "Photographic public storytelling and compact, task-led workspaces.",
-      "Readable content before motion, with native touch scrolling and reduced motion support."
+      "Photograph-and-author priority on light teal-neutral surfaces.",
+      "Restrained warm story emphasis and visible interaction states.",
+      "Separate public, social and operational densities.",
+      "Responsive native forms, explicit privacy boundaries and reduced motion support."
     ],
     "rules": [
       {
-        "name": "The Contextual Accent Rule",
-        "body": "Use blue for public emphasis and neutral ink for operating primary actions; do not turn the working rail into a saturated marketing surface.",
+        "name": "The Story Accent Rule",
+        "body": "Keep warm orange attached to story emphasis; use teal for the social action and selection hierarchy.",
         "section": "colors"
       },
       {
-        "name": "The Arabic Breathing Rule",
-        "body": "Preserve the established line heights and wrapping when changing copy; do not compress Arabic to imitate Latin display density.",
+        "name": "The Arabic Room Rule",
+        "body": "Preserve the observed line heights and wrapping behavior when adapting Arabic headings; do not clip them to a Latin display baseline.",
         "section": "typography"
       },
       {
-        "name": "The Flat Working Surface Rule",
-        "body": "Give operating panels hierarchy with spacing, borders and headings; do not add ornamental elevation to routine tasks.",
+        "name": "The Flat Surface Rule",
+        "body": "Use borders and tonal changes for ordinary cards; reserve the observed small shadows for controls over imagery and selected studio tabs.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** share the blue/white identity while keeping public discovery generous and operating work compact.",
-      "**Do** keep Arabic RTL, logical spacing, local fonts, visible focus and semantic controls.",
-      "**Do** use real content and honest loading, empty, error and unavailable states in account workspaces.",
-      "**Do** keep photographs conceptual when their provenance is conceptual; preserve their provenance records.",
-      "**Do** preserve native touch and workspace scrolling and respect reduced motion and Save-Data."
+      "**Do** lead social posts with the actual authorized photograph and author.",
+      "**Do** use teal for social actions and orange for story emphasis.",
+      "**Do** preserve Arabic line height, RTL logical spacing and long-text wrapping.",
+      "**Do** retain keyboard focus, native forms, reduced motion and honest loading/error/empty states.",
+      "**Do** keep conceptual imagery, test data and incomplete capabilities explicitly disclosed.",
+      "**Do** preserve real routes, permissions and financial/medical privacy boundaries when applying this visual language."
     ],
     "donts": [
-      "**Don't** invent metrics, testimonials, endorsements or verification claims to fill visual space.",
-      "**Don't** replace task panels with ornamental gradients, floating badges or decorative charts.",
-      "**Don't** repeat a persona kicker above professional overview headings.",
-      "**Don't** infer universal styling from a legacy selector or claim the current focus cascade has been normalized.",
-      "**Don't** add external font, image or animation runtime requests to reproduce the identity."
+      "**Don't** describe the proposed palette as an exact color choice explicitly approved by the owner.",
+      "**Don't** claim comp fidelity, external quality-board approval or production certification for this code-led POC.",
+      "**Don't** fill community or professional screens with invented counts, endorsements or verification badges.",
+      "**Don't** promote retained cool-blue overrides or legacy global focus colors into the replacement world's rules.",
+      "**Don't** add ambient shadows to ordinary posts or use story-viewer gradients as general page decoration.",
+      "**Don't** treat the clinic quick-task strip as proof of a completed professional-platform redesign."
     ]
   }
 }

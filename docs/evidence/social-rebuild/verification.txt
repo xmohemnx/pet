@@ -1,0 +1,64 @@
+Petra social rebuild — actual local run excerpts, 2026-10-23 UTC
+Implementation: f4429f36e48458cbef9884ec028b987f7f568f7d
+Branch: codex/social-rebuild-20261023
+The first full run was NOT green. Five obsolete Home heading assertions
+were corrected and all 15 foundation scenarios rerun. Combined verification
+covers 219 distinct functional E2E scenarios; repeat runs are not added.
+Logs below are aggregate excerpts, not reconstructed passes.
+
+Full regression before Home assertion correction
+Source local log: social-final-full-e2e.log
+  5 failed
+  1 skipped
+  214 passed (9.8m)
+[ELIFECYCLE] Command failed with exit code 1.
+
+Foundation rerun after assertion correction
+Source local log: social-foundation-verified.log
+  15 passed (41.2s)
+
+Verified baseline after privacy guards
+Source local log: social-verified-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+   Start at  08:21:18
+   Duration  3.77s (tests 53%, import 38%, transform 7%, worker 2%)
+All matched files use Prettier code style!
+Security file checks passed: private env, source, public assets.
+
+Refinement lint/types/unit; format initially failed on unpublished proof manifest
+Source local log: social-refinement-check.log
+ Test Files  11 passed (11)
+      Tests  48 passed (48)
+   Start at  08:44:36
+   Duration  2.62s (tests 51%, import 44%, worker 3%, transform 2%)
+[warn] docs/evidence/social-rebuild/ba73280d/manifest.json
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.
+[ELIFECYCLE] Command failed with exit code 1.
+[ELIFECYCLE] Command failed with exit code 1.
+
+Refinement formatting recheck
+Source local log: social-refinement-format.log
+All matched files use Prettier code style!
+
+Refinement secret scan
+Source local log: social-refinement-secrets.log
+Process exited 0; secretlint emits no finding on success.
+
+Refinement security file check
+Source local log: social-refinement-security.log
+Security file checks passed: private env, source, public assets.
+
+Refinement build
+Source local log: social-refinement-build.log
+✓ Compiled successfully in 695ms
+✓ Generating static pages using 2 workers (22/22) in 247ms
+
+Refinement social E2E
+Source local log: social-refinement-e2e.log
+  10 passed (52.8s)
+
+Committed-source browser evidence
+Source local log: social-proof-final-capture.log
+Captured 12 working screens and 3 explicitly labelled direction sketches from f4429f36e48458cbef9884ec028b987f7f568f7d
+  1 passed (50.2s)

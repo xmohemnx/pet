@@ -1,0 +1,4077 @@
+{
+  "source_commit": "9aef237216e6868d2b744baf5e61a89d7015c734",
+  "web": [
+    {
+      "route": "/admin/finance",
+      "file": "apps/web/app/admin/finance/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/admin/operations",
+      "file": "apps/web/app/admin/operations/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/admin",
+      "file": "apps/web/app/admin/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/admin/transport",
+      "file": "apps/web/app/admin/transport/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/adoption",
+      "file": "apps/web/app/adoption/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/app",
+      "file": "apps/web/app/app/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/boarding/[id]",
+      "file": "apps/web/app/boarding/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/calendar",
+      "file": "apps/web/app/care/calendar/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/directory",
+      "file": "apps/web/app/care/directory/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/library/[id]",
+      "file": "apps/web/app/care/library/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/library",
+      "file": "apps/web/app/care/library/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care",
+      "file": "apps/web/app/care/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/pets/[id]",
+      "file": "apps/web/app/care/pets/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/care/pets/[id]/passport",
+      "file": "apps/web/app/care/pets/[id]/passport/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/boarding",
+      "file": "apps/web/app/clinic/[id]/boarding/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/calendar",
+      "file": "apps/web/app/clinic/[id]/calendar/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/catalog",
+      "file": "apps/web/app/clinic/[id]/catalog/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/commerce",
+      "file": "apps/web/app/clinic/[id]/commerce/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/finance",
+      "file": "apps/web/app/clinic/[id]/finance/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/finance/statements",
+      "file": "apps/web/app/clinic/[id]/finance/statements/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/grooming",
+      "file": "apps/web/app/clinic/[id]/grooming/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/home-visits",
+      "file": "apps/web/app/clinic/[id]/home-visits/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/inventory",
+      "file": "apps/web/app/clinic/[id]/inventory/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/library",
+      "file": "apps/web/app/clinic/[id]/library/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]",
+      "file": "apps/web/app/clinic/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/promotions",
+      "file": "apps/web/app/clinic/[id]/promotions/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/services",
+      "file": "apps/web/app/clinic/[id]/services/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/clinic/[id]/storefront",
+      "file": "apps/web/app/clinic/[id]/storefront/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/content/[slug]",
+      "file": "apps/web/app/content/[slug]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/admin",
+      "file": "apps/web/app/demo/admin/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/clinic/finance",
+      "file": "apps/web/app/demo/clinic/finance/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/clinic",
+      "file": "apps/web/app/demo/clinic/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/customer",
+      "file": "apps/web/app/demo/customer/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/doctor",
+      "file": "apps/web/app/demo/doctor/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/demo/driver",
+      "file": "apps/web/app/demo/driver/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/doctor",
+      "file": "apps/web/app/doctor/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/doctor/planning",
+      "file": "apps/web/app/doctor/planning/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/driver",
+      "file": "apps/web/app/driver/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/grooming",
+      "file": "apps/web/app/grooming/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/home-visits/[id]/receipt",
+      "file": "apps/web/app/home-visits/[id]/receipt/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/home-visits",
+      "file": "apps/web/app/home-visits/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/login",
+      "file": "apps/web/app/login/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/marketplace",
+      "file": "apps/web/app/marketplace/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/marketplace/products/[id]",
+      "file": "apps/web/app/marketplace/products/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/marketplace/stores/[id]",
+      "file": "apps/web/app/marketplace/stores/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/notifications",
+      "file": "apps/web/app/notifications/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/",
+      "file": "apps/web/app/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/preview",
+      "file": "apps/web/app/preview/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/recover",
+      "file": "apps/web/app/recover/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/register",
+      "file": "apps/web/app/register/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/reset-password",
+      "file": "apps/web/app/reset-password/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/safety/[token]",
+      "file": "apps/web/app/safety/[token]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/security",
+      "file": "apps/web/app/security/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/services",
+      "file": "apps/web/app/services/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/social",
+      "file": "apps/web/app/social/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/social/posts/[id]",
+      "file": "apps/web/app/social/posts/[id]/page.tsx",
+      "line": 1
+    },
+    {
+      "route": "/taxi",
+      "file": "apps/web/app/taxi/page.tsx",
+      "line": 1
+    }
+  ],
+  "api": [
+    {
+      "method": "GET",
+      "path": "/api/v1/pets",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 27
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 30
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pets/:id",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 36
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/pets/:id",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 47
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/pets/:id",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 63
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/guardians",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 69
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/pets/:id/guardians/:userId",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 96
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/consents",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 107
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/pets/:id/consents/:clinicId/:doctorId",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 130
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/care/slots",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 143
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctor/clinics",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 154
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctor/appointments",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 157
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/services",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 160
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/services",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 166
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/slots",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 194
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 219
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/:id/cancel",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 233
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/:id/encounter",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 239
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/encounters/:id/sign",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 255
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/encounters/:id/addenda",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 267
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/encounters/:id/labs/:labId/review",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 282
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/tasks",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 299
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/care/tasks/:id/resolve",
+      "file": "apps/api/src/care/controller.ts",
+      "line": 322
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/home-visits/catalog",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 12
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/home-visits",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 19
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/home-visits/:id",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 22
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/home-visits",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 28
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/home-visits/offers",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 34
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/home-visits/offers/:offerId/availability",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 62
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/home-visits/slots",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 78
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/home-visits",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 94
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/home-visits/:id/dispatch",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 123
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/home-visits/:id/cancel",
+      "file": "apps/api/src/care/home-controller.ts",
+      "line": 139
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/care/library",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 40
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/care/library/:id",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 56
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/content-corrections",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 63
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/care/library/:id/corrections",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 66
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/library",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 81
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/library",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 87
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/library/:articleId",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 98
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/library/:articleId/review",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 116
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/library/:articleId/publication",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 139
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/content-corrections/:correctionId/resolve",
+      "file": "apps/api/src/care/library-controller.ts",
+      "line": 161
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pets/:id/safety-cards",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 18
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/safety-cards",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 24
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/pets/:id/safety-cards/:cardId",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 46
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/safety/:token",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 57
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pets/:id/passport",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 60
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/care-calendar",
+      "file": "apps/api/src/care/safety-controller.ts",
+      "line": 66
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/care/directory",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 27
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctor/public-profile",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 40
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/doctor/public-profile",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 43
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:clinicId/resources",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 61
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:clinicId/resources",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 70
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/doctor/clinics/:clinicId/planning",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 81
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/doctor/clinics/:clinicId/working-hours",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 90
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/doctor/clinics/:clinicId/working-hours/:id",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 114
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/doctor/clinics/:clinicId/working-hours/:id/generate",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 125
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/doctor/clinics/:clinicId/time-off",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 140
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:clinicId/closures",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 151
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/clinics/:clinicId/time-off/:id",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 163
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:clinicId/calendar",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 174
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/:id/attendance",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 185
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/:id/review",
+      "file": "apps/api/src/care/scheduling-controller.ts",
+      "line": 206
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/products/:productId/variant-matrix",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 12
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products/:id",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 48
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/products/:productId/catalog",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 55
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/stores/:id",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 106
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/storefront",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 110
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/storefront",
+      "file": "apps/api/src/commerce/catalog-controller.ts",
+      "line": 116
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/cart",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 25
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/cart",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 28
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/wishlist",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 41
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/products/:id/wishlist",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 44
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/products/:id/reviews",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 56
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/products/:id/reviews",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 62
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/marketplace",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 83
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/stores/:id/products",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 87
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/orders",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 94
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/commerce",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 97
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/products",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 103
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/products/:productId",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 129
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/vendors",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 154
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/purchases",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 167
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/purchases/:poId/receive",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 192
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/purchases/:poId/bill",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 203
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/checkout",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 214
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/orders/:id/capture",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 242
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/orders/:id/cancel",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 254
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/orders/:orderId/transition",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 260
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/order-lines/:id/returns",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 277
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/returns/:returnId/approve",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 290
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/finance",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 304
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/approvals",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 310
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/approvals/:approvalId/approve",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 335
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/journals",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 346
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/approvals/:approvalId/reject",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 382
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/periods/close",
+      "file": "apps/api/src/commerce/controller.ts",
+      "line": 393
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/delivery-addresses",
+      "file": "apps/api/src/commerce/delivery-controller.ts",
+      "line": 33
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/delivery-addresses",
+      "file": "apps/api/src/commerce/delivery-controller.ts",
+      "line": 36
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/me/delivery-addresses/:id",
+      "file": "apps/api/src/commerce/delivery-controller.ts",
+      "line": 45
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/me/delivery-addresses/:id",
+      "file": "apps/api/src/commerce/delivery-controller.ts",
+      "line": 61
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/orders/:orderId/tracking",
+      "file": "apps/api/src/commerce/delivery-controller.ts",
+      "line": 67
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/inventory",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 16
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/warehouses",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 22
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/purchases/:poId/receipts",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 43
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/inventory/:layerId/quarantine",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 68
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/inventory/transfers",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 83
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/inventory/writeoffs",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 105
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/inventory/writeoffs/:requestId/decision",
+      "file": "apps/api/src/commerce/inventory-controller.ts",
+      "line": 127
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/checkout/quote",
+      "file": "apps/api/src/commerce/pricing-controller.ts",
+      "line": 41
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/pricing",
+      "file": "apps/api/src/commerce/pricing-controller.ts",
+      "line": 52
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/coupons",
+      "file": "apps/api/src/commerce/pricing-controller.ts",
+      "line": 58
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/coupons/:couponId",
+      "file": "apps/api/src/commerce/pricing-controller.ts",
+      "line": 85
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/tax-settings",
+      "file": "apps/api/src/commerce/pricing-controller.ts",
+      "line": 105
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/categories",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 203
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/categories",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 209
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/categories/:categoryId",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 226
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/products/:productId/classification",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 245
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/marketplace/categories",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 268
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/marketplace/search",
+      "file": "apps/api/src/commerce/taxonomy.ts",
+      "line": 272
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/profile",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 28
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/profile",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 31
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/people",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 45
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/feed",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 51
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 68
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/posts/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 82
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/social/posts/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 88
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/social/posts/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 104
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/reactions",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 110
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/comments",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 128
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/follow-requests",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 140
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/followers",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 143
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/social/users/:id/follow",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 146
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/social/followers/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 152
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/users/:id/follow",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 162
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/users/:id/accept-follow",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 168
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/users/:id/block",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 174
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/social/users/:id/block",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 180
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/blocks",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 186
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/realtime",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 189
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/inbox",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 193
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/messages/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 196
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/messages/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 205
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/reports",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 228
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/moderation",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 240
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/moderation/:id",
+      "file": "apps/api/src/community/controller.ts",
+      "line": 244
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/stories/archive",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 17
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/highlights/:id",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 20
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/highlight",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 29
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/social/posts/:id/highlight",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 50
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/view",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 59
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/social/posts/:id/viewers",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 65
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/social/posts/:id/share",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 71
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/rescue/cases/:id/matches",
+      "file": "apps/api/src/community/discovery-controller.ts",
+      "line": 77
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/adoptions/:id",
+      "file": "apps/api/src/community/lifecycle.ts",
+      "line": 190
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/adoptions/:id/close",
+      "file": "apps/api/src/community/lifecycle.ts",
+      "line": 214
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/admin/sandbox/campaigns/:id",
+      "file": "apps/api/src/community/lifecycle.ts",
+      "line": 226
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/campaigns/:id/close",
+      "file": "apps/api/src/community/lifecycle.ts",
+      "line": 247
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/adoptions",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 19
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/rescue",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 23
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/adoptions",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 26
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/adoptions/:id/applications",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 41
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/adoptions/:id/applications",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 53
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/adoption-applications/:id/decision",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 62
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/adoption-applications/:id/handover",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 83
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/rescue/cases",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 91
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rescue/cases",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 95
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rescue/cases/:id/accept",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 116
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rescue/cases/:id/transition",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 128
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/rescue",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 143
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/rescue",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 152
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/rescue/:kind/:id",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 156
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/donations/campaigns",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 171
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/campaigns",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 175
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/campaigns/:id/donate",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 188
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/donations/:id/refund",
+      "file": "apps/api/src/community/rescue-controller.ts",
+      "line": 211
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/finance/banks",
+      "file": "apps/api/src/finance/banks-controller.ts",
+      "line": 9
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/banks",
+      "file": "apps/api/src/finance/banks-controller.ts",
+      "line": 12
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/banks/:bankId/import",
+      "file": "apps/api/src/finance/banks-controller.ts",
+      "line": 33
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/finance/banks/lines/:lineId/match",
+      "file": "apps/api/src/finance/banks-controller.ts",
+      "line": 65
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/finance/statements",
+      "file": "apps/api/src/finance/reports-controller.ts",
+      "line": 9
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "file": "apps/api/src/main.ts",
+      "line": 89
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/ready",
+      "file": "apps/api/src/main.ts",
+      "line": 100
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/customer",
+      "file": "apps/api/src/main.ts",
+      "line": 137
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/clinics/demo-clinic/finance",
+      "file": "apps/api/src/main.ts",
+      "line": 142
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/media",
+      "file": "apps/api/src/media/controller.ts",
+      "line": 20
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media",
+      "file": "apps/api/src/media/controller.ts",
+      "line": 35
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/:id/hls",
+      "file": "apps/api/src/media/controller.ts",
+      "line": 46
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/:id/streams/:streamId",
+      "file": "apps/api/src/media/controller.ts",
+      "line": 49
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/:id/file",
+      "file": "apps/api/src/media/controller.ts",
+      "line": 69
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/notifications",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 19
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/notifications/:id/read",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 22
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/notification-preferences",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 28
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/notification-preferences",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 31
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/content/pages",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 47
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/content/pages/:slug",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 50
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 53
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content/:slug",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 57
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/jobs",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/jobs/:id/retry",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 84
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/incidents",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 90
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/finance",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 94
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/payouts",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 97
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/payouts/:id/pay",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 114
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/payouts/:id/cancel",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 121
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/sandbox/payouts/:id/reconcile",
+      "file": "apps/api/src/operations/controller.ts",
+      "line": 127
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 34
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/workspaces",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 37
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/active-workspace",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 41
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/me",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 51
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/applications",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 63
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/applications",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 72
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/invitations",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 88
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/:id/accept",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 97
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 103
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/branches",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 123
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/members",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 143
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/invitations",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 157
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/clinics/:id/members/:userId",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 171
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/applications",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 189
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/applications/:id/decision",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 197
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/audit",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 217
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/affiliations",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 225
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/affiliations",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 234
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/affiliations",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 275
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/affiliations/:affiliationId/decision",
+      "file": "apps/api/src/organizations/controller.ts",
+      "line": 289
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/boarding/:id",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 10
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/boarding",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 16
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/boarding/:id/accept-policy",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 25
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding-units/:unitId/availability",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 40
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding/:bookingId/reviews",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 55
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding/:bookingId/incidents",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 82
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding/:bookingId/cancel",
+      "file": "apps/api/src/services/boarding-controller.ts",
+      "line": 107
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/services/catalog",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 19
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/services",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 23
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/services/management",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 26
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/care-plans",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 32
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/care-plans/:planId/availability",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/subscriptions",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 100
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/subscriptions/:id/renew",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 123
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/subscriptions/:id/upgrade",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 141
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/subscriptions/:id/pause",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 165
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/subscriptions/:id/resume",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 189
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/subscriptions/:id/redeem",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 212
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding-units",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 224
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/boarding",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 250
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/boarding/:id/cancel",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 273
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/subscriptions/:id/cancel",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 279
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/boarding/:bookingId/transition",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 285
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/appointments/:id/messages",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 309
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/appointments/:id/messages",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 315
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/transfer",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 336
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pet-transfers/:id/accept",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 348
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pets/:id/weights",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 357
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pets/:id/weights",
+      "file": "apps/api/src/services/controller.ts",
+      "line": 363
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/driver/dispatch-offers/:id/accept",
+      "file": "apps/api/src/services/dispatch.ts",
+      "line": 62
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/driver/dispatch-offers/:id/decline",
+      "file": "apps/api/src/services/dispatch.ts",
+      "line": 74
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/rides/:id/dispute",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 331
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/dispute",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 337
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/dispute/messages",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 348
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/transport/disputes",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 359
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/transport/rides/:id/dispute",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 362
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/transport/rides/:id/dispute/messages",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 372
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/transport/rides/:id/dispute/proposal",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 384
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/transport/rides/:id/dispute/decision",
+      "file": "apps/api/src/services/disputes.ts",
+      "line": 406
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/grooming/catalog",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 12
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/grooming",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 16
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/clinics/:id/grooming",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 19
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/grooming-services",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 25
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/grooming-slots",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 60
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/grooming-services/:serviceId/availability",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 79
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/grooming-slots/:slotId/availability",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 101
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/grooming",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 123
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clinics/:id/grooming/:bookingId/transition",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 139
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/grooming/:id/cancel",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 162
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/grooming/:id/withdraw-photos",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 168
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/grooming/:id/review",
+      "file": "apps/api/src/services/grooming-controller.ts",
+      "line": 177
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/rides",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 15
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/driver/home",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 18
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/driver/vehicle",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 21
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sandbox/rides",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 44
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/claim",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 70
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/transition",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 76
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/cancel",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 100
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/rides/:id/location",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 106
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/location",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 112
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/rides/:id/incidents",
+      "file": "apps/api/src/services/rides-controller.ts",
+      "line": 120
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/taxi/routing",
+      "file": "apps/api/src/services/routing.ts",
+      "line": 254
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/taxi/route-quotes",
+      "file": "apps/api/src/services/routing.ts",
+      "line": 258
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/rides/:id/route",
+      "file": "apps/api/src/services/routing.ts",
+      "line": 267
+    }
+  ],
+  "tables": [
+    {
+      "table": "users",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 3
+    },
+    {
+      "table": "clinics",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 8
+    },
+    {
+      "table": "clinic_memberships",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 14
+    },
+    {
+      "table": "clinic_storefronts",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 20
+    },
+    {
+      "table": "outbox_messages",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 26
+    },
+    {
+      "table": "audit_events",
+      "file": "infra/database/migrations/0001_foundation.sql",
+      "line": 37
+    },
+    {
+      "table": "auth_users",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 2
+    },
+    {
+      "table": "auth_sessions",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 4
+    },
+    {
+      "table": "auth_accounts",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 6
+    },
+    {
+      "table": "auth_verifications",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 8
+    },
+    {
+      "table": "auth_two_factors",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 10
+    },
+    {
+      "table": "auth_rate_limits",
+      "file": "infra/database/migrations/0002_better_auth.sql",
+      "line": 12
+    },
+    {
+      "table": "professional_applications",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 8
+    },
+    {
+      "table": "professional_profiles",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 24
+    },
+    {
+      "table": "clinic_branches",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 31
+    },
+    {
+      "table": "clinic_invitations",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 39
+    },
+    {
+      "table": "doctor_affiliations",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 50
+    },
+    {
+      "table": "admin_grants",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 59
+    },
+    {
+      "table": "active_workspaces",
+      "file": "infra/database/migrations/0003_identity_organizations.sql",
+      "line": 66
+    },
+    {
+      "table": "pets",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 2
+    },
+    {
+      "table": "pet_guardians",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 11
+    },
+    {
+      "table": "medical_consents",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 15
+    },
+    {
+      "table": "clinic_services",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 20
+    },
+    {
+      "table": "appointment_slots",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 25
+    },
+    {
+      "table": "appointments",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 31
+    },
+    {
+      "table": "encounters",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 41
+    },
+    {
+      "table": "encounter_addenda",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 46
+    },
+    {
+      "table": "care_tasks",
+      "file": "infra/database/migrations/0005_care_foundation.sql",
+      "line": 60
+    },
+    {
+      "table": "medical_lab_orders",
+      "file": "infra/database/migrations/0006_medical_labs.sql",
+      "line": 2
+    },
+    {
+      "table": "ledger_entities",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 1
+    },
+    {
+      "table": "ledger_accounts",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 6
+    },
+    {
+      "table": "accounting_periods",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 10
+    },
+    {
+      "table": "journals",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 15
+    },
+    {
+      "table": "journal_lines",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 22
+    },
+    {
+      "table": "vendors",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 53
+    },
+    {
+      "table": "products",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 54
+    },
+    {
+      "table": "purchase_orders",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 59
+    },
+    {
+      "table": "stock_movements",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 64
+    },
+    {
+      "table": "checkout_orders",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 69
+    },
+    {
+      "table": "clinic_orders",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 74
+    },
+    {
+      "table": "order_lines",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 79
+    },
+    {
+      "table": "sandbox_captures",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 84
+    },
+    {
+      "table": "return_requests",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 85
+    },
+    {
+      "table": "finance_approvals",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 89
+    },
+    {
+      "table": "sandbox_policy",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 94
+    },
+    {
+      "table": "inventory_layers",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 96
+    },
+    {
+      "table": "inventory_allocations",
+      "file": "infra/database/migrations/0007_ledger_and_commerce.sql",
+      "line": 98
+    },
+    {
+      "table": "care_plans",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 1
+    },
+    {
+      "table": "care_subscriptions",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 2
+    },
+    {
+      "table": "entitlement_usage",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 3
+    },
+    {
+      "table": "boarding_units",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 5
+    },
+    {
+      "table": "boarding_bookings",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 6
+    },
+    {
+      "table": "care_messages",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 7
+    },
+    {
+      "table": "pet_transfers",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 8
+    },
+    {
+      "table": "pet_ownership_history",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 10
+    },
+    {
+      "table": "pet_weights",
+      "file": "infra/database/migrations/0008_plans_boarding_and_followup.sql",
+      "line": 12
+    },
+    {
+      "table": "social_profiles",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 1
+    },
+    {
+      "table": "social_follows",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 2
+    },
+    {
+      "table": "social_blocks",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 3
+    },
+    {
+      "table": "media_assets",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 4
+    },
+    {
+      "table": "social_posts",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 5
+    },
+    {
+      "table": "social_post_history",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 6
+    },
+    {
+      "table": "social_reactions",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 7
+    },
+    {
+      "table": "social_comments",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 8
+    },
+    {
+      "table": "direct_messages",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 9
+    },
+    {
+      "table": "abuse_reports",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 10
+    },
+    {
+      "table": "action_limits",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 11
+    },
+    {
+      "table": "adoption_listings",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 12
+    },
+    {
+      "table": "adoption_applications",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 14
+    },
+    {
+      "table": "rescue_cases",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 16
+    },
+    {
+      "table": "donation_campaigns",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 17
+    },
+    {
+      "table": "sandbox_donations",
+      "file": "infra/database/migrations/0009_community_and_rescue.sql",
+      "line": 18
+    },
+    {
+      "table": "driver_vehicles",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 1
+    },
+    {
+      "table": "rides",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 2
+    },
+    {
+      "table": "ride_locations",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 4
+    },
+    {
+      "table": "ride_incidents",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 5
+    },
+    {
+      "table": "notifications",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 6
+    },
+    {
+      "table": "notification_preferences",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 11
+    },
+    {
+      "table": "cms_pages",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 12
+    },
+    {
+      "table": "platform_finance_grants",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 13
+    },
+    {
+      "table": "sandbox_payouts",
+      "file": "infra/database/migrations/0010_rides_notifications_and_operations.sql",
+      "line": 14
+    },
+    {
+      "table": "manual_journal_requests",
+      "file": "infra/database/migrations/0011_financial_guards.sql",
+      "line": 2
+    },
+    {
+      "table": "bank_accounts",
+      "file": "infra/database/migrations/0012_bank_reconciliation.sql",
+      "line": 1
+    },
+    {
+      "table": "bank_statement_lines",
+      "file": "infra/database/migrations/0012_bank_reconciliation.sql",
+      "line": 2
+    },
+    {
+      "table": "cart_items",
+      "file": "infra/database/migrations/0013_cancellations_and_carts.sql",
+      "line": 4
+    },
+    {
+      "table": "product_wishlist",
+      "file": "infra/database/migrations/0013_cancellations_and_carts.sql",
+      "line": 5
+    },
+    {
+      "table": "product_reviews",
+      "file": "infra/database/migrations/0013_cancellations_and_carts.sql",
+      "line": 6
+    },
+    {
+      "table": "media_upload_limits",
+      "file": "infra/database/migrations/0015_upload_admission_limits.sql",
+      "line": 2
+    },
+    {
+      "table": "clinic_resources",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 5
+    },
+    {
+      "table": "doctor_working_hours",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 13
+    },
+    {
+      "table": "care_time_off",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 24
+    },
+    {
+      "table": "appointment_state_history",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 54
+    },
+    {
+      "table": "doctor_public_profiles",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 59
+    },
+    {
+      "table": "doctor_reviews",
+      "file": "infra/database/migrations/0016_care_scheduling.sql",
+      "line": 63
+    },
+    {
+      "table": "pet_safety_cards",
+      "file": "infra/database/migrations/0017_safety_and_care_reminders.sql",
+      "line": 1
+    },
+    {
+      "table": "care_reminder_dispatches",
+      "file": "infra/database/migrations/0017_safety_and_care_reminders.sql",
+      "line": 11
+    },
+    {
+      "table": "deferred_notifications",
+      "file": "infra/database/migrations/0017_safety_and_care_reminders.sql",
+      "line": 15
+    },
+    {
+      "table": "rescue_content_history",
+      "file": "infra/database/migrations/0019_rescue_lifecycle.sql",
+      "line": 3
+    },
+    {
+      "table": "product_images",
+      "file": "infra/database/migrations/0020_catalog_and_storefronts.sql",
+      "line": 15
+    },
+    {
+      "table": "warehouses",
+      "file": "infra/database/migrations/0022_inventory_batches.sql",
+      "line": 1
+    },
+    {
+      "table": "purchase_receipts",
+      "file": "infra/database/migrations/0022_inventory_batches.sql",
+      "line": 34
+    },
+    {
+      "table": "inventory_requests",
+      "file": "infra/database/migrations/0022_inventory_batches.sql",
+      "line": 40
+    },
+    {
+      "table": "inventory_transfers",
+      "file": "infra/database/migrations/0022_inventory_batches.sql",
+      "line": 46
+    },
+    {
+      "table": "vendor_payments",
+      "file": "infra/database/migrations/0022_inventory_batches.sql",
+      "line": 52
+    },
+    {
+      "table": "story_views",
+      "file": "infra/database/migrations/0023_social_discovery.sql",
+      "line": 1
+    },
+    {
+      "table": "story_highlights",
+      "file": "infra/database/migrations/0023_social_discovery.sql",
+      "line": 2
+    },
+    {
+      "table": "ride_pets",
+      "file": "infra/database/migrations/0025_scheduled_multi_pet_transport.sql",
+      "line": 2
+    },
+    {
+      "table": "delivery_addresses",
+      "file": "infra/database/migrations/0027_delivery_addresses_and_tracking.sql",
+      "line": 1
+    },
+    {
+      "table": "shipments",
+      "file": "infra/database/migrations/0027_delivery_addresses_and_tracking.sql",
+      "line": 4
+    },
+    {
+      "table": "shipment_events",
+      "file": "infra/database/migrations/0027_delivery_addresses_and_tracking.sql",
+      "line": 5
+    },
+    {
+      "table": "commerce_tax_settings",
+      "file": "infra/database/migrations/0028_promotions_and_tax.sql",
+      "line": 1
+    },
+    {
+      "table": "commerce_coupons",
+      "file": "infra/database/migrations/0028_promotions_and_tax.sql",
+      "line": 5
+    },
+    {
+      "table": "grooming_services",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 3
+    },
+    {
+      "table": "grooming_slots",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 10
+    },
+    {
+      "table": "grooming_bookings",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 16
+    },
+    {
+      "table": "clinic_booking_occupancy",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 25
+    },
+    {
+      "table": "grooming_photos",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 52
+    },
+    {
+      "table": "grooming_reviews",
+      "file": "infra/database/migrations/0029_grooming_and_shared_capacity.sql",
+      "line": 56
+    },
+    {
+      "table": "care_articles",
+      "file": "infra/database/migrations/0030_reviewed_care_library.sql",
+      "line": 1
+    },
+    {
+      "table": "care_article_revisions",
+      "file": "infra/database/migrations/0030_reviewed_care_library.sql",
+      "line": 6
+    },
+    {
+      "table": "care_article_reviews",
+      "file": "infra/database/migrations/0030_reviewed_care_library.sql",
+      "line": 13
+    },
+    {
+      "table": "care_article_corrections",
+      "file": "infra/database/migrations/0030_reviewed_care_library.sql",
+      "line": 18
+    },
+    {
+      "table": "care_plan_entitlements",
+      "file": "infra/database/migrations/0031_care_plan_lifecycle.sql",
+      "line": 6
+    },
+    {
+      "table": "care_subscription_entitlements",
+      "file": "infra/database/migrations/0031_care_plan_lifecycle.sql",
+      "line": 30
+    },
+    {
+      "table": "care_subscription_events",
+      "file": "infra/database/migrations/0031_care_plan_lifecycle.sql",
+      "line": 48
+    },
+    {
+      "table": "home_visit_offers",
+      "file": "infra/database/migrations/0033_home_visits.sql",
+      "line": 1
+    },
+    {
+      "table": "home_visit_bookings",
+      "file": "infra/database/migrations/0033_home_visits.sql",
+      "line": 50
+    },
+    {
+      "table": "home_visit_events",
+      "file": "infra/database/migrations/0033_home_visits.sql",
+      "line": 65
+    },
+    {
+      "table": "boarding_admission_reviews",
+      "file": "infra/database/migrations/0034_boarding_admission.sql",
+      "line": 14
+    },
+    {
+      "table": "boarding_incident_log",
+      "file": "infra/database/migrations/0034_boarding_admission.sql",
+      "line": 18
+    },
+    {
+      "table": "product_variant_matrices",
+      "file": "infra/database/migrations/0036_product_variant_matrices.sql",
+      "line": 2
+    },
+    {
+      "table": "product_variant_choices",
+      "file": "infra/database/migrations/0036_product_variant_matrices.sql",
+      "line": 14
+    },
+    {
+      "table": "catalog_categories",
+      "file": "infra/database/migrations/0038_catalog_taxonomy.sql",
+      "line": 1
+    },
+    {
+      "table": "ride_route_attempts",
+      "file": "infra/database/migrations/0039_road_routing.sql",
+      "line": 1
+    },
+    {
+      "table": "ride_route_quotes",
+      "file": "infra/database/migrations/0039_road_routing.sql",
+      "line": 7
+    },
+    {
+      "table": "ride_dispatch_offers",
+      "file": "infra/database/migrations/0040_consented_dispatch.sql",
+      "line": 4
+    },
+    {
+      "table": "ride_disputes",
+      "file": "infra/database/migrations/0041_transport_disputes.sql",
+      "line": 1
+    },
+    {
+      "table": "ride_dispute_messages",
+      "file": "infra/database/migrations/0041_transport_disputes.sql",
+      "line": 19
+    },
+    {
+      "table": "media_streams",
+      "file": "infra/database/migrations/0043_adaptive_video.sql",
+      "line": 1
+    },
+    {
+      "table": "media_gc_jobs",
+      "file": "infra/database/migrations/0044_private_media_storage.sql",
+      "line": 13
+    }
+  ],
+  "tests": [
+    {
+      "title": "\\n",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 31
+    },
+    {
+      "title": "worker generates two bounded renditions and valid H264 segments without source metadata",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 125
+    },
+    {
+      "title": "every manifest and segment requires authorization, follows current policy and cannot change asset identity",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 185
+    },
+    {
+      "title": "/",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 224
+    },
+    {
+      "title": "browser loads the adaptive playlist, decodes segments, selects a rendition and supports MP4 fallback",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 232
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 237
+    },
+    {
+      "title": "unpublishing revokes all derivatives and backup includes every ready stream file",
+      "file": "tests/e2e/adaptive-video.spec.ts",
+      "line": 296
+    },
+    {
+      "title": "audio needs a permitted conversation and a real bounded container; medical scope cannot be mixed",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 121
+    },
+    {
+      "title": "worker converts actual WAV into stripped mono Opus and no recipient can read an unsent asset",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 169
+    },
+    {
+      "title": "streamed WebM without a duration header is measured after bounded conversion",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 224
+    },
+    {
+      "title": "message attachment is bound to sender and peer, replay includes attachment identity and raw SQL cannot republish",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 261
+    },
+    {
+      "title": "only delivered attachments become readable; current privacy is rechecked on every request",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 324
+    },
+    {
+      "title": "sender privacy and follow revocation deny every delivered video file and HLS resource",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 354
+    },
+    {
+      "title": "\\n",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 424
+    },
+    {
+      "title": "\\n",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 429
+    },
+    {
+      "title": "mobile UI uploads, selects and sends a conversation image, with accessible private audio playback",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 477
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 482
+    },
+    {
+      "title": "blocking revokes recipient file access while the sender retains its original",
+      "file": "tests/e2e/attachments.spec.ts",
+      "line": 556
+    },
+    {
+      "title": "نماذج الهوية العربية على الهاتف والحاسوب دون تجاوز أفقي",
+      "file": "tests/e2e/auth-ux.spec.ts",
+      "line": 3
+    },
+    {
+      "title": "نماذج التسجيل والدخول والاستعادة تجتاز فحص الوصول الآلي",
+      "file": "tests/e2e/auth-ux.spec.ts",
+      "line": 25
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 101
+    },
+    {
+      "title": "الوحدة بشروط ثابتة وإتاحة بإصدار ولا تعديل من المشتري أو عيادة أخرى",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 152
+    },
+    {
+      "title": "موافقة المالك وسعر الخادم وسباق السعة للحيوان والوحدة مع إعادة طلب ثابتة",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 179
+    },
+    {
+      "title": "المراجعة لطبيب مخول وتحقق الوزن واللقاح والصلاحية ومربع المتصفح لا يمنح الوصول",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 247
+    },
+    {
+      "title": "الحضور الفعلي حصري حتى مع تواريخ عقدين لا تتداخل ولا إدراج حجز حاضر مباشرة",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 308
+    },
+    {
+      "title": "الحادث العاجل يمنع المغادرة وحله لطبيب والسجل ثابت والإيراد مرة واحدة",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 347
+    },
+    {
+      "title": "نقل الملكية يحجب العقد عن المالكين ويمنع الوصول مع رد إداري محمي بالمستحق",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 418
+    },
+    {
+      "title": "سحب اعتماد المراجع يمنع الوصول والمحاسب لا يقرأ الحجوزات الصحية",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 468
+    },
+    {
+      "title": "واجهة العيادة تنشئ وحدة إقامة بشروط من الهاتف",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 523
+    },
+    {
+      "title": "المالك يحجز وحدة الفندق من الهاتف ويتابع الإيصال الخاص",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 556
+    },
+    {
+      "title": "الطبيب يراجع القبول الصحي من الهاتف دون كشفه للاستقبال",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 599
+    },
+    {
+      "title": "الفريق يسجل حادثاً والطبيب يحله ثم يغادر الحيوان ويطبع الإيصال",
+      "file": "tests/e2e/boarding.spec.ts",
+      "line": 628
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/care-library.spec.ts",
+      "line": 43
+    },
+    {
+      "title": "لا قراءة للمسودة أو نشر بلا مراجعة ولا مراجعة ذاتية أو لعيادة أخرى",
+      "file": "tests/e2e/care-library.spec.ts",
+      "line": 89
+    },
+    {
+      "title": "كل تعديل يلغي النشر والمراجعة، وسحب الاعتماد أو قدم المراجعة يحجب المقال",
+      "file": "tests/e2e/care-library.spec.ts",
+      "line": 173
+    },
+    {
+      "title": "التصحيح للنسخة التي قرأها العميل ورد الفريق خاص ولا يغير المقال",
+      "file": "tests/e2e/care-library.spec.ts",
+      "line": 258
+    },
+    {
+      "title": "واجهة تحرير ومراجعة ونشر وقراءة وتصحيح على الهاتف دون تنفيذ HTML",
+      "file": "tests/e2e/care-library.spec.ts",
+      "line": 315
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 56
+    },
+    {
+      "title": "الخدمات والفاصل وغرف العلاج بنطاق عيادة وفرع، والدوام لا يقبل صلاحيات دخيلة",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 125
+    },
+    {
+      "title": "الدوام يولد أوقات بغداد مرة واحدة والإجازة تلغي المتاح وتحظر إعادة حجزه",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 213
+    },
+    {
+      "title": "سباق طبيبين على الغرفة يفوز مرة واحدة، وفاصل الطبيب والغرفة محفوظان في DB",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 292
+    },
+    {
+      "title": "الحضور وبدء الزيارة للطبيب المسند، ومنع إلغاء زيارة بدأت أو غياب قبل نهاية الموعد",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 380
+    },
+    {
+      "title": "عدم الحضور محفوظ بعد النهاية ولا يفتح سجلًا طبيًا، والاستقبال لا يرى الملاحظات",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 441
+    },
+    {
+      "title": "بطاقة السلامة موافقة صريحة وحقول محدودة وtoken مخزن كهاش وقابل للإلغاء",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 488
+    },
+    {
+      "title": "الدليل معتمد ولا يكشف بريدًا، والتقييم لزيارة مكتملة حقيقية فقط",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 556
+    },
+    {
+      "title": "التقويم يعزل الملاحظات والتذكير يؤجل أثناء عدم الإزعاج ولا يتكرر والمنتهي لا يحسم",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 635
+    },
+    {
+      "title": "الواجهات الجديدة RTL ووصولية وحفظ دوام وQR وطباعة PDF خاص",
+      "file": "tests/e2e/care-planning.spec.ts",
+      "line": 706
+    },
+    {
+      "title": "الحيوان محفوظ، مع منع الاطلاع والتعديل العابر وتضارب النسخة",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 121
+    },
+    {
+      "title": "الوصاية محدودة وقابلة للإلغاء؛ صلاحية الملف وحدها لا تكشف السجل",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 169
+    },
+    {
+      "title": "الخدمات والأوقات بصلاحيات العيادة والطبيب المعتمد",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 208
+    },
+    {
+      "title": "حجز متزامن يفوز به طلب واحد، وإعادة المحاولة لا تكرر الأثر",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 243
+    },
+    {
+      "title": "إعادة المحاولة المتزامنة تعيد الحجز نفسه، وتداخل الحيوان مرفوض عبر طبيبين",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 319
+    },
+    {
+      "title": "الموافقة والانتساب يفحصان لكل طلب، والمسودة لا يراها المالك",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 369
+    },
+    {
+      "title": "التوقيع ذري، الأصل محمي والإضافة مستقلة والمتابعة محفوظة",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 445
+    },
+    {
+      "title": "رحلة الواجهة: إضافة حيوان وحجز وموافقة وطبيب يوقع ثم متابعة المالك",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 542
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 552
+    },
+    {
+      "title": "/",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 578
+    },
+    {
+      "title": "سحب الموافقة يمنع إضافة بعد التوقيع، والأرشفة لا تدمر الزيارات",
+      "file": "tests/e2e/care.spec.ts",
+      "line": 686
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 94
+    },
+    {
+      "title": "صلاحيات العيادة ومجموعات SKU تمنع ربط عيادة أخرى أو خيار متداخل",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 147
+    },
+    {
+      "title": "الصورة خاصة قبل النشر؛ رفض سرقة الصورة والمرفق الطبي وغياب الموافقة",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 178
+    },
+    {
+      "title": "حذف الصورة يلغي صلاحية قراءتها، والمشتري لا يرى التكلفة والموردين",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 291
+    },
+    {
+      "title": "كل خيار يملك مخزونه وسعره؛ الخادم يرفض السعر المزور والكمية الزائدة",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 319
+    },
+    {
+      "title": "إخفاء المتجر يحجب الكتالوج والصور والطلبات الجديدة ويحتفظ بالسجل",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 371
+    },
+    {
+      "title": "المتصفح يحفظ بيانات وصورة المنتج وإعدادات المتجر على الهاتف",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 429
+    },
+    {
+      "title": "رحلة المتسوق: فلترة ثم اختيار SKU وصورة وإضافة للسلة دون تجاوز الشاشة",
+      "file": "tests/e2e/catalog.spec.ts",
+      "line": 513
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/delivery.spec.ts",
+      "line": 42
+    },
+    {
+      "title": "العنوان لصاحب الجلسة فقط، والطلب يحفظ نسخة مستقلة مع تكرار آمن",
+      "file": "tests/e2e/delivery.spec.ts",
+      "line": 106
+    },
+    {
+      "title": "التتبع للعيادة فقط وأحداث التجهيز/الشحن/التسليم لا تعدل",
+      "file": "tests/e2e/delivery.spec.ts",
+      "line": 157
+    },
+    {
+      "title": "المتصفح يحفظ عنواناً ويختاره للشراء دون إدخال نص مباشر",
+      "file": "tests/e2e/delivery.spec.ts",
+      "line": 203
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/discovery.spec.ts",
+      "line": 28
+    },
+    {
+      "title": "البحث والمشاركة ومشاهدة القصة تعيد فحص الخصوصية والمتابعة",
+      "file": "tests/e2e/discovery.spec.ts",
+      "line": 111
+    },
+    {
+      "title": "القصة المميزة تبقى بموافقة؛ إزالتها أو الحظر يسحب عرض الوسيط بعد الانتهاء",
+      "file": "tests/e2e/discovery.spec.ts",
+      "line": 160
+    },
+    {
+      "title": "مطابقة مفقود/معثور تقتصر على صاحب البلاغ والمدينة والنوع والمراجَع دون الموقع",
+      "file": "tests/e2e/discovery.spec.ts",
+      "line": 218
+    },
+    {
+      "title": "واجهة البحث والذكرى والرابط المشترك والمطابقة تعمل على الهاتف",
+      "file": "tests/e2e/discovery.spec.ts",
+      "line": 256
+    },
+    {
+      "title": "default driver opt-out, rider opt-out and eligibility prevent assignment",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 125
+    },
+    {
+      "title": "two dispatchers produce one private offer without leaking coordinates or reserving a second ride",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 147
+    },
+    {
+      "title": "decline is idempotent and reassignment chooses a different eligible driver",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 186
+    },
+    {
+      "title": "a driver cannot accept or be offered a second active journey, and cancellation releases capacity",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 221
+    },
+    {
+      "title": "expired offer acceptance is rejected and opt-out withdraws immediately",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 243
+    },
+    {
+      "title": "driver workspace discovers offers automatically, expires offline, and clears revoked access",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 308
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/dispatch.spec.ts",
+      "line": 315
+    },
+    {
+      "title": "general admin and finance grants do not grant dispute access; participants have scoped read",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 104
+    },
+    {
+      "title": "opening and immutable statements are idempotent and cannot cross ride scope",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 123
+    },
+    {
+      "title": "proposal needs maker scope and version, while the same maker cannot approve even with both scopes",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 172
+    },
+    {
+      "title": "concurrent approval refunds the exact original amount once and preserves the original posted journal",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 219
+    },
+    {
+      "title": "spent driver payables block refund atomically; independent rejection closes with no financial effect",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 271
+    },
+    {
+      "title": "mobile participant statements and reviewer queue preserve accessibility and private content",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 322
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/disputes.spec.ts",
+      "line": 329
+    },
+    {
+      "title": "العميل يبدل الحيوان وتظهر مواعيده ثم حالة الملف الصحي",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 51
+    },
+    {
+      "title": "تصفية الفواتير وتفاصيلها باللوحة وإغلاقها بلوحة المفاتيح",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 76
+    },
+    {
+      "title": "مساحات خمس فقط والوظائف غير المنفذة موسومة",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 101
+    },
+    {
+      "title": "عقود API وجاهزية الخدمات وأخطاء المسارات",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 114
+    },
+    {
+      "title": "تقليل الحركة يبقي الصفحة كاملة دون حركة غير ضرورية",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 133
+    },
+    {
+      "title": "إغلاق العرض التجريبي في الويب وAPI دون flag صريح",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 165
+    },
+    {
+      "title": "اختيار مساحة من الهاتف وتمرير جدول المالية داخل حاويته",
+      "file": "tests/e2e/foundation.spec.ts",
+      "line": 181
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 74
+    },
+    {
+      "title": "بنطاق الفرع والموظف ونوع الحيوان وسعر الخادم، ولا إدارة لعيادة أخرى",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 165
+    },
+    {
+      "title": "حجز متزامن مرة واحدة وإلغاء يرد المبلغ مرة واحدة ويعيد السعة",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 264
+    },
+    {
+      "title": "منع تعارض الموظف والغرفة والحيوان بين التجميل والزيارة الطبية في الاتجاهين",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 314
+    },
+    {
+      "title": "إتمام بصور خاصة وموافقة قابلة للسحب وتقييم شراء وإيراد غير مكرر",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 396
+    },
+    {
+      "title": "نقل الملكية يمنع البدء وتلغى صلاحية العضو المسحوب ولا تكشف الصور دون موافقة",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 503
+    },
+    {
+      "title": "المتصفح ينشئ الخدمة والموعد ثم يحجزها ويُلغيها من الهاتف",
+      "file": "tests/e2e/grooming.spec.ts",
+      "line": 574
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 100
+    },
+    {
+      "title": "عروض ومواعيد بنطاق العيادة والفرع والطبيب المعتمد وبشروط ثابتة",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 163
+    },
+    {
+      "title": "سعر وموافقات وملكية ثم سباق حجز واحد وعنوان لا ينتقل إلى القوائم العامة",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 237
+    },
+    {
+      "title": "وقت الانتقال يمنع تداخل العيادة قبل وبعد المنزل، ويحمي الإجازة والحيوان",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 322
+    },
+    {
+      "title": "سحب الموافقة أو نقل الملكية يحجب العنوان ويوقف التنفيذ مع مسار رد للمدير",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 383
+    },
+    {
+      "title": "الإرسال والحضور والتوقيع الطبي فقط يتممان الإيراد مرة واحدة",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 426
+    },
+    {
+      "title": "إخفاء العرض أو سحب اعتماد الطبيب يمنع الجديد دون كشف خاص لغير المخول",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 525
+    },
+    {
+      "title": "العيادة تنشر والمالك يحجز ويطبع إيصالاً خاصاً من الهاتف",
+      "file": "tests/e2e/home-visits.spec.ts",
+      "line": 560
+    },
+    {
+      "title": "التسجيل عميل فقط، والبريد غير الموثق لا يدخل، وحقول الامتياز مرفوضة",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 136
+    },
+    {
+      "title": "TOTP إلزامي للمراجع والجلسات السابقة تُلغى عند منحه",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 159
+    },
+    {
+      "title": "اعتماد العيادات يُنشئ عضويات الخادم ويمنع المراجع من اعتماد نفسه والتكرار",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 210
+    },
+    {
+      "title": "الدعوة لبريد بعينه وتُقبل مرة واحدة، والسحب يوقف الوصول فورًا",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 271
+    },
+    {
+      "title": "انتساب طبيب لعيادة لا يعيد صلاحيات ملغاة، وتعليق الاعتماد يوقفه",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 344
+    },
+    {
+      "title": "تسجيل واجهة حقيقي ثم تأكيد البريد والدخول وحفظ الاسم والإلغاء",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 409
+    },
+    {
+      "title": "واجهة العيادة والمراجعة تعرض بيانات محفوظة وتحترم الهاتف وإمكانية الوصول",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 468
+    },
+    {
+      "title": "الاستعادة لا تكشف وجود البريد وتلغي الجلسات ورابطها يستخدم مرة واحدة",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 578
+    },
+    {
+      "title": "رمز الاسترداد يستخدم مرة واحدة وسجل التدقيق غير قابل للتعديل",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 613
+    },
+    {
+      "title": "حد المحاولات مطبق على الخادم",
+      "file": "tests/e2e/identity.spec.ts",
+      "line": 644
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 55
+    },
+    {
+      "title": "المستودع والدفعة داخل العيادة؛ الاستلام الجزئي لا يتجاوز PO ولا يتكرر",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 126
+    },
+    {
+      "title": "منع المنتهي وسباق الحجز والحجر؛ نقل الدفعة يحفظ الكلفة والرصيد",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 209
+    },
+    {
+      "title": "الإتلاف يتطلب شخصاً ثانياً وMFA ويولد قيداً متوازناً مرة واحدة",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 275
+    },
+    {
+      "title": "السداد الجزئي وأعمار المستحقات حسب التاريخ؛ لا صرف زائد أو عبر العيادات",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 325
+    },
+    {
+      "title": "شحن طلب بعد انتهاء دفعته يرفض ولا يخصم المنتهي",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 406
+    },
+    {
+      "title": "واجهات المستودعات والتقارير تحفظ وتعكس القاعدة وتدعم الهاتف والوصول",
+      "file": "tests/e2e/inventory-finance.spec.ts",
+      "line": 449
+    },
+    {
+      "title": "default dry run leaves database and original bytes intact and excludes medical video",
+      "file": "tests/e2e/media-backfill.spec.ts",
+      "line": 123
+    },
+    {
+      "title": "concurrent batches create one rendition set, preserve privacy, and safely repeat",
+      "file": "tests/e2e/media-backfill.spec.ts",
+      "line": 139
+    },
+    {
+      "title": "unreadable or symlinked sources keep MP4 playback and permit a repaired retry",
+      "file": "tests/e2e/media-backfill.spec.ts",
+      "line": 175
+    },
+    {
+      "title": "invalid batch bounds are rejected before work",
+      "file": "tests/e2e/media-backfill.spec.ts",
+      "line": 215
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 121
+    },
+    {
+      "title": "شروط محدودة بنطاق العيادة والفرع والخدمات وإتاحة بإصدار",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 191
+    },
+    {
+      "title": "شراء مكرر بلقطة ثابتة وسعر خادم، ومنع تغيير العدادات والمبالغ",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 262
+    },
+    {
+      "title": "حصص مستقلة وزيارة مؤهلة واستهلاك متزامن واحد وإيراد كامل دون فقد التقريب",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 311
+    },
+    {
+      "title": "انتظار وتعليق محدود واستئناف مبكر وتلقائي وحظر زيارة أثناء التعليق",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 356
+    },
+    {
+      "title": "تجديد دورة منتهية مرة واحدة بشروط متاحة ومن دون ترحيل الاستخدامات",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 422
+    },
+    {
+      "title": "المستحق المحجوز يمنع الرد، وتعليق الانتظار يمدد المدة المتبقية فقط",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 448
+    },
+    {
+      "title": "ترقية بفرق موجب تحفظ الحقوق وتستبدل الأصل ذرياً مرة واحدة",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 506
+    },
+    {
+      "title": "نقل الملكية والأرشفة يسحبان القراءة والتعديل والاستهلاك، والتقارير مقيدة",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 557
+    },
+    {
+      "title": "إنشاء وشراء وتعليق واستئناف من الهاتف مع فحص الوصول",
+      "file": "tests/e2e/plan-lifecycle.spec.ts",
+      "line": 614
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 89
+    },
+    {
+      "title": "كتالوج ومشتريات واستلام ومطابقة، وعزل العيادات",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 137
+    },
+    {
+      "title": "سلة متعددة العيادات وتحصل خمس مرات بأثر واحد وتسليم حقيقي",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 193
+    },
+    {
+      "title": "سباق مخزون قطعة واحدة، وانتهاء الحجز يعيدها عبر العامل",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 254
+    },
+    {
+      "title": "مرتجع جزئي يعكس العمولة وتكلفة FIFO مرة واحدة",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 289
+    },
+    {
+      "title": "قاعدة البيانات ترفض القيد غير المتوازن وتعديل المرحل وتفرض اعتمادًا مستقلًا",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 330
+    },
+    {
+      "title": "رعاية موقعة ثم اشتراك: استخدام متزامن واحد، وفندق لا يقبل تداخلًا",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 434
+    },
+    {
+      "title": "المجتمع: الخصوصية والحظر والرسائل المتينة ومنع وصول المرفق",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 550
+    },
+    {
+      "title": "الفيديو لا ينشر قبل التحويل، ومرفق طبي لا يقرأه مستخدم آخر",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 694
+    },
+    {
+      "title": "الرفع الخاطئ يحتسب محاولاته، وروابط الملفات الرمزية لا تكشف ملفات الخادم",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 769
+    },
+    {
+      "title": "الاعتماد المالي يرفض غياب MFA والجلسة القديمة أو السابقة لتفعيله",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 798
+    },
+    {
+      "title": "تبنٍ ببيانات خاصة وقبول ثم تسليم، وبلاغ لا يكشف موقعه",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 846
+    },
+    {
+      "title": "التبرعات المقيدة ومطابقة الصرف لا تتكرر أو تتجاوز فصل المهام",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 908
+    },
+    {
+      "title": "السائق: سباق قبول واحد، موقع مؤقت، ومستحق مشتق من الدفتر",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 978
+    },
+    {
+      "title": "العامل والإشعارات والمحتوى العام تعمل ببيانات محفوظة",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1038
+    },
+    {
+      "title": "حفظ السلة والمفضلة والتقييم الموثق وإلغاء الخدمات يعيد الأثر مرة واحدة",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1064
+    },
+    {
+      "title": "المطابقة المصرفية ترفض قيد عيادة أخرى وتحفظ مرجع السطر",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1154
+    },
+    {
+      "title": "فشل العامل لا يغير الحدث؛ dead letter ثم إعادة تشغيل دون تكرار",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1213
+    },
+    {
+      "title": "خط أساس حمل محلي وفحص 120 منتجًا وقياسات متصفح",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1249
+    },
+    {
+      "title": "نسخة PostgreSQL والوسائط تسترجع إلى قاعدة مستقلة مع تطابق البصمات",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1336
+    },
+    {
+      "title": "الشراء والملف الاجتماعي يحفظان من الواجهة ولوحة المفاتيح",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1386
+    },
+    {
+      "title": "صفحات العيادة والإدارة تتجاوب وتجتاز الوصول ويعتمد القيد بلوحة المفاتيح",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1429
+    },
+    {
+      "title": "/",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1463
+    },
+    {
+      "title": "السائق يقرأ رحلاته ومستحقاته من الواجهة",
+      "file": "tests/e2e/platform.spec.ts",
+      "line": 1500
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 84
+    },
+    {
+      "title": "الصلاحيات وMFA وشروط الرمز ثابتة والتعطيل بإصدار متفائل",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 165
+    },
+    {
+      "title": "المعاينة لا تثق بسعر العميل وتعيد التحقق عند تبدل الإعداد والطلب يحفظ لقطة",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 254
+    },
+    {
+      "title": "آخر استخدام لا يتجاوز الحد مع منتجين متزامنين والإلغاء والانتهاء يحرران الحجز",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 387
+    },
+    {
+      "title": "حد العميل مستقل عن الحد العام والخصم والنسبة لا يتسربان لعيادة أخرى",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 433
+    },
+    {
+      "title": "واجهة الهاتف تنشئ كوبوناً وتعاين الخصم والضريبة وتحجز الطلب الحقيقي",
+      "file": "tests/e2e/pricing.spec.ts",
+      "line": 500
+    },
+    {
+      "title": "المصافحة ترفض المصدر الغريب والضيف والبروتوكول الآخر دون قبول cookies كافية وحدها",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 118
+    },
+    {
+      "title": "الرسائل الثنائية وJSON غير الموافق والحجم الزائد تغلق الاتصال",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 136
+    },
+    {
+      "title": "الاشتراك يتبع خصوصية المراسلة ولا يكشف رسائل حساب خاص بلا متابعة",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 156
+    },
+    {
+      "title": "الإشعار يصل بعد commit فقط وبلا نص الرسالة وإعادة الاتصال تعيد التاريخ من DB",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 173
+    },
+    {
+      "title": "الحضور والكتابة مخفيان افتراضياً ويظهران بموافقة ويسحبان عند إلغائها",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 241
+    },
+    {
+      "title": "حد ثلاث جلسات للمستخدم لا يسمح باتصال رابع",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 263
+    },
+    {
+      "title": "واجهة الهاتف تستقبل عبر WS وتعرض الكتابة وتحفظ الرسالة بمفتاح وتستوفي الوصول",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 278
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 285
+    },
+    {
+      "title": "سحب الجلسة والحظر يوقفان اتصالاً مفتوحاً ولا يكتفيان بإخفاء واجهة",
+      "file": "tests/e2e/realtime.spec.ts",
+      "line": 357
+    },
+    {
+      "title": "اختيار الحاجة يفتح الخدمة الصحيحة والأسئلة تعمل بلوحة المفاتيح",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 8
+    },
+    {
+      "title": "الصور المحلية وتقليل الحركة وإتاحة الصفحة الجديدة",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 30
+    },
+    {
+      "title": "الهوية الجديدة تخدم الشخصيات الخمس والتنقل على الهاتف دون تسريب الصلاحيات",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 61
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 99
+    },
+    {
+      "title": "التمرير والحركة يحترمان الروابط ولوحة المفاتيح والتفضيل الحي والتنقل",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 176
+    },
+    {
+      "title": "اللمس يبقى بتمرير أصلي والصفحة العامة قابلة للقراءة دون JavaScript",
+      "file": "tests/e2e/redesign.spec.ts",
+      "line": 219
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/rescue-lifecycle.spec.ts",
+      "line": 31
+    },
+    {
+      "title": "تعديل الإعلان يعيده للمراجعة، وإغلاقه يرفض الطلبات؛ سباق الإغلاق والتسليم لا ينقل مرتين",
+      "file": "tests/e2e/rescue-lifecycle.spec.ts",
+      "line": 77
+    },
+    {
+      "title": "الحملة تحفظ شروطها بعد أول تبرع، وتغلق بأثر واحد مع السماح برد التبرعات القديمة",
+      "file": "tests/e2e/rescue-lifecycle.spec.ts",
+      "line": 177
+    },
+    {
+      "title": "المالك يعدل ويغلق الإعلان من الواجهة، والإدارة تعدل الحملة ثم توقفها",
+      "file": "tests/e2e/rescue-lifecycle.spec.ts",
+      "line": 289
+    },
+    {
+      "title": "authentication, explicit coordinate consent, Iraq bounds and URL injection",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 68
+    },
+    {
+      "title": "immutable road distance and integer sandbox quote survive concurrent replay",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 92
+    },
+    {
+      "title": "quote owner, coordinate and expiry checks bind the ride and do not trust browser fares",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 120
+    },
+    {
+      "title": "provider failures produce no fabricated quote and failed attempts are limited",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 180
+    },
+    {
+      "title": "geometry remains private until assigned, and driver revocation removes access",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 210
+    },
+    {
+      "title": "mobile planner loads no tiles before opt-in, computes quote and clears it when coordinates change",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 235
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/routing.spec.ts",
+      "line": 240
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/scheduled-transport.spec.ts",
+      "line": 51
+    },
+    {
+      "title": "يرفض حيوان غير مخول وتكراره والموعد البعيد، ويعيد نفس الحجز مرة واحدة",
+      "file": "tests/e2e/scheduled-transport.spec.ts",
+      "line": 113
+    },
+    {
+      "title": "نافذة الموعد والسعة والأنواع والراكب تمنع القبول؛ لا عنوان خاص في قائمة الطلبات",
+      "file": "tests/e2e/scheduled-transport.spec.ts",
+      "line": 147
+    },
+    {
+      "title": "سحب ملكية حيوان إضافي يمنع القبول، والعامل يلغي الموعد الفائت مرة واحدة",
+      "file": "tests/e2e/scheduled-transport.spec.ts",
+      "line": 195
+    },
+    {
+      "title": "المتصفح ينشئ موعداً لحيوانين ويعرضه بتوقيت بغداد دون تجاوز الهاتف",
+      "file": "tests/e2e/scheduled-transport.spec.ts",
+      "line": 246
+    },
+    {
+      "title": "إعداد الإنتاج يرفض الوضع التجريبي والمفاتيح الضعيفة واتصالات البيانات غير المشفرة",
+      "file": "tests/e2e/security.spec.ts",
+      "line": 6
+    },
+    {
+      "title": "ملفات البيئة وGit والنسخ لا يمكن تنزيلها من الويب أو API",
+      "file": "tests/e2e/security.spec.ts",
+      "line": 45
+    },
+    {
+      "title": "الطلب غير الموثوق يرفض قبل JSON، والرفع المجهول قبل فك الملف",
+      "file": "tests/e2e/security.spec.ts",
+      "line": 65
+    },
+    {
+      "title": "CSP برمز متغير يمنع سكربتًا محقونًا ويحافظ على تسجيل الدخول",
+      "file": "tests/e2e/security.spec.ts",
+      "line": 105
+    },
+    {
+      "title": "التصنيفات للتجارة فقط ولا يمكن تغيير العيادة بالمعرف",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 77
+    },
+    {
+      "title": "أربعة مستويات ثابتة مع إعادة طلب ومنع اسم أخ مكرر أو مستوى خامس",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 104
+    },
+    {
+      "title": "ربط بإصدار ووسوم مطبعة يحفظ السعر والمخزون ولا يقبل تصنيف عيادة أخرى",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 150
+    },
+    {
+      "title": "فلاتر الخادم تشمل فرع التصنيف وتحجب التصنيفات غير المنشورة أو ذات أصل مخفي",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 213
+    },
+    {
+      "title": "قاعدة البيانات تمنع الدورات ونقل العيادة والوسم المكرر حتى لكاتب آخر",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 265
+    },
+    {
+      "title": "الفريق ينشئ ويربط من الهاتف مع الوصول ودون تجاوز",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 282
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 287
+    },
+    {
+      "title": "البحث المصنف لا يسقط منتجاً مختاراً من السلة عند تغير النتائج",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 358
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/taxonomy.spec.ts",
+      "line": 374
+    },
+    {
+      "title": "; ",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 93
+    },
+    {
+      "title": "يرفض العميل والمحاسب والعيادة الأخرى والحقول المزورة والأبعاد غير الصالحة",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 139
+    },
+    {
+      "title": "التوليد ذري ومخفي بلا مخزون أو قيد، وإعادة الطلب تعيد الهويات نفسها",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 178
+    },
+    {
+      "title": "سباق توليد واحد وتعارض SKU يلغي كل الصفوف ويسمح بمحاولة صحيحة",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 249
+    },
+    {
+      "title": "لا تحول عائلة قديمة أو خياراً إلى مصفوفة ولا تضيف ابناً يدوياً لعائلة منظمة",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 302
+    },
+    {
+      "title": "قاعدة البيانات ترفض العبث بالهوية أو التعريف أو الاختيار أو حفظ مصفوفة ناقصة",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 335
+    },
+    {
+      "title": "السعر والحجز مستقلان لكل تركيبة وتُحجب التكاليف والمتجر المخفي",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 406
+    },
+    {
+      "title": "الهاتف ينشئ المصفوفة من معاينة حقيقية دون تجاوز أو أخطاء وصول",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 463
+    },
+    {
+      "title": "المشتري يختار أبعاداً منشورة ويضيف SKU المطابق بسعره ومخزونه",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 525
+    },
+    {
+      "title": "استرجاع نسخة بها مصفوفات فعلية يحفظ كل التركيبات وآليات الحماية",
+      "file": "tests/e2e/variant-matrix.spec.ts",
+      "line": 592
+    },
+    {
+      "title": "يولد الدوام بتوقيت بغداد ويترك مدة الخدمة والفاصل داخل الدوام",
+      "file": "tests/unit/care-calendar.test.ts",
+      "line": 4
+    },
+    {
+      "title": "يرفض نطاقًا مقلوبًا أو كبيرًا وقيم مدة غير آمنة",
+      "file": "tests/unit/care-calendar.test.ts",
+      "line": 18
+    },
+    {
+      "title": "يحول الدينار والوحدات الصغرى دون حساب عائم أو فقد كسور",
+      "file": "tests/unit/care-calendar.test.ts",
+      "line": 29
+    },
+    {
+      "title": "يرفض نقل الملكية أو تجاوز النسخة عبر حقول ملف الحيوان",
+      "file": "tests/unit/care-contracts.test.ts",
+      "line": 19
+    },
+    {
+      "title": "لا يقبل نتيجة معتمدة بلا نص ولا متابعة لقاح تسبق تنفيذه",
+      "file": "tests/unit/care-contracts.test.ts",
+      "line": 33
+    },
+    {
+      "title": "يرفض حقول توقيع يرسلها العميل وخطة طبية فارغة",
+      "file": "tests/unit/care-contracts.test.ts",
+      "line": 54
+    },
+    {
+      "title": "يحدد خمس مساحات عمل ويرفض هوية تاجر مستقلة",
+      "file": "tests/unit/contracts.test.ts",
+      "line": 26
+    },
+    {
+      "title": "يحمل الحدث المالي سياق دفتر وعيادة ومفتاح منع التكرار",
+      "file": "tests/unit/contracts.test.ts",
+      "line": 30
+    },
+    {
+      "title": "يرفض حقولًا سرية إضافية وطابعًا زمنيًا بلا UTC",
+      "file": "tests/unit/contracts.test.ts",
+      "line": 44
+    },
+    {
+      "title": "يعرض وحدات IQD الثلاث دون تقريب عائم حتى المبالغ الكبيرة",
+      "file": "tests/unit/contracts.test.ts",
+      "line": 55
+    },
+    {
+      "title": "يمنع خلط أمثلة التصميم ببيانات إنتاجية",
+      "file": "tests/unit/contracts.test.ts",
+      "line": 60
+    },
+    {
+      "title": "يعترف بكل قيمة الاشتراك تمامًا حتى مع باقي القسمة",
+      "file": "tests/unit/finance-math.test.ts",
+      "line": 7
+    },
+    {
+      "title": "عكس العمولة الجزئي يحفظ الباقي في آخر رد",
+      "file": "tests/unit/finance-math.test.ts",
+      "line": 22
+    },
+    {
+      "title": "يرفض تجاوز حق الاشتراك ومبلغ المبيعات ومبالغ سالبة",
+      "file": "tests/unit/finance-math.test.ts",
+      "line": 30
+    },
+    {
+      "title": "يحظر الأسرار والملفات المخفية والترميز المتكرر والفواصل البديلة",
+      "file": "tests/unit/http-security.test.ts",
+      "line": 6
+    },
+    {
+      "title": "يرفض الحجم المعلن قبل قراءة الجسم والضغط قبل فكّه",
+      "file": "tests/unit/http-security.test.ts",
+      "line": 25
+    },
+    {
+      "title": "يحصر الطلب المتدفق بلا Content-Length ويلغي المصدر عند التجاوز",
+      "file": "tests/unit/http-security.test.ts",
+      "line": 46
+    },
+    {
+      "title": "يرسل البريد العربي عبر HTTPS بمفتاح ثابت للرسالة دون إعادة محاولة",
+      "file": "tests/unit/mail.test.ts",
+      "line": 12
+    },
+    {
+      "title": "يرفض مهلة الشبكة أو استجابة نجاح بلا معرّف دون كشف السبب الخاص",
+      "file": "tests/unit/mail.test.ts",
+      "line": 68
+    },
+    {
+      "title": "يرفض الإعداد الناقص أو المزود المجهول دون إرسال أو بريد محلي بديل",
+      "file": "tests/unit/mail.test.ts",
+      "line": 79
+    },
+    {
+      "title": "يبقي بريد Mailpit المحلي متاحاً للتطوير فقط",
+      "file": "tests/unit/mail.test.ts",
+      "line": 93
+    },
+    {
+      "title": "يبقي SMTP مشفراً خارج التطوير مع إعداد المصادقة والمهل",
+      "file": "tests/unit/mail.test.ts",
+      "line": 115
+    },
+    {
+      "title": "يوزع أكبر البواقي بترتيب ثابت دون تجاوز أي بند",
+      "file": "tests/unit/pricing.test.ts",
+      "line": 9
+    },
+    {
+      "title": "يحفظ الدقة فوق مدى Number الآمن ويقرب الضريبة نصفاً إلى أعلى",
+      "file": "tests/unit/pricing.test.ts",
+      "line": 19
+    },
+    {
+      "title": "يعيد كل البواقي عند رد ثلاث قطع على دفعات مع كامل العمولة",
+      "file": "tests/unit/pricing.test.ts",
+      "line": 24
+    },
+    {
+      "title": "يرفض الخصم الزائد والضريبة غير الصحيحة وتجاوز كمية الرد",
+      "file": "tests/unit/pricing.test.ts",
+      "line": 41
+    },
+    {
+      "title": "يفشل مغلقاً للإعداد المحلي ولا يطبع الأسرار في التقرير",
+      "file": "tests/unit/production-readiness.test.ts",
+      "line": 11
+    },
+    {
+      "title": "لا يقبل مرسل Resend التجريبي كتهيئة بريد إطلاق عام",
+      "file": "tests/unit/production-readiness.test.ts",
+      "line": 30
+    },
+    {
+      "title": "يربط تقرير التدقيق بتوقيع المراجع والنسخة والصلاحية والمجالات المطلوبة",
+      "file": "tests/unit/production-readiness.test.ts",
+      "line": 46
+    },
+    {
+      "title": "يكشف سرًا منسوخًا إلى public دون طباعته",
+      "file": "tests/unit/secret-guard.test.ts",
+      "line": 8
+    },
+    {
+      "title": "يكشف env مضافًا بالقوة إلى فهرس Git معزول",
+      "file": "tests/unit/secret-guard.test.ts",
+      "line": 25
+    },
+    {
+      "title": "يكشف سراً ثنائياً في فهرس Git مع نسخة عمل نظيفة دون طباعة السر",
+      "file": "tests/unit/secret-guard.test.ts",
+      "line": 61
+    },
+    {
+      "title": "يولد كل التركيبات بترتيب ثابت ومؤشرات تبدأ بواحد وتسمية صريحة",
+      "file": "tests/unit/variant-matrix.test.ts",
+      "line": 4
+    },
+    {
+      "title": "يطبع Unicode والمسافات قبل اكتشاف القيم والأبعاد المكررة",
+      "file": "tests/unit/variant-matrix.test.ts",
+      "line": 24
+    },
+    {
+      "title": "يقبل 64 تركيبة ويمنع الانفجار التجميعي قبل توليد القائمة",
+      "file": "tests/unit/variant-matrix.test.ts",
+      "line": 41
+    },
+    {
+      "title": "يرفض الفراغ وعلامات التحكم والاتجاه والتسميات الأطول من حد هوية الخيار",
+      "file": "tests/unit/variant-matrix.test.ts",
+      "line": 55
+    },
+    {
+      "title": "requires an explicit true flag and does not alter normal routes",
+      "file": "tests/unit/web-preview.test.ts",
+      "line": 12
+    },
+    {
+      "title": "blocks all API methods independently of session or origin",
+      "file": "tests/unit/web-preview.test.ts",
+      "line": 18
+    },
+    {
+      "title": "hides demo and safety tokens and rejects page writes",
+      "file": "tests/unit/web-preview.test.ts",
+      "line": 25
+    },
+    {
+      "title": "redirects unavailable routes without copying secrets from the URL",
+      "file": "tests/unit/web-preview.test.ts",
+      "line": 31
+    },
+    {
+      "title": "allows identity designs and known assets without opening dynamic paths",
+      "file": "tests/unit/web-preview.test.ts",
+      "line": 41
+    }
+  ]
+}

@@ -241,7 +241,8 @@ export class MediaService {
           !groomingAccess &&
           !(
             await db.query(
-              `SELECT 1 FROM social_posts p JOIN social_profiles sp ON sp.user_id=p.user_id WHERE p.asset_id=$2 AND ${visibleSql}`,
+              `SELECT 1 FROM social_posts p JOIN social_profiles sp ON sp.user_id=p.user_id WHERE (p.asset_id=$2 OR EXISTS(SELECT 1 FROM social_post_media pm WHERE pm.post_id=p.id AND pm.asset_id=$2)) AND ${visibleSql}
+              UNION ALL SELECT 1 FROM social_profiles sp WHERE sp.avatar_asset_id=$2 AND (sp.privacy='public' OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=$1 AND f.followed_id=sp.user_id AND f.status='accepted')) AND NOT EXISTS(SELECT 1 FROM social_blocks b WHERE (b.blocker_id=$1 AND b.blocked_id=sp.user_id) OR (b.blocker_id=sp.user_id AND b.blocked_id=$1)) LIMIT 1`,
               [actor, id],
             )
           ).rowCount &&
