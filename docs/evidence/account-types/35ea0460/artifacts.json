@@ -1,0 +1,125 @@
+{
+  "source": "35ea04603e6a6a1c0d00565a03b30430cd102257",
+  "kind": "unaltered native browser screenshots",
+  "files": [
+    {
+      "file": "account-1440-viewport.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 133494,
+      "sha256": "be6aa65199f7957bc7cddf1013dfcb37b586931564dcbc61cc8cb393f2769718"
+    },
+    {
+      "file": "account-1440.png",
+      "width": 1440,
+      "height": 1166,
+      "bytes": 141903,
+      "sha256": "227c5ed29c8023c22b8dad2af778d63430e7ec37f38ec952e271535fd7538857"
+    },
+    {
+      "file": "account-390-viewport.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 54081,
+      "sha256": "ce67e4c2a9bdcb93591ee5c0621259b63a30f8f50b7dadc1922eabd028b81976"
+    },
+    {
+      "file": "account-390.png",
+      "width": 390,
+      "height": 2086,
+      "bytes": 103483,
+      "sha256": "684ad24d96d7cecf61162653ccf611ed90bcaeb8bbfcd17410e9932eb172f67b"
+    },
+    {
+      "file": "admin-1440.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 90771,
+      "sha256": "fecd5d0221a269b858a8484bf99ca37d803260379eb538425e41bd3dd8c93904"
+    },
+    {
+      "file": "login-1440-viewport.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 294498,
+      "sha256": "a2ae5b78a71267df2993d7a3f70d42f2ced2b0502e95d25a1380c18276b588d5"
+    },
+    {
+      "file": "login-1440.png",
+      "width": 1440,
+      "height": 1136,
+      "bytes": 300976,
+      "sha256": "77be12dfa3cbf7e1a5c4e9e37b3203d9d6102957a0942227bfe995b95b84b2cb"
+    },
+    {
+      "file": "login-390-viewport.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 28434,
+      "sha256": "f54aae97049e583d4fe8f8b0d05279c3bc8ce24094aa2a258971e0a5200fae5c"
+    },
+    {
+      "file": "login-390.png",
+      "width": 390,
+      "height": 877,
+      "bytes": 29371,
+      "sha256": "9fe4f8deffb2d0e2b81a40484da067cd3edff162f4b26600a53bc0b8bd0179d9"
+    },
+    {
+      "file": "register-1440-viewport.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 306633,
+      "sha256": "140a7b35d63aeaab6e9834e91c3d3ef47cf6474a09640f9b9a0ac60851466d04"
+    },
+    {
+      "file": "register-1440.png",
+      "width": 1440,
+      "height": 1136,
+      "bytes": 318819,
+      "sha256": "8134577b97c13592fac78191112290f1fe9b75e9aed656f8280d7ac087382818"
+    },
+    {
+      "file": "register-390-viewport.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 33316,
+      "sha256": "3e8948b9098bf035dc8ad0ccc4f91161dc3a517e90bb6b49f196b8e6a2e7ed50"
+    },
+    {
+      "file": "register-390.png",
+      "width": 390,
+      "height": 1134,
+      "bytes": 45686,
+      "sha256": "35f17c95e71df14df94fc9936dae09a74cda82ecbe2806d27ae8a2f449d3a6f1"
+    },
+    {
+      "file": "security-1440-viewport.png",
+      "width": 1440,
+      "height": 1000,
+      "bytes": 145303,
+      "sha256": "d46ba3df2907558c743a8768a7737ab83691d9e75eb9fec296ad5b6493e4906a"
+    },
+    {
+      "file": "security-1440.png",
+      "width": 1440,
+      "height": 1374,
+      "bytes": 160894,
+      "sha256": "86e324a3358bcb9477120c3c961767605b9378a74ee2f3540ab081fe1e73423f"
+    },
+    {
+      "file": "security-390-viewport.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 61382,
+      "sha256": "9e1ca8055eb8705de1feae54be2d919f211cf6d3a4a4b88ae6c28e7749836c62"
+    },
+    {
+      "file": "security-390.png",
+      "width": 390,
+      "height": 2100,
+      "bytes": 117389,
+      "sha256": "fb58328c13fb196b3fcf410a3c35ff8ab4e3e581f4bb84dc0235bbad064707b3"
+    }
+  ]
+}

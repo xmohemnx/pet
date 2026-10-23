@@ -1,0 +1,62 @@
+{
+  "commit": "35ea04603e6a6a1c0d00565a03b30430cd102257",
+  "branch": "codex/account-types-20261023",
+  "timezone": "Asia/Baghdad",
+  "environment": "isolated local E2E database; explicitly synthetic accounts",
+  "screens": [
+    {
+      "file": "register-390.png",
+      "route": "/register",
+      "width": 390,
+      "capturedAt": "2026-10-23T14:19:47.572Z"
+    },
+    {
+      "file": "register-1440.png",
+      "route": "/register",
+      "width": 1440,
+      "capturedAt": "2026-10-23T14:19:48.805Z"
+    },
+    {
+      "file": "login-390.png",
+      "route": "/login",
+      "width": 390,
+      "capturedAt": "2026-10-23T14:19:49.810Z"
+    },
+    {
+      "file": "login-1440.png",
+      "route": "/login",
+      "width": 1440,
+      "capturedAt": "2026-10-23T14:19:50.939Z"
+    },
+    {
+      "file": "account-390.png",
+      "route": "/account",
+      "width": 390,
+      "capturedAt": "2026-10-23T14:19:52.086Z"
+    },
+    {
+      "file": "account-1440.png",
+      "route": "/account",
+      "width": 1440,
+      "capturedAt": "2026-10-23T14:19:53.575Z"
+    },
+    {
+      "file": "security-390.png",
+      "route": "/security",
+      "width": 390,
+      "capturedAt": "2026-10-23T14:19:55.587Z"
+    },
+    {
+      "file": "security-1440.png",
+      "route": "/security",
+      "width": 1440,
+      "capturedAt": "2026-10-23T14:19:56.789Z"
+    },
+    {
+      "file": "admin-1440.png",
+      "route": "/admin/account-types",
+      "width": 1440,
+      "capturedAt": "2026-10-23T14:19:57.862Z"
+    }
+  ]
+}
