@@ -1,6 +1,6 @@
 ---
 name: Petra
-description: Arabic companion photo journal with a light teal field and restrained warm story accents; incumbent identity with shared task and account refinements.
+description: Arabic companion photo journal with a light teal field and restrained warm story accents; incumbent identity with shared task, account and dashboard refinements.
 colors:
   brand: '#0e6873'
   brand-hover: '#08515b'
@@ -35,6 +35,8 @@ colors:
   operating-control: '#b7c2d1'
   operating-selected: '#e5eaf1'
   operating-neutral: '#f0f3f7'
+  control-glass: 'rgb(255 255 255 / 82%)'
+  control-glass-line: 'rgb(14 104 115 / 25%)'
 typography:
   display:
     fontFamily: 'IBM Plex Sans Arabic, sans-serif'
@@ -113,10 +115,41 @@ typography:
     fontWeight: 700
     lineHeight: 1
     letterSpacing: '-1.4px'
+  dashboard-stat:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.65rem'
+    fontWeight: 600
+  driver-stat:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.3rem'
+    fontWeight: 600
+  dashboard-stat-mobile:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.4rem'
+    fontWeight: 600
+  banner-heading:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: 'clamp(1.4rem, 2.3vw, 2rem)'
+  banner-heading-mobile:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.45rem'
+  management-title:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.1rem'
+  professional-monogram:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '2rem'
+  professional-monogram-mobile:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.5rem'
+  professional-title-mobile:
+    fontFamily: 'IBM Plex Sans Arabic, sans-serif'
+    fontSize: '1.5rem'
 rounded:
   tab: '6px'
   field: '7px'
   control: '8px'
+  task-control: '12px'
   search: '9px'
   panel: '12px'
   social-panel: '14px'
@@ -177,8 +210,24 @@ components:
   operating-button:
     backgroundColor: '{colors.brand}'
     textColor: '{colors.surface}'
-    rounded: '{rounded.control}'
+    rounded: '{rounded.task-control}'
     padding: '10px 20px'
+  glass-action:
+    backgroundColor: '{colors.control-glass}'
+    textColor: '{colors.brand-dark}'
+    rounded: '{rounded.task-control}'
+    padding: '10px 20px'
+  department-filter:
+    backgroundColor: '{colors.control-glass}'
+    textColor: '{colors.brand-dark}'
+    rounded: '{rounded.task-control}'
+    padding: '0.7rem 1rem'
+  department-filter-selected:
+    backgroundColor: '{colors.brand}'
+    textColor: '{colors.surface}'
+  dashboard-statistic:
+    textColor: '{colors.ink}'
+    typography: '{typography.dashboard-stat}'
   operating-button-hover:
     backgroundColor: '{colors.brand-dark}'
   task-field:
@@ -224,13 +273,16 @@ This is the implemented replacement proposed for owner visual review under the a
 - Photograph-and-author priority on light teal-neutral surfaces.
 - Restrained warm story emphasis and visible interaction states.
 - Separate public, social and operational densities.
+- Translucent task controls over opaque operational reading surfaces.
 - Responsive native forms, explicit privacy boundaries and reduced motion support.
 
-Scope: `apps/web`; original social extraction `f4429f36e48458cbef9884ec028b987f7f568f7d`, shared-experience refresh from source `41851243224fbc66907cca32d5510f138e9f975e`. This refresh merges the authorized shared refinement into the incumbent system; it establishes no new visual world. Sources load in this order: `../../packages/ui/src/tokens.css`, `app/globals.css`, `app/redesign.css`, `app/social.css`, `app/rebuild.css`, `app/experience.css`; font imports and RTL live in `app/layout.tsx`. The frontmatter is normative for selected implemented values. Rounded/spacing names describe observed dimensions rather than new CSS variables. Shared brand and social-prefixed CSS tokens have matching values; public overrides have their own scope. Sidecar metadata extends these primitives without inventing palette ramps.
+Scope: `apps/web`; original social extraction `f4429f36e48458cbef9884ec028b987f7f568f7d`, shared-experience refresh from source `41851243224fbc66907cca32d5510f138e9f975e`; dashboard expansion from source `b0efa4b5e38ae81eaf893adaea7d18eaf7786195` (tree `6278760fdffe2ab90d6d9985e2dffcd56bc7b1ee`). This refresh merges the authorized shared refinement into the incumbent system; it establishes no new visual world. Sources load in this order: `../../packages/ui/src/tokens.css`, `app/globals.css`, `app/redesign.css`, `app/social.css`, `app/rebuild.css`, `app/experience.css`, `app/workspaces.css`, `app/dashboards.css`; font imports and RTL live in `app/layout.tsx`. The frontmatter is normative for selected implemented values. Rounded/spacing names describe observed dimensions rather than new CSS variables. Shared brand and social-prefixed CSS tokens have matching values; public overrides have their own scope. Sidecar metadata extends these primitives without inventing palette ramps.
 
 The finish review in `../../docs/audits/DESIGN_FINISH_REVIEW.md` returns `ship` for the first-task POC ready for owner review. It does not certify a complete platform, full clinic redesign, advanced social phases or production readiness. Browser evidence and provenance are in `../../docs/evidence/social-rebuild/f4429f36/`; unfinished capabilities remain disclosed in `../../docs/audits/RELEASE_EVIDENCE.md`. Conceptual brand photographs and encoded test media are illustration, never evidence of actual patients, users, premises or endorsements; see `../../docs/ASSET_CREDITS.md` and the evidence manifest.
 
 The shared refinement has its own independent `ship` verdict in `../../docs/audits/UI_UX_DESIGN_REVIEW.md`, bounded by `../../docs/audits/UI_UX_RELEASE.md`. Its 40 native browser images at `../../docs/evidence/ui-ux/41851243/` cover selected authentication, account, service and workspace states. They extend the historical proof without claiming a full professional redesign, API/security certification, physical-device validation or production readiness.
+
+The dashboard expansion preserves this identity and the bundled fonts. Its owner request authorizes modern icons and glass controls; restrained Liquid Glass remains the stated working interpretation of “لكود كلاس”, not an answered clarification. The independent review in `../../docs/audits/DASHBOARD_PLATFORM_DESIGN_REVIEW.md` first inspected 30 images and then returned `ship` for its two scored fixes only. The final customer pair was reopened in that verdict pass; the other 28 final captures were not independently re-reviewed. Final native Chromium evidence is in `../../docs/evidence/dashboards/6278760f/`; the documentation extraction and limits are in `../../docs/audits/DASHBOARD_PLATFORM_DESIGN_DOCUMENTATION.md`. This is no full-platform, security or production certification.
 
 ## Colors
 
@@ -253,6 +305,8 @@ The proposed palette pairs deep readable teal with white, lightly green-tinted f
 - **Public control** and shared **field edge** strengthen input boundaries. Social studio/profile controls retain the separately recorded **social field edge**. Shared form errors use **error ground/ink**; the social error class retains **social error ground** with the same error ink. **Disabled ground/ink** retain social disabled states.
 - **Connection ground** pairs with **warning** in the shared offline status. The old social **offline ground/ink** remain compatibility declarations, rather than the current shared banner. Success retains its semantic role. Authentication story/icon grounds and the account security card now use **mint**.
 - The `operating-*` primitives remain source compatibility values, including cool selected tabs and neutral treatments. Shared workspace primary controls, rail selection and focus now use teal/mint. Remaining cool-blue notices, disabled controls and generic authentication hover values in `redesign.css` are local legacy states; they are not a new palette or a completed cleanup of all platform surfaces.
+
+- **Control glass** is translucent white for outline actions and native department filters; **control glass line** is the quiet teal edge for generic glass actions and filters. Workspace outline buttons retain the stronger inherited **field edge** through CSS specificity. These are control materials, not translucent record backgrounds.
 
 **The Story Accent Rule.** Keep warm orange attached to story emphasis; use teal for social and shared task actions, focus and selection.
 
@@ -277,6 +331,10 @@ Arabic weights (400, 500, 600, 700) and Manrope (700) are bundled with `@fontsou
 - **Operating body / label:** real workspaces and form labels retain their compact roles. Social account names use (14px), weight (600); metadata and story labels commonly use (11px). These small metadata sizes are observed, not a recommendation for long-form reading.
 - **Button link:** primary social links use the explicit frontmatter role. Native social buttons also inherit the container font via a button reset; do not assume every button computes to the link's size.
 
+- **Dashboard statistic / driver statistic:** the new scoped roles serve compact actual-data summaries, clinic-store counts, professional outcome counts and administrator totals. Driver summaries use the smaller role in their vertical ledger context, including mobile: their more specific selector wins over the (600px) dashboard-count override. Other dashboard counts use `dashboard-stat-mobile` at that breakpoint. Store, portfolio and admin counts retain `dashboard-stat`.
+- **Banner heading:** the fluid role is used by administrator-published customer announcements; at or below (600px), `banner-heading-mobile` replaces it. The (1.4rem)/(2rem) endpoints belong to this bounded banner role, not public display typography.
+- **Management title:** section/product/warehouse destinations and grouped administrator tools use this compact h3 role. **Professional monogram** uses its own symbol size; at or below (600px) its mobile role and `professional-title-mobile` both use (1.5rem), while serving different elements. Font weight and line height remain inherited where the frontmatter intentionally omits them. These dashboard roles extend the existing ramp only at the named use sites.
+
 **The Arabic Room Rule.** Preserve the observed line heights and wrapping behavior when adapting Arabic headings; do not clip them to a Latin display baseline.
 
 ## Layout
@@ -289,11 +347,13 @@ Social has a fixed right rail (226px), an (82px) top bar and a centered main con
 
 Studio separates preview and publication fields with a `1.2fr / 1fr` grid and (36px) gap, stacking on mobile with (20px) padding. Profile and inbox reflow locally; inbox switches between thread list and chosen conversation on mobile. Reels and stories use bounded portrait viewers, not an autoplay feed. The shared workspace shell retains a (232px) right rail and (76px) desktop header. Main content is centered at maximum (1440px), with `36px clamp(24px, 3vw, 48px)` padding. At or below (1000px), the rail becomes a native modal drawer and main padding is (28px 24px); at or below (760px), padding is (26px 18px), the sticky header is at least (68px), and four fixed quick destinations reserve (72px) plus the bottom safe-area inset. The drawer is `min(360px, calc(100vw - 28px))` wide and (100dvh) high, scrolls within itself, and has (24px 20px) padding plus bottom safe-area allowance. Clinic retains its quick-task strip and operational forms. Doctor task actions wrap with a (10px) gap and (24px) following space, becoming full-width links on mobile. Authentication retains two equal desktop columns and a maximum (450px) form; mobile shows the compact brand header and native scrolling form.
 
+Dashboard summaries are ruled horizontal definition lists with a (1.5rem) outer gap and (2rem) metric gap; driver summaries stack into paired label/value rows. Store management uses (1.3fr / 1fr) columns with a (2.5rem) gap; professional profiles use (1.7fr / 1fr) columns with a (2rem) gap. At or below (900px), both stack, professional/admin statistics become two columns, and admin destinations become a single column. At or below (600px), store counts become two columns and professional work rows stack. Customer banners use native horizontal overflow and scroll snapping; image/copy columns stack at (600px), with the image (150px) high and copy padded (1.25rem). Store product grids use `repeat(auto-fill, minmax(min(100%, 280px), 1fr))`.
+
 Spacing is extracted from repeated control, post, panel and grid values in the frontmatter; there is no claimed mathematical scale. Preserve min-width constraints and long-text wrapping alongside those dimensions.
 
 ## Elevation & Depth
 
-The system is flat by default. White surfaces, light tonal grounds, fine borders and image crops provide structure. No ambient shadow belongs under every post or operational panel. Small local shadows separate carousel controls and dots from photos; the selected studio kind tab has a shallow shadow.
+The system is flat by default. White surfaces, light tonal grounds, fine borders and image crops provide structure. No ambient shadow belongs under every post or operational panel. Small local shadows separate carousel controls and dots from photos; the selected studio kind tab has a shallow shadow. The authorized dashboard expansion adds a shallow control lift and restrained primary inset highlight without adding shadows to operational records.
 
 ### Shadow Vocabulary
 
@@ -301,13 +361,19 @@ The system is flat by default. White surfaces, light tonal grounds, fine borders
 - **Carousel position dot:** `0 1px 4px #1a2c3060`, to preserve visibility on variable images.
 - **Selected kind tab:** `0 2px 5px #174c5012`, within the studio's segmented control.
 
-**The Flat Surface Rule.** Use borders and tonal changes for ordinary cards; reserve the observed small shadows for controls over imagery and selected studio tabs.
+- **Task control:** `0 3px 9px rgb(18 50 56 / 9%)`, the shared control elevation.
+- **Task control hover:** `0 5px 14px rgb(18 50 56 / 15%)`, for enabled action/filter hover.
+- **Primary inset:** `inset 0 1px 0 rgb(255 255 255 / 25%)`, combined with the task-control lift at rest. Enabled hover replaces the combined shadow with the hover lift.
+
+**The Flat Surface Rule.** Use borders and tonal changes for ordinary cards; reserve the observed small shadows for image controls, selected studio tabs and task controls.
+
+**The Control Glass Rule.** Limit translucent material and backdrop blur to controls. Keep operational reading surfaces opaque; glass actions and department filters fall back to white when backdrop filtering is unsupported or reduced transparency is requested.
 
 Micro interaction uses the shared (160ms) duration; page/reveal values are (280ms)/(600ms), with `cubic-bezier(0.2, 0.65, 0.3, 1)`. The social reaction press scales to (0.9) over (160ms ease-out). Public editorial image hover scales to (1.035) over (600ms); the public button hover lifts (2px). Reduced motion disables animations/transitions and restores automatic scrolling. These are recorded source behaviors, not claims that every state was visually reviewed.
 
 ## Shapes
 
-Controls are gently curved, fields slightly tighter and photographic surfaces broader. Social primary/secondary actions use `control`; studio/profile fields use `field`; social search and rail links use `search`; shared task fields/rail links use `field`, while authentication fields retain `search`; feed posts and studio use `social-panel`. Home hero photography uses `hero-photo`, while supporting public photos retain `photo`. Operational panels use `panel`. Avatars, story rings and image navigation buttons are circular.
+Controls are gently curved, fields slightly tighter and photographic surfaces broader. The final dashboard stylesheet gives generic button actions, desk-tab links and native department filters the `task-control` radius; this shared selector also affects matching actions outside dashboard routes. Social-prefixed buttons retain their separate `control` radius. Social primary/secondary actions use `control`; studio/profile fields use `field`; social search and rail links use `search`; shared task fields/rail links use `field`, while authentication fields retain `search`; feed posts and studio use `social-panel`. Home hero photography uses `hero-photo`, while supporting public photos retain `photo`. Operational panels use `panel`. Avatars, story rings and image navigation buttons are circular.
 
 The brand symbol retains its asymmetric (13px 13px 13px 4px) corner treatment, reduced locally for smaller shells. Story rings have a (2px) orange stroke with (3px) internal padding. Feed cards have a (1px) divider border. Mobile edge-to-edge posts are intentionally square, without becoming the shape of all controls. Message bubbles retain directional corners tied to sender state.
 
@@ -317,19 +383,27 @@ The brand symbol retains its asymmetric (13px 13px 13px 4px) corner treatment, r
 
 Clear, compact actions with text and a consistent Lucide icon family. Social primary links use teal/white, minimum height (44px), `10px 20px` padding and an (8px) corner. Hover deepens teal; secondary actions use tint/teal. Disabled controls use the recorded disabled colors and a blocked cursor. Native buttons inherit the surrounding font; the explicit link typography token is scoped accordingly.
 
-Home's main care action is minimum (52px) high with inline padding (24px), becoming (48px) and (16px) on mobile. Shared operational primary buttons now use teal/white and deepen to `brand-dark` on hover; the existing (46px) action height, (10px 20px) padding and native behavior remain. Outline task controls use the shared field edge and mint hover. The inherited generic authentication primary hover still uses a cool-blue literal; it remains a local compatibility state, not the shared task or social hover rule.
+The dashboard control layer sets a minimum logical block size of (44px), an (8px) icon/text gap and (12px) corners for matching button actions. Existing workspace/authentication minimum height (46px) still wins through specificity; 44px is the floor, not a promise that every button computes to exactly 44px. Lucide leading icons retain visible labels, flex without shrinking and use stroke width (1.8) within generic buttons.
+
+Home's main care action is minimum (52px) high with inline padding (24px), becoming (48px) and (16px) on mobile. Shared operational primary buttons now use teal/white and deepen to `brand-dark` on hover; the existing (46px) action height, (10px 20px) padding and native behavior remain. Outline task controls use control-glass ground, the inherited shared field edge, backdrop `blur(14px) saturate(1.1)`, control lift and mint hover. Generic glass actions and department filters use control-glass-line. Unsupported backdrop filtering or reduced transparency selects opaque white; reduced transparency also removes the filter. Workspace primary backgrounds remain solid teal with deep-teal hover because the more specific shared-workspace rules override the later generic gloss gradient. The inset highlight and control lift remain visible. The generic primary declaration outside that override uses `linear-gradient(160deg, rgb(255 255 255 / 11%), transparent 65%)` over teal; do not assume all primary controls render that gradient. The inherited generic authentication primary hover still uses a cool-blue literal; it remains a local compatibility state, not the shared task or social hover rule.
 
 Shared and social keyboard focus is a (3px) teal outline offset (4px), covering links, buttons, fields, summaries and explicit tabindex targets. The final experience stylesheet supersedes the older warm global focus rule. Mobile focus targets reserve (90px) scroll margin and document-end scroll padding is (96px), preserving visibility around fixed navigation.
 
 ### Chips / Tabs
 
-Social feed filters are text tabs over a divider; the selected tab uses teal, weight (600) and a (2px) underline. Studio content kinds form a segmented control with (5px) outer padding, (8px) gap, and (6px) tab corners. Selection is white with teal text and the shallow tab shadow. Existing workspace chips retain their compact neutral styling.
+Social feed filters are text tabs over a divider; the selected tab uses teal, weight (600) and a (2px) underline. Studio content kinds form a segmented control with (5px) outer padding, (8px) gap, and (6px) tab corners. Selection is white with teal text and the shallow tab shadow. Existing workspace chips retain their compact neutral styling. Store department filters are native labelled buttons with real SVG icons, wrapping (0.75rem) gaps, glass ground and (0.7rem 1rem) padding. `aria-pressed=true` selects solid teal/white with a teal border; loading disables them with (0.65) opacity and a wait cursor.
 
 ### Cards / Containers
 
 A post is a white, bordered photograph frame with its author above and caption/reactions below. Header padding is (16px 18px); content padding is (12px 18px 18px). Desktop photos use aspect ratio (1.13), changing to (1) on mobile, with `object-fit: cover`. Changing carousel position keeps that frame stable; position text, buttons and dots remain visible.
 
 Empty states use white surfaces, centered copy and a real destination when available. Loading placeholders use quiet tinted blocks rather than fabricated populated content. Errors and offline notices use their explicit warm state palettes and useful text. Retained operational panels are flat with (1px) borders and no shadow.
+
+### Dashboard records / Professional identity
+
+Compact summaries use definition lists with tabular figures and semantic icon labels; they remain rows over solid paper, not decorative metric cards. Professional outcome statistics retain distinct labels for procedures, surgery, successful/unsuccessful outcomes, pending follow-up and charity. Account identity and professional accreditation are separate labelled badges with an (8px) icon gap, (0.2rem) block margin and (0.8rem) inline-end spacing in the profile header. The mint monogram is (80px) square with (16px) corners, becoming (56px) square on small screens. It is a name initial, not an icon substitute.
+
+Administrator decisions and withdrawal controls use native details/summary disclosures: targets have a (44px) minimum block size and (0.65rem) block padding. Store policies use the same disclosure affordance; the clinic warehouse hub lists actual named warehouse rows alongside management destinations. Customer announcement attribution follows the banner body and precedes its CTA, preserving provenance without a heading eyebrow.
 
 ### Inputs / Fields
 
@@ -358,6 +432,7 @@ The story row presents avatars, names and orange rings, plus an outlined add-sto
 - **Do** lead social posts with the actual authorized photograph and author.
 - **Do** use teal for social/shared task actions and keyboard focus, mint for their selected grounds, and orange for story emphasis.
 - **Do** preserve Arabic line height, RTL logical spacing and long-text wrapping.
+- **Do** keep glass on controls, opaque record surfaces, visible icon labels and solid reduced-transparency fallbacks.
 - **Do** retain keyboard focus, native forms, reduced motion and honest loading/error/empty states.
 - **Do** keep conceptual imagery, test data and incomplete capabilities explicitly disclosed.
 - **Do** preserve real routes, permissions and financial/medical privacy boundaries when applying this visual language.

@@ -14,7 +14,7 @@ FIRST VIEWPORT: Task heading, compact real summary and working links on desktop.
 
 FORM: Task desk with scope-specific rows and a secondary record column; explicit user-selected five-dashboard structure. seed:ffd74c87b52a507b. The reference was generated after the first finish review to correct provenance; the existing task-desk extension is retained, not represented as a user-approved roll. Remote service remained unavailable on retry; there were no challengers or quality-board results.
 
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+FINISH: The independent first review inspected 30 images; the final verdict resolved its two scored fixes with `disposition: ship`, reopening the final customer pair only. Source `b0efa4b5e38ae81eaf893adaea7d18eaf7786195`, tree `6278760fdffe2ab90d6d9985e2dffcd56bc7b1ee`; final native Chromium evidence and raster provenance are in `docs/evidence/dashboards/6278760f/`. The existing DESIGN.md and sidecar now record the authorized control material and scoped typography; `docs/audits/DASHBOARD_PLATFORM_DESIGN_DOCUMENTATION.md` records extraction and limits. This is a scoped finish, not full-platform or production certification.
 
 ## Verification boundary
 

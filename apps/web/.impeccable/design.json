@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-23T15:19:08Z",
+  "generatedAt": "2026-10-23T21:15:37Z",
   "title": "Design System: Petra",
   "extensions": {
     "colorMeta": {
@@ -135,6 +135,14 @@
       "connection-ground": {
         "role": "semantic",
         "displayName": "Shared offline warning ground"
+      },
+      "control-glass": {
+        "role": "neutral",
+        "displayName": "Control glass"
+      },
+      "control-glass-line": {
+        "role": "neutral",
+        "displayName": "Control glass line"
       }
     },
     "typographyMeta": {
@@ -201,6 +209,42 @@
       "quick-label": {
         "displayName": "Mobile destination label",
         "purpose": "Four labelled mobile quick destinations; this small size is not a body-copy default."
+      },
+      "dashboard-stat": {
+        "displayName": "Dashboard stat",
+        "purpose": "Actual-data counts in dashboard-summary, store-summary, portfolio-statistics and admin-dashboard-summary; 600px dashboard override is separate."
+      },
+      "driver-stat": {
+        "displayName": "Driver stat",
+        "purpose": "Vertical driver-summary counts at all viewport widths; its more specific selector wins over dashboard-stat-mobile at 600px."
+      },
+      "dashboard-stat-mobile": {
+        "displayName": "Dashboard stat mobile",
+        "purpose": "DashboardSummary counts at or below 600px, except the more specific driver selector; not store/portfolio/admin counts."
+      },
+      "banner-heading": {
+        "displayName": "Banner heading",
+        "purpose": "Administrator-published customer banner h2; fluid endpoints 1.4rem and 2rem, replaced at 600px."
+      },
+      "banner-heading-mobile": {
+        "displayName": "Banner heading mobile",
+        "purpose": "Customer banner h2 at or below 600px."
+      },
+      "management-title": {
+        "displayName": "Management title",
+        "purpose": "Clinic-store management destinations and grouped administrator h3 labels."
+      },
+      "professional-monogram": {
+        "displayName": "Professional monogram",
+        "purpose": "80px-square profile name initial; distinct from headings and icons."
+      },
+      "professional-monogram-mobile": {
+        "displayName": "Professional monogram mobile",
+        "purpose": "56px-square profile name initial at or below 600px."
+      },
+      "professional-title-mobile": {
+        "displayName": "Professional title mobile",
+        "purpose": "Professional profile h1 at or below 600px, with anywhere wrapping."
       }
     },
     "shadows": [
@@ -218,6 +262,21 @@
         "name": "selected-kind-tab",
         "value": "0 2px 5px #174c5012",
         "purpose": "Selected studio content kind."
+      },
+      {
+        "name": "control-elevation",
+        "value": "0 3px 9px rgb(18 50 56 / 9%)",
+        "purpose": "Shared task control lift; never operational record panels."
+      },
+      {
+        "name": "control-hover",
+        "value": "0 5px 14px rgb(18 50 56 / 15%)",
+        "purpose": "Enabled action/filter hover replaces the rest shadow."
+      },
+      {
+        "name": "primary-inset",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 25%)",
+        "purpose": "Combined with control-elevation at rest; workspace primary background stays solid through specificity."
       }
     ],
     "motion": [
@@ -279,6 +338,14 @@
       {
         "name": "home-small",
         "value": "350px"
+      },
+      {
+        "name": "dashboard-stack",
+        "value": "900px"
+      },
+      {
+        "name": "dashboard-small",
+        "value": "600px"
       }
     ]
   },
@@ -335,9 +402,9 @@
       "name": "Shared task action",
       "kind": "button",
       "refersTo": "operating-button",
-      "description": "Teal primary action in shared professional/account task surfaces; retains native geometry and inherited press/hover motion.",
-      "html": "<a class=\"ds-operating\" href=\"#task\" dir=\"rtl\">فتح المهمة</a>",
-      "css": ".ds-operating{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:46px;padding:10px 20px;border:1px solid var(--brand,#0e6873);border-radius:8px;background:var(--brand,#0e6873);color:var(--surface,#fff);font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:transform var(--duration-micro,160ms),background var(--duration-micro,160ms);font-family:'IBM Plex Sans Arabic',sans-serif;}.ds-operating:hover{background:var(--brand-dark,#124b53);border-color:var(--brand-dark,#124b53);transform:translateY(-2px)}.ds-operating:active{transform:translateY(1px)}.ds-operating:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-operating{transition:none!important}}"
+      "description": "Actual shared-workspace primary: solid teal wins over generic gloss through cascade; inset highlight and control elevation remain.",
+      "html": "<a class=\"ds-operating\" href=\"#inventory\" dir=\"rtl\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m16 16 2 2 4-4\"></path><path d=\"M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14\"></path><path d=\"m7.5 4.27 9 5.15\"></path><polyline points=\"3.29 7 12 12 20.71 7\"></polyline><line x1=\"12\" x2=\"12\" y1=\"22\" y2=\"12\"></line></svg>إدارة المخزون</a>",
+      "css": ".ds-operating{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-block-size:44px;min-height:46px;padding:10px 20px;border-radius:12px;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:background-color var(--duration-micro,160ms),box-shadow var(--duration-micro,160ms),border-color var(--duration-micro,160ms);border:1px solid var(--brand,#0e6873);background:var(--brand,#0e6873);color:var(--surface,#fff);box-shadow:inset 0 1px 0 rgb(255 255 255 / 25%),var(--control-elevation,0 3px 9px rgb(18 50 56 / 9%));}.ds-operating svg{flex:0 0 auto}.ds-operating:hover{background:var(--brand-dark,#124b53);border-color:var(--brand-dark,#124b53);box-shadow:0 5px 14px rgb(18 50 56 / 15%);transform:translateY(-2px)}.ds-operating:active{transform:translateY(1px)}.ds-operating:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px;}@media(prefers-reduced-motion:reduce){.ds-operating{transition:none!important}}"
     },
     {
       "name": "Shared task field",
@@ -362,6 +429,30 @@
       "description": "Shared warning shown only when the browser reports offline. This specimen shows its visible state.",
       "html": "<p class=\"ds-connection\" role=\"status\" dir=\"rtl\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m2 2 20 20M8.5 16.5a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.17-2.65M10.66 5a16 16 0 0 1 11.3 3.82M5 12.86a10 10 0 0 1 5.17-2.69M16.5 11.5a10 10 0 0 1 2.5 1.36M12 20h.01\"/></svg><span>أنت غير متصل. تحقق من اتصالك؛ لا تعتبر تغييراتك محفوظة حتى يظهر تأكيدها.</span></p>",
       "css": ".ds-connection{display:flex;align-items:flex-start;gap:12px;padding:14px 24px;margin:0;background:#fff4df;color:var(--warning,#88520d);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;line-height:1.9}.ds-connection svg{flex-shrink:0;margin-block-start:4px}"
+    },
+    {
+      "name": "Glass task action",
+      "kind": "button",
+      "refersTo": "glass-action",
+      "description": "Banner CTA material; workspace outline variant retains field-edge instead of the generic translucent edge.",
+      "html": "<a class=\"ds-glass-action\" href=\"#destination\" dir=\"rtl\">اكتشف المزيد<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17V7h10\"></path><path d=\"M17 17 7 7\"></path></svg></a>",
+      "css": ".ds-glass-action{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-block-size:44px;min-height:46px;padding:10px 20px;border-radius:12px;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:500;line-height:1.7;text-decoration:none;transition:background-color var(--duration-micro,160ms),box-shadow var(--duration-micro,160ms),border-color var(--duration-micro,160ms);color:var(--brand-dark,#124b53);background:var(--control-glass,rgb(255 255 255 / 82%));border:1px solid var(--control-glass-line,rgb(14 104 115 / 25%));box-shadow:var(--control-elevation,0 3px 9px rgb(18 50 56 / 9%));backdrop-filter:blur(14px) saturate(1.1)}.ds-glass-action svg{flex:0 0 auto}.ds-glass-action:hover{background:var(--mint,#e8f2ef);box-shadow:0 5px 14px rgb(18 50 56 / 15%)}.ds-glass-action:active{transform:translateY(1px)}.ds-glass-action:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px;}@supports not(backdrop-filter:blur(1px)){.ds-glass-action{background:var(--surface,#fff)}}@media(prefers-reduced-transparency:reduce){.ds-glass-action{background:var(--surface,#fff);backdrop-filter:none}}@media(prefers-reduced-motion:reduce){.ds-glass-action{transition:none}}"
+    },
+    {
+      "name": "Store department filters",
+      "kind": "chip",
+      "refersTo": "department-filter",
+      "description": "Native labelled department buttons; teal selected state follows aria-pressed.",
+      "html": "<nav class=\"ds-departments\" aria-label=\"أقسام المتجر\" dir=\"rtl\"><button aria-pressed=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v18\"></path><path d=\"M3 12h18\"></path><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"></rect></svg>كل المنتجات</button><button aria-pressed=\"false\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z\"></path><path d=\"m7 16.5-4.74-2.85\"></path><path d=\"m7 16.5 5-3\"></path><path d=\"M7 16.5v5.17\"></path><path d=\"M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z\"></path><path d=\"m17 16.5-5-3\"></path><path d=\"m17 16.5 4.74-2.85\"></path><path d=\"M17 16.5v5.17\"></path><path d=\"M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z\"></path><path d=\"M12 8 7.26 5.15\"></path><path d=\"m12 8 4.74-2.85\"></path><path d=\"M12 13.5V8\"></path></svg>القسم</button></nav>",
+      "css": ".ds-departments{display:flex;flex-wrap:wrap;gap:.75rem;font-family:\"IBM Plex Sans Arabic\",sans-serif}.ds-departments button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-block-size:44px;border-radius:12px;padding:.7rem 1rem;font:inherit;line-height:1.8;cursor:pointer;color:var(--brand-dark,#124b53);background:var(--control-glass,rgb(255 255 255 / 82%));border:1px solid var(--control-glass-line,rgb(14 104 115 / 25%));box-shadow:var(--control-elevation,0 3px 9px rgb(18 50 56 / 9%));backdrop-filter:blur(14px) saturate(1.1);transition:background-color var(--duration-micro,160ms),box-shadow var(--duration-micro,160ms),border-color var(--duration-micro,160ms)}.ds-departments button[aria-pressed=true]{background:var(--brand,#0e6873);color:#fff;border-color:var(--brand,#0e6873)}.ds-departments button:hover:not(:disabled){box-shadow:0 5px 14px rgb(18 50 56 / 15%)}.ds-departments button:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px;}.ds-departments button:disabled{opacity:.65;cursor:wait}.ds-departments svg{flex-shrink:0}@supports not(backdrop-filter:blur(1px)){.ds-departments button{background:var(--surface,#fff)}.ds-departments button[aria-pressed=true]{background:var(--brand,#0e6873)}}@media(prefers-reduced-transparency:reduce){.ds-departments button{background:var(--surface,#fff);backdrop-filter:none}.ds-departments button[aria-pressed=true]{background:var(--brand,#0e6873)}}@media(prefers-reduced-motion:reduce){.ds-departments button{transition:none}}"
+    },
+    {
+      "name": "Actual-data dashboard statistic",
+      "kind": "custom",
+      "refersTo": "dashboard-statistic",
+      "description": "Unpopulated specimen uses an em dash: actual values come from API records. Generic dashboard count becomes 1.4rem at 600px.",
+      "html": "<dl class=\"ds-dashboard-stat\" dir=\"rtl\"><div><dt><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2\"></path></svg>حيواناتي</dt><dd><a href=\"#records\">—<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17V7h10\"></path><path d=\"M17 17 7 7\"></path></svg></a></dd></div></dl>",
+      "css": ".ds-dashboard-stat{display:flex;gap:2rem;margin:0;padding:1.15rem 0;border-block:1px solid var(--line,#dce6e3);font-family:\"IBM Plex Sans Arabic\",sans-serif;line-height:1.8}.ds-dashboard-stat>div{flex:1}.ds-dashboard-stat dt{display:flex;align-items:center;gap:.5rem;color:var(--muted,#5d6f72);font-size:.88rem}.ds-dashboard-stat svg{color:var(--brand,#0e6873);flex-shrink:0}.ds-dashboard-stat dd{margin:.4rem 0 0;font-size:1.65rem;font-weight:600;font-variant-numeric:tabular-nums}.ds-dashboard-stat a{display:flex;align-items:center;gap:1rem;color:var(--ink,#1a2c30);text-decoration:none}.ds-dashboard-stat a:focus-visible{outline:3px solid var(--brand,#0e6873);outline-offset:4px;}@media(max-width:600px){.ds-dashboard-stat{gap:.6rem}.ds-dashboard-stat dt{font-size:.78rem;gap:.3rem;align-items:start}.ds-dashboard-stat svg{inline-size:16px;block-size:16px}.ds-dashboard-stat dd{font-size:1.4rem}}"
     }
   ],
   "narrative": {
@@ -372,6 +463,7 @@
       "Photograph-and-author priority on light teal-neutral surfaces.",
       "Restrained warm story emphasis and visible interaction states.",
       "Separate public, social and operational densities.",
+      "Translucent task controls over opaque operational reading surfaces.",
       "Responsive native forms, explicit privacy boundaries and reduced motion support."
     ],
     "rules": [
@@ -387,7 +479,12 @@
       },
       {
         "name": "The Flat Surface Rule",
-        "body": "Use borders and tonal changes for ordinary cards; reserve the observed small shadows for controls over imagery and selected studio tabs.",
+        "body": "Use borders and tonal changes for ordinary cards; reserve the observed small shadows for image controls, selected studio tabs and task controls.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Control Glass Rule",
+        "body": "Limit translucent material and backdrop blur to controls. Keep operational reading surfaces opaque; glass actions and department filters fall back to white when backdrop filtering is unsupported or reduced transparency is requested.",
         "section": "elevation"
       }
     ],
@@ -395,6 +492,7 @@
       "**Do** lead social posts with the actual authorized photograph and author.",
       "**Do** use teal for social/shared task actions and keyboard focus, mint for their selected grounds, and orange for story emphasis.",
       "**Do** preserve Arabic line height, RTL logical spacing and long-text wrapping.",
+      "**Do** keep glass on controls, opaque record surfaces, visible icon labels and solid reduced-transparency fallbacks.",
       "**Do** retain keyboard focus, native forms, reduced motion and honest loading/error/empty states.",
       "**Do** keep conceptual imagery, test data and incomplete capabilities explicitly disclosed.",
       "**Do** preserve real routes, permissions and financial/medical privacy boundaries when applying this visual language."
