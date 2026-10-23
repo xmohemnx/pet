@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-23",
+  "requested_scope": "restore_all_522_removed_files",
+  "original_source_commit": "01f37537f157ae844ebf2f09dcbd52990b0a9352",
+  "removal_commit": "bcf5ab4614f629bb3bb69c1c5e4e4bc57733d448",
+  "restored_files": 522,
+  "authoring_skill_files": 441,
+  "browser_screenshots": 79,
+  "authoring_direction_files": 2,
+  "original_content_and_git_modes_verified": true,
+  "application_source_changed": false,
+  "ignore_rules_for_restored_files_removed": true,
+  "git_history_rewritten": false,
+  "runtime_tests_rerun": false
+}
