@@ -5,11 +5,13 @@ export function CareForm({
   submit,
   label = 'حفظ',
   className = '',
+  variant = 'primary',
 }: {
   children: ReactNode;
   submit: (form: FormData) => Promise<void>;
   label?: ReactNode;
   className?: string;
+  variant?: 'primary' | 'outline';
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(''),
@@ -33,7 +35,7 @@ export function CareForm({
     <form className={`care-form ${className}`} onSubmit={send}>
       <fieldset disabled={busy}>
         {children}
-        <button className="button primary" type="submit">
+        <button className={`button ${variant}`} type="submit">
           {busy ? 'جارٍ الحفظ…' : label}
         </button>
       </fieldset>
@@ -53,12 +55,14 @@ export function CareForm({
 export function CareAction({
   children,
   action,
+  variant = 'primary',
 }: {
   children: ReactNode;
   action: () => Promise<void>;
+  variant?: 'primary' | 'outline';
 }) {
   return (
-    <CareForm submit={action} label={children}>
+    <CareForm submit={action} label={children} variant={variant}>
       <span className="sr-only">{children}</span>
     </CareForm>
   );

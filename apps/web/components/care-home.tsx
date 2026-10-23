@@ -1,11 +1,16 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
-import { PawPrint, CalendarDays, ArrowUpLeft } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { ArrowUpLeft } from 'lucide-react';
 import type { IdentityMe, Pet, AvailableSlot } from '@petra/contracts';
 import { IdentityShell } from './identity-shell';
 import { PetForm } from './pet-form';
 import { careDate, speciesLabels } from './care-shared';
+import {
+  WorkspaceHeading,
+  WorkspaceLink,
+  WorkspaceEmpty,
+} from './workspace-overview';
 export function CareHome({
   me,
   pets,
@@ -16,120 +21,192 @@ export function CareHome({
   slots: AvailableSlot[];
 }) {
   const [adding, setAdding] = useState(false);
+  const formRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (adding) {
+      formRef.current?.scrollIntoView({ block: 'nearest' });
+      formRef.current?.querySelector<HTMLInputElement>('input')?.focus();
+    }
+  }, [adding]);
+  const activePets = pets.filter((p) => !p.archived_at);
   return (
     <IdentityShell me={me}>
-      <div className="care-heading">
-        <div>
-          <h1>مركز الرعاية</h1>
-          <p>ملفات رفاقك، مواعيدهم، ومتابعتهم في مكان واحد.</p>
-        </div>
-        <button
-          className="button primary"
-          onClick={() => setAdding(!adding)}
-          aria-expanded={adding}
-        >
-          {adding ? 'إغلاق النموذج' : 'إضافة حيوان'}
-        </button>
-      </div>
-      <div className="care-actions">
-        <Link className="button outline" href="/care/library">
-          مكتبة الرعاية المراجعة
-        </Link>
-        <Link className="button outline" href="/home-visits">
-          الزيارات المنزلية
-        </Link>
-        <Link className="button outline" href="/care/directory">
-          دليل الأطباء والحجز
-        </Link>
-        <Link className="button outline" href="/care/calendar">
-          تقويم الرعاية
-        </Link>
-      </div>
-      {adding && (
-        <section className="panel care-section">
-          <h2>رفيق جديد</h2>
-          <PetForm
-            onSaved={(id) => window.location.assign(`/care/pets/${id}`)}
-          />
-        </section>
-      )}
-      <div className="petra-care-overview">
-        <section className="care-section">
-          <h2>
-            <PawPrint size={22} />
-            حيواناتي
-          </h2>
-          {!pets.length ? (
-            <div className="panel care-empty">
-              <PawPrint size={36} />
-              <h3>تبدأ الرعاية بملف صغير</h3>
-              <p>أضف حيوانك لتحتفظ ببياناته وتحجز موعده الأول.</p>
-            </div>
-          ) : (
-            <div className="pet-real-grid">
-              {pets.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/care/pets/${p.id}`}
-                  className="panel pet-real-card"
+      <div className="role-desk customer-desk">
+        <WorkspaceHeading
+          title="رعاية رفاقك"
+          description={`أهلًا، ${me.user.name}. ملفات حيواناتك وخطوتك التالية في مكان واحد.`}
+          action={
+            <button
+              className="button primary"
+              onClick={() => setAdding(!adding)}
+              aria-expanded={adding}
+              aria-controls="new-companion"
+            >
+              {adding ? 'إغلاق النموذج' : 'إضافة حيوان'}
+            </button>
+          }
+        />
+        <nav className="desk-tabs" aria-label="أقسام رعاية العميل">
+          <a href="#companions">
+            حيواناتي <span>{activePets.length}</span>
+          </a>
+          <Link href="/care/calendar">المواعيد والمتابعة</Link>
+          <Link href="/care/directory">الأطباء والعيادات</Link>
+        </nav>
+        {adding && (
+          <section
+            ref={formRef}
+            id="new-companion"
+            className="panel care-section"
+          >
+            <h2>رفيق جديد</h2>
+            <PetForm
+              onSaved={(id) => window.location.assign(`/care/pets/${id}`)}
+            />
+          </section>
+        )}
+        <div className="desk-body">
+          <div className="desk-main">
+            <section className="desk-panel" id="companions">
+              <div className="desk-section-heading">
+                <div>
+                  <h2>حيواناتي</h2>
+                  <p>ملف مستقل لكل رفيق، وخصوصية تتحكم بها.</p>
+                </div>
+                <span className="desk-count">{activePets.length} نشط</span>
+              </div>
+              {!pets.length ? (
+                <WorkspaceEmpty
+                  title="لنبدأ بالتعرّف إلى رفيقك"
+                  action={
+                    <button
+                      className="button primary"
+                      onClick={() => setAdding(true)}
+                    >
+                      إنشاء أول ملف
+                    </button>
+                  }
                 >
-                  <span className="pet-real-avatar">
-                    <PawPrint size={30} />
-                  </span>
-                  <h3>{p.name}</h3>
-                  <p>
-                    {speciesLabels[p.species]}
-                    {p.breed ? ` · ${p.breed}` : ''}
-                  </p>
-                  <span className="small-chip">
-                    {p.archived_at
-                      ? 'مؤرشف'
-                      : p.scopes.includes('owner')
-                        ? 'أنت المالك'
-                        : 'وصاية مشتركة'}
-                  </span>
-                  <ArrowUpLeft size={18} />
+                  أضف بياناته مرة واحدة للوصول إلى سجله وحجز رعايته ومتابعة
+                  مواعيده.
+                </WorkspaceEmpty>
+              ) : (
+                <div className="companion-list">
+                  {pets.map((p) => (
+                    <Link
+                      key={p.id}
+                      href={`/care/pets/${p.id}`}
+                      className="companion-row"
+                    >
+                      <span className="companion-initial" aria-hidden="true">
+                        {Array.from(p.name)[0]}
+                      </span>
+                      <div>
+                        <h3>{p.name}</h3>
+                        <p>
+                          {speciesLabels[p.species]}
+                          {p.breed ? ` · ${p.breed}` : ''}
+                        </p>
+                        <span>
+                          {p.archived_at
+                            ? 'ملف مؤرشف'
+                            : p.scopes.includes('owner')
+                              ? 'أنت المالك'
+                              : 'وصاية مشتركة'}
+                        </span>
+                      </div>
+                      <span className="companion-open">
+                        فتح الملف <ArrowUpLeft size={17} aria-hidden="true" />
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </section>
+            <section className="desk-panel">
+              <div className="desk-section-heading">
+                <div>
+                  <h2>أوقات متاحة للرعاية</h2>
+                  <p>أطباء العيادات المعتمدة · بتوقيت بغداد</p>
+                </div>
+                <Link className="text-link" href="/care/directory">
+                  دليل الأطباء
                 </Link>
-              ))}
-            </div>
-          )}
-        </section>
-        <section className="care-section">
-          <h2>
-            <CalendarDays size={22} />
-            مواعيد متاحة لدى أطباء معتمدين
-          </h2>
-          <p className="panel-intro">
-            الأوقات بتوقيت بغداد. افتح ملف الحيوان لاختيار الموعد وتأكيد الحجز.
-          </p>
-          {!slots.length ? (
-            <div className="panel care-empty">
+              </div>
+              {!slots.length ? (
+                <WorkspaceEmpty title="لا أوقات منشورة حاليًا">
+                  يمكنك استكشاف الأطباء والعيادات، أو العودة لاحقًا بعد نشر
+                  أوقات جديدة.
+                </WorkspaceEmpty>
+              ) : (
+                <div className="desk-slot-list">
+                  {slots.slice(0, 4).map((s) => (
+                    <article className="desk-slot" key={s.id}>
+                      <time dateTime={s.starts_at}>
+                        {careDate(s.starts_at)}
+                      </time>
+                      <div>
+                        <h3>{s.doctor_name}</h3>
+                        <p>
+                          {s.service_name} · {s.clinic_name} · {s.branch_name}
+                        </p>
+                      </div>
+                      {pets[0] ? (
+                        <Link
+                          className="text-link"
+                          href={`/care/pets/${pets[0].id}`}
+                        >
+                          اختيار للحيوان
+                        </Link>
+                      ) : (
+                        <button
+                          className="button outline small"
+                          onClick={() => setAdding(true)}
+                        >
+                          أضف حيوانًا أولًا
+                        </button>
+                      )}
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
+          </div>
+          <aside className="desk-aside">
+            <section className="desk-panel">
+              <h2>ماذا يحتاج رفيقك؟</h2>
+              <nav aria-label="خدمات العميل">
+                <WorkspaceLink href="/care/directory" title="موعد مع طبيب">
+                  ابحث عن الطبيب والخدمة المناسبة.
+                </WorkspaceLink>
+                <WorkspaceLink href="/home-visits" title="طبيب إلى المنزل">
+                  استكشف الزيارات المنزلية المتاحة.
+                </WorkspaceLink>
+                <WorkspaceLink href="/taxi" title="نقل الحيوانات">
+                  خطّط للنقل وتابع طلب رحلتك.
+                </WorkspaceLink>
+                <WorkspaceLink href="/services" title="العناية والإقامة">
+                  استكشف الخدمات والباقات.
+                </WorkspaceLink>
+              </nav>
+            </section>
+            <section className="desk-note">
+              <h2>متابعة لا تضيع</h2>
               <p>
-                لا توجد أوقات منشورة حاليًا. تظهر هنا الأوقات التي ينشرها أطباء
-                العيادات المعتمدة.
+                راجع مواعيد حيواناتك ومهام الرعاية من التقويم، وامنح الطبيب
+                موافقة الوصول من ملف الحيوان عند الحاجة.
               </p>
-            </div>
-          ) : (
-            <div className="care-slot-grid">
-              {slots.slice(0, 8).map((s) => (
-                <article key={s.id} className="panel care-slot">
-                  <span className="small-chip">{s.service_name}</span>
-                  <h3>{s.doctor_name}</h3>
-                  <p>
-                    {s.clinic_name} · {s.branch_name}
-                  </p>
-                  <strong>{careDate(s.starts_at)}</strong>
-                  <Link
-                    className="text-link"
-                    href={pets[0] ? `/care/pets/${pets[0].id}` : '/care'}
-                  >
-                    {pets.length ? 'اختيار للحيوان' : 'أضف حيوانًا أولًا'}
-                  </Link>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
+              <Link href="/care/calendar" className="text-link">
+                افتح تقويم الرعاية <ArrowUpLeft size={16} aria-hidden="true" />
+              </Link>
+            </section>
+            <Link className="desk-library" href="/care/library">
+              <strong>مكتبة الرعاية</strong>
+              <span>اقرأ المحتوى المراجع قبل اتخاذ قرارات الرعاية.</span>
+              <ArrowUpLeft size={20} aria-hidden="true" />
+            </Link>
+          </aside>
+        </div>
       </div>
     </IdentityShell>
   );

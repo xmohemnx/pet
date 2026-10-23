@@ -473,6 +473,10 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
       .getByRole('button', { name: 'تسجيل الدخول', exact: true })
       .click();
     await expect(
+      page.getByRole('heading', { name: 'رعاية رفاقك', exact: true }),
+    ).toBeVisible();
+    await page.goto('/account');
+    await expect(
       page.getByRole('heading', { name: 'أهلًا، مستخدم الواجهة.' }),
     ).toBeVisible();
     await page.getByLabel('الاسم الظاهر').fill('اسم محفوظ');
@@ -524,11 +528,17 @@ test.describe.serial('هوية حقيقية وعضويات معزولة', () => 
     await expect(
       page.getByRole('heading', { name: 'عيادة الاختبار أ', exact: true }),
     ).toBeVisible();
+    await page
+      .getByRole('link', { name: 'الفريق والفروع', exact: true })
+      .click();
     await page.getByLabel('اسم الفرع', { exact: true }).fill('فرع الواجهة');
     await page.getByLabel('المدينة', { exact: true }).fill('بغداد');
     await page.getByRole('button', { name: 'إضافة فرع' }).click();
     await expect(page.getByText('فرع الواجهة', { exact: true })).toBeVisible();
     await page.reload();
+    await page
+      .getByRole('link', { name: 'الفريق والفروع', exact: true })
+      .click();
     await expect(page.getByText('فرع الواجهة', { exact: true })).toBeVisible();
     for (const width of [320, 390, 1440]) {
       await page.setViewportSize({ width, height: 900 });

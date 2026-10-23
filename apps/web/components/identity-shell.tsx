@@ -91,7 +91,7 @@ export function IdentityShell({
   }
 
   const clinicId = me.activeWorkspace.clinicId;
-  const professionalLinks =
+  const rawProfessionalLinks =
     me.activeWorkspace.id === 'account'
       ? []
       : me.activeWorkspace.persona === 'clinic_member' && clinicId
@@ -119,6 +119,21 @@ export function IdentityShell({
                   ['/admin/transport', 'نزاعات النقل', CarFront],
                 ] as const)
               : [];
+  const professionalLinks = rawProfessionalLinks.filter(([href]) => {
+    if (me.activeWorkspace.persona !== 'clinic_member') return true;
+    const capabilities = me.activeWorkspace.capabilities;
+    const required: Record<string, string[]> = {
+      calendar: ['clinic_admin', 'receptionist'],
+      commerce: ['clinic_admin', 'commerce_manager'],
+      inventory: ['clinic_admin', 'inventory_clerk'],
+      finance: ['clinic_admin', 'clinic_accountant', 'cashier'],
+    };
+    const section = href.split('/')[3] ?? '';
+    return (
+      !required[section] ||
+      capabilities.some((c) => required[section]!.includes(c))
+    );
+  });
   const destinations = [
     ['/app', 'مساحتي', LayoutDashboard],
     ['/care', 'مركز الرعاية', PawPrint],

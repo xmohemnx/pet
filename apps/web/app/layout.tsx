@@ -14,6 +14,7 @@ import './redesign.css';
 import './social.css';
 import './rebuild.css';
 import './experience.css';
+import './workspaces.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000'),
   openGraph: { locale: 'ar_IQ', type: 'website', siteName: 'Petra' },
