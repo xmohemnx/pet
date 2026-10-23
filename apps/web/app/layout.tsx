@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { WebPreview } from '../components/web-preview';
+import { isWebPreview } from '../lib/web-preview';
 import '@fontsource/ibm-plex-sans-arabic/400.css';
 import '@fontsource/ibm-plex-sans-arabic/500.css';
 import '@fontsource/ibm-plex-sans-arabic/600.css';
@@ -29,7 +31,7 @@ export default async function Layout({
         <a className="skip-link" href="#main">
           انتقل إلى المحتوى
         </a>
-        {children}
+        <WebPreview enabled={isWebPreview()}>{children}</WebPreview>
       </body>
     </html>
   );

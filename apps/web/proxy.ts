@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sensitivePath } from '../../packages/contracts/src/http-security';
+import { isWebPreview, previewResponse } from './lib/web-preview';
 
 export function proxy(request: NextRequest) {
   if (sensitivePath(request.nextUrl.pathname))
@@ -38,9 +39,12 @@ export function proxy(request: NextRequest) {
   // Overwrite client-supplied nonce/CSP; Next reads this header for its SSR scripts.
   headers.set('x-nonce', nonce);
   headers.set('Content-Security-Policy', csp);
-  const response = NextResponse.next({ request: { headers } });
+  const response =
+    previewResponse(request) ?? NextResponse.next({ request: { headers } });
   response.headers.set('Content-Security-Policy', csp);
   response.headers.set('Cache-Control', 'private, no-store');
+  if (isWebPreview())
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
   if (request.nextUrl.pathname.startsWith('/safety/')) {
     response.headers.set('Referrer-Policy', 'no-referrer');
     response.headers.set(

@@ -1,10 +1,11 @@
 'use client';
-import { useState, type FormEvent } from 'react';
+import { useContext, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ShieldCheck, Mail, KeyRound } from 'lucide-react';
 import { Brand } from './brand';
 import { authClient, authError } from '../lib/auth-client';
+import { WebPreviewContext } from './web-preview';
 export function AuthForm({
   mode,
   token,
@@ -12,6 +13,7 @@ export function AuthForm({
   mode: 'login' | 'register' | 'recover' | 'reset';
   token?: string;
 }) {
+  const preview = useContext(WebPreviewContext);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
@@ -25,6 +27,7 @@ export function AuthForm({
   };
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (preview) return;
     setError('');
     setMessage('');
     setBusy(true);
@@ -99,6 +102,7 @@ export function AuthForm({
     }
   }
   async function resend() {
+    if (preview) return;
     setBusy(true);
     setError('');
     const email =
@@ -163,6 +167,11 @@ export function AuthForm({
             {mfa ? 'خطوة أخيرة لحماية حسابك' : 'مساحتك في Petra'}
           </span>
           <h1>{mfa ? 'تحقق من هويتك.' : titles[mode]}</h1>
+          {preview && (
+            <p className="preview-form-note">
+              النموذج للمعاينة فقط؛ لا تدخل بيانات حقيقية. الإرسال غير مفعّل.
+            </p>
+          )}
           <p>
             {mfa
               ? 'أدخل الرمز الحالي من تطبيق المصادقة أو استخدم رمز استرداد.'
@@ -178,6 +187,7 @@ export function AuthForm({
                 الاسم الكامل
                 <input
                   name="name"
+                  disabled={preview}
                   required
                   minLength={2}
                   maxLength={100}
@@ -190,6 +200,7 @@ export function AuthForm({
                 البريد الإلكتروني
                 <input
                   name="email"
+                  disabled={preview}
                   type="email"
                   required
                   maxLength={254}
@@ -203,6 +214,7 @@ export function AuthForm({
                 {mode === 'reset' ? 'كلمة المرور الجديدة' : 'كلمة المرور'}
                 <input
                   name="password"
+                  disabled={preview}
                   aria-label={
                     mode === 'reset' ? 'كلمة المرور الجديدة' : 'كلمة المرور'
                   }
@@ -230,6 +242,7 @@ export function AuthForm({
                 {backup ? 'رمز الاسترداد' : 'رمز تطبيق المصادقة'}
                 <input
                   name="code"
+                  disabled={preview}
                   key={String(backup)}
                   required
                   inputMode={backup ? 'text' : 'numeric'}
@@ -257,7 +270,7 @@ export function AuthForm({
             )}
             <button
               className="button primary"
-              disabled={busy || (mode === 'reset' && !token)}
+              disabled={preview || busy || (mode === 'reset' && !token)}
             >
               {busy
                 ? 'جارٍ الإرسال…'
@@ -291,7 +304,7 @@ export function AuthForm({
                   <button
                     className="link-button"
                     onClick={resend}
-                    disabled={busy}
+                    disabled={preview || busy}
                   >
                     إعادة إرسال تأكيد البريد
                   </button>

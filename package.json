@@ -35,6 +35,7 @@
     "media:backfill-hls": "node scripts/backfill-hls.mjs",
     "containers:build": "bash scripts/build-containers.sh",
     "test:containers": "node scripts/verify-containers.mjs",
+    "test:preview": "node scripts/verify-web-preview.mjs",
     "test:providers": "pnpm --filter @petra/api build && pnpm private:services && node scripts/verify-private-providers.mjs"
   },
   "devDependencies": {

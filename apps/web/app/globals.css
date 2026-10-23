@@ -4758,3 +4758,21 @@ td small {
   min-width: 0;
   max-width: 100%;
 }
+
+.preview-banner {
+  padding: 0.8rem 1rem;
+  background: #eaf1ff;
+  color: #17386e;
+  text-align: center;
+  border-bottom: 1px solid #b7cdf3;
+}
+
+.preview-explanation {
+  max-width: 48rem;
+  margin: 4rem auto;
+  padding: 1.5rem;
+}
+
+.preview-form-note {
+  color: #17386e;
+}

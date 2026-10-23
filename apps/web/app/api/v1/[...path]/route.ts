@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { BodyError, readLimitedBody } from '../../../../lib/http-body';
+import { isWebPreview } from '../../../../lib/web-preview';
 export const dynamic = 'force-dynamic';
 let uploads = 0;
 const uploadAttempts = new Map<string, { until: number; count: number }>();
@@ -7,6 +8,11 @@ async function proxy(
   request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> },
 ) {
+  if (isWebPreview())
+    return Response.json(
+      { message: 'هذه معاينة للواجهة؛ العمليات غير متاحة حالياً.' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
   const { path } = await params;
   const deny = (status: number) =>
     Response.json(

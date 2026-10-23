@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next';
+import { isWebPreview } from '../lib/web-preview';
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       disallow:
-        process.env.APP_ENV === 'production'
+        !isWebPreview() && process.env.APP_ENV === 'production'
           ? [
               '/api/',
               '/app',

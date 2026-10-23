@@ -1,7 +1,9 @@
 import type { MetadataRoute } from 'next';
+import { isWebPreview } from '../lib/web-preview';
 export const dynamic = 'force-dynamic';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = process.env.APP_ORIGIN ?? 'http://127.0.0.1:3000';
+  if (isWebPreview()) return [];
   let pages: { slug: string }[] = [];
   try {
     const r = await fetch(
